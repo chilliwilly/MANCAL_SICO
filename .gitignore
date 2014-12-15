@@ -24,8 +24,8 @@ $RECYCLE.BIN/
 
 *.sln
 *.suo
-MANCAL_WEB/Properties/*
-MANCAL_WEB/obj/*
+/MANCAL_WEB/Properties/*
+/MANCAL_WEB/obj/*
 
 # OSX
 # =========================
