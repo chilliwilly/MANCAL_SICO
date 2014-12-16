@@ -69,5 +69,11 @@ namespace MANCAL_WCF
             }
             return ls;
         }
+
+
+        public void updateUsrPassword(string usr_pwd)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

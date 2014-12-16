@@ -44,7 +44,9 @@
   <ItemGroup>
     <Compile Include="bl_codificar_pwd.cs" />
     <Compile Include="bl_login.cs" />
+    <Compile Include="bl_mail.cs" />
     <Compile Include="bl_menu.cs" />
+    <Compile Include="bl_pwd.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service References\ManCal_Login\Reference.cs">
       <AutoGen>True</AutoGen>

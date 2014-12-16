@@ -21,7 +21,8 @@
             </tr>
             <tr>
                 <td style="font-family:Arial; text-align:center;">
-                    Si tiene problemas de acceso contacte con el administrador
+                    Si tiene problemas de acceso contacte con el 
+                    <a href="mailto:wcontreras@dts.cl?subject=Problema Sistema Cotizacion Web">administrador</a>
                 </td>
             </tr>
             <tr>
@@ -55,9 +56,9 @@
             </tr>
             <tr>
                 <td style="text-align:center; font-family:Arial;">
-                    <a href="forms/pwd_recordar.aspx">Resetear Contraseña</a>
+                    <a href="frm_pwd/pwd_smaster_res.aspx">Resetear Contraseña</a>
                     <br />
-                    <a href="forms/pwd_cambiar.aspx">Cambiar Contraseña</a>
+                    <a href="frm_pwd/pwd_smaster_mod.aspx">Cambiar Contraseña</a>
                 </td>
             </tr>
         </table>
