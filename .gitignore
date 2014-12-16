@@ -18,15 +18,6 @@ $RECYCLE.BIN/
 # Operating System Files
 # =========================
 
-# =========================
-# VS Files
-# =========================
-
-*.sln
-*.suo
-/MANCAL_WEB/Properties/*
-/MANCAL_WEB/obj/*
-
 # OSX
 # =========================
 
@@ -50,3 +41,9 @@ Icon
 Network Trash Folder
 Temporary Items
 .apdisk
+*.sln
+*.suo
+/MANCAL_WEB/Properties/
+/MANCAL_WEB/obj/
+/MANCAL_WCF/Properties/
+/MANCAL_WCF/obj/
