@@ -43,7 +43,7 @@ Temporary Items
 .apdisk
 *.sln
 *.suo
-/MANCAL_WEB/Properties/
-/MANCAL_WEB/obj/
-/MANCAL_WCF/Properties/
-/MANCAL_WCF/obj/
+/MANCAL_WEB/MANCAL_WEB/Properties/
+/MANCAL_WEB/MANCAL_WEB/obj/
+/MANCAL_WCF/MANCAL_WCF/Properties/
+/MANCAL_WCF/MANCAL_WCF/obj/
