@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/MANCAL_WCF" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/MANCAL_WCF" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:complexType name="ArrayOfUsuario">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Usuario" nillable="true" type="tns:Usuario" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfUsuario" nillable="true" type="tns:ArrayOfUsuario" />
+  <xs:complexType name="Usuario">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="UsrNom" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="UsrPerfil" type="xs:int" />
+      <xs:element minOccurs="0" name="UsrPwd" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="UsrSta" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Usuario" nillable="true" type="tns:Usuario" />
+  <xs:complexType name="ArrayOfMenu">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Menu" nillable="true" type="tns:Menu" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfMenu" nillable="true" type="tns:ArrayOfMenu" />
+  <xs:complexType name="Menu">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="MenuGrp" type="xs:int" />
+      <xs:element minOccurs="0" name="MenuId" type="xs:int" />
+      <xs:element minOccurs="0" name="MenuNom" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="MenuUrl" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Menu" nillable="true" type="tns:Menu" />
+</xs:schema>

@@ -1,4 +1,4 @@
-﻿<%@ Page Title="Login - Gestion de Mejoras" Language="C#" AutoEventWireup="true" CodeBehind="login.aspx.cs" Inherits="MANCAL_WEB.login" %>
+﻿<%@ Page Title="Login - Sistema Cotizacion" Language="C#" AutoEventWireup="true" CodeBehind="login.aspx.cs" Inherits="MANCAL_WEB.login" %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 

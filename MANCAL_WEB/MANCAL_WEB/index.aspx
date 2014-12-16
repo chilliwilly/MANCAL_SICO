@@ -1,5 +1,4 @@
 ﻿<%@ Page Title="Inicio - Sistema Cotizacion" Language="C#" MasterPageFile="~/MasterPage.Master" AutoEventWireup="true" CodeBehind="index.aspx.cs" Inherits="MANCAL_WEB.index" EnableSessionState="False" EnableEventValidation="false"%>
-
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="asp" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
@@ -18,5 +17,5 @@
 <br />
 <h1>cambios realizados y otros.</h1>
 <br />
-<p><asp:HyperLink ID="id01" runat="server" NavigateUrl="~/adjunto_doc/Informacion_Gestion_de_Mejora.pdf" Target="_blank">Documento de Ayuda del Sistema</asp:HyperLink></p>
+<p><asp:HyperLink ID="id01" runat="server" NavigateUrl="~/adjunto_doc/" Target="_blank">Documento de Ayuda del Sistema</asp:HyperLink></p>
 </asp:Content>

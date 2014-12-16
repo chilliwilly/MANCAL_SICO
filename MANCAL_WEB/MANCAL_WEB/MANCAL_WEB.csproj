@@ -33,7 +33,15 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AjaxControlToolkit">
+      <HintPath>..\..\..\..\AjaxControlToolkit.Binary.NET40\AjaxControlToolkit.dll</HintPath>
+    </Reference>
+    <Reference Include="AjaxMin">
+      <HintPath>..\..\..\..\AjaxControlToolkit.Binary.NET40\AjaxMin.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -51,8 +59,21 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="aprobacion.aspx" />
     <Content Include="css\jquery-ui.css" />
     <Content Include="css\Site.css" />
+    <Content Include="frm_cal\cal_cot_mod.aspx" />
+    <Content Include="frm_cal\cal_cot_new.aspx" />
+    <Content Include="frm_equipo\equipo_mod.aspx" />
+    <Content Include="frm_equipo\equipo_new.aspx" />
+    <Content Include="frm_manto\manto_cot_mod.aspx" />
+    <Content Include="frm_manto\manto_cot_new.aspx" />
+    <Content Include="frm_proy\proy_mod.aspx" />
+    <Content Include="frm_proy\proy_new.aspx" />
+    <Content Include="frm_pwd\pwd_master_mod.aspx" />
+    <Content Include="frm_pwd\pwd_master_res.aspx" />
+    <Content Include="frm_pwd\pwd_smaster_mod.aspx" />
+    <Content Include="frm_pwd\pwd_smaster_res.aspx" />
     <Content Include="img_files\ajax-loader.gif" />
     <Content Include="img_files\Attach.png" />
     <Content Include="img_files\cross_icon_normal.png" />
@@ -65,8 +86,11 @@
     <Content Include="img_files\Stage_BG_btm.png" />
     <Content Include="img_files\titlebar_bg.jpg" />
     <Content Include="index.aspx" />
+    <Content Include="load.aspx" />
     <Content Include="login.aspx" />
     <Content Include="logout.aspx" />
+    <Content Include="Scripts\jquery-1.10.2.js" />
+    <Content Include="Scripts\jquery-ui.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -76,12 +100,110 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="aprobacion.aspx.cs">
+      <DependentUpon>aprobacion.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="aprobacion.aspx.designer.cs">
+      <DependentUpon>aprobacion.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="frm_cal\cal_cot_mod.aspx.cs">
+      <DependentUpon>cal_cot_mod.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="frm_cal\cal_cot_mod.aspx.designer.cs">
+      <DependentUpon>cal_cot_mod.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="frm_cal\cal_cot_new.aspx.cs">
+      <DependentUpon>cal_cot_new.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="frm_cal\cal_cot_new.aspx.designer.cs">
+      <DependentUpon>cal_cot_new.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="frm_equipo\equipo_mod.aspx.cs">
+      <DependentUpon>equipo_mod.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="frm_equipo\equipo_mod.aspx.designer.cs">
+      <DependentUpon>equipo_mod.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="frm_equipo\equipo_new.aspx.cs">
+      <DependentUpon>equipo_new.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="frm_equipo\equipo_new.aspx.designer.cs">
+      <DependentUpon>equipo_new.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="frm_manto\manto_cot_mod.aspx.cs">
+      <DependentUpon>manto_cot_mod.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="frm_manto\manto_cot_mod.aspx.designer.cs">
+      <DependentUpon>manto_cot_mod.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="frm_manto\manto_cot_new.aspx.cs">
+      <DependentUpon>manto_cot_new.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="frm_manto\manto_cot_new.aspx.designer.cs">
+      <DependentUpon>manto_cot_new.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="frm_proy\proy_mod.aspx.cs">
+      <DependentUpon>proy_mod.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="frm_proy\proy_mod.aspx.designer.cs">
+      <DependentUpon>proy_mod.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="frm_proy\proy_new.aspx.cs">
+      <DependentUpon>proy_new.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="frm_proy\proy_new.aspx.designer.cs">
+      <DependentUpon>proy_new.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="frm_pwd\pwd_master_mod.aspx.cs">
+      <DependentUpon>pwd_master_mod.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="frm_pwd\pwd_master_mod.aspx.designer.cs">
+      <DependentUpon>pwd_master_mod.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="frm_pwd\pwd_master_res.aspx.cs">
+      <DependentUpon>pwd_master_res.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="frm_pwd\pwd_master_res.aspx.designer.cs">
+      <DependentUpon>pwd_master_res.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="frm_pwd\pwd_smaster_mod.aspx.cs">
+      <DependentUpon>pwd_smaster_mod.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="frm_pwd\pwd_smaster_mod.aspx.designer.cs">
+      <DependentUpon>pwd_smaster_mod.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="frm_pwd\pwd_smaster_res.aspx.cs">
+      <DependentUpon>pwd_smaster_res.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="frm_pwd\pwd_smaster_res.aspx.designer.cs">
+      <DependentUpon>pwd_smaster_res.aspx</DependentUpon>
+    </Compile>
     <Compile Include="index.aspx.cs">
       <DependentUpon>index.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="index.aspx.designer.cs">
       <DependentUpon>index.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="load.aspx.cs">
+      <DependentUpon>load.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="load.aspx.designer.cs">
+      <DependentUpon>load.aspx</DependentUpon>
     </Compile>
     <Compile Include="login.aspx.cs">
       <DependentUpon>login.aspx</DependentUpon>
@@ -111,6 +233,16 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="adjunto_doc\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MANCAL_WEB_BL\MANCAL_WEB_BL.csproj">
+      <Project>{C8A027CE-06A0-45FB-A113-F7D89076F4EF}</Project>
+      <Name>MANCAL_WEB_BL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MANCAL_WEB_CLASS\MANCAL_WEB_CLASS.csproj">
+      <Project>{FF7397D2-03D8-4B4E-817A-EFEEF9A6631B}</Project>
+      <Name>MANCAL_WEB_CLASS</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

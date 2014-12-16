@@ -1,0 +1,132 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="ModelManCal.Store" Alias="Self" Provider="Oracle.DataAccess.Client" ProviderManifestToken="10.2" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+        <EntityContainer Name="ModelManCalStoreContainer">
+          <EntitySet Name="TBL_MENU" EntityType="ModelManCal.Store.TBL_MENU" store:Type="Tables" Schema="SICO_MANCAL" />
+          <EntitySet Name="TBL_USUARIO" EntityType="ModelManCal.Store.TBL_USUARIO" store:Type="Tables" Schema="SICO_MANCAL" />
+        </EntityContainer>
+        <EntityType Name="TBL_MENU">
+          <Key>
+            <PropertyRef Name="MENU_ID" />
+          </Key>
+          <Property Name="MENU_ID" Type="number" Nullable="false" />
+          <Property Name="MENU_NOMBRE" Type="varchar2" Nullable="false" MaxLength="70" />
+          <Property Name="MENU_GRUPO" Type="number" Nullable="false" />
+          <Property Name="MENU_FUNCU" Type="number" />
+          <Property Name="MENU_FUNCD" Type="number" />
+          <Property Name="MENU_FUNCT" Type="number" />
+          <Property Name="MENU_FUNCC" Type="number" />
+          <Property Name="MENU_URL" Type="varchar2" MaxLength="150" />
+        </EntityType>
+        <EntityType Name="TBL_USUARIO">
+          <Key>
+            <PropertyRef Name="USR_ID" />
+          </Key>
+          <Property Name="USR_ID" Type="number" Nullable="false" />
+          <Property Name="USR_NOMBRE" Type="varchar2" Nullable="false" MaxLength="70" />
+          <Property Name="USR_APPAT" Type="varchar2" Nullable="false" MaxLength="70" />
+          <Property Name="USR_APMAT" Type="varchar2" Nullable="false" MaxLength="70" />
+          <Property Name="USR_USRPC" Type="varchar2" Nullable="false" MaxLength="50" />
+          <Property Name="USR_PWD" Type="varchar2" Nullable="false" MaxLength="300" />
+          <Property Name="USR_PERFIL" Type="number" Nullable="false" />
+          <Property Name="USR_ESTADO" Type="number" Nullable="false" />
+        </EntityType>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ModelManCal" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+        <EntityContainer Name="EntitiesManCal" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="TBL_USUARIO" EntityType="ModelManCal.TBL_USUARIO" />
+          <EntitySet Name="TBL_MENU" EntityType="ModelManCal.TBL_MENU" />
+        </EntityContainer>
+        <EntityType Name="TBL_USUARIO">
+          <Key>
+            <PropertyRef Name="USR_ID" />
+          </Key>
+          <Property Name="USR_ID" Type="Decimal" Nullable="false" Precision="38" Scale="0" />
+          <Property Name="USR_NOMBRE" Type="String" Nullable="false" MaxLength="70" Unicode="false" FixedLength="false" />
+          <Property Name="USR_APPAT" Type="String" Nullable="false" MaxLength="70" Unicode="false" FixedLength="false" />
+          <Property Name="USR_APMAT" Type="String" Nullable="false" MaxLength="70" Unicode="false" FixedLength="false" />
+          <Property Name="USR_USRPC" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="USR_PWD" Type="String" Nullable="false" MaxLength="300" Unicode="false" FixedLength="false" />
+          <Property Name="USR_PERFIL" Type="Decimal" Nullable="false" Precision="38" Scale="0" />
+          <Property Name="USR_ESTADO" Type="Decimal" Nullable="false" Precision="38" Scale="0" />
+        </EntityType>
+        <EntityType Name="TBL_MENU">
+          <Key>
+            <PropertyRef Name="MENU_ID" />
+          </Key>
+          <Property Type="Decimal" Name="MENU_ID" Nullable="false" Precision="38" Scale="0" />
+          <Property Type="String" Name="MENU_NOMBRE" Nullable="false" MaxLength="70" FixedLength="false" Unicode="false" />
+          <Property Type="Decimal" Name="MENU_GRUPO" Nullable="false" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="MENU_FUNCU" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="MENU_FUNCD" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="MENU_FUNCT" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="MENU_FUNCC" Precision="38" Scale="0" />
+          <Property Type="String" Name="MENU_URL" MaxLength="150" FixedLength="false" Unicode="false" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ModelManCalStoreContainer" CdmEntityContainer="EntitiesManCal">
+          <EntitySetMapping Name="TBL_USUARIO">
+            <EntityTypeMapping TypeName="ModelManCal.TBL_USUARIO">
+              <MappingFragment StoreEntitySet="TBL_USUARIO">
+                <ScalarProperty Name="USR_ID" ColumnName="USR_ID" />
+                <ScalarProperty Name="USR_NOMBRE" ColumnName="USR_NOMBRE" />
+                <ScalarProperty Name="USR_APPAT" ColumnName="USR_APPAT" />
+                <ScalarProperty Name="USR_APMAT" ColumnName="USR_APMAT" />
+                <ScalarProperty Name="USR_USRPC" ColumnName="USR_USRPC" />
+                <ScalarProperty Name="USR_PWD" ColumnName="USR_PWD" />
+                <ScalarProperty Name="USR_PERFIL" ColumnName="USR_PERFIL" />
+                <ScalarProperty Name="USR_ESTADO" ColumnName="USR_ESTADO" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TBL_MENU">
+            <EntityTypeMapping TypeName="ModelManCal.TBL_MENU">
+              <MappingFragment StoreEntitySet="TBL_MENU">
+                <ScalarProperty Name="MENU_URL" ColumnName="MENU_URL" />
+                <ScalarProperty Name="MENU_FUNCC" ColumnName="MENU_FUNCC" />
+                <ScalarProperty Name="MENU_FUNCT" ColumnName="MENU_FUNCT" />
+                <ScalarProperty Name="MENU_FUNCD" ColumnName="MENU_FUNCD" />
+                <ScalarProperty Name="MENU_FUNCU" ColumnName="MENU_FUNCU" />
+                <ScalarProperty Name="MENU_GRUPO" ColumnName="MENU_GRUPO" />
+                <ScalarProperty Name="MENU_NOMBRE" ColumnName="MENU_NOMBRE" />
+                <ScalarProperty Name="MENU_ID" ColumnName="MENU_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams>
+      <Diagram Name="ModelManCal">
+        <EntityTypeShape EntityType="ModelManCal.TBL_USUARIO" Width="1.5" PointX="0.75" PointY="0.75" Height="2.5571907552083335" IsExpanded="true" />
+        <EntityTypeShape EntityType="ModelManCal.TBL_MENU" Width="1.5" PointX="3.375" PointY="0.75" Height="2.5571907552083326" />
+      </Diagram>
+    </Diagrams>
+  </Designer>
+</edmx:Edmx>

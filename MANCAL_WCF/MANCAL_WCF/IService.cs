@@ -14,10 +14,10 @@ namespace MANCAL_WCF
     {
 
         [OperationContract]
-        string GetData(int value);
+        List<Usuario> listaUsuario();
 
         [OperationContract]
-        CompositeType GetDataUsingDataContract(CompositeType composite);
+        List<Menu> listaMenu(int nro_perfil);
 
         // TODO: agregue aquí sus operaciones de servicio
     }
@@ -25,23 +25,34 @@ namespace MANCAL_WCF
 
     // Utilice un contrato de datos, como se ilustra en el ejemplo siguiente, para agregar tipos compuestos a las operaciones de servicio.
     [DataContract]
-    public class CompositeType
+    public class Usuario
     {
-        bool boolValue = true;
-        string stringValue = "Hello ";
+        [DataMember]
+        public String UsrNom { get; set; }
 
         [DataMember]
-        public bool BoolValue
-        {
-            get { return boolValue; }
-            set { boolValue = value; }
-        }
+        public String UsrPwd { get; set; }
 
         [DataMember]
-        public string StringValue
-        {
-            get { return stringValue; }
-            set { stringValue = value; }
-        }
+        public int UsrPerfil { get; set; }
+
+        [DataMember]
+        public int UsrSta { get; set; }
+    }
+
+    [DataContract]
+    public class Menu 
+    {
+        [DataMember]
+        public int MenuId { get; set; }
+
+        [DataMember]
+        public String MenuNom { get; set; }
+
+        [DataMember]
+        public int MenuGrp { get; set; }
+
+        [DataMember]
+        public String MenuUrl { get; set; }
     }
 }
