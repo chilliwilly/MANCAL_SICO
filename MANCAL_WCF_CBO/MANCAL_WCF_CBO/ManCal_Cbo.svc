@@ -1,0 +1,1 @@
+﻿<%@ ServiceHost Language="C#" Debug="true" Service="MANCAL_WCF_CBO.ManCal_Cbo" CodeBehind="ManCal_Cbo.svc.cs" %>

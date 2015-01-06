@@ -2,3 +2,4 @@ C:\Users\wcontreras\Documents\GitHub\MANCAL_SICO\MANCAL_WEB\MANCAL_WEB_CLASS\bin
 C:\Users\wcontreras\Documents\GitHub\MANCAL_SICO\MANCAL_WEB\MANCAL_WEB_CLASS\bin\Debug\MANCAL_WEB_CLASS.pdb
 C:\Users\wcontreras\Documents\GitHub\MANCAL_SICO\MANCAL_WEB\MANCAL_WEB_CLASS\obj\Debug\MANCAL_WEB_CLASS.dll
 C:\Users\wcontreras\Documents\GitHub\MANCAL_SICO\MANCAL_WEB\MANCAL_WEB_CLASS\obj\Debug\MANCAL_WEB_CLASS.pdb
+C:\Users\wcontreras\Documents\GitHub\MANCAL_SICO\MANCAL_WEB\MANCAL_WEB_CLASS\obj\Debug\MANCAL_WEB_CLASS.csprojResolveAssemblyReference.cache

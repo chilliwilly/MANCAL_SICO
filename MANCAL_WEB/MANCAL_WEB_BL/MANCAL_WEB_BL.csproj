@@ -42,12 +42,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="bl_carga_cbo.cs" />
     <Compile Include="bl_codificar_pwd.cs" />
+    <Compile Include="bl_detalle_pro.cs" />
+    <Compile Include="bl_equipo.cs" />
     <Compile Include="bl_login.cs" />
     <Compile Include="bl_mail.cs" />
     <Compile Include="bl_menu.cs" />
     <Compile Include="bl_pwd.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Service References\ManCal_Cbo\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="Service References\ManCal_Login\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -59,6 +67,61 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="Service References\ManCal_Cbo\ManCal_Cbo.wsdl" />
+    <None Include="Service References\ManCal_Cbo\ManCal_Cbo.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ManCal_Cbo\ManCal_Cbo1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ManCal_Cbo\ManCal_Cbo2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ManCal_Cbo\MANCAL_WEB_BL.ManCal_Cbo.Jefe.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ManCal_Cbo\MANCAL_WEB_BL.ManCal_Cbo.Lugar.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ManCal_Cbo\MANCAL_WEB_BL.ManCal_Cbo.Region.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ManCal_Cbo\MANCAL_WEB_BL.ManCal_Cbo.TipoCotizacion.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ManCal_Cbo\MANCAL_WEB_BL.ManCal_Cbo.TipoEnvio.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ManCal_Cbo\MANCAL_WEB_BL.ManCal_Cbo.TipoFactura.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ManCal_Cbo\MANCAL_WEB_BL.ManCal_Cbo.TipoGarantia.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ManCal_Cbo\MANCAL_WEB_BL.ManCal_Cbo.TipoGarantiaVal.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ManCal_Cbo\MANCAL_WEB_BL.ManCal_Cbo.TipoLugarEjec.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ManCal_Cbo\MANCAL_WEB_BL.ManCal_Cbo.TipoLugarEntr.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ManCal_Cbo\MANCAL_WEB_BL.ManCal_Cbo.TipoPagoFactura.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ManCal_Cbo\MANCAL_WEB_BL.ManCal_Cbo.TipoPlazoEntregaFac.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ManCal_Cbo\MANCAL_WEB_BL.ManCal_Cbo.TipoTarifa.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ManCal_Cbo\MANCAL_WEB_BL.ManCal_Cbo.TipoTrabajo.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ManCal_Cbo\MANCAL_WEB_BL.ManCal_Cbo.Vendedor.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Service References\ManCal_Login\ManCal_Login.wsdl" />
     <None Include="Service References\ManCal_Login\ManCal_Login.xsd">
       <SubType>Designer</SubType>
@@ -77,6 +140,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <WCFMetadataStorage Include="Service References\ManCal_Cbo\" />
     <WCFMetadataStorage Include="Service References\ManCal_Login\" />
   </ItemGroup>
   <ItemGroup>
@@ -96,6 +160,22 @@
       <Project>{FF7397D2-03D8-4B4E-817A-EFEEF9A6631B}</Project>
       <Name>MANCAL_WEB_CLASS</Name>
     </ProjectReference>
+    <ProjectReference Include="..\MANCAL_WEB_DL\MANCAL_WEB_DL.csproj">
+      <Project>{932ECA68-A9D8-4DBD-9EE4-5B91E21665DC}</Project>
+      <Name>MANCAL_WEB_DL</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\ManCal_Cbo\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\ManCal_Cbo\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\ManCal_Cbo\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

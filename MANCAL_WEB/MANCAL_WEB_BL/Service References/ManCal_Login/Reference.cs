@@ -208,6 +208,9 @@ namespace MANCAL_WEB_BL.ManCal_Login {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService/listaMenu", ReplyAction="http://tempuri.org/IService/listaMenuResponse")]
         MANCAL_WEB_BL.ManCal_Login.Menu[] listaMenu(int nro_perfil);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService/updateUsrPassword", ReplyAction="http://tempuri.org/IService/updateUsrPasswordResponse")]
+        void updateUsrPassword(string usr_pwd, string new_pwd);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -243,6 +246,10 @@ namespace MANCAL_WEB_BL.ManCal_Login {
         
         public MANCAL_WEB_BL.ManCal_Login.Menu[] listaMenu(int nro_perfil) {
             return base.Channel.listaMenu(nro_perfil);
+        }
+        
+        public void updateUsrPassword(string usr_pwd, string new_pwd) {
+            base.Channel.updateUsrPassword(usr_pwd, new_pwd);
         }
     }
 }

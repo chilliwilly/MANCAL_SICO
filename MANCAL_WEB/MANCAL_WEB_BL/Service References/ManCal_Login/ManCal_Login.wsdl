@@ -19,6 +19,12 @@
   <wsdl:message name="IService_listaMenu_OutputMessage">
     <wsdl:part name="parameters" element="tns:listaMenuResponse" />
   </wsdl:message>
+  <wsdl:message name="IService_updateUsrPassword_InputMessage">
+    <wsdl:part name="parameters" element="tns:updateUsrPassword" />
+  </wsdl:message>
+  <wsdl:message name="IService_updateUsrPassword_OutputMessage">
+    <wsdl:part name="parameters" element="tns:updateUsrPasswordResponse" />
+  </wsdl:message>
   <wsdl:portType name="IService">
     <wsdl:operation name="listaUsuario">
       <wsdl:input wsaw:Action="http://tempuri.org/IService/listaUsuario" message="tns:IService_listaUsuario_InputMessage" />
@@ -27,6 +33,10 @@
     <wsdl:operation name="listaMenu">
       <wsdl:input wsaw:Action="http://tempuri.org/IService/listaMenu" message="tns:IService_listaMenu_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IService/listaMenuResponse" message="tns:IService_listaMenu_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="updateUsrPassword">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/updateUsrPassword" message="tns:IService_updateUsrPassword_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/updateUsrPasswordResponse" message="tns:IService_updateUsrPassword_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_IService" type="tns:IService">
@@ -42,6 +52,15 @@
     </wsdl:operation>
     <wsdl:operation name="listaMenu">
       <soap:operation soapAction="http://tempuri.org/IService/listaMenu" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="updateUsrPassword">
+      <soap:operation soapAction="http://tempuri.org/IService/updateUsrPassword" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

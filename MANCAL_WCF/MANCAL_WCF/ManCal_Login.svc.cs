@@ -9,6 +9,8 @@ using System.Text;
 namespace MANCAL_WCF
 {
     // NOTA: puede usar el comando "Rename" del menú "Refactorizar" para cambiar el nombre de clase "Service1" en el código, en svc y en el archivo de configuración.
+    [ServiceBehavior(InstanceContextMode = InstanceContextMode.PerCall,
+                 ConcurrencyMode = ConcurrencyMode.Multiple)]
     public class ManCal_Login : IService
     {
         public List<Usuario> listaUsuario()
@@ -71,9 +73,13 @@ namespace MANCAL_WCF
         }
 
 
-        public void updateUsrPassword(string usr_pwd)
+        public void updateUsrPassword(string usr_pwd, string new_pwd)
         {
-            throw new NotImplementedException();
+            ModelManCal.EntitiesManCal db = new ModelManCal.EntitiesManCal();
+            var cliente = db.TBL_USUARIO.Where(it => it.USR_USRPC == usr_pwd).FirstOrDefault();
+
+            cliente.USR_PWD = new_pwd;
+            db.SaveChanges();
         }
     }
 }

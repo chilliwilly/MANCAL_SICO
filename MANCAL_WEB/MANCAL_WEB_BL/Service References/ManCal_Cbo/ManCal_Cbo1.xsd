@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://tempuri.org/" elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://localhost:43354/ManCal_Cbo.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/MANCAL_WCF_CBO" />
+  <xs:element name="lsTipoCotizacionMan">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="id_un" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="lsTipoCotizacionManResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/MANCAL_WCF_CBO" minOccurs="0" name="lsTipoCotizacionManResult" nillable="true" type="q1:ArrayOfTipoCotizacion" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="lsVendedor">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="id_un" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="lsVendedorResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/MANCAL_WCF_CBO" minOccurs="0" name="lsVendedorResult" nillable="true" type="q2:ArrayOfVendedor" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="lsTarifa">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="lsTarifaResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/MANCAL_WCF_CBO" minOccurs="0" name="lsTarifaResult" nillable="true" type="q3:ArrayOfTipoTarifa" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="lsTrabajo">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="un" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="forma" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="lsTrabajoResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/MANCAL_WCF_CBO" minOccurs="0" name="lsTrabajoResult" nillable="true" type="q4:ArrayOfTipoTrabajo" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="lsFactura">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="lsFacturaResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/MANCAL_WCF_CBO" minOccurs="0" name="lsFacturaResult" nillable="true" type="q5:ArrayOfTipoFactura" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="lsPagoFactura">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="lsPagoFacturaResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/MANCAL_WCF_CBO" minOccurs="0" name="lsPagoFacturaResult" nillable="true" type="q6:ArrayOfTipoPagoFactura" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="lsPlazoEntregaFac">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="lsPlazoEntregaFacResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/MANCAL_WCF_CBO" minOccurs="0" name="lsPlazoEntregaFacResult" nillable="true" type="q7:ArrayOfTipoPlazoEntregaFac" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="lsLugarEjec">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="lsLugarEjecResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/MANCAL_WCF_CBO" minOccurs="0" name="lsLugarEjecResult" nillable="true" type="q8:ArrayOfTipoLugarEjec" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="lsLugarEntr">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="lsLugarEntrResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/MANCAL_WCF_CBO" minOccurs="0" name="lsLugarEntrResult" nillable="true" type="q9:ArrayOfTipoLugarEntr" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="lsGarantia">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="lsGarantiaResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/MANCAL_WCF_CBO" minOccurs="0" name="lsGarantiaResult" nillable="true" type="q10:ArrayOfTipoGarantia" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="lsGarantiaVal">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="lsGarantiaValResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/MANCAL_WCF_CBO" minOccurs="0" name="lsGarantiaValResult" nillable="true" type="q11:ArrayOfTipoGarantiaVal" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="lsJefe">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="lsJefeResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q12="http://schemas.datacontract.org/2004/07/MANCAL_WCF_CBO" minOccurs="0" name="lsJefeResult" nillable="true" type="q12:ArrayOfJefe" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="datosJefe">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="id_jefe" type="xs:decimal" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="datosJefeResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q13="http://schemas.datacontract.org/2004/07/MANCAL_WCF_CBO" minOccurs="0" name="datosJefeResult" nillable="true" type="q13:Jefe" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="lsRegion">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="lsRegionResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q14="http://schemas.datacontract.org/2004/07/MANCAL_WCF_CBO" minOccurs="0" name="lsRegionResult" nillable="true" type="q14:ArrayOfRegion" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="lsEnvio">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="lsEnvioResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q15="http://schemas.datacontract.org/2004/07/MANCAL_WCF_CBO" minOccurs="0" name="lsEnvioResult" nillable="true" type="q15:ArrayOfTipoEnvio" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="lsLugar">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="lsLugarResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q16="http://schemas.datacontract.org/2004/07/MANCAL_WCF_CBO" minOccurs="0" name="lsLugarResult" nillable="true" type="q16:ArrayOfLugar" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

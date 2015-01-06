@@ -27,4 +27,17 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="updateUsrPassword">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="usr_pwd" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="new_pwd" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="updateUsrPasswordResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
 </xs:schema>

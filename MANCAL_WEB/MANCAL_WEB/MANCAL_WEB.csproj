@@ -60,6 +60,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="aprobacion.aspx" />
+    <Content Include="asmx_files\js_llenado.asmx" />
     <Content Include="css\jquery-ui.css" />
     <Content Include="css\Site.css" />
     <Content Include="frm_cal\cal_cot_mod.aspx" />
@@ -106,6 +107,10 @@
     </Compile>
     <Compile Include="aprobacion.aspx.designer.cs">
       <DependentUpon>aprobacion.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="asmx_files\js_llenado.asmx.cs">
+      <DependentUpon>js_llenado.asmx</DependentUpon>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="frm_cal\cal_cot_mod.aspx.cs">
       <DependentUpon>cal_cot_mod.aspx</DependentUpon>

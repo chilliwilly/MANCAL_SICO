@@ -1,0 +1,5 @@
+C:\Users\wcontreras\Documents\GitHub\MANCAL_SICO\MANCAL_WEB\MANCAL_WEB_DL\bin\Debug\MANCAL_WEB_DL.dll
+C:\Users\wcontreras\Documents\GitHub\MANCAL_SICO\MANCAL_WEB\MANCAL_WEB_DL\bin\Debug\MANCAL_WEB_DL.pdb
+C:\Users\wcontreras\Documents\GitHub\MANCAL_SICO\MANCAL_WEB\MANCAL_WEB_DL\bin\Debug\Oracle.DataAccess.dll
+C:\Users\wcontreras\Documents\GitHub\MANCAL_SICO\MANCAL_WEB\MANCAL_WEB_DL\obj\Debug\MANCAL_WEB_DL.dll
+C:\Users\wcontreras\Documents\GitHub\MANCAL_SICO\MANCAL_WEB\MANCAL_WEB_DL\obj\Debug\MANCAL_WEB_DL.pdb

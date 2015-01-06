@@ -20,7 +20,7 @@ namespace MANCAL_WCF
         List<Menu> listaMenu(int nro_perfil);
 
         [OperationContract]
-        void updateUsrPassword(String usr_pwd);
+        void updateUsrPassword(String usr_pwd, String new_pwd);
 
         // TODO: agregue aquí sus operaciones de servicio
     }

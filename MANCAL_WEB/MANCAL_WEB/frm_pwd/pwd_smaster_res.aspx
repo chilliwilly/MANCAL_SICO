@@ -34,7 +34,7 @@
             </tr>
             <tr>
                 <td style="text-align:center;">
-                    <asp:TextBox ID="txtUser" runat="server" style="text-align:center;"></asp:TextBox>
+                    <asp:TextBox ID="txtUser" runat="server" style="text-align:center;" ReadOnly="true"></asp:TextBox>
                 </td>
             </tr>          
             <tr>

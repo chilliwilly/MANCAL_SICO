@@ -40,6 +40,22 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CotizacionEnvio.cs" />
+    <Compile Include="CotizacionGarantia.cs" />
+    <Compile Include="CotizacionGarantiaVal.cs" />
+    <Compile Include="CotizacionJefe.cs" />
+    <Compile Include="CotizacionLugarCom.cs" />
+    <Compile Include="CotizacionLugarEjec.cs" />
+    <Compile Include="CotizacionLugarEntr.cs" />
+    <Compile Include="CotizacionRegion.cs" />
+    <Compile Include="CotizacionTarifa.cs" />
+    <Compile Include="CotizacionTFactura.cs" />
+    <Compile Include="CotizacionTipo.cs" />
+    <Compile Include="CotizacionTPEntrega.cs" />
+    <Compile Include="CotizacionTPFactura.cs" />
+    <Compile Include="CotizacionTrabajo.cs" />
+    <Compile Include="CotizacionVendedor.cs" />
+    <Compile Include="DetalleCotizacionPro.cs" />
     <Compile Include="MenuUsuario.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

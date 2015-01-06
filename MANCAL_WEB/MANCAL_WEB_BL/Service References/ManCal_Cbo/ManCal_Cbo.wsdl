@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="ManCal_Cbo" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import schemaLocation="http://localhost:43354/ManCal_Cbo.svc?xsd=xsd0" namespace="http://tempuri.org/" />
+      <xsd:import schemaLocation="http://localhost:43354/ManCal_Cbo.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="http://localhost:43354/ManCal_Cbo.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/MANCAL_WCF_CBO" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IService_lsTipoCotizacionMan_InputMessage">
+    <wsdl:part name="parameters" element="tns:lsTipoCotizacionMan" />
+  </wsdl:message>
+  <wsdl:message name="IService_lsTipoCotizacionMan_OutputMessage">
+    <wsdl:part name="parameters" element="tns:lsTipoCotizacionManResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_lsVendedor_InputMessage">
+    <wsdl:part name="parameters" element="tns:lsVendedor" />
+  </wsdl:message>
+  <wsdl:message name="IService_lsVendedor_OutputMessage">
+    <wsdl:part name="parameters" element="tns:lsVendedorResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_lsTarifa_InputMessage">
+    <wsdl:part name="parameters" element="tns:lsTarifa" />
+  </wsdl:message>
+  <wsdl:message name="IService_lsTarifa_OutputMessage">
+    <wsdl:part name="parameters" element="tns:lsTarifaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_lsTrabajo_InputMessage">
+    <wsdl:part name="parameters" element="tns:lsTrabajo" />
+  </wsdl:message>
+  <wsdl:message name="IService_lsTrabajo_OutputMessage">
+    <wsdl:part name="parameters" element="tns:lsTrabajoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_lsFactura_InputMessage">
+    <wsdl:part name="parameters" element="tns:lsFactura" />
+  </wsdl:message>
+  <wsdl:message name="IService_lsFactura_OutputMessage">
+    <wsdl:part name="parameters" element="tns:lsFacturaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_lsPagoFactura_InputMessage">
+    <wsdl:part name="parameters" element="tns:lsPagoFactura" />
+  </wsdl:message>
+  <wsdl:message name="IService_lsPagoFactura_OutputMessage">
+    <wsdl:part name="parameters" element="tns:lsPagoFacturaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_lsPlazoEntregaFac_InputMessage">
+    <wsdl:part name="parameters" element="tns:lsPlazoEntregaFac" />
+  </wsdl:message>
+  <wsdl:message name="IService_lsPlazoEntregaFac_OutputMessage">
+    <wsdl:part name="parameters" element="tns:lsPlazoEntregaFacResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_lsLugarEjec_InputMessage">
+    <wsdl:part name="parameters" element="tns:lsLugarEjec" />
+  </wsdl:message>
+  <wsdl:message name="IService_lsLugarEjec_OutputMessage">
+    <wsdl:part name="parameters" element="tns:lsLugarEjecResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_lsLugarEntr_InputMessage">
+    <wsdl:part name="parameters" element="tns:lsLugarEntr" />
+  </wsdl:message>
+  <wsdl:message name="IService_lsLugarEntr_OutputMessage">
+    <wsdl:part name="parameters" element="tns:lsLugarEntrResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_lsGarantia_InputMessage">
+    <wsdl:part name="parameters" element="tns:lsGarantia" />
+  </wsdl:message>
+  <wsdl:message name="IService_lsGarantia_OutputMessage">
+    <wsdl:part name="parameters" element="tns:lsGarantiaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_lsGarantiaVal_InputMessage">
+    <wsdl:part name="parameters" element="tns:lsGarantiaVal" />
+  </wsdl:message>
+  <wsdl:message name="IService_lsGarantiaVal_OutputMessage">
+    <wsdl:part name="parameters" element="tns:lsGarantiaValResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_lsJefe_InputMessage">
+    <wsdl:part name="parameters" element="tns:lsJefe" />
+  </wsdl:message>
+  <wsdl:message name="IService_lsJefe_OutputMessage">
+    <wsdl:part name="parameters" element="tns:lsJefeResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_datosJefe_InputMessage">
+    <wsdl:part name="parameters" element="tns:datosJefe" />
+  </wsdl:message>
+  <wsdl:message name="IService_datosJefe_OutputMessage">
+    <wsdl:part name="parameters" element="tns:datosJefeResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_lsRegion_InputMessage">
+    <wsdl:part name="parameters" element="tns:lsRegion" />
+  </wsdl:message>
+  <wsdl:message name="IService_lsRegion_OutputMessage">
+    <wsdl:part name="parameters" element="tns:lsRegionResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_lsEnvio_InputMessage">
+    <wsdl:part name="parameters" element="tns:lsEnvio" />
+  </wsdl:message>
+  <wsdl:message name="IService_lsEnvio_OutputMessage">
+    <wsdl:part name="parameters" element="tns:lsEnvioResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_lsLugar_InputMessage">
+    <wsdl:part name="parameters" element="tns:lsLugar" />
+  </wsdl:message>
+  <wsdl:message name="IService_lsLugar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:lsLugarResponse" />
+  </wsdl:message>
+  <wsdl:portType name="IService">
+    <wsdl:operation name="lsTipoCotizacionMan">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/lsTipoCotizacionMan" message="tns:IService_lsTipoCotizacionMan_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/lsTipoCotizacionManResponse" message="tns:IService_lsTipoCotizacionMan_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="lsVendedor">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/lsVendedor" message="tns:IService_lsVendedor_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/lsVendedorResponse" message="tns:IService_lsVendedor_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="lsTarifa">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/lsTarifa" message="tns:IService_lsTarifa_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/lsTarifaResponse" message="tns:IService_lsTarifa_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="lsTrabajo">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/lsTrabajo" message="tns:IService_lsTrabajo_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/lsTrabajoResponse" message="tns:IService_lsTrabajo_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="lsFactura">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/lsFactura" message="tns:IService_lsFactura_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/lsFacturaResponse" message="tns:IService_lsFactura_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="lsPagoFactura">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/lsPagoFactura" message="tns:IService_lsPagoFactura_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/lsPagoFacturaResponse" message="tns:IService_lsPagoFactura_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="lsPlazoEntregaFac">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/lsPlazoEntregaFac" message="tns:IService_lsPlazoEntregaFac_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/lsPlazoEntregaFacResponse" message="tns:IService_lsPlazoEntregaFac_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="lsLugarEjec">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/lsLugarEjec" message="tns:IService_lsLugarEjec_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/lsLugarEjecResponse" message="tns:IService_lsLugarEjec_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="lsLugarEntr">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/lsLugarEntr" message="tns:IService_lsLugarEntr_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/lsLugarEntrResponse" message="tns:IService_lsLugarEntr_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="lsGarantia">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/lsGarantia" message="tns:IService_lsGarantia_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/lsGarantiaResponse" message="tns:IService_lsGarantia_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="lsGarantiaVal">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/lsGarantiaVal" message="tns:IService_lsGarantiaVal_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/lsGarantiaValResponse" message="tns:IService_lsGarantiaVal_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="lsJefe">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/lsJefe" message="tns:IService_lsJefe_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/lsJefeResponse" message="tns:IService_lsJefe_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="datosJefe">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/datosJefe" message="tns:IService_datosJefe_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/datosJefeResponse" message="tns:IService_datosJefe_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="lsRegion">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/lsRegion" message="tns:IService_lsRegion_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/lsRegionResponse" message="tns:IService_lsRegion_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="lsEnvio">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/lsEnvio" message="tns:IService_lsEnvio_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/lsEnvioResponse" message="tns:IService_lsEnvio_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="lsLugar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/lsLugar" message="tns:IService_lsLugar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/lsLugarResponse" message="tns:IService_lsLugar_OutputMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="BasicHttpBinding_IService" type="tns:IService">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="lsTipoCotizacionMan">
+      <soap:operation soapAction="http://tempuri.org/IService/lsTipoCotizacionMan" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="lsVendedor">
+      <soap:operation soapAction="http://tempuri.org/IService/lsVendedor" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="lsTarifa">
+      <soap:operation soapAction="http://tempuri.org/IService/lsTarifa" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="lsTrabajo">
+      <soap:operation soapAction="http://tempuri.org/IService/lsTrabajo" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="lsFactura">
+      <soap:operation soapAction="http://tempuri.org/IService/lsFactura" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="lsPagoFactura">
+      <soap:operation soapAction="http://tempuri.org/IService/lsPagoFactura" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="lsPlazoEntregaFac">
+      <soap:operation soapAction="http://tempuri.org/IService/lsPlazoEntregaFac" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="lsLugarEjec">
+      <soap:operation soapAction="http://tempuri.org/IService/lsLugarEjec" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="lsLugarEntr">
+      <soap:operation soapAction="http://tempuri.org/IService/lsLugarEntr" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="lsGarantia">
+      <soap:operation soapAction="http://tempuri.org/IService/lsGarantia" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="lsGarantiaVal">
+      <soap:operation soapAction="http://tempuri.org/IService/lsGarantiaVal" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="lsJefe">
+      <soap:operation soapAction="http://tempuri.org/IService/lsJefe" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="datosJefe">
+      <soap:operation soapAction="http://tempuri.org/IService/datosJefe" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="lsRegion">
+      <soap:operation soapAction="http://tempuri.org/IService/lsRegion" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="lsEnvio">
+      <soap:operation soapAction="http://tempuri.org/IService/lsEnvio" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="lsLugar">
+      <soap:operation soapAction="http://tempuri.org/IService/lsLugar" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="ManCal_Cbo">
+    <wsdl:port name="BasicHttpBinding_IService" binding="tns:BasicHttpBinding_IService">
+      <soap:address location="http://localhost:43354/ManCal_Cbo.svc" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
