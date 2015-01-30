@@ -2,39 +2,45 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using MANCAL_WEB_BL.ManCal_Cbo;
 using MANCAL_WEB_CLASS;
+using MANCAL_WEB_DL;
+using System.Data;
 
 namespace MANCAL_WEB_BL
 {
     public class bl_carga_cbo
     {
-        ServiceClient combo = new ServiceClient();
+        dl_carga_cbo objCbo;
 
         public List<CotizacionTipo> lsTipoCotizacion(String un_id) 
         {
-            var ls = combo.lsTipoCotizacionMan(un_id);
             List<CotizacionTipo> lstc = new List<CotizacionTipo>();
+            objCbo = new dl_carga_cbo();
+
+            DataTable dt = objCbo.selectTipoCotizacion();
 
             lstc.Add(new CotizacionTipo("0", "Seleccione"));
 
-            foreach (TipoCotizacion tc in ls) 
+            foreach (DataRow dr in dt.Rows) 
             {
                 CotizacionTipo ct = new CotizacionTipo();
-                if (un_id.Equals("PRO"))
-                {       
-                    if (tc.id_tipocot >= 3)
+                if (dr["TC_UN_ID"].ToString().Equals(un_id) || dr["TC_UN_ID"].ToString().Equals("DUO")) 
+                {
+                    if (un_id.Equals("PRO"))
                     {
-                        ct.idtipocot = tc.id_tipocot.ToString();
-                        ct.nomtipocot = tc.nom_tipocot;
+                        if (Convert.ToInt32(dr["TC_ID"]) >= 3)
+                        {
+                            ct.idtipocot = dr["TC_ID"].ToString();
+                            ct.nomtipocot = dr["TC_NOMBRE"].ToString();
+                            lstc.Add(ct);
+                        }
+                    }
+                    else
+                    {
+                        ct.idtipocot = dr["TC_ID"].ToString();
+                        ct.nomtipocot = dr["TC_NOMBRE"].ToString();
                         lstc.Add(ct);
                     }
-                }
-                else 
-                {
-                    ct.idtipocot = tc.id_tipocot.ToString();
-                    ct.nomtipocot = tc.nom_tipocot;
-                    lstc.Add(ct);
                 }
             }
             return lstc;
@@ -43,16 +49,21 @@ namespace MANCAL_WEB_BL
         public List<CotizacionVendedor> lsVendedorCot(String un_id) 
         {
             List<CotizacionVendedor> lscv = new List<CotizacionVendedor>();
-            var ls = combo.lsVendedor(un_id);
+            objCbo = new dl_carga_cbo();
+
+            DataTable dt = objCbo.selectVendedor();
 
             lscv.Add(new CotizacionVendedor("0", "Seleccione"));
-
-            foreach (Vendedor v in ls) 
+            
+            foreach (DataRow dr in dt.Rows) 
             {
-                CotizacionVendedor cv = new CotizacionVendedor();
-                cv.id_ven = v.id_venta.ToString();
-                cv.id_nom = v.nom_venta;
-                lscv.Add(cv);
+                if (dr["VEN_UN_ID"].ToString().Equals(un_id) || dr["VEN_UN_ID"].ToString().Equals("DUO")) 
+                {
+                    CotizacionVendedor cv = new CotizacionVendedor();
+                    cv.id_ven = dr["VEN_ID"].ToString();
+                    cv.id_nom = dr["USR_NOMBRE"].ToString() + " " + dr["USR_APPAT"].ToString();
+                    lscv.Add(cv);
+                }
             }
 
             return lscv;
@@ -61,15 +72,17 @@ namespace MANCAL_WEB_BL
         public List<CotizacionTarifa> lsTarifaTipo() 
         {
             List<CotizacionTarifa> lstt = new List<CotizacionTarifa>();
-            var ls = combo.lsTarifa();
+            objCbo = new dl_carga_cbo();
+
+            DataTable dt = objCbo.selectTarifa();
 
             lstt.Add(new CotizacionTarifa("0", "Seleccione"));
 
-            foreach (TipoTarifa tt in ls) 
+            foreach (DataRow dr in dt.Rows) 
             {
                 CotizacionTarifa ct = new CotizacionTarifa();
-                ct.tt_idn = tt.id_tarifa.ToString();
-                ct.tt_nom = tt.nom_tarifa;
+                ct.tt_idn = dr["TT_ID"].ToString();
+                ct.tt_nom = dr["TT_NOMBRE"].ToString();
                 lstt.Add(ct);
             }
             return lstt;            
@@ -78,16 +91,21 @@ namespace MANCAL_WEB_BL
         public List<CotizacionTrabajo> lsTrabajoTipo(String un, String fr) 
         {
             List<CotizacionTrabajo> lsttr = new List<CotizacionTrabajo>();
-            var ls = combo.lsTrabajo(un, fr);
+            objCbo = new dl_carga_cbo();
+
+            DataTable dt = objCbo.selectTrabajo();
 
             lsttr.Add(new CotizacionTrabajo("0", "Seleccione"));
 
-            foreach (TipoTrabajo ttr in ls) 
+            foreach (DataRow dr in dt.Rows)
             {
-                CotizacionTrabajo ct = new CotizacionTrabajo();
-                ct.idn_ttrabajo = ttr.idn_trabajo.ToString();
-                ct.nom_ttrabajo = ttr.nom_trabajo;
-                lsttr.Add(ct);
+                if (dr["TTR_UN_ID"].ToString().Equals(un) && dr["TTR_FORMATO"].ToString().Equals(fr)) 
+                {
+                    CotizacionTrabajo ct = new CotizacionTrabajo();
+                    ct.idn_ttrabajo = dr["TTR_ID"].ToString();
+                    ct.nom_ttrabajo = dr["TTR_NOMBRE"].ToString();
+                    lsttr.Add(ct);
+                }
             }
             return lsttr;
         }
@@ -95,15 +113,17 @@ namespace MANCAL_WEB_BL
         public List<CotizacionTFactura> lsTipoFactura() 
         {
             List<CotizacionTFactura> lstf = new List<CotizacionTFactura>();
-            var ls = combo.lsFactura();
+            objCbo = new dl_carga_cbo();
+
+            DataTable dt = objCbo.selectFactura();
 
             lstf.Add(new CotizacionTFactura("0", "Seleccione"));
 
-            foreach (TipoFactura tf in ls) 
+            foreach (DataRow dr in dt.Rows)
             {
                 CotizacionTFactura ctf = new CotizacionTFactura();
-                ctf.idn_factura = tf.idn_factura.ToString();
-                ctf.nom_factura = tf.nom_factura;
+                ctf.idn_factura = dr["TF_ID"].ToString();
+                ctf.nom_factura = dr["TF_NOMBRE"].ToString();
                 lstf.Add(ctf);
             }
             return lstf;
@@ -112,15 +132,17 @@ namespace MANCAL_WEB_BL
         public List<CotizacionTPFactura> lsTipoPagoFactura()
         {
             List<CotizacionTPFactura> lstpf = new List<CotizacionTPFactura>();
-            var ls = combo.lsPagoFactura();
+            objCbo = new dl_carga_cbo();
+
+            DataTable dt = objCbo.selectPagoFactura();
 
             lstpf.Add(new CotizacionTPFactura("0", "Seleccione"));
 
-            foreach (TipoPagoFactura tf in ls)
+            foreach (DataRow dr in dt.Rows)
             {
                 CotizacionTPFactura ctpf = new CotizacionTPFactura();
-                ctpf.idn_pagofactura = tf.idn_pagofactura.ToString();
-                ctpf.nom_pagofactura = tf.nom_pagofactura;
+                ctpf.idn_pagofactura = dr["TFPF_ID"].ToString();
+                ctpf.nom_pagofactura = dr["TFPF_NOMBRE"].ToString();
                 lstpf.Add(ctpf);
             }
             return lstpf;
@@ -129,15 +151,17 @@ namespace MANCAL_WEB_BL
         public List<CotizacionTPEntrega> lsTipoPlazoEn()
         {
             List<CotizacionTPEntrega> lstpe = new List<CotizacionTPEntrega>();
-            var ls = combo.lsPlazoEntregaFac();
+            objCbo = new dl_carga_cbo();
+
+            DataTable dt = objCbo.selectPlazoEntrega();
 
             lstpe.Add(new CotizacionTPEntrega("0", "Seleccione"));
 
-            foreach (TipoPlazoEntregaFac tf in ls)
+            foreach (DataRow dr in dt.Rows)
             {
                 CotizacionTPEntrega ctpe = new CotizacionTPEntrega();
-                ctpe.idn_plazoentrega = tf.idn_plazoentregafac.ToString();
-                ctpe.nom_plazoentrega = tf.nom_plazoentregafac;
+                ctpe.idn_plazoentrega = dr["TPE_ID"].ToString();
+                ctpe.nom_plazoentrega = dr["TPE_NOMBRE"].ToString();
                 lstpe.Add(ctpe);
             }
             return lstpe;
@@ -146,15 +170,17 @@ namespace MANCAL_WEB_BL
         public List<CotizacionLugarEjec> lsLugarEjec() 
         {
             List<CotizacionLugarEjec> ls = new List<CotizacionLugarEjec>();
-            var serls = combo.lsLugarEjec();
+            objCbo = new dl_carga_cbo();
+
+            DataTable dt = objCbo.selectLugarEjec();
 
             ls.Add(new CotizacionLugarEjec("0", "Seleccione"));
 
-            foreach (TipoLugarEjec obj in serls) 
+            foreach (DataRow dr in dt.Rows)
             {
                 CotizacionLugarEjec cle = new CotizacionLugarEjec();
-                cle.le_idn = obj.idn_lugarejec.ToString();
-                cle.le_nom = obj.nom_lugarejec;
+                cle.le_idn = dr["TLEJ_ID"].ToString();
+                cle.le_nom = dr["TLEJ_NOMBRE"].ToString();
                 ls.Add(cle);
             }
             return ls;
@@ -163,15 +189,17 @@ namespace MANCAL_WEB_BL
         public List<CotizacionLugarEntr> lsLugarEntr() 
         {
             List<CotizacionLugarEntr> ls = new List<CotizacionLugarEntr>();
-            var serls = combo.lsLugarEntr();
+            objCbo = new dl_carga_cbo();
+
+            DataTable dt = objCbo.selectLugarEntr();
 
             ls.Add(new CotizacionLugarEntr("0", "Seleccione"));
 
-            foreach (TipoLugarEntr obj in serls) 
+            foreach (DataRow dr in dt.Rows)
             {
                 CotizacionLugarEntr clen = new CotizacionLugarEntr();
-                clen.len_idn = obj.idn_lugarentr.ToString();
-                clen.len_nom = obj.nom_lugarentr;
+                clen.len_idn = dr["TLE_ID"].ToString();
+                clen.len_nom = dr["TLE_NOMBRE"].ToString();
                 ls.Add(clen);
             }
             return ls;
@@ -180,15 +208,17 @@ namespace MANCAL_WEB_BL
         public List<CotizacionGarantia> lsGarantia() 
         {
             List<CotizacionGarantia> lsg = new List<CotizacionGarantia>();
-            var serls = combo.lsGarantia();
+            objCbo = new dl_carga_cbo();
+
+            DataTable dt = objCbo.selectGarantia();
 
             lsg.Add(new CotizacionGarantia("0", "Seleccione"));
 
-            foreach (TipoGarantia obj in serls) 
+            foreach (DataRow dr in dt.Rows)
             {
                 CotizacionGarantia cg = new CotizacionGarantia();
-                cg.g_idn = obj.idn_garantia.ToString();
-                cg.g_nom = obj.nom_garantia;
+                cg.g_idn = dr["TG_ID"].ToString();
+                cg.g_nom = dr["TG_NOMBRE"].ToString();
                 lsg.Add(cg);
             }
             return lsg;
@@ -197,15 +227,17 @@ namespace MANCAL_WEB_BL
         public List<CotizacionGarantiaVal> lsGarantiaVal() 
         {
             List<CotizacionGarantiaVal> lsgv = new List<CotizacionGarantiaVal>();
-            var serls = combo.lsGarantiaVal();
+            objCbo = new dl_carga_cbo();
+
+            DataTable dt = objCbo.selectGarantiaVal();
 
             lsgv.Add(new CotizacionGarantiaVal("0", "Seleccione"));
 
-            foreach (TipoGarantiaVal obj in serls) 
+            foreach (DataRow dr in dt.Rows)
             {
                 CotizacionGarantiaVal cgv = new CotizacionGarantiaVal();
-                cgv.gv_idn = obj.idn_garantiaval.ToString();
-                cgv.gv_nom = obj.nom_garantiaval;
+                cgv.gv_idn = dr["TVG_ID"].ToString();
+                cgv.gv_nom = dr["TVG_NOMBRE"].ToString();
                 lsgv.Add(cgv);
             }
 
@@ -215,15 +247,17 @@ namespace MANCAL_WEB_BL
         public List<CotizacionJefe> lsJefe() 
         {
             List<CotizacionJefe> lsj = new List<CotizacionJefe>();
-            var serls = combo.lsJefe();
+            objCbo = new dl_carga_cbo();
+
+            DataTable dt = objCbo.selectJefe();
 
             lsj.Add(new CotizacionJefe("0", "Seleccione"));
 
-            foreach (Jefe obj in serls) 
+            foreach (DataRow dr in dt.Rows)
             {
                 CotizacionJefe cj = new CotizacionJefe();
-                cj.jef_idn = obj.idn_jefe.ToString();
-                cj.jef_nom = obj.nom_jefe;
+                cj.jef_idn = dr["JEF_ID"].ToString();
+                cj.jef_nom = dr["USR_NOMBRE"].ToString() + " " + dr["USR_APPAT"].ToString();
                 lsj.Add(cj);
             }
             return lsj;
@@ -232,15 +266,17 @@ namespace MANCAL_WEB_BL
         public List<CotizacionLugarCom> lsLugarCom() 
         {
             List<CotizacionLugarCom> lslc = new List<CotizacionLugarCom>();
-            var serls = combo.lsLugar();
+            objCbo = new dl_carga_cbo();
+
+            DataTable dt = objCbo.selectLugar();
 
             lslc.Add(new CotizacionLugarCom("0", "Seleccione"));
 
-            foreach (Lugar l in serls) 
+            foreach (DataRow dr in dt.Rows)
             {
                 CotizacionLugarCom clc = new CotizacionLugarCom();
-                clc.lugar_idn = l.idn_lugar.ToString();
-                clc.lugar_nom = l.nom_lugar;
+                clc.lugar_idn = dr["LUG_ID"].ToString();
+                clc.lugar_nom = dr["LUG_NOMBRE"].ToString();
                 lslc.Add(clc);
             }
             return lslc;
@@ -249,15 +285,17 @@ namespace MANCAL_WEB_BL
         public List<CotizacionRegion> lsRegion() 
         {
             List<CotizacionRegion> lsr = new List<CotizacionRegion>();
-            var serls = combo.lsRegion();
+            objCbo = new dl_carga_cbo();
+
+            DataTable dt = objCbo.selectRegion();
 
             lsr.Add(new CotizacionRegion("0", "Seleccione"));
 
-            foreach (Region r in serls) 
+            foreach (DataRow dr in dt.Rows)
             {
                 CotizacionRegion cr = new CotizacionRegion();
-                cr.region_idn = r.idn_region.ToString();
-                cr.region_nom = r.nom_region;
+                cr.region_idn = dr["REG_ID"].ToString();
+                cr.region_nom = dr["REG_NOMBRE"].ToString();
                 lsr.Add(cr);
             }
             return lsr;
@@ -266,15 +304,17 @@ namespace MANCAL_WEB_BL
         public List<CotizacionEnvio> lsEnvio() 
         {
             List<CotizacionEnvio> lse = new List<CotizacionEnvio>();
-            var serls = combo.lsEnvio();
+            objCbo = new dl_carga_cbo();
+
+            DataTable dt = objCbo.selectEnvio();
 
             lse.Add(new CotizacionEnvio("0", "Seleccione"));
 
-            foreach (TipoEnvio te in serls) 
+            foreach (DataRow dr in dt.Rows)
             {
                 CotizacionEnvio ce = new CotizacionEnvio();
-                ce.envio_idn = te.idn_tipoenvio.ToString();
-                ce.envio_nom = te.nom_tipoenvio;
+                ce.envio_idn = dr["TEN_ID"].ToString();
+                ce.envio_nom = dr["TEN_NOMBRE"].ToString();
                 lse.Add(ce);
             }
             return lse;
@@ -283,11 +323,19 @@ namespace MANCAL_WEB_BL
         public CotizacionJefe datoJefe(String id_jef) 
         {
             CotizacionJefe cj = new CotizacionJefe();
-            var serls = combo.datosJefe(Convert.ToDecimal(id_jef));
+            objCbo = new dl_carga_cbo();
 
-            cj.jef_car = serls.car_jefe;
-            cj.jef_mai = serls.mai_jefe;
+            DataTable dt = objCbo.selectDatoJefe();
 
+            foreach (DataRow dr in dt.Rows) 
+            {
+                if (dr["JEF_ID"].ToString().Equals(id_jef)) 
+                {
+                    cj.jef_car = dr["JEF_AREA"].ToString();
+                    cj.jef_mai = dr["USR_USRPC"].ToString() + "@dts.cl";
+                    break;
+                }
+            }
             return cj;
         }
     }

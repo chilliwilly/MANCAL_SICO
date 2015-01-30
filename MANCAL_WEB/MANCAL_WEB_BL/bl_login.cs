@@ -2,25 +2,29 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using MANCAL_WEB_BL.ManCal_Login;
+using MANCAL_WEB_DL;
+using MANCAL_WEB_CLASS;
+using System.Data;
 
 namespace MANCAL_WEB_BL
 {
     public class bl_login
     {
-        ServiceClient login = new ServiceClient();
         bl_codificar_pwd objCodificar = new bl_codificar_pwd();
+        dl_login objLogin;
 
         public bool validaUsuario(String usr_nick, String usr_pwd) 
         {
             bool valida = false;
-            var lsUsr = login.listaUsuario();
+            objLogin = new dl_login();
 
-            foreach (Usuario usr in lsUsr) 
+            DataTable dt = objLogin.selectUsuario();
+
+            foreach (DataRow dr in dt.Rows)
             {
-                if (usr.UsrNom.Equals(usr_nick)) 
+                if (dr["USR_USRPC"].ToString().Equals(usr_nick))
                 {
-                    if (usr.UsrPwd.Equals(objCodificar.cryptoPwd(usr_pwd))) 
+                    if (dr["USR_PWD"].ToString().Equals(objCodificar.cryptoPwd(usr_pwd))) 
                     {
                         valida = true;
                         break;
@@ -33,14 +37,15 @@ namespace MANCAL_WEB_BL
         public bool validaEstadoUsr(String usr_nick) 
         {
             bool valida = false;
+            objLogin = new dl_login();
 
-            var lsUsr = login.listaUsuario();
+            DataTable dt = objLogin.selectUsuario();
 
-            foreach (Usuario usr in lsUsr)
+            foreach (DataRow dr in dt.Rows)
             {
-                if (usr.UsrNom.Equals(usr_nick))
+                if (dr["USR_USRPC"].ToString().Equals(usr_nick))
                 {
-                    if (usr.UsrSta == 1)
+                    if (dr["USR_ESTADO"].ToString().Equals("1"))
                     {
                         valida = true;
                         break;
@@ -53,17 +58,32 @@ namespace MANCAL_WEB_BL
         public String getPerfilUsr(String usr_nick) 
         {
             String perfil = "";
+            objLogin = new dl_login();
 
-            var lsUsr = login.listaUsuario();
+            DataTable dt = objLogin.selectUsuario();
 
-            foreach (Usuario usr in lsUsr)
+            foreach (DataRow dr in dt.Rows)
             {
-                if (usr.UsrNom.Equals(usr_nick))
+                if (dr["USR_USRPC"].ToString().Equals(usr_nick))
                 {
-                    perfil = usr.UsrPerfil.ToString();
+                    perfil = dr["USR_PERFIL"].ToString();
+                    break;
                 }
             }
             return perfil;
+        }
+
+        public void actualizaPwdUsuario(String usr, String pwd) 
+        {
+            objLogin = new dl_login();
+            objLogin.updatePassword(usr, pwd);
+        }
+
+        public void actualizaEstadoUsr(String usrid) 
+        {
+            int idusr = Convert.ToInt32(usrid);
+            objLogin = new dl_login();
+            objLogin.updateEstadoUsuario(idusr);
         }
     }
 }
