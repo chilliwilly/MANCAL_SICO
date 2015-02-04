@@ -6,6 +6,9 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using MANCAL_WEB_BL;
 using MANCAL_WEB_CLASS;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using System.Runtime.Serialization;
 
 namespace MANCAL_WEB.frm_proy
 {
@@ -255,6 +258,23 @@ namespace MANCAL_WEB.frm_proy
             txtValorMO.Text = "0";
             txtPrecioTipoTarifa.Text = "0";
             txtMonto.Text = "0";
+        }
+
+        protected void btnUpdate_Click(object sender, EventArgs e)
+        {
+            mostrarDetalle("wcontreras", "1");
+            UpdatePanel5.Update();
+        }
+
+        protected void GV1_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            GV1.PageIndex = e.NewPageIndex;
+            mostrarDetalle("wcontreras", "1");
+        }
+
+        protected void GV1_RowCommand(object sender, GridViewCommandEventArgs e)
+        {            
+
         }
 
         #endregion

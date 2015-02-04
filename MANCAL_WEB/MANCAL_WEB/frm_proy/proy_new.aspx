@@ -5,9 +5,24 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
 
-    <link rel="Stylesheet" href="../css/jquery-ui.css" />
-    <script type="text/javascript" src="../Scripts/jquery-1.10.2.js"></script>
-    <script type="text/javascript" src="../Scripts/jquery-ui.js"></script>
+    <script type="text/javascript">
+        function agregarEquipo() {
+            $("#btnAddEquipo").on('click', function () {
+                chgTipoCoti();
+                $("#dialog-equipo-add").dialog({
+                    modal: true,
+                    width: "350px",
+                    buttons: {
+                        "Calcular": sumDetEquipo,
+                        "Agregar": setDetEquipo,
+                        "Cerrar": function () {
+                            $(this).dialog('close');
+                        }
+                    }
+                });
+            });
+        }
+    </script>
 
     <style type="text/css">
         .style1
@@ -67,7 +82,7 @@
                 </td>
                 <td class="style6">
                     <asp:DropDownList ID="cboTipoCotizacion" runat="server" Width="263px" 
-                        oninit="cboTipoCotizacion_Init"> 
+                        oninit="cboTipoCotizacion_Init" onchange="chgTipoCoti();"> 
                     </asp:DropDownList>
                 </td>
                 <td class="style9">
@@ -117,93 +132,6 @@
                 </td>
                 <td class="style9">
                     <asp:TextBox ID="txtClienteInforme" runat="server" Width="263px"></asp:TextBox>
-                    <%-- PANEL DE BUSCAR CONTACTOS style="display:none" OkControlID="btnContactRdy" btnContactCnl--%>
-                    <%--<asp:Button ID="btnGet" runat="server" style="display:none" />--%>
-                    <asp:ModalPopupExtender ID="mpeCC" runat="server" TargetControlID="btnContactoGet" PopupControlID="panelContactoCliente" DropShadow="true" 
-                        CancelControlID="btnCancelContacto" BackgroundCssClass="ModalPopupBG" PopupDragHandleControlID="PopupHeader" Drag="true">
-                    </asp:ModalPopupExtender>
-                        <div id="panelContactoCliente" style="display:none" class="popupConfirmation">
-                            <div class="popup_Container">
-                                <div class="popup_Titlebar" id="PopupHeader">
-                                    <div class="TitlebarLeft">Buscar Contacto</div>
-                                    <div class="TitlebarRight"></div>
-                                </div>
-                                <div class="popup_Body">
-                                    Contacto:&nbsp;&nbsp;
-                                    <asp:DropDownList ID="cboContactoGet" runat="server" AutoPostBack="true">
-                                    </asp:DropDownList>
-                                    <br />
-                                    Dirección:&nbsp;&nbsp;<asp:TextBox ID="txtGetDirContacto" runat="server"></asp:TextBox>
-                                    <br />
-                                    Mail:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<asp:TextBox ID="txtGetMailContacto" runat="server"></asp:TextBox>
-                                    <br />
-                                    Fono:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<asp:TextBox ID="txtGetFonoContacto" runat="server"></asp:TextBox>
-                                    <br />
-                                </div>
-                                <div class="popup_Buttons">
-                                    <asp:Button ID="btnGetContacto" runat="server" Text="Seleccionar" />
-                                    &nbsp;&nbsp;&nbsp;
-                                    <asp:Button ID="btnCancelContacto" runat="server" Text="Cerrar" />
-                                </div>
-                            </div>
-                        </div>
-                        <%-- PANEL DE AGREGAR CONTACTOS style="display:none" OkControlID="btnSetContacto"--%>                        
-                    <asp:ModalPopupExtender ID="mpeSCC" runat="server" TargetControlID="btnContactoSet" PopupControlID="panelContactoAgrega" DropShadow="true" 
-                        CancelControlID="btnOutContacto" BackgroundCssClass="ModalPopupBG" PopupDragHandleControlID="PopupHeaderSet" Drag="true">
-                    </asp:ModalPopupExtender>
-                        <div id="panelContactoAgrega" style="display:none" class="popupConfirmation">
-                            <div class="popup_Container">
-                                <div class="popup_Titlebar" id="PopupHeaderSet">
-                                    <div class="TitlebarLeft">Agregar Contacto</div>
-                                    <div class="TitlebarRight"></div>
-                                </div>
-                                <div class="popup_Body">
-                                    Contacto:&nbsp;
-                                    <asp:TextBox ID="txtSetNomContacto" runat="server" Width="170px"></asp:TextBox>
-                                    <br />
-                                    Dirección:&nbsp;<asp:TextBox ID="txtSetDirContacto" runat="server" Width="170px"></asp:TextBox>
-                                    <br />
-                                    Mail:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<asp:TextBox ID="txtSetMailContacto" runat="server" Width="170px"></asp:TextBox>
-                                    <br />
-                                    Fono:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<asp:TextBox ID="txtSetFonoContacto" runat="server" Width="170px"></asp:TextBox>
-                                    <br />
-                                </div>
-                                <div class="popup_Buttons">
-                                    <asp:Button ID="btnSetContacto" runat="server" Text="Agregar" />
-                                    &nbsp;&nbsp;&nbsp;
-                                    <asp:Button ID="btnOutContacto" runat="server" Text="Cerrar" />
-                                </div>
-                            </div>
-                        </div>
-                        <%-- PANEL DE UPDATE CONTACTOS style="display:none" OkControlID="btnUpdContacto"--%>
-                        <asp:Button ID="btnUpd" runat="server" style="display:none"/>
-                    <asp:ModalPopupExtender ID="mpeUCC" runat="server" TargetControlID="btnUpd" PopupControlID="panelContactoUpdate" DropShadow="true"
-                        CancelControlID="btnUpdOutcontacto" BackgroundCssClass="ModalPopupBG" PopupDragHandleControlID="PopupHeaderUpd" Drag="true">
-                    </asp:ModalPopupExtender>
-                        <div id="panelContactoUpdate" style="display:none" class="popupConfirmation">
-                            <div class="popup_Container">
-                                <div class="popup_Titlebar" id="PopupHeaderUpd">
-                                    <div class="TitlebarLeft">Actualiza Contacto</div>
-                                    <div class="TitlebarRight"></div>
-                                </div>
-                                <div class="popup_Body">
-                                    Contacto:&nbsp;
-                                    <asp:TextBox ID="txtUpdNomContacto" runat="server" Width="170px"></asp:TextBox>
-                                    <br />
-                                    Dirección:&nbsp;<asp:TextBox ID="txtUpdDirContacto" runat="server" Width="170px"></asp:TextBox>
-                                    <br />
-                                    Mail:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<asp:TextBox ID="txtUpdMailContacto" runat="server" Width="170px"></asp:TextBox>
-                                    <br />
-                                    Fono:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<asp:TextBox ID="txtUpdFonoContacto" runat="server" Width="170px"></asp:TextBox>
-                                    <br />
-                                </div>
-                                <div class="popup_Buttons">
-                                    <asp:Button ID="btnUpdContacto" runat="server" Text="Actualizar" />
-                                    &nbsp;&nbsp;&nbsp;
-                                    <asp:Button ID="btnUpdOutcontacto" runat="server" Text="Cerrar" />
-                                </div>
-                            </div>
-                        </div>
                 </td>
             </tr>
             <tr>
@@ -221,13 +149,6 @@
                 </td>
                 <td>
                     <asp:TextBox ID="txtContactoCliente" runat="server" Width="263px"></asp:TextBox>
-                    &nbsp;&nbsp;&nbsp;
-                    <asp:Button ID="btnContactoGet" runat="server" Text="Buscar Contacto" Width="120px"/>
-                    &nbsp;&nbsp;&nbsp;
-                    <asp:Button ID="btnContactoSet" runat="server" Text="Agregar Contacto" Width="120px"/>
-                    &nbsp;&nbsp;&nbsp;
-                    <asp:Button ID="btnContactoUpd" runat="server" Text="Actualizar Contacto" 
-                        Width="130px"/>
                 </td>
             </tr>
             <tr>
@@ -302,8 +223,10 @@
     <br /> 
     Datos Equipo
     <asp:UpdatePanel ID="UpdatePanel4" runat="server" UpdateMode="Conditional"><ContentTemplate>
-        
-        <table cellpadding="5px">
+        <script type="text/javascript">
+            Sys.Application.add_load(agregarEquipo);
+     	</script>
+        <%--<table cellpadding="5px">
                         <tr>      
                             <td>
                                 Nro Parte<br />
@@ -378,14 +301,15 @@
                                 <asp:TextBox ID="txtTipoTarifaOriginal" runat="server" Width="60px" Visible="false"></asp:TextBox>
                             </td>
                         </tr>
-                </table>
+                </table>--%>
 
         <table cellpadding="5px"><%--BOTON  QUE CALCULA EN CASO DE MODIFICAR LA CANTIDAD U OTROS VALORES QUE AFECTEN EL MONTO --%>
             <tr>
-                <td><asp:Button runat="server" ID="btnCalcula" Text="Calcular Equipo" Width="130px" 
+                <%--<td><asp:Button runat="server" ID="btnCalcula" Text="Calcular Equipo" Width="130px" 
                         onclick="btnCalcula_Click" /></td>
                 <td><asp:Button runat="server" ID="btnAgrega" Text="Agregar Equipo" Width="130px" 
-                        onclick="btnAgrega_Click" /></td>                        
+                        onclick="btnAgrega_Click" /></td>--%>
+                <td><input type="button" name="btnAddEquipo" id="btnAddEquipo" value="Agregar Equipo" /></td>
             </tr>
         </table>
         <table>
@@ -398,6 +322,86 @@
         </ContentTemplate>
     </asp:UpdatePanel>
     
+    <%--DIV PARA AGREGAR EQUIPO CON JQUERY Y AJAX --%>
+    <div id="dialog-equipo-add" title="Agregar Equipo" style="display:none;">
+        <form action="" id="frm-equipo-add">
+            <table>
+                <tr>
+                    <td>
+                        Nro Parte
+                    </td>
+                    <td>
+                        <input type="text" id="txt_nroparte" name="txt_nroparte" value="" class="text ui-widget-content ui-corner-all" placeholder="Ingrese Nro Parte"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Descripcion
+                    </td>
+                    <td>
+                        <input type="text" id="txt_descrip" name="txt_descrip" value="" class="text ui-widget-content ui-corner-all" placeholder="Ingrese Descripcion"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Nro Serie
+                    </td>
+                    <td>
+                        <input type="text" id="txt_serie" name="txt_serie" value="" class="text ui-widget-content ui-corner-all"  placeholder="Ingrese Nro Serie"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Cantidad
+                    </td>
+                    <td>
+                        <input type="number" id="txt_cantidad" name="txt_cantidad" value="1" class="text ui-widget-content ui-corner-all" style="width:100px;"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Costo Repuesto
+                    </td>
+                    <td>
+                        <input type="number" id="txt_crep" name="txt_crep" value="0" class="text ui-widget-content ui-corner-all" style="width:100px;"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Precio Repuesto
+                    </td>
+                    <td>
+                        <input type="number" id="txt_prep" name="txt_prep" value="0" class="text ui-widget-content ui-corner-all" style="width:100px;"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Costo MO
+                    </td>
+                    <td>
+                        <input type="number" id="txt_cmo" name="txt_cmo" value="0" class="text ui-widget-content ui-corner-all" style="width:100px;"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Precio MO
+                    </td>
+                    <td>
+                        <input type="number" id="txt_pmo" name="txt_pmo" value="0" class="text ui-widget-content ui-corner-all" style="width:100px;"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Monto
+                    </td>
+                    <td>
+                        <input type="text" id="txt_monto" name="txt_monto" value="0" class="text ui-widget-content ui-corner-all" style="width:100px;" disabled="disabled"/>
+                    </td>
+                </tr>
+            </table>            
+        </form>
+    </div>
+
     <%--DETALLE DE EQUIPOS AGREGADOS--%>
     <br />
     <asp:Panel ID="Panel1" runat="server" Width="100%" Height="165px"><%-- ACA VA EL GRIDVIEW ScrollBars="Vertical" --%>
@@ -406,7 +410,8 @@
             DataKeyNames="Item,IdVenta" PageSize="5" 
         PagerSettings-PageButtonCount="10" PagerSettings-Mode="NumericFirstLast" 
         PagerSettings-FirstPageText="Primera" PagerSettings-LastPageText="Ultima" 
-                AllowPaging="true" >
+                AllowPaging="true" onpageindexchanging="GV1_PageIndexChanging" 
+                onrowcommand="GV1_RowCommand" >
             <Columns>
 
                 <asp:TemplateField HeaderText="Id Cotizacion" ShowHeader="false" Visible="false">
@@ -520,7 +525,12 @@
                     </ItemTemplate>
                 </asp:TemplateField>
             </Columns>
-        </asp:GridView></ContentTemplate>
+        </asp:GridView>
+
+            <asp:Button runat="server" ID="btnUpdate" style="display:none;" 
+                onclick="btnUpdate_Click" />
+
+        </ContentTemplate>        
         </asp:UpdatePanel>
     </asp:Panel>
     <br />
@@ -855,35 +865,74 @@
             Sys.WebForms.PageRequestManager.getInstance().add_endRequest(EndRequestHandler);
             function EndRequestHandler(sender, args) {
                 if (args.get_error() == undefined) {
-                    reloadAutocomplete();
+//                    reloadAutocomplete();
                 }
             }
 
-            function reloadAutocomplete() {
-                $(document).ready(function () {
-                    $.ajax({
-                        type: "POST",
+            $(document).ready(function () {
+                $(".td").css("text-align", "left");
+                $(".td").css("font-weight", "bold");
+            });
 
-                        url: "/asmx_files/js_llenado.asmx/lsNroParte",
-                        dataType: "json",
-                        data: "{}",
-                        contentType: "application/json; charset=utf-8",
+            function dataEquipo() {
+                var objEquipo = new Object();
 
-                        success: function (data) {
+                objEquipo.idventa = "wcontreras";
+                objEquipo.nroparte = $("#txt_nroparte").val();
+                objEquipo.descripcion = $("#txt_descrip").val();
+                objEquipo.nroserie = $("#txt_serie").val();
+                objEquipo.cantidad = $("#txt_cantidad").val();
+                objEquipo.costorepuesto = $("#txt_crep").val();
+                objEquipo.preciorepuesto = $("#txt_prep").val();
+                objEquipo.costomo = $("#txt_cmo").val();
+                objEquipo.preciomo = $("#txt_pmo").val();
+                objEquipo.preciototal = $("#txt_monto").val();
 
-                            var dataFromServer = data.d.split(":");
-                            $("#txtnroparte").autocomplete({
-                                source: dataFromServer
-                            });
-                        },
-                        error: function (XMLHttpRequest, textStatus, errorThrown) {
-                            alert(textStatus);
-                        }
-                    });
-                })
+                return objEquipo;
             }
 
-            reloadAutocomplete();
+            function sumDetEquipo() {
+                var tot = sumEquipo(dataEquipo());
+                $("#txt_monto").val(tot);
+            }
+
+            function setDetEquipo() {
+                setEquipo(dataEquipo());
+                $("#<%=btnUpdate.ClientID %>").click();
+                limpiaIngreso();
+                //btnUpdate - UpdatePanel5 - hfUpdate
+            }
+
+            function chgTipoCoti() {
+                var tc = $('#<%=cboTipoCotizacion.ClientID %>').val();
+
+                if (tc == 5) {
+                    $("#txt_cmo").attr("disabled", "disabled");
+                    $("#txt_pmo").attr("disabled", "disabled");
+                }
+                else if (tc == 6) {
+                    $("#txt_cmo").removeAttr("disabled");
+                    $("#txt_pmo").removeAttr("disabled");
+                    $("#txt_crep").attr("disabled", "disabled");
+                }
+                else if (tc == 7) {
+                    $("#txt_cmo").removeAttr("disabled");
+                    $("#txt_pmo").removeAttr("disabled");
+                    $("#txt_crep").removeAttr("disabled");
+                }
+            }
+
+            function limpiaIngreso() {
+                $("#txt_nroparte").val("");
+                $("#txt_descrip").val("");
+                $("#txt_serie").val("");
+                $("#txt_cantidad").val("1");
+                $("#txt_crep").val("0");
+                $("#txt_prep").val("0");
+                $("#txt_cmo").val("0");
+                $("#txt_pmo").val("0");
+                $("#txt_monto").val("0");
+            }
         </script>
 
 </asp:Content>

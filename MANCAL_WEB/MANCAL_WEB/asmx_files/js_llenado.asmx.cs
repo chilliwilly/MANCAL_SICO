@@ -25,5 +25,26 @@ namespace MANCAL_WEB.asmx_files
 
             return objEquipo.listaEquipo();
         }
+
+        [WebMethod]
+        public void setDatoEquipo(Object eq)
+        {
+            //var obj = JsonConvert.DeserializeObject<DetalleCotizacionPro>(eq);
+            MANCAL_WEB_CLASS.DetalleCotizacionPro det = MANCAL_WEB_CLASS.DetalleCotizacionPro.getObjDet(eq);
+
+            bl_detalle_pro objBL = new bl_detalle_pro();
+            objBL.setEquipo(det);
+        }
+
+        [WebMethod]
+        public String getSumEquipo(Object eq)
+        {
+            MANCAL_WEB_CLASS.DetalleCotizacionPro det = MANCAL_WEB_CLASS.DetalleCotizacionPro.getObjDet(eq);
+
+            bl_detalle_pro objBL = new bl_detalle_pro();
+            String totEq = objBL.getTotalEquipo(det, "5", "1");
+
+            return totEq;
+        }
     }
 }

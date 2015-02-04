@@ -34,5 +34,46 @@ namespace MANCAL_WEB_CLASS
             this.preciomo = preciomo;
             this.preciototal = preciototal;
         }
+
+        public static DetalleCotizacionPro getObjDet(Object obj)
+        {
+            DetalleCotizacionPro det = new DetalleCotizacionPro();
+            Dictionary<String, Object> dObj = (Dictionary<string, object>)obj;
+
+            Object idventa = null;
+            Object nroparte = null;
+            Object descripcion = null;
+            Object nroserie = null;
+            Object cantidad = null;
+            Object costorepuesto = null;
+            Object preciorepuesto = null;
+            Object costomo = null;
+            Object preciomo = null;
+            Object preciototal = null;
+
+            dObj.TryGetValue("idventa", out idventa);
+            dObj.TryGetValue("nroparte", out nroparte);
+            dObj.TryGetValue("descripcion", out descripcion);
+            dObj.TryGetValue("nroserie", out nroserie);
+            dObj.TryGetValue("cantidad", out cantidad);
+            dObj.TryGetValue("costorepuesto", out costorepuesto);
+            dObj.TryGetValue("preciorepuesto", out preciorepuesto);
+            dObj.TryGetValue("costomo", out costomo);
+            dObj.TryGetValue("preciomo", out preciomo);
+            dObj.TryGetValue("preciototal", out preciototal);
+
+            det.idventa = idventa.ToString();
+            det.nroparte = nroparte.ToString();
+            det.descripcion = descripcion.ToString();
+            det.nroserie = nroserie.ToString();
+            det.cantidad = cantidad.ToString();
+            det.costorepuesto = costorepuesto.ToString();
+            det.preciorepuesto = preciorepuesto.ToString();
+            det.costomo = costomo.ToString();
+            det.preciomo = preciomo.ToString();
+            det.preciototal = preciototal.ToString();
+
+            return det;
+        }
     }
 }
