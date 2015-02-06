@@ -29,7 +29,6 @@ namespace MANCAL_WEB.asmx_files
         [WebMethod]
         public void setDatoEquipo(Object eq)
         {
-            //var obj = JsonConvert.DeserializeObject<DetalleCotizacionPro>(eq);
             MANCAL_WEB_CLASS.DetalleCotizacionPro det = MANCAL_WEB_CLASS.DetalleCotizacionPro.getObjDet(eq);
 
             bl_detalle_pro objBL = new bl_detalle_pro();
@@ -37,14 +36,34 @@ namespace MANCAL_WEB.asmx_files
         }
 
         [WebMethod]
-        public String getSumEquipo(Object eq)
+        public String getSumEquipo(Object eq, String tcot, String tmon)
         {
             MANCAL_WEB_CLASS.DetalleCotizacionPro det = MANCAL_WEB_CLASS.DetalleCotizacionPro.getObjDet(eq);
 
             bl_detalle_pro objBL = new bl_detalle_pro();
-            String totEq = objBL.getTotalEquipo(det, "5", "1");
+            String totEq = objBL.getTotalEquipo(det, tcot, tmon);
 
             return totEq;
+        }
+
+        [WebMethod]
+        public void modDatoEquipo(Object eq) 
+        {
+            MANCAL_WEB_CLASS.DetalleCotizacionPro det = MANCAL_WEB_CLASS.DetalleCotizacionPro.getObjDet(eq);
+
+            bl_detalle_pro objBL = new bl_detalle_pro();
+            objBL.modEquipo(det);
+        }
+
+        [WebMethod]
+        public void delDatoEquipo(Object eq) 
+        {
+            MANCAL_WEB_CLASS.DetalleCotizacionPro det = MANCAL_WEB_CLASS.DetalleCotizacionPro.getObjDet(eq);
+
+            bl_detalle_pro objBL = new bl_detalle_pro();
+            String[] objDet = { det.item, det.idventa };
+
+            objBL.delEquipo(objDet);
         }
     }
 }

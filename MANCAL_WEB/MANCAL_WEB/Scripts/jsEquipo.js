@@ -14,7 +14,7 @@
     });
 }
 
-function sumEquipo(obj) {
+function sumEquipo(obj, cot, mon) {
     var total;
     $.ajax({
         type: "POST",
@@ -22,7 +22,7 @@ function sumEquipo(obj) {
         dataType: "json",
         async: false,
         contentType: "application/json; charset=utf-8",
-        data: JSON.stringify({ "eq": obj }),
+        data: JSON.stringify({ "eq": obj, "tcot": cot, "tmon": mon }),
         success: function (data, status) {
             total = data.d;
         },
@@ -31,4 +31,36 @@ function sumEquipo(obj) {
         }
     });
     return total;
+}
+
+function updEquipo(obj) {
+    $.ajax({
+        type: "POST",
+        url: "/asmx_files/js_llenado.asmx/modDatoEquipo",
+        datatype: "json",
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify({ "eq": obj }),
+        success: function (data, status) {
+            alert("Equipo actualizado");
+        },
+        error: function (data) {
+            alert("Error al actualizar equipo");
+        }
+    });
+}
+
+function delEquipo(obj) {
+    $.ajax({
+        type: "POST",
+        url: "/asmx_files/js_llenado.asmx/delDatoEquipo",
+        datatype: "json",
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify({ "eq": obj }),
+        success: function (data, status) {
+            alert("Equipo Borrado");
+        },
+        error: function (data) {
+            alert("Error al borrar equipo");
+        }
+    });
 }

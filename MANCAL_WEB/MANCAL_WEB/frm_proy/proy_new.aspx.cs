@@ -161,23 +161,23 @@ namespace MANCAL_WEB.frm_proy
             txtMailJefe.Text = cj.jef_mai;
         }
 
-        protected void btnCalcula_Click(object sender, EventArgs e)
-        {
-            this.txtCantidad_TextChanged(sender, e);
-            this.txtCostoRepuesto_TextChanged(sender, e);
-            this.txtPrecioTipoTarifa_TextChanged(sender, e);
-            this.txtValorMO_TextChanged(sender, e);
-            this.txtValorRepuesto_TextChanged(sender, e);
-        }
+        //protected void btnCalcula_Click(object sender, EventArgs e)
+        //{
+        //    this.txtCantidad_TextChanged(sender, e);
+        //    this.txtCostoRepuesto_TextChanged(sender, e);
+        //    this.txtPrecioTipoTarifa_TextChanged(sender, e);
+        //    this.txtValorMO_TextChanged(sender, e);
+        //    this.txtValorRepuesto_TextChanged(sender, e);
+        //}
 
         protected void btnAgrega_Click(object sender, EventArgs e)
         {
             String usr = System.Environment.UserName;
             String moneda = cboTipoTarifa.SelectedValue;
 
-            ingresarEquipo();
+            //ingresarEquipo();
             mostrarDetalle(usr, moneda);
-            limpiaCamposEquipo();
+            //limpiaCamposEquipo();
 
             UpdatePanel5.Update();
             UpdatePanel4.Update();
@@ -185,60 +185,60 @@ namespace MANCAL_WEB.frm_proy
 
         #region Metodos Privados
 
-        private void calculaTotalEquipo() 
-        {
-            String qty = this.txtCantidad.Text;
-            String crpto = this.txtCostoRepuesto.Text;
-            String prpto = this.txtValorRepuesto.Text;
-            String cmo = this.txtValorMO.Text;
-            String pmo = this.txtPrecioTipoTarifa.Text;
-            String tmoneda = this.cboTipoTarifa.SelectedValue;
-            String tcoti = this.cboTipoCotizacion.SelectedValue;            
+        //private void calculaTotalEquipo() 
+        //{
+        //    String qty = this.txtCantidad.Text;
+        //    String crpto = this.txtCostoRepuesto.Text;
+        //    String prpto = this.txtValorRepuesto.Text;
+        //    String cmo = this.txtValorMO.Text;
+        //    String pmo = this.txtPrecioTipoTarifa.Text;
+        //    String tmoneda = this.cboTipoTarifa.SelectedValue;
+        //    String tcoti = this.cboTipoCotizacion.SelectedValue;            
 
-            if (String.IsNullOrEmpty(tmoneda))
-            {
-                String ndmo = "alert(\"Debe seleccionar un tipo tarifa.\");";
-                ScriptManager.RegisterStartupScript(this, GetType(), "Mensaje", ndmo, true);
-            }
-            else
-            {
-                DetalleCotizacionPro objDC = new DetalleCotizacionPro();
-                objDC.cantidad = qty;
-                objDC.costorepuesto = crpto;
-                objDC.preciorepuesto = prpto;
-                objDC.costomo = cmo;
-                objDC.preciomo = pmo;
+        //    if (String.IsNullOrEmpty(tmoneda))
+        //    {
+        //        String ndmo = "alert(\"Debe seleccionar un tipo tarifa.\");";
+        //        ScriptManager.RegisterStartupScript(this, GetType(), "Mensaje", ndmo, true);
+        //    }
+        //    else
+        //    {
+        //        DetalleCotizacionPro objDC = new DetalleCotizacionPro();
+        //        objDC.cantidad = qty;
+        //        objDC.costorepuesto = crpto;
+        //        objDC.preciorepuesto = prpto;
+        //        objDC.costomo = cmo;
+        //        objDC.preciomo = pmo;
 
-                if (int.Parse(qty) <= 0)
-                {
-                    String ndmo = "alert(\"Cantidad no puede ser menor o igual a 0. Favor revisar.\");";
-                    ScriptManager.RegisterStartupScript(this, GetType(), "Mensaje", ndmo, true);
-                }
-                else
-                {
-                    this.txtMonto.Text = objDet.getTotalEquipo(objDC, tcoti, tmoneda);
-                }
-            }
-        }
+        //        if (int.Parse(qty) <= 0)
+        //        {
+        //            String ndmo = "alert(\"Cantidad no puede ser menor o igual a 0. Favor revisar.\");";
+        //            ScriptManager.RegisterStartupScript(this, GetType(), "Mensaje", ndmo, true);
+        //        }
+        //        else
+        //        {
+        //            this.txtMonto.Text = objDet.getTotalEquipo(objDC, tcoti, tmoneda);
+        //        }
+        //    }
+        //}
 
-        private void ingresarEquipo() 
-        {
-            DetalleCotizacionPro dcp = new DetalleCotizacionPro();
-            objDet = new bl_detalle_pro();
+        //private void ingresarEquipo() 
+        //{
+        //    DetalleCotizacionPro dcp = new DetalleCotizacionPro();
+        //    objDet = new bl_detalle_pro();
 
-            dcp.idventa = System.Environment.UserName;
-            dcp.nroparte = txtNroParte.Text;
-            dcp.descripcion = txtDescripcion.Text;
-            dcp.nroserie = txtNroSerie.Text;
-            dcp.cantidad = txtCantidad.Text;
-            dcp.costorepuesto = txtCostoRepuesto.Text;
-            dcp.preciorepuesto = txtValorRepuesto.Text;
-            dcp.costomo = txtValorMO.Text;
-            dcp.preciomo = txtPrecioTipoTarifa.Text;
-            dcp.preciototal = txtMonto.Text;
+        //    dcp.idventa = System.Environment.UserName;
+        //    dcp.nroparte = txtNroParte.Text;
+        //    dcp.descripcion = txtDescripcion.Text;
+        //    dcp.nroserie = txtNroSerie.Text;
+        //    dcp.cantidad = txtCantidad.Text;
+        //    dcp.costorepuesto = txtCostoRepuesto.Text;
+        //    dcp.preciorepuesto = txtValorRepuesto.Text;
+        //    dcp.costomo = txtValorMO.Text;
+        //    dcp.preciomo = txtPrecioTipoTarifa.Text;
+        //    dcp.preciototal = txtMonto.Text;
 
-            objDet.setEquipo(dcp);
-        }
+        //    objDet.setEquipo(dcp);
+        //}
 
         private void mostrarDetalle(String idusr, String tmoneda) 
         {
@@ -247,29 +247,33 @@ namespace MANCAL_WEB.frm_proy
             GV1.DataBind();
         }
 
-        public void limpiaCamposEquipo()
-        {
-            txtNroParte.Text = "";
-            txtDescripcion.Text = "";
-            txtNroSerie.Text = "";
-            txtCantidad.Text = "1";
-            txtCostoRepuesto.Text = "0";
-            txtValorRepuesto.Text = "0";
-            txtValorMO.Text = "0";
-            txtPrecioTipoTarifa.Text = "0";
-            txtMonto.Text = "0";
-        }
+        //public void limpiaCamposEquipo()
+        //{
+        //    txtNroParte.Text = "";
+        //    txtDescripcion.Text = "";
+        //    txtNroSerie.Text = "";
+        //    txtCantidad.Text = "1";
+        //    txtCostoRepuesto.Text = "0";
+        //    txtValorRepuesto.Text = "0";
+        //    txtValorMO.Text = "0";
+        //    txtPrecioTipoTarifa.Text = "0";
+        //    txtMonto.Text = "0";
+        //}
 
         protected void btnUpdate_Click(object sender, EventArgs e)
         {
-            mostrarDetalle("wcontreras", "1");
+            String ttarifa = cboTipoTarifa.SelectedValue;
+            String copcusr = Request.Cookies["pcusr"].Value;
+            mostrarDetalle(copcusr, ttarifa);
             UpdatePanel5.Update();
         }
 
         protected void GV1_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
+            String ttarifa = cboTipoTarifa.SelectedValue;
+            String copcusr = Request.Cookies["pcusr"].Value;
             GV1.PageIndex = e.NewPageIndex;
-            mostrarDetalle("wcontreras", "1");
+            mostrarDetalle(copcusr, ttarifa);
         }
 
         protected void GV1_RowCommand(object sender, GridViewCommandEventArgs e)
@@ -281,55 +285,55 @@ namespace MANCAL_WEB.frm_proy
 
         #region Cambio_Valores_Ingreso_Equipo
 
-        protected void txtCantidad_TextChanged(object sender, EventArgs e)
-        {
-            TextBox revtxt = sender as TextBox;
+        //protected void txtCantidad_TextChanged(object sender, EventArgs e)
+        //{
+        //    TextBox revtxt = sender as TextBox;
 
-            if (revtxt != null)
-            {
-                this.calculaTotalEquipo();
-            }
-        }
+        //    if (revtxt != null)
+        //    {
+        //        this.calculaTotalEquipo();
+        //    }
+        //}
 
-        protected void txtCostoRepuesto_TextChanged(object sender, EventArgs e)
-        {
-            TextBox revtxt = sender as TextBox;
+        //protected void txtCostoRepuesto_TextChanged(object sender, EventArgs e)
+        //{
+        //    TextBox revtxt = sender as TextBox;
 
-            if (revtxt != null)
-            {
-                this.calculaTotalEquipo();
-            }
-        }
+        //    if (revtxt != null)
+        //    {
+        //        this.calculaTotalEquipo();
+        //    }
+        //}
 
-        protected void txtValorRepuesto_TextChanged(object sender, EventArgs e)
-        {
-            TextBox revtxt = sender as TextBox;
+        //protected void txtValorRepuesto_TextChanged(object sender, EventArgs e)
+        //{
+        //    TextBox revtxt = sender as TextBox;
 
-            if (revtxt != null)
-            {
-                this.calculaTotalEquipo();
-            }
-        }
+        //    if (revtxt != null)
+        //    {
+        //        this.calculaTotalEquipo();
+        //    }
+        //}
 
-        protected void txtValorMO_TextChanged(object sender, EventArgs e)
-        {
-            TextBox revtxt = sender as TextBox;
+        //protected void txtValorMO_TextChanged(object sender, EventArgs e)
+        //{
+        //    TextBox revtxt = sender as TextBox;
 
-            if (revtxt != null)
-            {
-                this.calculaTotalEquipo();
-            }
-        }
+        //    if (revtxt != null)
+        //    {
+        //        this.calculaTotalEquipo();
+        //    }
+        //}
 
-        protected void txtPrecioTipoTarifa_TextChanged(object sender, EventArgs e)
-        {
-            TextBox revtxt = sender as TextBox;
+        //protected void txtPrecioTipoTarifa_TextChanged(object sender, EventArgs e)
+        //{
+        //    TextBox revtxt = sender as TextBox;
 
-            if (revtxt != null)
-            {
-                this.calculaTotalEquipo();
-            }
-        }
+        //    if (revtxt != null)
+        //    {
+        //        this.calculaTotalEquipo();
+        //    }
+        //}
 
         #endregion
     }

@@ -12,6 +12,7 @@
                 $("#dialog-equipo-add").dialog({
                     modal: true,
                     width: "350px",
+                    title: "Agregar Equipo",
                     buttons: {
                         "Calcular": sumDetEquipo,
                         "Agregar": setDetEquipo,
@@ -225,97 +226,17 @@
     <asp:UpdatePanel ID="UpdatePanel4" runat="server" UpdateMode="Conditional"><ContentTemplate>
         <script type="text/javascript">
             Sys.Application.add_load(agregarEquipo);
-     	</script>
-        <%--<table cellpadding="5px">
-                        <tr>      
-                            <td>
-                                Nro Parte<br />
-                                <asp:TextBox ID="txtNroParte" runat="server" Width="120px"></asp:TextBox>
-                            </td>                  
-                            <td>
-                                Descripción<br />
-                                <asp:TextBox ID="txtDescripcion" runat="server" Width="260px"></asp:TextBox>
-                            </td>
-                            <td>
-                                Nro Serie<br />
-                                <asp:TextBox ID="txtNroSerie" runat="server" Width="120px"></asp:TextBox>
-                            </td>
-                            <td>
-                                Cantidad<br />
-                                <asp:TextBox ID="txtCantidad" runat="server" Width="60px" 
-                                    ontextchanged="txtCantidad_TextChanged">1</asp:TextBox>
-                                    <asp:RegularExpressionValidator ID="RegularExpressionValidator1" runat="server" Display="None"
-                                        ErrorMessage="<b>Numero Incorrecto</b><br />Solo se permite numeros enteros" ValidationExpression="\d+" ControlToValidate="txtCantidad">
-                                    </asp:RegularExpressionValidator>
-                                <asp:ValidatorCalloutExtender ID="ValidatorCalloutExtender1" runat="server" HighlightCssClass="validatorCalloutHighlight" TargetControlID="RegularExpressionValidator1">
-                                </asp:ValidatorCalloutExtender>
-                            </td>
-                            <td>
-                                Costo Repuesto<br />
-                                <asp:TextBox ID="txtCostoRepuesto" runat="server" Width="100px" 
-                                    ontextchanged="txtCostoRepuesto_TextChanged">0</asp:TextBox>
-                                <asp:RegularExpressionValidator ID="RegularExpressionValidator4" runat="server" 
-                                ErrorMessage="<b>Formato Numero Incorrecto</b><br />Favor utilize un punto para separar decimales" 
-                                    ControlToValidate="txtCostoRepuesto" Display="None" ValidationExpression="\d+(\.\d{1,2})?"></asp:RegularExpressionValidator>
-                                <asp:ValidatorCalloutExtender ID="ValidatorCalloutExtender4" runat="server" TargetControlID="RegularExpressionValidator4" HighlightCssClass="validatorCalloutHighlight">
-                                </asp:ValidatorCalloutExtender>
-                            </td>
-                            <td>
-                                Precio Repuesto<br />
-                                <asp:TextBox ID="txtValorRepuesto" runat="server" Width="100px" 
-                                    ontextchanged="txtValorRepuesto_TextChanged">0</asp:TextBox>
-                                <asp:RegularExpressionValidator ID="RegularExpressionValidator2" runat="server" 
-                                    ErrorMessage="<b>Formato Numero Incorrecto</b><br />Favor utilize un punto para separar decimales" 
-                                    ControlToValidate="txtValorRepuesto" Display="None" ValidationExpression="\d+(\.\d{1,2})?"></asp:RegularExpressionValidator>
-                                    <asp:ValidatorCalloutExtender ID="ValidatorCalloutExtender2" runat="server" TargetControlID="RegularExpressionValidator2" 
-                                        HighlightCssClass="validatorCalloutHighlight">
-                                    </asp:ValidatorCalloutExtender>
-                            </td>
-                            <td>
-                                Costo MO<br />
-                                <asp:TextBox ID="txtValorMO" runat="server" Width="100px" 
-                                    ontextchanged="txtValorMO_TextChanged">0</asp:TextBox>
-                                <asp:RegularExpressionValidator ID="RegularExpressionValidator5" runat="server" 
-                                    ErrorMessage="<b>Formato Numero Incorrecto</b><br />Favor utilize un punto para separar decimales" 
-                                    ControlToValidate="txtValorMO" Display="None" ValidationExpression="\d+(\.\d{1,2})?"></asp:RegularExpressionValidator>
-                                    <asp:ValidatorCalloutExtender ID="ValidatorCalloutExtender5" runat="server" TargetControlID="RegularExpressionValidator5" 
-                                        HighlightCssClass="validatorCalloutHighlight">
-                                    </asp:ValidatorCalloutExtender>
-                            </td>
-                            <td>
-                                Precio MO<br />
-                                <asp:TextBox ID="txtPrecioTipoTarifa" runat="server" Width="100px" 
-                                    ontextchanged="txtPrecioTipoTarifa_TextChanged">0</asp:TextBox>
-                                <asp:RegularExpressionValidator ID="RegularExpressionValidator3" runat="server"
-                                 ErrorMessage="<b>Formato Numero Incorrecto</b><br />Favor utilize un punto para separar decimales"
-                                 ControlToValidate="txtPrecioTipoTarifa" Display="None" ValidationExpression="\d+(\.\d{1,2})?"></asp:RegularExpressionValidator>
-                                <asp:ValidatorCalloutExtender ID="ValidatorCalloutExtender3" runat="server" TargetControlID="RegularExpressionValidator3"
-                                    HighlightCssClass="validatorCalloutHighlight">
-                                </asp:ValidatorCalloutExtender>
-                            </td>
-                            <td>
-                                Monto<br />
-                                <asp:TextBox ID="txtMonto" runat="server" Width="100px" ReadOnly="True">0</asp:TextBox>
-                            </td>                            
-                            <td>
-                                <asp:TextBox ID="txtTipoTarifaOriginal" runat="server" Width="60px" Visible="false"></asp:TextBox>
-                            </td>
-                        </tr>
-                </table>--%>
+     	</script>       
 
         <table cellpadding="5px"><%--BOTON  QUE CALCULA EN CASO DE MODIFICAR LA CANTIDAD U OTROS VALORES QUE AFECTEN EL MONTO --%>
             <tr>
-                <%--<td><asp:Button runat="server" ID="btnCalcula" Text="Calcular Equipo" Width="130px" 
-                        onclick="btnCalcula_Click" /></td>
-                <td><asp:Button runat="server" ID="btnAgrega" Text="Agregar Equipo" Width="130px" 
-                        onclick="btnAgrega_Click" /></td>--%>
                 <td><input type="button" name="btnAddEquipo" id="btnAddEquipo" value="Agregar Equipo" /></td>
             </tr>
         </table>
         <table>
             <tr>
                 <td class="bold">
-                    SIGNIFICADO LETRAS DETALLE COTIZACIÓN: E; Editar / B; Borrar / A; Actualizar / C; Cancelar / S; Sumar
+                    SIGNIFICADO LETRAS DETALLE COTIZACIÓN: E; Editar / B; Borrar
                 </td>
             </tr>
         </table>
@@ -323,7 +244,7 @@
     </asp:UpdatePanel>
     
     <%--DIV PARA AGREGAR EQUIPO CON JQUERY Y AJAX --%>
-    <div id="dialog-equipo-add" title="Agregar Equipo" style="display:none;">
+    <div id="dialog-equipo-add" style="display:none;">
         <form action="" id="frm-equipo-add">
             <table>
                 <tr>
@@ -402,6 +323,8 @@
         </form>
     </div>
 
+    <%--DIV PARA MODIFICAR EQUIPO CON JQUERY Y AJAX --%>
+
     <%--DETALLE DE EQUIPOS AGREGADOS--%>
     <br />
     <asp:Panel ID="Panel1" runat="server" Width="100%" Height="165px"><%-- ACA VA EL GRIDVIEW ScrollBars="Vertical" --%>
@@ -412,14 +335,15 @@
         PagerSettings-FirstPageText="Primera" PagerSettings-LastPageText="Ultima" 
                 AllowPaging="true" onpageindexchanging="GV1_PageIndexChanging" 
                 onrowcommand="GV1_RowCommand" >
+            <RowStyle CssClass="gvDetalleProy" />
             <Columns>
-
+            
                 <asp:TemplateField HeaderText="Id Cotizacion" ShowHeader="false" Visible="false">
                     <EditItemTemplate>
                         <asp:Label ID="IdVenta" runat="server" Text='<%# Bind("IdVenta") %>'></asp:Label>
                     </EditItemTemplate>
                     <ItemTemplate>
-                        <asp:Label ID="IdVenta" runat="server" Text='<%# Bind("IdVenta") %>'></asp:Label>
+                        <asp:Label ID="IdVenta" CssClass="id_venta" runat="server" Text='<%# Bind("IdVenta") %>'></asp:Label>
                     </ItemTemplate>
                 </asp:TemplateField>
                             
@@ -428,7 +352,7 @@
                         <asp:Label ID="Item" runat="server" Text='<%# Bind("Item") %>'></asp:Label>
                     </EditItemTemplate>
                     <ItemTemplate>
-                        <asp:Label ID="Item" runat="server" Text='<%# Bind("Item") %>'></asp:Label>
+                        <asp:Label ID="Item" runat="server" CssClass="item_" Text='<%# Bind("Item") %>'></asp:Label>
                     </ItemTemplate>
                 </asp:TemplateField>
 
@@ -437,7 +361,7 @@
                         <asp:Label ID="NroParte" runat="server" Text='<%# Bind("NroParte") %>'></asp:Label>
                     </EditItemTemplate>
                     <ItemTemplate>
-                        <asp:Label ID="NroParte" runat="server" Text='<%# Bind("NroParte") %>'></asp:Label>
+                        <asp:Label ID="NroParte" runat="server" CssClass="nro_parte" Text='<%# Bind("NroParte") %>'></asp:Label>
                     </ItemTemplate>
                 </asp:TemplateField>
 
@@ -446,7 +370,7 @@
                         <asp:TextBox ID="Descripcion" runat="server" Width="260px" Text='<%# Bind("Descripcion") %>' />
                     </EditItemTemplate>
                     <ItemTemplate>
-                        <asp:Label ID="Descripcion" runat="server" Text='<%# Bind("Descripcion") %>'></asp:Label>
+                        <asp:Label ID="Descripcion" runat="server" CssClass="descrip_" Text='<%# Bind("Descripcion") %>'></asp:Label>
                     </ItemTemplate>
                 </asp:TemplateField>                          
 
@@ -455,7 +379,7 @@
                         <asp:TextBox ID="Cantidad" runat="server" Width="50px" Text='<%# Bind("Cantidad") %>'/>
                     </EditItemTemplate>
                     <ItemTemplate>
-                        <asp:Label ID="Cantidad" runat="server" Text='<%# Bind("Cantidad") %>'></asp:Label>
+                        <asp:Label ID="Cantidad" runat="server" CssClass="cantidad_" Text='<%# Bind("Cantidad") %>'></asp:Label>
                     </ItemTemplate>
                 </asp:TemplateField>
 
@@ -464,7 +388,7 @@
                         <asp:TextBox ID="NroSerie" runat="server" Width="100px" Text='<%# Bind("NroSerie") %>' />
                     </EditItemTemplate>
                     <ItemTemplate>
-                        <asp:Label ID="NroSerie" runat="server" Text='<%# Bind("NroSerie") %>'></asp:Label>
+                        <asp:Label ID="NroSerie" runat="server" CssClass="nro_serie" Text='<%# Bind("NroSerie") %>'></asp:Label>
                     </ItemTemplate>
                 </asp:TemplateField>
 
@@ -473,7 +397,7 @@
                         <asp:TextBox ID="CostoRepuesto" runat="server" Width="100px" Text='<%# Bind("CostoRepuesto") %>' />
                     </EditItemTemplate>
                     <ItemTemplate>
-                        <asp:Label ID="CostoRepuesto" runat="server" Text='<%# Bind("CostoRepuesto") %>'></asp:Label>
+                        <asp:Label ID="CostoRepuesto" runat="server" CssClass="costo_rep" Text='<%# Bind("CostoRepuesto") %>'></asp:Label>
                     </ItemTemplate>
                 </asp:TemplateField>
 
@@ -482,7 +406,7 @@
                         <asp:TextBox ID="PrecioRepuesto" runat="server" Width="100px" Text='<%# Bind("PrecioRepuesto") %>' />
                     </EditItemTemplate>
                     <ItemTemplate>
-                        <asp:Label ID="PrecioRepuesto" runat="server" Text='<%# Bind("PrecioRepuesto") %>'></asp:Label>
+                        <asp:Label ID="PrecioRepuesto" runat="server" CssClass="precio_rep" Text='<%# Bind("PrecioRepuesto") %>'></asp:Label>
                     </ItemTemplate>
                 </asp:TemplateField>
 
@@ -491,7 +415,7 @@
                         <asp:TextBox ID="CostoMO" runat="server" ReadOnly="true" Width="100px" Text='<%# Bind("CostoMO") %>' />
                     </EditItemTemplate>
                     <ItemTemplate>
-                        <asp:Label ID="CostoMO" runat="server" Text='<%# Bind("CostoMO") %>'></asp:Label>
+                        <asp:Label ID="CostoMO" runat="server" CssClass="costo_mo" Text='<%# Bind("CostoMO") %>'></asp:Label>
                     </ItemTemplate>
                 </asp:TemplateField>
 
@@ -500,7 +424,7 @@
                         <asp:TextBox ID="PrecioMO" runat="server" Width="100px" Text='<%# Bind("PrecioMO") %>'/>
                     </EditItemTemplate>
                     <ItemTemplate>
-                        <asp:Label ID="PrecioMO" runat="server" Text='<%# Bind("PrecioMO") %>'></asp:Label>
+                        <asp:Label ID="PrecioMO" runat="server" CssClass="precio_mo" Text='<%# Bind("PrecioMO") %>'></asp:Label>
                     </ItemTemplate>
                 </asp:TemplateField>
 
@@ -509,19 +433,16 @@
                         <asp:TextBox ID="PrecioTotal" runat="server" ReadOnly="true" Width="100px" Text='<%# Bind("PrecioTotal") %>'/>
                     </EditItemTemplate>
                     <ItemTemplate>
-                        <asp:Label ID="PrecioTotal" runat="server" Text='<%# Bind("PrecioTotal") %>'></asp:Label>
+                        <asp:Label ID="PrecioTotal" runat="server" CssClass="precio_t" Text='<%# Bind("PrecioTotal") %>'></asp:Label>
                     </ItemTemplate>
                 </asp:TemplateField>
 
-                <asp:TemplateField HeaderText="Editar" ShowHeader="false">
-                    <EditItemTemplate>
-                        <asp:LinkButton ID="btnUpdate" runat="server" CausesValidation="true" CommandName="bActualizar" Text="A"></asp:LinkButton>
-                        <asp:LinkButton ID="btnCancel" runat="server" CausesValidation="false" CommandName="bCancelar" Text="C"></asp:LinkButton>
-                        <asp:LinkButton ID="btnCalcula" runat="server" CausesValidation="false" CommandName="bCalcula" Text="S"></asp:LinkButton>
-                    </EditItemTemplate>
+                <asp:TemplateField HeaderText="Editar" ItemStyle-Width="50px" ShowHeader="false">
                     <ItemTemplate>
-                        <asp:LinkButton ID="btnEdit" runat="server" CausesValidation="false" CommandName="bEditar" Text="E"></asp:LinkButton>
-                        <asp:LinkButton ID="btnDelete" runat="server" CausesValidation="false" CommandName="bBorrar" Text="B"></asp:LinkButton>
+                        <%--<asp:LinkButton ID="btnEdit" runat="server" CausesValidation="false" CommandName="bEditar" Text="E"></asp:LinkButton>
+                        <asp:LinkButton ID="btnDelete" runat="server" CausesValidation="false" CommandName="bBorrar" Text="B"></asp:LinkButton>--%>
+                        <a href="javascript:void(null);" id="btn-upd" onclick="editaNroParte();" style="display:inline-block;" class="ui-icon ui-icon-transferthick-e-w"></a>
+                        <a href="javascript:void(null);" id="btn-del" onclick="borraNroParte();" style="display:inline-block;" class="ui-icon ui-icon-trash"></a>                       
                     </ItemTemplate>
                 </asp:TemplateField>
             </Columns>
@@ -835,7 +756,7 @@
       </table>
 
       <%--SECTOR DE JAVASCRIPT--%>
-        <script type="text/javascript">
+        <script type="text/javascript">            
             maxL = 400;
             var bName = navigator.appName;
             function taLimit(taObj) {
@@ -874,10 +795,13 @@
                 $(".td").css("font-weight", "bold");
             });
 
+            var itemnro;
             function dataEquipo() {
                 var objEquipo = new Object();
+                var pccookie = $.cookie("pcusr");
 
-                objEquipo.idventa = "wcontreras";
+                objEquipo.idventa = pccookie;
+                objEquipo.item = itemnro;
                 objEquipo.nroparte = $("#txt_nroparte").val();
                 objEquipo.descripcion = $("#txt_descrip").val();
                 objEquipo.nroserie = $("#txt_serie").val();
@@ -892,11 +816,17 @@
             }
 
             function sumDetEquipo() {
-                var tot = sumEquipo(dataEquipo());
+                var coti = $('#<%=cboTipoCotizacion.ClientID %>').val();
+                var mone = $('#<%=cboTipoTarifa.ClientID %>').val();
+
+                itemnro = itemnro ? itemnro : "1";
+                
+                var tot = sumEquipo(dataEquipo(), coti, mone);
                 $("#txt_monto").val(tot);
             }
 
             function setDetEquipo() {
+                //itemnro = "1";
                 setEquipo(dataEquipo());
                 $("#<%=btnUpdate.ClientID %>").click();
                 limpiaIngreso();
@@ -932,6 +862,78 @@
                 $("#txt_cmo").val("0");
                 $("#txt_pmo").val("0");
                 $("#txt_monto").val("0");
+            }
+
+            function updDetalle() {
+//                $('.gvDetalleProy').on('click', function () {
+//                    itemnro = $('.item_', $(this).closest("tr")).html();
+//                    $("#txt_nroparte").val($('.nro_parte', $(this).closest("tr")).html()); //txt_nro_parte_m
+//                    $("#txt_descrip").val($('.descrip_', $(this).closest("tr")).html()); //txt_descrip_m
+//                    $("#txt_cantidad").val($('.cantidad_', $(this).closest("tr")).html()); //txt_cantidad_m
+//                    $("#txt_serie").val($('.nro_serie', $(this).closest("tr")).html()); //txt_serie_m
+//                    $("#txt_crep").val($('.costo_rep', $(this).closest("tr")).html()); //txt_crep_m
+//                    $("#txt_prep").val($('.precio_rep', $(this).closest("tr")).html()); //txt_prep_m
+//                    $("#txt_cmo").val($('.costo_mo', $(this).closest("tr")).html()); //txt_cmo_m
+//                    $("#txt_pmo").val($('.precio_mo', $(this).closest("tr")).html()); //txt_pmo_m
+//                    $("#txt_monto").val($('.precio_t', $(this).closest("tr")).html()); //txt_monto_m
+//                });
+            }
+
+            function editaNroParte() {
+                $('.gvDetalleProy').on('click', function () {
+                    itemnro = $('.item_', $(this).closest("tr")).html();
+                    $("#txt_nroparte").val($('.nro_parte', $(this).closest("tr")).html()); //txt_nro_parte_m
+                    $("#txt_descrip").val($('.descrip_', $(this).closest("tr")).html()); //txt_descrip_m
+                    $("#txt_cantidad").val($('.cantidad_', $(this).closest("tr")).html()); //txt_cantidad_m
+                    $("#txt_serie").val($('.nro_serie', $(this).closest("tr")).html()); //txt_serie_m
+                    $("#txt_crep").val($('.costo_rep', $(this).closest("tr")).html()); //txt_crep_m
+                    $("#txt_prep").val($('.precio_rep', $(this).closest("tr")).html()); //txt_prep_m
+                    $("#txt_cmo").val($('.costo_mo', $(this).closest("tr")).html()); //txt_cmo_m
+                    $("#txt_pmo").val($('.precio_mo', $(this).closest("tr")).html()); //txt_pmo_m
+                    $("#txt_monto").val($('.precio_t', $(this).closest("tr")).html()); //txt_monto_m
+                });
+
+                $("#dialog-equipo-add").dialog({
+                    modal: true,
+                    width: "350px",
+                    title: "Modificar Equipo",
+                    buttons: {
+                        "Calcular": sumDetEquipo,
+                        "Actualizar": function () {
+                            updEquipo(dataEquipo());
+                            $("#<%=btnUpdate.ClientID %>").click();
+                            $(this).dialog('close');
+                            limpiaIngreso();
+                        },
+                        "Cerrar": function () {
+                            $(this).dialog('close');
+                        }
+                    }
+                });
+            }
+
+            function borraNroParte() {
+                var nroitem_;
+                $('.gvDetalleProy').on('click', function () {
+                    nroitem_ = $('.item_', $(this).closest("tr")).html();
+
+                    alert(nroitem_);
+                });
+
+                
+
+                $("<div id='dialog-del'><p>Esta seguro que desea borrar el item Nro " + nroitem + " del detalle?</p></div>").dialog({
+                    modal: true,
+                    title: "Borrar Equipo",
+                    buttons: {
+                        "Si": function () {
+                            $(this).dialog('close');
+                        },
+                        "No": function () {
+                            $(this).dialog('close');
+                        }
+                    }
+                });
             }
         </script>
 

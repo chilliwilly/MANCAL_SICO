@@ -37,15 +37,21 @@ namespace MANCAL_WEB
                 else 
                 {
                     String v_pr = objLogin.getPerfilUsr(u);
+                    String pcusr = System.Environment.UserName;
+
                     Session["usr_pc"] = System.Environment.UserName;
 
                     HttpCookie cookie_perfil = new HttpCookie("v_pr");
+                    HttpCookie cookie_pcusr = new HttpCookie("pcusr");
 
                     cookie_perfil.Value = v_pr;
+                    cookie_pcusr.Value = pcusr;
 
-                    cookie_perfil.Expires = DateTime.Now.AddMinutes(30);
+                    cookie_perfil.Expires = DateTime.Now.AddMinutes(60);
+                    cookie_pcusr.Expires = DateTime.Now.AddMinutes(60);
 
                     Response.Cookies.Add(cookie_perfil);
+                    Response.Cookies.Add(cookie_pcusr);
 
                     Response.Redirect("~/index.aspx");
                 }

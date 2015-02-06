@@ -129,5 +129,76 @@ namespace MANCAL_WEB_DL
             }
             return ds;
         }
+
+        public void updateDetalleProy(String idusr_, int nitem_, String nparte_, String descrip_, String nserie_, int qty_, String crep_, String prep_, String cmo_, String pmo_, String monto_)
+        {
+            using (OracleConnection con = new OracleConnection(conStr))
+            {
+                con.Open();
+                String qry = "PKG_MANCAL_DET_PROY.SP_UPDATE_EQUIPO_DET";
+                using (OracleCommand cmd = new OracleCommand(qry, con))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    cmd.Parameters.Add(new OracleParameter("idusr", OracleDbType.Varchar2)).Value = idusr_;
+                    cmd.Parameters["idusr"].Direction = ParameterDirection.Input;
+
+                    cmd.Parameters.Add(new OracleParameter("nitem", OracleDbType.Int32)).Value = nitem_;
+                    cmd.Parameters["nitem"].Direction = ParameterDirection.Input;
+
+                    cmd.Parameters.Add(new OracleParameter("nparte", OracleDbType.Varchar2)).Value = nparte_;
+                    cmd.Parameters["nparte"].Direction = ParameterDirection.Input;
+
+                    cmd.Parameters.Add(new OracleParameter("descrip", OracleDbType.Varchar2)).Value = descrip_;
+                    cmd.Parameters["descrip"].Direction = ParameterDirection.Input;
+
+                    cmd.Parameters.Add(new OracleParameter("nserie", OracleDbType.Varchar2)).Value = nserie_;
+                    cmd.Parameters["nserie"].Direction = ParameterDirection.Input;
+
+                    cmd.Parameters.Add(new OracleParameter("qty", OracleDbType.Int32)).Value = qty_;
+                    cmd.Parameters["qty"].Direction = ParameterDirection.Input;
+
+                    cmd.Parameters.Add(new OracleParameter("crep", OracleDbType.Varchar2)).Value = crep_;
+                    cmd.Parameters["crep"].Direction = ParameterDirection.Input;
+
+                    cmd.Parameters.Add(new OracleParameter("prep", OracleDbType.Varchar2)).Value = prep_;
+                    cmd.Parameters["prep"].Direction = ParameterDirection.Input;
+
+                    cmd.Parameters.Add(new OracleParameter("cmo", OracleDbType.Varchar2)).Value = cmo_;
+                    cmd.Parameters["cmo"].Direction = ParameterDirection.Input;
+
+                    cmd.Parameters.Add(new OracleParameter("pmo", OracleDbType.Varchar2)).Value = pmo_;
+                    cmd.Parameters["pmo"].Direction = ParameterDirection.Input;
+
+                    cmd.Parameters.Add(new OracleParameter("monto", OracleDbType.Varchar2)).Value = monto_;
+                    cmd.Parameters["monto"].Direction = ParameterDirection.Input;
+
+                    cmd.ExecuteNonQuery();
+                }
+                con.Close();
+            }
+        }
+
+        public void deleteDetalleProy(String idusr_, int nitem_) 
+        {
+            using (OracleConnection con = new OracleConnection(conStr)) 
+            {
+                con.Open();
+                String qry = "PKG_MANCAL_DET_PROY.SP_DELETE_EQUIPO_DET";
+                using (OracleCommand cmd = new OracleCommand(qry, con)) 
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    cmd.Parameters.Add(new OracleParameter("idusr", OracleDbType.Varchar2)).Value = idusr_;
+                    cmd.Parameters["idusr"].Direction = ParameterDirection.Input;
+
+                    cmd.Parameters.Add(new OracleParameter("nitem", OracleDbType.Int32)).Value = nitem_;
+                    cmd.Parameters["nitem"].Direction = ParameterDirection.Input;
+
+                    cmd.ExecuteNonQuery();
+                }
+                con.Close();
+            }
+        }
     }
 }

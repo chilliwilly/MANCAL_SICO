@@ -39,8 +39,9 @@ namespace MANCAL_WEB_CLASS
         {
             DetalleCotizacionPro det = new DetalleCotizacionPro();
             Dictionary<String, Object> dObj = (Dictionary<string, object>)obj;
-
+            
             Object idventa = null;
+            Object item = null;
             Object nroparte = null;
             Object descripcion = null;
             Object nroserie = null;
@@ -52,6 +53,7 @@ namespace MANCAL_WEB_CLASS
             Object preciototal = null;
 
             dObj.TryGetValue("idventa", out idventa);
+            dObj.TryGetValue("item", out item);
             dObj.TryGetValue("nroparte", out nroparte);
             dObj.TryGetValue("descripcion", out descripcion);
             dObj.TryGetValue("nroserie", out nroserie);
@@ -63,6 +65,7 @@ namespace MANCAL_WEB_CLASS
             dObj.TryGetValue("preciototal", out preciototal);
 
             det.idventa = idventa.ToString();
+            det.item = item.ToString();
             det.nroparte = nroparte.ToString();
             det.descripcion = descripcion.ToString();
             det.nroserie = nroserie.ToString();

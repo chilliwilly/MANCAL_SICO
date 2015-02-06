@@ -25,8 +25,10 @@ namespace MANCAL_WEB_BL
                 dcp.idventa = dr["proy_numero"].ToString();
                 dcp.item = dr["dp_item"].ToString();
                 dcp.nroparte = dr["dp_nroparte"].ToString();
-                dcp.cantidad = dr["dp_cantidad"].ToString();
                 dcp.nroserie = dr["dp_nserie"].ToString();
+                dcp.cantidad = dr["dp_cantidad"].ToString();
+                dcp.descripcion = dr["dp_descrip"].ToString();
+                dcp.costorepuesto = dr["costorep"].ToString();
                 dcp.preciorepuesto = dr["preciorep"].ToString();
                 dcp.costomo = dr["costomo"].ToString();
                 dcp.preciomo = dr["preciomo"].ToString();
@@ -54,6 +56,23 @@ namespace MANCAL_WEB_BL
             int cant = Convert.ToInt32(det.cantidad);
 
             objProDet.insertEquipoIn(det.idventa, det.nroparte, det.descripcion, det.nroserie, cant, det.costorepuesto, det.preciorepuesto, det.costomo, det.preciomo, det.preciototal);
+        }
+
+        public void modEquipo(DetalleCotizacionPro det) 
+        {
+            objProDet = new dl_detalle_pro();
+            int cant = Convert.ToInt32(det.cantidad);
+            int item = Convert.ToInt32(det.item);
+
+            objProDet.updateDetalleProy(det.idventa, item, det.nroparte, det.descripcion, det.nroserie, cant, det.costorepuesto, det.preciorepuesto, det.costomo, det.preciomo, det.preciototal);
+        }
+
+        public void delEquipo(String[] det) 
+        {
+            objProDet = new dl_detalle_pro();
+            int item = Convert.ToInt32(det[0]);
+
+            objProDet.deleteDetalleProy(det[1], item);
         }
     }
 }
