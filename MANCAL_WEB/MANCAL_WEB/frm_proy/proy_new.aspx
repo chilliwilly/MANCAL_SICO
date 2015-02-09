@@ -9,7 +9,7 @@
         function agregarEquipo() {
             $("#btnAddEquipo").on('click', function () {
                 chgTipoCoti();
-                $("#dialog-equipo-add").dialog({
+                $("#dialog-ins").dialog({
                     modal: true,
                     width: "350px",
                     title: "Agregar Equipo",
@@ -244,83 +244,185 @@
     </asp:UpdatePanel>
     
     <%--DIV PARA AGREGAR EQUIPO CON JQUERY Y AJAX --%>
-    <div id="dialog-equipo-add" style="display:none;">
-        <form action="" id="frm-equipo-add">
-            <table>
-                <tr>
-                    <td>
-                        Nro Parte
-                    </td>
-                    <td>
-                        <input type="text" id="txt_nroparte" name="txt_nroparte" value="" class="text ui-widget-content ui-corner-all" placeholder="Ingrese Nro Parte"/>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        Descripcion
-                    </td>
-                    <td>
-                        <input type="text" id="txt_descrip" name="txt_descrip" value="" class="text ui-widget-content ui-corner-all" placeholder="Ingrese Descripcion"/>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        Nro Serie
-                    </td>
-                    <td>
-                        <input type="text" id="txt_serie" name="txt_serie" value="" class="text ui-widget-content ui-corner-all"  placeholder="Ingrese Nro Serie"/>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        Cantidad
-                    </td>
-                    <td>
-                        <input type="number" id="txt_cantidad" name="txt_cantidad" value="1" class="text ui-widget-content ui-corner-all" style="width:100px;"/>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        Costo Repuesto
-                    </td>
-                    <td>
-                        <input type="number" id="txt_crep" name="txt_crep" value="0" class="text ui-widget-content ui-corner-all" style="width:100px;"/>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        Precio Repuesto
-                    </td>
-                    <td>
-                        <input type="number" id="txt_prep" name="txt_prep" value="0" class="text ui-widget-content ui-corner-all" style="width:100px;"/>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        Costo MO
-                    </td>
-                    <td>
-                        <input type="number" id="txt_cmo" name="txt_cmo" value="0" class="text ui-widget-content ui-corner-all" style="width:100px;"/>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        Precio MO
-                    </td>
-                    <td>
-                        <input type="number" id="txt_pmo" name="txt_pmo" value="0" class="text ui-widget-content ui-corner-all" style="width:100px;"/>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        Monto
-                    </td>
-                    <td>
-                        <input type="text" id="txt_monto" name="txt_monto" value="0" class="text ui-widget-content ui-corner-all" style="width:100px;" disabled="disabled"/>
-                    </td>
-                </tr>
-            </table>            
-        </form>
+    <div id="dialog-tab" title="Escoja Opcion" style="display:none;">
+        <div id="tab">
+            <ul>
+                <li><a href="#tab-mod">Actualizar</a></li>
+                <li><a href="#tab-del">Eliminar</a></li>
+            </ul>
+
+            <div id="tab-mod">
+                <div id="dialog-mod" title="Actualizar Fila">
+                    <form action="" id="frm-equipo-add">
+                        <table>
+                            <tr>
+                                <td>
+                                    Nro Parte
+                                </td>
+                                <td>
+                                    <input type="text" id="txt_nroparte" name="txt_nroparte" value="" class="text ui-widget-content ui-corner-all" placeholder="Ingrese Nro Parte"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Descripcion
+                                </td>
+                                <td>
+                                    <input type="text" id="txt_descrip" name="txt_descrip" value="" class="text ui-widget-content ui-corner-all" placeholder="Ingrese Descripcion"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Nro Serie
+                                </td>
+                                <td>
+                                    <input type="text" id="txt_serie" name="txt_serie" value="" class="text ui-widget-content ui-corner-all"  placeholder="Ingrese Nro Serie"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Cantidad
+                                </td>
+                                <td>
+                                    <input type="number" id="txt_cantidad" name="txt_cantidad" value="1" class="text ui-widget-content ui-corner-all" style="width:100px;"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Costo Repuesto
+                                </td>
+                                <td>
+                                    <input type="number" id="txt_crep" name="txt_crep" value="0" class="text ui-widget-content ui-corner-all" style="width:100px;"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Precio Repuesto
+                                </td>
+                                <td>
+                                    <input type="number" id="txt_prep" name="txt_prep" value="0" class="text ui-widget-content ui-corner-all" style="width:100px;"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Costo MO
+                                </td>
+                                <td>
+                                    <input type="number" id="txt_cmo" name="txt_cmo" value="0" class="text ui-widget-content ui-corner-all" style="width:100px;"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Precio MO
+                                </td>
+                                <td>
+                                    <input type="number" id="txt_pmo" name="txt_pmo" value="0" class="text ui-widget-content ui-corner-all" style="width:100px;"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Monto
+                                </td>
+                                <td>
+                                    <input type="text" id="txt_monto" name="txt_monto" value="0" class="text ui-widget-content ui-corner-all" style="width:100px;" disabled="disabled"/>
+                                </td>
+                            </tr>
+                        </table>
+                        <br /><br />
+                        <input type="button" id="btn-cal-row" value="Calcular" name="btn-cal-row" />
+                        &nbsp;&nbsp;&nbsp;
+                        <input type="button" id="btn-mod-row" value="Actualizar" name="btn-mod-row" />
+                    </form>
+                </div>
+            </div>
+
+            <div id="tab-del">
+                <div id="dialog-del" title="Eliminar Fila">
+                    Esta seguro que desea este elemento?
+                    <br /><br />
+                    <input type="button" id="btn-del-row" value="Eliminar" name="btn-del-row" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="dialog-ins" style="display:none;">
+	    <form action="" id="frm-equipo-ins">
+		    <table>
+			    <tr>
+				    <td>
+					    Nro Parte
+				    </td>
+				    <td>
+					    <input type="text" id="txt_nroparte_ins" name="txt_nroparte_ins" value="" class="text ui-widget-content ui-corner-all" placeholder="Ingrese Nro Parte"/>
+				    </td>
+			    </tr>
+			    <tr>
+				    <td>
+					    Descripcion
+				    </td>
+				    <td>
+					    <input type="text" id="txt_descrip_ins" name="txt_descrip_ins" value="" class="text ui-widget-content ui-corner-all" placeholder="Ingrese Descripcion"/>
+				    </td>
+			    </tr>
+			    <tr>
+				    <td>
+					    Nro Serie
+				    </td>
+				    <td>
+					    <input type="text" id="txt_serie_ins" name="txt_serie_ins" value="" class="text ui-widget-content ui-corner-all"  placeholder="Ingrese Nro Serie"/>
+				    </td>
+			    </tr>
+			    <tr>
+				    <td>
+					    Cantidad
+				    </td>
+				    <td>
+					    <input type="number" id="txt_cantidad_ins" name="txt_cantidad_ins" value="1" class="text ui-widget-content ui-corner-all" style="width:100px;"/>
+				    </td>
+			    </tr>
+			    <tr>
+				    <td>
+					    Costo Repuesto
+				    </td>
+				    <td>
+					    <input type="number" id="txt_crep_ins" name="txt_crep_ins" value="0" class="text ui-widget-content ui-corner-all" style="width:100px;"/>
+				    </td>
+			    </tr>
+			    <tr>
+				    <td>
+					    Precio Repuesto
+				    </td>
+				    <td>
+					    <input type="number" id="txt_prep_ins" name="txt_prep_ins" value="0" class="text ui-widget-content ui-corner-all" style="width:100px;"/>
+				    </td>
+			    </tr>
+			    <tr>
+				    <td>
+					    Costo MO
+				    </td>
+				    <td>
+					    <input type="number" id="txt_cmo_ins" name="txt_cmo_ins" value="0" class="text ui-widget-content ui-corner-all" style="width:100px;"/>
+				    </td>
+			    </tr>
+			    <tr>
+				    <td>
+					    Precio MO
+				    </td>
+				    <td>
+					    <input type="number" id="txt_pmo_ins" name="txt_pmo_ins" value="0" class="text ui-widget-content ui-corner-all" style="width:100px;"/>
+				    </td>
+			    </tr>
+			    <tr>
+				    <td>
+					    Monto
+				    </td>
+				    <td>
+					    <input type="text" id="txt_monto_ins" name="txt_monto_ins" value="0" class="text ui-widget-content ui-corner-all" style="width:100px;" disabled="disabled"/>
+				    </td>
+			    </tr>
+		    </table>         
+	    </form>
     </div>
 
     <%--DIV PARA MODIFICAR EQUIPO CON JQUERY Y AJAX --%>
@@ -442,7 +544,7 @@
                         <%--<asp:LinkButton ID="btnEdit" runat="server" CausesValidation="false" CommandName="bEditar" Text="E"></asp:LinkButton>
                         <asp:LinkButton ID="btnDelete" runat="server" CausesValidation="false" CommandName="bBorrar" Text="B"></asp:LinkButton>--%>
                         <a href="javascript:void(null);" id="btn-upd" onclick="editaNroParte();" style="display:inline-block;" class="ui-icon ui-icon-transferthick-e-w"></a>
-                        <a href="javascript:void(null);" id="btn-del" onclick="borraNroParte();" style="display:inline-block;" class="ui-icon ui-icon-trash"></a>                       
+                        <%--<a href="javascript:void(null);" id="btn-del" onclick="borraNroParte();" style="display:inline-block;" class="ui-icon ui-icon-trash"></a>--%>                       
                     </ItemTemplate>
                 </asp:TemplateField>
             </Columns>
@@ -458,6 +560,61 @@
     <%--CALCULO DE VALORES--%>
     <asp:UpdatePanel ID="panelCalculo" runat="server" UpdateMode="Conditional">
         <ContentTemplate>
+            <fieldset>
+                <legend>Margenes Comerciales</legend>
+                <table>
+                    <tr>
+                        <td>
+                            Total Costo MO
+                        </td>
+                        <td>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Total Costo Rpto
+                        </td>
+                        <td>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Mg Operacional %
+                        </td>
+                        <td>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Mg Bruto %
+                        </td>
+                        <td>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Mg Contribucion
+                        </td>
+                        <td>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Mg Contribucion %
+                        </td>
+                        <td>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Utilidad Esperada %
+                        </td>
+                        <td>
+                        </td>
+                    </tr>
+                </table>
+            </fieldset>
+
             <div id="contenedor">
                 <div id="margenes">
                     <div class="tabla">
@@ -796,23 +953,41 @@
             });
 
             var itemnro;
-            function dataEquipo() {
-                var objEquipo = new Object();
-                var pccookie = $.cookie("pcusr");
+            var pccookie = $.cookie("pcusr");
+            function dataEquipo() {//solo para insertar
+                var objEquipo = new Object();                
 
                 objEquipo.idventa = pccookie;
                 objEquipo.item = itemnro;
-                objEquipo.nroparte = $("#txt_nroparte").val();
-                objEquipo.descripcion = $("#txt_descrip").val();
-                objEquipo.nroserie = $("#txt_serie").val();
-                objEquipo.cantidad = $("#txt_cantidad").val();
-                objEquipo.costorepuesto = $("#txt_crep").val();
-                objEquipo.preciorepuesto = $("#txt_prep").val();
-                objEquipo.costomo = $("#txt_cmo").val();
-                objEquipo.preciomo = $("#txt_pmo").val();
-                objEquipo.preciototal = $("#txt_monto").val();
+                objEquipo.nroparte = $("#txt_nroparte_ins").val();
+                objEquipo.descripcion = $("#txt_descrip_ins").val();
+                objEquipo.nroserie = $("#txt_serie_ins").val();
+                objEquipo.cantidad = $("#txt_cantidad_ins").val();
+                objEquipo.costorepuesto = $("#txt_crep_ins").val();
+                objEquipo.preciorepuesto = $("#txt_prep_ins").val();
+                objEquipo.costomo = $("#txt_cmo_ins").val();
+                objEquipo.preciomo = $("#txt_pmo_ins").val();
+                objEquipo.preciototal = $("#txt_monto_ins").val();
 
                 return objEquipo;
+            }
+
+            function dataEquipoMod() {
+                var objEquipomod = new Object();
+
+                objEquipomod.idventa = pccookie;
+                objEquipomod.item = itemnro;
+                objEquipomod.nroparte = $("#txt_nroparte").val();
+                objEquipomod.descripcion = $("#txt_descrip").val();
+                objEquipomod.nroserie = $("#txt_serie").val();
+                objEquipomod.cantidad = $("#txt_cantidad").val();
+                objEquipomod.costorepuesto = $("#txt_crep").val();
+                objEquipomod.preciorepuesto = $("#txt_prep").val();
+                objEquipomod.costomo = $("#txt_cmo").val();
+                objEquipomod.preciomo = $("#txt_pmo").val();
+                objEquipomod.preciototal = $("#txt_monto").val();
+
+                return objEquipomod;
             }
 
             function sumDetEquipo() {
@@ -822,7 +997,7 @@
                 itemnro = itemnro ? itemnro : "1";
                 
                 var tot = sumEquipo(dataEquipo(), coti, mone);
-                $("#txt_monto").val(tot);
+                $("#txt_monto_ins").val(tot);
             }
 
             function setDetEquipo() {
@@ -837,22 +1012,31 @@
                 var tc = $('#<%=cboTipoCotizacion.ClientID %>').val();
 
                 if (tc == 5) {
-                    $("#txt_cmo").attr("disabled", "disabled");
-                    $("#txt_pmo").attr("disabled", "disabled");
+                    $("#txt_cmo_ins").attr("disabled", "disabled");
+                    $("#txt_pmo_ins").attr("disabled", "disabled");
                 }
                 else if (tc == 6) {
-                    $("#txt_cmo").removeAttr("disabled");
-                    $("#txt_pmo").removeAttr("disabled");
-                    $("#txt_crep").attr("disabled", "disabled");
+                    $("#txt_cmo_ins").removeAttr("disabled");
+                    $("#txt_pmo_ins").removeAttr("disabled");
+                    $("#txt_crep_ins").attr("disabled", "disabled");
                 }
                 else if (tc == 7) {
-                    $("#txt_cmo").removeAttr("disabled");
-                    $("#txt_pmo").removeAttr("disabled");
-                    $("#txt_crep").removeAttr("disabled");
+                    $("#txt_cmo_ins").removeAttr("disabled");
+                    $("#txt_pmo_ins").removeAttr("disabled");
+                    $("#txt_crep_ins").removeAttr("disabled");
                 }
             }
 
             function limpiaIngreso() {
+                $("#txt_nroparte_ins").val("");
+                $("#txt_descrip_ins").val("");
+                $("#txt_serie_ins").val("");
+                $("#txt_cantidad_ins").val("1");
+                $("#txt_crep_ins").val("0");
+                $("#txt_prep_ins").val("0");
+                $("#txt_cmo_ins").val("0");
+                $("#txt_pmo_ins").val("0");
+                $("#txt_monto_ins").val("0");
                 $("#txt_nroparte").val("");
                 $("#txt_descrip").val("");
                 $("#txt_serie").val("");
@@ -865,21 +1049,6 @@
             }
 
             function updDetalle() {
-//                $('.gvDetalleProy').on('click', function () {
-//                    itemnro = $('.item_', $(this).closest("tr")).html();
-//                    $("#txt_nroparte").val($('.nro_parte', $(this).closest("tr")).html()); //txt_nro_parte_m
-//                    $("#txt_descrip").val($('.descrip_', $(this).closest("tr")).html()); //txt_descrip_m
-//                    $("#txt_cantidad").val($('.cantidad_', $(this).closest("tr")).html()); //txt_cantidad_m
-//                    $("#txt_serie").val($('.nro_serie', $(this).closest("tr")).html()); //txt_serie_m
-//                    $("#txt_crep").val($('.costo_rep', $(this).closest("tr")).html()); //txt_crep_m
-//                    $("#txt_prep").val($('.precio_rep', $(this).closest("tr")).html()); //txt_prep_m
-//                    $("#txt_cmo").val($('.costo_mo', $(this).closest("tr")).html()); //txt_cmo_m
-//                    $("#txt_pmo").val($('.precio_mo', $(this).closest("tr")).html()); //txt_pmo_m
-//                    $("#txt_monto").val($('.precio_t', $(this).closest("tr")).html()); //txt_monto_m
-//                });
-            }
-
-            function editaNroParte() {
                 $('.gvDetalleProy').on('click', function () {
                     itemnro = $('.item_', $(this).closest("tr")).html();
                     $("#txt_nroparte").val($('.nro_parte', $(this).closest("tr")).html()); //txt_nro_parte_m
@@ -892,49 +1061,46 @@
                     $("#txt_pmo").val($('.precio_mo', $(this).closest("tr")).html()); //txt_pmo_m
                     $("#txt_monto").val($('.precio_t', $(this).closest("tr")).html()); //txt_monto_m
                 });
+            }
 
-                $("#dialog-equipo-add").dialog({
+            function editaNroParte() {
+                updDetalle();
+
+                $("#dialog-tab").dialog({
                     modal: true,
-                    width: "350px",
-                    title: "Modificar Equipo",
+                    width: "400px",
                     buttons: {
-                        "Calcular": sumDetEquipo,
-                        "Actualizar": function () {
-                            updEquipo(dataEquipo());
-                            $("#<%=btnUpdate.ClientID %>").click();
-                            $(this).dialog('close');
-                            limpiaIngreso();
-                        },
                         "Cerrar": function () {
                             $(this).dialog('close');
                         }
                     }
                 });
-            }
 
-            function borraNroParte() {
-                var nroitem_;
-                $('.gvDetalleProy').on('click', function () {
-                    nroitem_ = $('.item_', $(this).closest("tr")).html();
+                $("#btn-cal-row").on('click', function () {
+                    var coti = $('#<%=cboTipoCotizacion.ClientID %>').val();
+                    var mone = $('#<%=cboTipoTarifa.ClientID %>').val();
 
-                    alert(nroitem_);
+                    itemnro = itemnro ? itemnro : "1";
+
+                    var tot = sumEquipo(dataEquipoMod(), coti, mone);
+                    $("#txt_monto").val(tot);
                 });
 
-                
+                $("#btn-mod-row").on('click', function () {
+                    updEquipo(dataEquipoMod());
+                    $("#<%=btnUpdate.ClientID %>").click();
+                    limpiaIngreso();
+                });
 
-                $("<div id='dialog-del'><p>Esta seguro que desea borrar el item Nro " + nroitem + " del detalle?</p></div>").dialog({
-                    modal: true,
-                    title: "Borrar Equipo",
-                    buttons: {
-                        "Si": function () {
-                            $(this).dialog('close');
-                        },
-                        "No": function () {
-                            $(this).dialog('close');
-                        }
-                    }
+                $("#btn-del-row").on('click', function () {
+                    delEquipo(dataEquipoMod());
+                    $("#<%=btnUpdate.ClientID %>").click();
                 });
             }
+
+            $(function () {
+                $("#tab").tabs();
+            });
         </script>
 
 </asp:Content>
