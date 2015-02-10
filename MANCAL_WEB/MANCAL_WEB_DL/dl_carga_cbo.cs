@@ -362,5 +362,49 @@ namespace MANCAL_WEB_DL
             }
             return dt;
         }
+
+        public DataTable selectTextFactura() 
+        {
+            DataTable dt = new DataTable();
+
+            using (OracleConnection con = new OracleConnection(conStr)) 
+            {
+                con.Open();
+                String qry = "SELECT * FROM TBL_TXT_FACTURA ORDER BY TXTF_ID";
+                using (OracleCommand cmd = new OracleCommand(qry, con)) 
+                {
+                    cmd.CommandType = CommandType.Text;
+
+                    using (OracleDataAdapter oda = new OracleDataAdapter(cmd)) 
+                    {
+                        oda.Fill(dt);
+                    }
+                }
+                con.Close();
+            }
+            return dt;
+        }
+
+        public DataTable selectTextPentrega() 
+        {
+            DataTable dt = new DataTable();
+
+            using (OracleConnection con = new OracleConnection(conStr))
+            {
+                con.Open();
+                String qry = "SELECT * FROM TBL_TXT_PENTREGA ORDER BY TXTPE_ID";
+                using (OracleCommand cmd = new OracleCommand(qry, con))
+                {
+                    cmd.CommandType = CommandType.Text;
+
+                    using (OracleDataAdapter oda = new OracleDataAdapter(cmd))
+                    {
+                        oda.Fill(dt);
+                    }
+                }
+                con.Close();
+            }
+            return dt;
+        }
     }
 }

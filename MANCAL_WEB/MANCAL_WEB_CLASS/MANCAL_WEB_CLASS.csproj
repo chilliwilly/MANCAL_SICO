@@ -49,6 +49,7 @@
     <Compile Include="CotizacionLugarEntr.cs" />
     <Compile Include="CotizacionRegion.cs" />
     <Compile Include="CotizacionTarifa.cs" />
+    <Compile Include="CotizacionTextoFactura.cs" />
     <Compile Include="CotizacionTFactura.cs" />
     <Compile Include="CotizacionTipo.cs" />
     <Compile Include="CotizacionTPEntrega.cs" />

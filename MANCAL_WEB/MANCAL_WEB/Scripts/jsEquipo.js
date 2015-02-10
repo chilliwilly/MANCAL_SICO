@@ -64,3 +64,17 @@ function delEquipo(obj) {
         }
     });
 }
+
+function getCommFac() { //OBTIENE COMENTARIO FATURACION
+    $.ajax({
+        type: "GET",
+        url: "/asmx_files/js_llenado.asmx/delDatoEquipo",
+        datatype: "json",
+        contentType: "application/json; charset=utf-8",
+        data: "",
+        success: function (data, sstatus) {
+        },
+        error: function (data) {
+        }
+    });
+}

@@ -150,12 +150,32 @@ namespace MANCAL_WEB.frm_proy
             }
         }
 
+        protected void rblComentarioFac_Init(object sender, EventArgs e)
+        {
+            objCbo = new bl_carga_cbo();
+
+            foreach (var rad in objCbo.getTextFac()) 
+            {
+                rblComentarioFac.Items.Add(new ListItem(rad.nomtxtfac, rad.nomtxtfac));
+            }
+        }
+
+        protected void rblComentarioPen_Init(object sender, EventArgs e)
+        {
+            objCbo = new bl_carga_cbo();
+
+            foreach (var rad in objCbo.getTextPen()) 
+            {
+                rblComentarioPen.Items.Add(new ListItem(rad.nomtxtfac, rad.nomtxtfac));
+            }
+        }
+
         #endregion
 
         protected void cboJefe_SelectedIndexChanged(object sender, EventArgs e)
         {
             objCbo = new bl_carga_cbo();
-            var cj = objCbo.datoJefe(cboJefe.SelectedValue);
+            CotizacionJefe cj = objCbo.datoJefe(cboJefe.SelectedValue);
 
             txtCargoJefe.Text = cj.jef_car;
             txtMailJefe.Text = cj.jef_mai;

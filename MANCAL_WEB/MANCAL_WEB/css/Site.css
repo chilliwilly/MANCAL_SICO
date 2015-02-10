@@ -191,8 +191,8 @@ div.menu ul li a:active
 ----------------------------------------------------------*/
 
 fieldset
-{
-    margin: 1em 0px;
+{/*margin estaba en 1em 0px*/
+    margin: 1em 30px;
     padding: 1em;
     border: 1px solid #ccc;
 }
@@ -210,6 +210,12 @@ fieldset.login label, fieldset.register label, fieldset.changePassword label
 fieldset label.inline 
 {
     display: inline;
+}
+/*AGREGADO POR MI*/
+fieldset.inline
+{
+    display:inline;
+    padding:
 }
 
 legend 

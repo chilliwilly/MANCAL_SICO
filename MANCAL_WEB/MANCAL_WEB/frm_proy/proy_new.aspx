@@ -243,7 +243,7 @@
         </ContentTemplate>
     </asp:UpdatePanel>
     
-    <%--DIV PARA AGREGAR EQUIPO CON JQUERY Y AJAX --%>
+    <%--DIV PARA MODIFICAR/ELIMINAR EQUIPO CON JQUERY Y AJAX --%>
     <div id="dialog-tab" title="Escoja Opcion" style="display:none;">
         <div id="tab">
             <ul>
@@ -346,6 +346,7 @@
         </div>
     </div>
 
+    <%--DIV PARA AGREGAR UN EQUIPO NUEVO CON JQUERY Y AJAX --%>
     <div id="dialog-ins" style="display:none;">
 	    <form action="" id="frm-equipo-ins">
 		    <table>
@@ -560,14 +561,16 @@
     <%--CALCULO DE VALORES--%>
     <asp:UpdatePanel ID="panelCalculo" runat="server" UpdateMode="Conditional">
         <ContentTemplate>
-            <fieldset>
+            <fieldset style="width:20%;" class="inline">
                 <legend>Margenes Comerciales</legend>
-                <table>
+                <table align="center">
                     <tr>
                         <td>
                             Total Costo MO
                         </td>
                         <td>
+                            <asp:TextBox ID="txtTotalCostoMo" runat="server" Width="100px" 
+                                    ReadOnly="True" style="text-align: right;">0</asp:TextBox>
                         </td>
                     </tr>
                     <tr>
@@ -575,6 +578,8 @@
                             Total Costo Rpto
                         </td>
                         <td>
+                            <asp:TextBox ID="txtTotalCostoRpto" runat="server" 
+                                    Width="100px" ReadOnly="True" style="text-align: right;">0</asp:TextBox>
                         </td>
                     </tr>
                     <tr>
@@ -582,6 +587,8 @@
                             Mg Operacional %
                         </td>
                         <td>
+                            <asp:TextBox ID="txtMgOpPorc" runat="server" Width="100px" 
+                                    ReadOnly="True" style="text-align: right;">0</asp:TextBox>
                         </td>
                     </tr>
                     <tr>
@@ -589,6 +596,8 @@
                             Mg Bruto %
                         </td>
                         <td>
+                            <asp:TextBox ID="txtMgBrutoPorc" runat="server" Width="100px" 
+                                    ReadOnly="True" style="text-align: right;">0</asp:TextBox>
                         </td>
                     </tr>
                     <tr>
@@ -596,6 +605,8 @@
                             Mg Contribucion
                         </td>
                         <td>
+                            <asp:TextBox ID="txtMgContribucion" runat="server" 
+                                    Width="100px" ReadOnly="True" style="text-align: right;">0</asp:TextBox>
                         </td>
                     </tr>
                     <tr>
@@ -603,6 +614,8 @@
                             Mg Contribucion %
                         </td>
                         <td>
+                            <asp:TextBox ID="txtMgContribucionPorc" runat="server" 
+                                    Width="100px" ReadOnly="True" style="text-align: right;">0</asp:TextBox>
                         </td>
                     </tr>
                     <tr>
@@ -610,120 +623,102 @@
                             Utilidad Esperada %
                         </td>
                         <td>
+                            <asp:TextBox ID="txtUtilidadEspPorc" runat="server" 
+                                    Width="100px" ReadOnly="True" style="text-align: right;">0</asp:TextBox>
                         </td>
                     </tr>
                 </table>
             </fieldset>
 
-            <div id="contenedor">
-                <div id="margenes">
-                    <div class="tabla">
-                        <div class="fila">
-                            <div class="columna">Total Costo MO</div>
-                            <div class="columna"><asp:TextBox ID="txtTotalCostoMo" runat="server" Width="100px" 
-                                    ReadOnly="True" style="text-align: right;">0</asp:TextBox></div>
-                        </div>
-                        <div class="fila">
-                            <div class="columna">Total Costo Rpto</div>
-                            <div class="columna"><asp:TextBox ID="txtTotalCostoRpto" runat="server" 
-                                    Width="100px" ReadOnly="True" style="text-align: right;">0</asp:TextBox></div>
-                        </div>
-                        <div class="fila">
-                            <div class="columna">Mg Operacional %</div>
-                            <div class="columna"><asp:TextBox ID="txtMgOpPorc" runat="server" Width="100px" 
-                                    ReadOnly="True" style="text-align: right;">0</asp:TextBox></div>
-                        </div>
-                        <div class="fila">
-                            <div class="columna"><asp:Label ID="Label3" runat="server" Text="Label" Font-Bold="true">Mg Bruto %</asp:Label></div>
-                            <div class="columna"><asp:TextBox ID="txtMgBrutoPorc" runat="server" Width="100px" 
-                                    ReadOnly="True" style="text-align: right;">0</asp:TextBox></div>
-                        </div>
-                        <div class="fila">
-                            <div class="columna">Mg Contribucion</div>
-                            <div class="columna"><asp:TextBox ID="txtMgContribucion" runat="server" 
-                                    Width="100px" ReadOnly="True" style="text-align: right;">0</asp:TextBox></div>
-                        </div>
-                        <div class="fila">
-                            <div class="columna">Mg Contribucion %</div>
-                            <div class="columna"><asp:TextBox ID="txtMgContribucionPorc" runat="server" 
-                                    Width="100px" ReadOnly="True" style="text-align: right;">0</asp:TextBox></div>
-                        </div>
-                        <div class="fila">
-                            <div class="columna">Utilidad Eseperada %</div>
-                            <div class="columna"><asp:TextBox ID="txtUtilidadEspPorc" runat="server" 
-                                    Width="100px" ReadOnly="True" style="text-align: right;">0</asp:TextBox></div>
-                        </div>
-                    </div>
-                </div>
-                <div id="ivaotros">
-                    <div class="tabla">
-                        <div class="fila">
-                            <div class="columna">Pago Impuesto</div>
-                            <div class="columna">
-                                <asp:DropDownList ID="cboTipoImpuesto" runat="server">
-                                    <asp:ListItem Value="0">Seleccione</asp:ListItem>
-                                    <asp:ListItem Value="1">c/ IVA</asp:ListItem>
-                                    <asp:ListItem Value="2">s/ IVA</asp:ListItem>
-                                </asp:DropDownList>
-                            </div>
-                        </div>
-                        <div class="fila">
-                            <div class="columna">Con Descuento</div>
-                            <div class="columna"><asp:CheckBox ID="chkDcto" runat="server" AutoPostBack="true"/></div>
-                        </div>
-                        <div class="fila">
-                            <div class="columna">Tipo Moneda</div>
-                            <div class="columna"><asp:TextBox ID="txtTipoMoneda" runat="server" ReadOnly="True"></asp:TextBox></div>
-                        </div>
-                        <div class="fila">
-                            <div class="columna"></div>
-                            <div class="columna"></div>
-                        </div>
-                        <div class="fila">
-                            <div class="columna"></div>
-                            <div class="columna">
-                                <asp:Button ID="btnCalcular" runat="server" Text="Calcular" Width="90px" />
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div id="precionormal">        
-                    <div class="tabla">
-                        <div class="fila">
-                            <div class="columna"><asp:Label ID="Label1" runat="server" Text="Label" Font-Bold="true">Precio Total Normal</asp:Label></div>
-                            <div class="columna"></div>
-                        </div>
-                        <div class="fila">
-                            <div class="columna">Neto</div>
-                            <div class="columna"><asp:TextBox ID="txtNeto" runat="server" Width="100px" 
-                                    ReadOnly="True" style="text-align: right;">0</asp:TextBox></div>
-                        </div>
-                        <div class="fila">
-                            <div class="columna">Descuento</div>
-                            <div class="columna"><asp:TextBox ID="txtDcto" runat="server" Width="100px" 
-                                    Enabled="False" style="text-align: right;">0</asp:TextBox></div>
-                        </div>
-                        <div class="fila">
-                            <div class="columna">Neto Dcto</div>
-                            <div class="columna"><asp:TextBox ID="txtNetoDcto" runat="server" Width="100px" 
-                                    ReadOnly="True" style="text-align: right;">0</asp:TextBox></div>
-                        </div>
-                        <div class="fila">
-                            <div class="columna">IVA</div>
-                            <div class="columna"><asp:TextBox ID="txtIva" runat="server" Width="100px" 
-                                    ReadOnly="True" style="text-align: right;">0</asp:TextBox></div>
-                        </div>
-                        <div class="fila">
-                            <div class="columna">Total</div>
-                            <div class="columna"><asp:TextBox ID="txtTotal" runat="server" Width="100px" 
-                                    ReadOnly="True" style="text-align: right;">0</asp:TextBox></div>
-                        </div>
-                    </div>
-                </div>        
-                <div id="precioexcede">
-                    
-                </div>
-            </div>
+            <fieldset style="width:25%;" class="inline">
+                <legend>Impuesto</legend>
+                <table align="center">
+                    <tr>
+                        <td>
+                            Pago Impuesto
+                        </td>
+                        <td>
+                            <asp:DropDownList ID="cboTipoImpuesto" runat="server">
+                                <asp:ListItem Value="0">Seleccione</asp:ListItem>
+                                <asp:ListItem Value="1">c/ IVA</asp:ListItem>
+                                <asp:ListItem Value="2">s/ IVA</asp:ListItem>
+                            </asp:DropDownList>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Con Descuento
+                        </td>
+                        <td>
+                            <asp:CheckBox ID="chkDcto" runat="server"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Tipo Moneda
+                        </td>
+                        <td>
+                            <asp:TextBox ID="txtTipoMoneda" runat="server" ReadOnly="True"></asp:TextBox>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" style="text-align:center;">
+                            <asp:Button ID="btnCalcular" runat="server" Text="Calcular" Width="90px" />
+                        </td>
+                    </tr>
+                </table>
+            </fieldset>
+
+            <fieldset style="width:15%;" class="inline">
+                <legend>Precio Total</legend>
+                <table align="center">
+                    <tr>
+                        <td>
+                            Neto
+                        </td>
+                        <td>
+                            <asp:TextBox ID="txtNeto" runat="server" Width="100px" 
+                                    ReadOnly="True" style="text-align: right;">0</asp:TextBox>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Descuento
+                        </td>
+                        <td>
+                            <asp:TextBox ID="txtDcto" runat="server" Width="100px" 
+                                    Enabled="False" style="text-align: right;">0</asp:TextBox>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Neto Dcto
+                        </td>
+                        <td>
+                            <asp:TextBox ID="txtNetoDcto" runat="server" Width="100px" 
+                                    ReadOnly="True" style="text-align: right;">0</asp:TextBox>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            IVA
+                        </td>
+                        <td>
+                            <asp:TextBox ID="txtIva" runat="server" Width="100px" 
+                                    ReadOnly="True" style="text-align: right;">0</asp:TextBox>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Total
+                        </td>
+                        <td>
+                            <asp:TextBox ID="txtTotal" runat="server" Width="100px" 
+                                    ReadOnly="True" style="text-align: right;">0</asp:TextBox>
+                        </td>
+                    </tr>
+                </table>
+            </fieldset>
         </ContentTemplate>
     </asp:UpdatePanel>
 
@@ -767,20 +762,11 @@
                             Width="140px" oninit="cboFacturacion_Init"> 
                         </asp:DropDownList>
                     </td>
-                    <td><asp:Panel ID="panelFac" runat="server">
-                        <asp:UpdatePanel ID="UpdatePanel2" runat="server">
-                            <ContentTemplate>
-                                <asp:RadioButtonList ID="fac" runat="server" AutoPostBack="True" BackColor="White" BorderColor="Black" BorderWidth="2px">                           
-                                </asp:RadioButtonList>
-                            </ContentTemplate>
-                        </asp:UpdatePanel>
-                        </asp:Panel>
+                    <td>
                     </td>
                     <td class="style12">Comentario Facturacion<br />
                         <asp:TextBox ID="txtFacturacion" runat="server" Height="50px" 
-                            TextMode="MultiLine" Width="421px"></asp:TextBox>
-                        <asp:PopupControlExtender ID="PopFac" PopupControlID="panelFac" TargetControlID="txtFacturacion" Position="Bottom" runat="server" CommitProperty="value">
-                        </asp:PopupControlExtender>
+                            TextMode="MultiLine" Width="421px" ReadOnly="true"></asp:TextBox>
                     </td>
                 </tr>
                 <tr>
@@ -805,31 +791,45 @@
                             oninit="cboPlazoEntrega_Init">
                         </asp:DropDownList>                
                     </td>
-                    <td><asp:Panel ID="panelPEn" runat="server">
-                        <asp:UpdatePanel ID="UpdatePanel3" runat="server">
-                            <ContentTemplate>
-                                <asp:RadioButtonList ID="pEn" runat="server" AutoPostBack="True" 
-                                    BackColor="White" BorderColor="Black" BorderWidth="2px">
-                                </asp:RadioButtonList>
-                            </ContentTemplate>                    
-                        </asp:UpdatePanel>                
-                        </asp:Panel>
+                    <td>
                     </td>
                     <td class="style12">Comentario Plazo Entrega<br />
                         <asp:TextBox ID="txtPlazoEntrega" runat="server" Height="50px" 
-                            TextMode="MultiLine" Width="422px"></asp:TextBox>
-                            <asp:PopupControlExtender ID="PopPEn" PopupControlID="panelPEn" TargetControlID="txtPlazoEntrega" Position="Bottom" runat="server" CommitProperty="value">
-                            </asp:PopupControlExtender>
+                            TextMode="MultiLine" Width="422px" ReadOnly="true"></asp:TextBox>
                     </td>
                 </tr>
             </table>
+
+            <div id="dialog-comentario-fac" style="display:none;">
+                Seleccione una opcion la cual puede modificar, o bien escriba una nueva.
+                <br /><br />
+                <asp:RadioButtonList ID="rblComentarioFac" runat="server" 
+                    oninit="rblComentarioFac_Init">
+                </asp:RadioButtonList>
+                <br /> 
+                <textarea name="txta-fac" id="txta-fac" rows="6" cols="60" maxlength="200"></textarea>
+            </div>
+
+            <div id="dialog-comentario-pen" style="display:none;">
+                Seleccione una opcion la cual puede modificar, o bien escriba una nueva.
+                <br /><br />
+                <asp:RadioButtonList ID="rblComentarioPen" runat="server" 
+                    oninit="rblComentarioPen_Init">
+                </asp:RadioButtonList>
+                <br />
+                <textarea name="txta-pen" id="txta-pen" rows="6" cols="60" maxlength="200"></textarea>                  
+            </div>
+
         </ContentTemplate>
     </asp:UpdatePanel>
 
     <%--PANEL GARANTIA Y LUGAR DE EJECUCION --%>
     <br />
-    <asp:UpdatePanel ID="panelJefe" runat="server" UpdateMode="Conditional">
+    <asp:UpdatePanel ID="panelJefe" runat="server" UpdateMode="Conditional">    
         <ContentTemplate>
+        <script type="text/javascript">
+            Sys.Application.add_load(llenaSectorEntrega);
+        </script>
             <table cellpadding="5px">
             <tr>
                 <td>Texto solo cotizaciones<br /> clientes extranjeros</td>
@@ -854,7 +854,7 @@
             <tr>
                 <td>Lugar de Entrega</td>
                 <td>
-                    <asp:DropDownList ID="cboLugarEntrega" runat="server" AutoPostBack="true" 
+                    <asp:DropDownList ID="cboLugarEntrega" runat="server" 
                         oninit="cboLugarEntrega_Init">
                     </asp:DropDownList>
             &nbsp;&nbsp;&nbsp;&nbsp; Sector Entrega
@@ -896,6 +896,12 @@
             </table>                    
         </ContentTemplate>
     </asp:UpdatePanel>
+
+    <div id="dialog-sector" style="display:none;">
+        Ingrese sector de entrega
+        <br /><br />
+        <input type="text" id="txt-sector" name="txt-sector" value="" placeholder="Ingrese sector de entrega" width="120px"/>
+    </div>
 
 <%--PEGAR LO CORTADO--%>    
 <br /><br /><br />
@@ -1101,6 +1107,95 @@
             $(function () {
                 $("#tab").tabs();
             });
+
+            $("#<%=txtFacturacion.ClientID %>").on('click', function () {
+                $("#txta-fac").val($("#<%=txtFacturacion.ClientID %>").val());
+                $("#dialog-comentario-fac").dialog({
+                    modal: true,
+                    title: "Comentario Facturacion",
+                    width: "550px",
+                    buttons: {
+                        "Agregar": function () {
+                            $("#<%=txtFacturacion.ClientID %>").val($("#txta-fac").val());
+                            $(this).dialog('close');
+                            $("#txta-fac").val("");
+                        },
+                        "Cerrar": function () {
+                            $(this).dialog('close');
+                            $("#txta-fac").val("");
+                        }
+                    }
+                });
+            });
+
+            $("#<%=txtPlazoEntrega.ClientID %>").on('click', function () {
+                $("#txta-pen").val($("#<%=txtPlazoEntrega.ClientID %>").val());
+                $("#dialog-comentario-pen").dialog({
+                    modal: true,
+                    title: "Comentario Plazo Entrega",
+                    width: "550px",
+                    buttons: {
+                        "Agregar": function () {
+                            $("#<%=txtPlazoEntrega.ClientID %>").val($("#txta-pen").val());
+                            $(this).dialog('close');
+                            $("#txta-pen").val("");
+                        },
+                        "Cerrar": function () {
+                            $(this).dialog('close');
+                            $("#txta-pen").val("");
+                        }
+                    }
+                });
+            });
+
+            $("#<%=rblComentarioFac.ClientID %>").on('click', function () {
+                var txtf = $("#<%=rblComentarioFac.ClientID %>").find(":checked").val();
+                $("#txta-fac").val("");
+                $("#txta-fac").val(txtf);
+            });
+
+            $("#<%=rblComentarioPen.ClientID %>").on('click', function () {
+                var txtp = $("#<%=rblComentarioPen.ClientID %>").find(":checked").val();
+                $("#txta-pen").val("");
+                $("#txta-pen").val(txtp);
+            });
+
+            $("#<%=chkDcto.ClientID %>").on('click', function () {
+                if ($("#<%=chkDcto.ClientID %>").is(':checked')) {
+                    $('#<%=txtDcto.ClientID %>').removeAttr("disabled");
+                } else {
+                    $('#<%=txtDcto.ClientID %>').attr("disabled", "disabled");
+                    $('#<%=txtDcto.ClientID %>').val("0");
+                }
+            });
+
+            $("#<%=cboLugarEntrega.ClientID %>").on('change', function () {
+                var idLE = $("#<%=cboLugarEntrega.ClientID %>").val();
+
+                if (idLE == 2) {
+                    llenaSectorEntrega();
+                } else {
+                    $("#<%=txtSectorEntrega.ClientID %>").val("");
+                }
+            });
+
+            function llenaSectorEntrega() {
+                $("#dialog-sector").dialog({
+                    modal: true,
+                    title: "Sector Entrega",
+                    buttons: {
+                        "Aceptar": function () {
+                            var intxt = $("#txt-sector").val();
+                            $("#<%=txtSectorEntrega.ClientID %>").val(intxt);
+                            $("#txt-sector").val("");
+                            $(this).dialog('close');
+                        },
+                        "Cancelar": function () {
+                            $(this).dialog('close');
+                        }
+                    }
+                });
+            }
         </script>
 
 </asp:Content>

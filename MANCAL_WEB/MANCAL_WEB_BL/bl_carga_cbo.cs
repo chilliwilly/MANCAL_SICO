@@ -338,5 +338,41 @@ namespace MANCAL_WEB_BL
             }
             return cj;
         }
+
+        public List<CotizacionTextoFactura> getTextFac() 
+        {
+            List<CotizacionTextoFactura> cot = new List<CotizacionTextoFactura>();
+            objCbo = new dl_carga_cbo();
+
+            DataTable dt = objCbo.selectTextFactura();
+
+            foreach (DataRow dr in dt.Rows)
+            {
+                CotizacionTextoFactura c = new CotizacionTextoFactura();
+                c.idntxtfac = dr["TXTF_ID"].ToString();
+                c.nomtxtfac = dr["TXTF_DESCRIP"].ToString();
+
+                cot.Add(c);
+            }
+            return cot;
+        }
+
+        public List<CotizacionTextoFactura> getTextPen() 
+        {
+            List<CotizacionTextoFactura> cot = new List<CotizacionTextoFactura>();
+            objCbo = new dl_carga_cbo();
+
+            DataTable dt = objCbo.selectTextPentrega();
+
+            foreach (DataRow dr in dt.Rows)
+            {
+                CotizacionTextoFactura c = new CotizacionTextoFactura();
+                c.idntxtfac = dr["TXTPE_ID"].ToString();
+                c.nomtxtfac = dr["TXTPE_DESCRIP"].ToString();
+
+                cot.Add(c);
+            }
+            return cot;
+        }
     }
 }

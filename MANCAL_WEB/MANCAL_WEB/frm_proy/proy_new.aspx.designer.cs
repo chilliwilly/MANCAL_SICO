@@ -274,15 +274,6 @@ namespace MANCAL_WEB.frm_proy {
         protected global::System.Web.UI.WebControls.TextBox txtMgOpPorc;
         
         /// <summary>
-        /// Control Label3.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label3;
-        
-        /// <summary>
         /// Control txtMgBrutoPorc.
         /// </summary>
         /// <remarks>
@@ -353,15 +344,6 @@ namespace MANCAL_WEB.frm_proy {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnCalcular;
-        
-        /// <summary>
-        /// Control Label1.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label1;
         
         /// <summary>
         /// Control txtNeto.
@@ -454,33 +436,6 @@ namespace MANCAL_WEB.frm_proy {
         protected global::System.Web.UI.WebControls.DropDownList cboFacturacion;
         
         /// <summary>
-        /// Control panelFac.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel panelFac;
-        
-        /// <summary>
-        /// Control UpdatePanel2.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.UpdatePanel UpdatePanel2;
-        
-        /// <summary>
-        /// Control fac.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButtonList fac;
-        
-        /// <summary>
         /// Control txtFacturacion.
         /// </summary>
         /// <remarks>
@@ -488,15 +443,6 @@ namespace MANCAL_WEB.frm_proy {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtFacturacion;
-        
-        /// <summary>
-        /// Control PopFac.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::AjaxControlToolkit.PopupControlExtender PopFac;
         
         /// <summary>
         /// Control cboFormaPago.
@@ -526,33 +472,6 @@ namespace MANCAL_WEB.frm_proy {
         protected global::System.Web.UI.WebControls.DropDownList cboPlazoEntrega;
         
         /// <summary>
-        /// Control panelPEn.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel panelPEn;
-        
-        /// <summary>
-        /// Control UpdatePanel3.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.UpdatePanel UpdatePanel3;
-        
-        /// <summary>
-        /// Control pEn.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButtonList pEn;
-        
-        /// <summary>
         /// Control txtPlazoEntrega.
         /// </summary>
         /// <remarks>
@@ -562,13 +481,22 @@ namespace MANCAL_WEB.frm_proy {
         protected global::System.Web.UI.WebControls.TextBox txtPlazoEntrega;
         
         /// <summary>
-        /// Control PopPEn.
+        /// Control rblComentarioFac.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::AjaxControlToolkit.PopupControlExtender PopPEn;
+        protected global::System.Web.UI.WebControls.RadioButtonList rblComentarioFac;
+        
+        /// <summary>
+        /// Control rblComentarioPen.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RadioButtonList rblComentarioPen;
         
         /// <summary>
         /// Control panelJefe.
