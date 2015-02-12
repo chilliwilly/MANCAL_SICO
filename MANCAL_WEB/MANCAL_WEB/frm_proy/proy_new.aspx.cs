@@ -15,6 +15,7 @@ namespace MANCAL_WEB.frm_proy
     public partial class proy_new : System.Web.UI.Page
     {
         bl_carga_cbo objCbo;
+        bl_adjunto objAdj;
         bl_detalle_pro objDet = new bl_detalle_pro();
         String un = "MAN";
 
@@ -203,6 +204,36 @@ namespace MANCAL_WEB.frm_proy
             UpdatePanel4.Update();
         }
 
+        protected void fuProyecto_UploadComplete(object sender, AjaxControlToolkit.AjaxFileUploadEventArgs e)
+        {
+            objAdj = new bl_adjunto();
+            String adjunto = "";
+            String usr = System.Environment.UserName;
+
+            adjunto = objAdj.adjuntarDocumento(e.FileName, usr);
+            fuProyecto.SaveAs(Server.MapPath("~/adjunto_doc/") + adjunto);
+        }
+
+        protected void gvArchivo_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            String usr = System.Environment.UserName;
+
+            gvArchivo.PageIndex = e.NewPageIndex;
+            getListArchivo(usr);
+        }
+
+        protected void gvArchivo_RowCommand(object sender, GridViewCommandEventArgs e)
+        {
+            String usr = System.Environment.UserName;
+            getListArchivo(usr);
+        }
+
+        protected void btnUpdateDoc_Click(object sender, EventArgs e)
+        {
+            getListArchivo(System.Environment.UserName);
+            udpArchivo.Update();
+        }
+
         #region Metodos Privados
 
         //private void calculaTotalEquipo() 
@@ -259,6 +290,13 @@ namespace MANCAL_WEB.frm_proy
 
         //    objDet.setEquipo(dcp);
         //}
+
+        private void getListArchivo(String idu)
+        {
+            objAdj = new bl_adjunto();
+            gvArchivo.DataSource = objAdj.getAdjunto(idu);
+            gvArchivo.DataBind();
+        }
 
         private void mostrarDetalle(String idusr, String tmoneda) 
         {

@@ -40,6 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CotizacionAdjunto.cs" />
     <Compile Include="CotizacionEnvio.cs" />
     <Compile Include="CotizacionGarantia.cs" />
     <Compile Include="CotizacionGarantiaVal.cs" />

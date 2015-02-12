@@ -607,6 +607,42 @@ namespace MANCAL_WEB.frm_proy {
         protected global::System.Web.UI.WebControls.TextBox txtCargoJefe;
         
         /// <summary>
+        /// Control udpArchivo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel udpArchivo;
+        
+        /// <summary>
+        /// Control gvArchivo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView gvArchivo;
+        
+        /// <summary>
+        /// Control btnUpdateDoc.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnUpdateDoc;
+        
+        /// <summary>
+        /// Control fuProyecto.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::AjaxControlToolkit.AjaxFileUpload fuProyecto;
+        
+        /// <summary>
         /// Control btnSave.
         /// </summary>
         /// <remarks>

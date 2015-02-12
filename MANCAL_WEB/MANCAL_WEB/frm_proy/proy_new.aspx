@@ -23,6 +23,18 @@
                 });
             });
         }
+
+        function chgSectorEntrega() {
+            $("#<%=cboLugarEntrega.ClientID %>").on('change', function () {
+                var idLE = $("#<%=cboLugarEntrega.ClientID %>").val();
+
+                if (idLE == 2) {
+                    llenaSectorEntrega();
+                } else {
+                    $("#<%=txtSectorEntrega.ClientID %>").val("");
+                }
+            });
+        }
     </script>
 
     <style type="text/css">
@@ -592,7 +604,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <td>
+                        <td style="font-weight:bold;">
                             Mg Bruto %
                         </td>
                         <td>
@@ -664,6 +676,7 @@
                     <tr>
                         <td colspan="2" style="text-align:center;">
                             <asp:Button ID="btnCalcular" runat="server" Text="Calcular" Width="90px" />
+                            <input type="button" value="Calcular" id="btn-calcular-total" />
                         </td>
                     </tr>
                 </table>
@@ -828,7 +841,7 @@
     <asp:UpdatePanel ID="panelJefe" runat="server" UpdateMode="Conditional">    
         <ContentTemplate>
         <script type="text/javascript">
-            Sys.Application.add_load(llenaSectorEntrega);
+            Sys.Application.add_load(chgSectorEntrega);
         </script>
             <table cellpadding="5px">
             <tr>
@@ -895,14 +908,62 @@
             </tr>
             </table>                    
         </ContentTemplate>
+    </asp:UpdatePanel>  
+
+    <br /><br />
+    Archivos Adjuntos
+    <asp:UpdatePanel ID="udpArchivo" runat="server" UpdateMode="Conditional">
+        <ContentTemplate>
+            <asp:GridView ID="gvArchivo" runat="server" AutoGenerateColumns="False" 
+            DataKeyNames="ADJUNTO_ID,COTIZ_ID" PageSize="5" 
+        PagerSettings-PageButtonCount="10" PagerSettings-Mode="NumericFirstLast" 
+        PagerSettings-FirstPageText="Primera" PagerSettings-LastPageText="Ultima" 
+                AllowPaging="true" onpageindexchanging="gvArchivo_PageIndexChanging" 
+                onrowcommand="gvArchivo_RowCommand">
+                <Columns>
+
+                    <asp:TemplateField HeaderText="Item" ItemStyle-Width="50px">
+                        <ItemTemplate>
+                            <asp:Label ID="ADJUNTO_ID" runat="server" CssClass="costo_rep" Text='<%# Bind("ADJUNTO_ID") %>'></asp:Label>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+
+                    <asp:TemplateField HeaderText="ID Cotiz" ItemStyle-Width="100px" Visible="false">
+                        <ItemTemplate>
+                            <asp:Label ID="COTIZ_ID" runat="server" CssClass="costo_rep" Text='<%# Bind("COTIZ_ID") %>'></asp:Label>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+
+                    <asp:TemplateField HeaderText="Nombre Adjunto" ItemStyle-Width="250px">
+                        <ItemTemplate>
+                            <asp:HyperLink ID="ADJUNTO_NOMBRE" runat="server" Text='<%# Eval("ADJUNTO_NOMBRE") %>' NavigateUrl='<%# Eval("ADJUNTO_DIR") %>' Target="_blank"></asp:HyperLink>                            
+                        </ItemTemplate>
+                    </asp:TemplateField>
+
+                    <asp:TemplateField HeaderText="Link Doc" ItemStyle-Width="100px" Visible="false">
+                        <ItemTemplate>
+                            <asp:Label ID="ADJUNTO_DIR" runat="server" CssClass="costo_rep" Text='<%# Bind("ADJUNTO_DIR") %>'></asp:Label>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                                      
+                </Columns>            
+            </asp:GridView>
+
+            <asp:Button ID="btnUpdateDoc" runat="server" style="display:none;" OnClick="btnUpdateDoc_Click"/>
+
+        </ContentTemplate>        
     </asp:UpdatePanel>
 
     <div id="dialog-sector" style="display:none;">
         Ingrese sector de entrega
         <br /><br />
-        <input type="text" id="txt-sector" name="txt-sector" value="" placeholder="Ingrese sector de entrega" width="120px"/>
-    </div>
+        <input type="text" id="txt-sector" name="txt-sector" value="" placeholder="Ingrese sector de entrega" size="40"/>
+    </div>    
 
+    <div id="dialog-doc" style="display:none;">
+        <asp:AjaxFileUpload ID="fuProyecto" runat="server" OnUploadComplete="fuProyecto_UploadComplete" />
+    </div>
+        
 <%--PEGAR LO CORTADO--%>    
 <br /><br /><br />
     <table cellpadding="5px">
@@ -914,6 +975,9 @@
 
             <td>
                 <asp:Button ID="btnSavePrint" runat="server" Text="Guardar e Imprimir"/>
+            </td>
+            <td>
+                <input type="button" id="btn-doc" name="btn-doc" value="Adjuntar Documento" />
             </td>
         </tr>
       </table>
@@ -956,6 +1020,7 @@
             $(document).ready(function () {
                 $(".td").css("text-align", "left");
                 $(".td").css("font-weight", "bold");
+                cambiaAjaxUploader();
             });
 
             var itemnro;
@@ -1167,22 +1232,13 @@
                     $('#<%=txtDcto.ClientID %>').attr("disabled", "disabled");
                     $('#<%=txtDcto.ClientID %>').val("0");
                 }
-            });
-
-            $("#<%=cboLugarEntrega.ClientID %>").on('change', function () {
-                var idLE = $("#<%=cboLugarEntrega.ClientID %>").val();
-
-                if (idLE == 2) {
-                    llenaSectorEntrega();
-                } else {
-                    $("#<%=txtSectorEntrega.ClientID %>").val("");
-                }
-            });
+            });            
 
             function llenaSectorEntrega() {
                 $("#dialog-sector").dialog({
                     modal: true,
                     title: "Sector Entrega",
+                    width: "350px",
                     buttons: {
                         "Aceptar": function () {
                             var intxt = $("#txt-sector").val();
@@ -1196,6 +1252,20 @@
                     }
                 });
             }
+
+            $("#btn-doc").on('click', function () {
+                $("#dialog-doc").dialog({
+                    modal: true,
+                    width: "600px",
+                    title: "Adjuntar Documento",
+                    buttons: {
+                        "Cerrar": function () {
+                            $("#<%=btnUpdateDoc.ClientID %>").click();
+                            $(this).dialog('close');
+                        }
+                    }
+                });
+            });
         </script>
 
 </asp:Content>

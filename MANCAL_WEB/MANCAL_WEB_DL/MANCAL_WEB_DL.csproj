@@ -45,6 +45,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="dl_adjunto.cs" />
     <Compile Include="dl_carga_cbo.cs" />
     <Compile Include="dl_detalle_pro.cs" />
     <Compile Include="dl_equipo.cs" />

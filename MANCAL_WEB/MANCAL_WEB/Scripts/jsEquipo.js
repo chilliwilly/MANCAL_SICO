@@ -78,3 +78,20 @@ function getCommFac() { //OBTIENE COMENTARIO FATURACION
         }
     });
 }
+
+function cambiaAjaxUploader() {
+    Sys.Extended.UI.Resources.AjaxFileUpload_SelectFile = "Seleccione";
+    Sys.Extended.UI.Resources.AjaxFileUpload_DropFiles = "Seleccione Archivos";
+    Sys.Extended.UI.Resources.AjaxFileUpload_Pending = "Pendiente";
+    Sys.Extended.UI.Resources.AjaxFileUpload_Remove = "Quitar";
+    Sys.Extended.UI.Resources.AjaxFileUpload_Upload = "Subir";
+    Sys.Extended.UI.Resources.AjaxFileUpload_FileInQueue = "{0} archivo(s) en cola.";
+    Sys.Extended.UI.Resources.AjaxFileUpload_UploadedPercentage = "Completado {0} %";
+    Sys.Extended.UI.Resources.AjaxFileUpload_SelectFileToUpload = "Seleccione archivo(s) para subir.";
+    Sys.Extended.UI.Resources.AjaxFileUpload_AllFilesUploaded = "Se han subido los archivos.";
+    Sys.Extended.UI.Resources.AjaxFileUpload_Cancel = "Cancelar";
+    Sys.Extended.UI.Resources.AjaxFileUpload_Canceled = "Cancelado";
+    Sys.Extended.UI.Resources.AjaxFileUpload_UploadCanceled = "Archivo Cancelado";
+    Sys.Extended.UI.Resources.AjaxFileUpload_UploadingInputFile = "Subiendo Archivo: {0}.";
+    Sys.Extended.UI.Resources.AjaxFileUpload_Uploaded = "Subido";
+}
