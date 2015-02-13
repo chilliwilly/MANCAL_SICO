@@ -18,7 +18,7 @@ namespace MANCAL_WEB.frm_proy
         bl_adjunto objAdj;
         bl_detalle_pro objDet = new bl_detalle_pro();
         String un = "MAN";
-
+        
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack) 

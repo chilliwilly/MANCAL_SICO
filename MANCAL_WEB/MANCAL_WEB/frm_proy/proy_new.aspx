@@ -1121,16 +1121,16 @@
 
             function updDetalle() {
                 $('.gvDetalleProy').on('click', function () {
-                    itemnro = $('.item_', $(this).closest("tr")).html();
-                    $("#txt_nroparte").val($('.nro_parte', $(this).closest("tr")).html()); //txt_nro_parte_m
-                    $("#txt_descrip").val($('.descrip_', $(this).closest("tr")).html()); //txt_descrip_m
-                    $("#txt_cantidad").val($('.cantidad_', $(this).closest("tr")).html()); //txt_cantidad_m
-                    $("#txt_serie").val($('.nro_serie', $(this).closest("tr")).html()); //txt_serie_m
-                    $("#txt_crep").val($('.costo_rep', $(this).closest("tr")).html()); //txt_crep_m
-                    $("#txt_prep").val($('.precio_rep', $(this).closest("tr")).html()); //txt_prep_m
-                    $("#txt_cmo").val($('.costo_mo', $(this).closest("tr")).html()); //txt_cmo_m
-                    $("#txt_pmo").val($('.precio_mo', $(this).closest("tr")).html()); //txt_pmo_m
-                    $("#txt_monto").val($('.precio_t', $(this).closest("tr")).html()); //txt_monto_m
+                    itemnro = $('.item_', $(this).closest('tr')).html();
+                    $("#txt_nroparte").val($('.nro_parte', $(this).closest('tr')).html()); //txt_nro_parte_m
+                    $("#txt_descrip").val($('.descrip_', $(this).closest('tr')).html()); //txt_descrip_m
+                    $("#txt_cantidad").val($('.cantidad_', $(this).closest('tr')).html()); //txt_cantidad_m
+                    $("#txt_serie").val($('.nro_serie', $(this).closest('tr')).html()); //txt_serie_m
+                    $("#txt_crep").val($('.costo_rep', $(this).closest('tr')).html()); //txt_crep_m
+                    $("#txt_prep").val($('.precio_rep', $(this).closest('tr')).html()); //txt_prep_m
+                    $("#txt_cmo").val($('.costo_mo', $(this).closest('tr')).html()); //txt_cmo_m
+                    $("#txt_pmo").val($('.precio_mo', $(this).closest('tr')).html()); //txt_pmo_m
+                    $("#txt_monto").val($('.precio_t', $(this).closest('tr')).html()); //txt_monto_m
                 });
             }
 
@@ -1146,28 +1146,36 @@
                         }
                     }
                 });
-
-                $("#btn-cal-row").on('click', function () {
-                    var coti = $('#<%=cboTipoCotizacion.ClientID %>').val();
-                    var mone = $('#<%=cboTipoTarifa.ClientID %>').val();
-
-                    itemnro = itemnro ? itemnro : "1";
-
-                    var tot = sumEquipo(dataEquipoMod(), coti, mone);
-                    $("#txt_monto").val(tot);
-                });
-
-                $("#btn-mod-row").on('click', function () {
-                    updEquipo(dataEquipoMod());
-                    $("#<%=btnUpdate.ClientID %>").click();
-                    limpiaIngreso();
-                });
-
-                $("#btn-del-row").on('click', function () {
-                    delEquipo(dataEquipoMod());
-                    $("#<%=btnUpdate.ClientID %>").click();
-                });
             }
+
+            /*
+            ********************
+            */
+
+            $("#btn-cal-row").on('click', function () {
+                var coti = $('#<%=cboTipoCotizacion.ClientID %>').val();
+                var mone = $('#<%=cboTipoTarifa.ClientID %>').val();
+
+                itemnro = itemnro ? itemnro : "1";
+
+                var tot = sumEquipo(dataEquipoMod(), coti, mone);
+                $("#txt_monto").val(tot);
+            });
+
+            $("#btn-mod-row").on('click', function () {
+                updEquipo(dataEquipoMod());
+                $("#<%=btnUpdate.ClientID %>").click();
+                limpiaIngreso();
+            });
+
+            $("#btn-del-row").on('click', function () {
+                delEquipo(dataEquipoMod());
+                $("#<%=btnUpdate.ClientID %>").click();
+            });
+
+            /*
+            ********************
+            */
 
             $(function () {
                 $("#tab").tabs();
@@ -1265,6 +1273,14 @@
                         }
                     }
                 });
+            });
+
+            $('#frm-equipo-ins').validate({
+                rules: {
+                    txt_nroparte_ins: {
+                        required: true
+                    }
+                }
             });
         </script>
 
