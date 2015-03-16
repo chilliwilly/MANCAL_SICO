@@ -44,6 +44,7 @@
     <Compile Include="CotizacionAdjunto.cs" />
     <Compile Include="CotizacionCliente.cs" />
     <Compile Include="CotizacionEnvio.cs" />
+    <Compile Include="CotizacionEquipo.cs" />
     <Compile Include="CotizacionEstadoCliente.cs" />
     <Compile Include="CotizacionGarantia.cs" />
     <Compile Include="CotizacionGarantiaVal.cs" />

@@ -200,5 +200,53 @@ namespace MANCAL_WEB_DL
                 con.Close();
             }
         }
+
+        public DataTable selectEquipoBuscar(String nom, String mod, String nparte, String nserie, int idcli)
+        {
+            DataTable dt = new DataTable();
+
+            using (OracleConnection con = new OracleConnection(conStr))
+            {
+                con.Open();
+                con.BeginTransaction();
+                String qry_proc = "SP_SPAC_SEARCH_EQUIPO";
+                using (OracleCommand cmd_proc = new OracleCommand(qry_proc, con))
+                {
+                    cmd_proc.CommandType = CommandType.StoredProcedure;
+
+                    cmd_proc.Parameters.Add(new OracleParameter("P_NOMBRE", OracleDbType.Varchar2)).Value = nom;
+                    cmd_proc.Parameters["P_NOMBRE"].Direction = ParameterDirection.Input;
+
+                    cmd_proc.Parameters.Add(new OracleParameter("P_MODELO", OracleDbType.Varchar2)).Value = mod;
+                    cmd_proc.Parameters["P_MODELO"].Direction = ParameterDirection.Input;
+
+                    cmd_proc.Parameters.Add(new OracleParameter("P_PARTE", OracleDbType.Varchar2)).Value = nparte;
+                    cmd_proc.Parameters["P_PARTE"].Direction = ParameterDirection.Input;
+
+                    cmd_proc.Parameters.Add(new OracleParameter("P_SERIE", OracleDbType.Varchar2)).Value = nserie;
+                    cmd_proc.Parameters["P_SERIE"].Direction = ParameterDirection.Input;
+
+                    cmd_proc.Parameters.Add(new OracleParameter("P_TIPO", OracleDbType.Varchar2)).Value = null;
+                    cmd_proc.Parameters["P_TIPO"].Direction = ParameterDirection.Input;
+
+                    cmd_proc.Parameters.Add(new OracleParameter("P_ID_CLIENTE", OracleDbType.Int32)).Value = idcli;
+                    cmd_proc.Parameters["P_ID_CLIENTE"].Direction = ParameterDirection.Input;
+                }
+
+                String qry = "SELECT * FROM TBL_SPAC_SEARCH_EQUIPO_TMP";
+                using (OracleCommand cmd = new OracleCommand(qry, con))
+                {
+                    cmd.CommandType = CommandType.Text;
+
+                    using (OracleDataAdapter oda = new OracleDataAdapter(cmd)) 
+                    {
+                        oda.Fill(dt);
+                    }
+                }
+                con.Close();
+            }
+
+            return dt;
+        }
     }
 }

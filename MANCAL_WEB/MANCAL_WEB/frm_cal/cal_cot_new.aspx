@@ -30,6 +30,20 @@
                 });
             });
         }
+
+        function agregarEquipo() {
+            $("#btnAddEquipo").on('click', function () {
+                $("#dialog-equipo-busca").dialog({
+                    modal: true,
+                    width: "1000px",
+                    buttons: {
+                        "Cerrar": function () {
+                            $(this).dialog('close');
+                        }
+                    }
+                });
+            });
+        }
     </script>
 
 
@@ -357,672 +371,776 @@
         </asp:UpdatePanel>
     </div>
 
-    <%--SELECCION DE EQUIPO A COTIZAR --%>  
-    Datos Equipo
-    <asp:UpdatePanel ID="upSelectEqCotiza" runat="server" UpdateMode="Conditional">
-        <ContentTemplate>
-            <script type="text/javascript">
-                Sys.Application.add_load(agregarEquipo);
-     	    </script>       
+    <div id="dialog-tab">
+        <div id="tab"> 
+            <ul>
+                <li><a href="#tab-det-cot">Detalle Cotizacion</a></li>
+                <li><a href="#tab-costo">Otros Costos</a></li>
+                <li><a href="#tab-total">Total/Margenes</a></li>
+                <li><a href="#tab-total-ex">Total Exceder</a></li>
+                <li><a href="#tab-notas">Notas</a></li>
+                <li><a href="#tab-factura">Facturacion</a></li>
+                <li><a href="#tab-garantia">Garantia/Otros</a></li>
+                <li><a href="#tab-adjunto">Adjuntos</a></li>
+            </ul>
 
-            <table cellpadding="5px"><%--BOTON  QUE CALCULA EN CASO DE MODIFICAR LA CANTIDAD U OTROS VALORES QUE AFECTEN EL MONTO --%>
-                <tr>
-                    <td><input type="button" name="btnAddEquipo" id="btnAddEquipo" value="Agregar Equipo" /></td>
-                </tr>
-            </table>
-        </ContentTemplate>
-    </asp:UpdatePanel>
+            <div id="tab-det-cot">
+                Datos Equipo
+                <asp:UpdatePanel ID="upBtnBuscarEquipo" runat="server" UpdateMode="Conditional" style="display:none;">
+                    <ContentTemplate>
+                        <asp:Button ID="btnBuscarListaEquipo" runat="server" 
+                            onclick="btnBuscarListaEquipo_Click" />
+                    </ContentTemplate>
+                </asp:UpdatePanel>
+                <asp:UpdatePanel ID="upSelectEqCotiza" runat="server" UpdateMode="Conditional">
+                    <ContentTemplate>
+                        <script type="text/javascript">
+                            Sys.Application.add_load(agregarEquipo);
+     	                </script>       
+
+                        <table cellpadding="5px"><%--BOTON  QUE CALCULA EN CASO DE MODIFICAR LA CANTIDAD U OTROS VALORES QUE AFECTEN EL MONTO --%>
+                            <tr>
+                                <td><input type="button" name="btnAddEquipo" id="btnAddEquipo" value="Agregar Equipo" /></td>
+                            </tr>
+                        </table>
+                    </ContentTemplate>
+                </asp:UpdatePanel>
+
+                <br />
+
+                <asp:Panel ID="Panel1" runat="server" Width="100%" Height="165px"><%-- ACA VA EL GRIDVIEW ScrollBars="Vertical" --%>
+                    <asp:UpdatePanel ID="UpdatePanel5" runat="server" UpdateMode="Conditional"><ContentTemplate>
+                    <asp:GridView ID="GV1" runat="server" AutoGenerateColumns="False" 
+                        DataKeyNames="Item,IdCotizacion" PageSize="5" 
+                    PagerSettings-PageButtonCount="10" PagerSettings-Mode="NumericFirstLast" 
+                    PagerSettings-FirstPageText="Primera" PagerSettings-LastPageText="Ultima" 
+                            AllowPaging="true" >
+                        <Columns>
+
+                            <asp:TemplateField HeaderText="Id Cotizacion" ShowHeader="false" Visible="false">
+                                <EditItemTemplate>
+                                    <asp:Label ID="IdCotizacion" runat="server" Text='<%# Bind("IdCotizacion") %>'></asp:Label>
+                                </EditItemTemplate>
+                                <ItemTemplate>
+                                    <asp:Label ID="IdCotizacion" runat="server" Text='<%# Bind("IdCotizacion") %>'></asp:Label>
+                                </ItemTemplate>
+                            </asp:TemplateField>
+                            
+                            <asp:TemplateField HeaderText="Item" ItemStyle-Width="40px">
+                                <EditItemTemplate>
+                                    <asp:Label ID="Item" runat="server" Text='<%# Bind("Item") %>'></asp:Label>
+                                </EditItemTemplate>
+                                <ItemTemplate>
+                                    <asp:Label ID="Item" runat="server" Text='<%# Bind("Item") %>'></asp:Label>
+                                </ItemTemplate>
+                            </asp:TemplateField>
+
+                            <asp:TemplateField HeaderText="Nro Parte" ItemStyle-Width="160px">
+                                <EditItemTemplate>
+                                    <asp:Label ID="NroParte" runat="server" Text='<%# Bind("NroParte") %>'></asp:Label>
+                                </EditItemTemplate>
+                                <ItemTemplate>
+                                    <asp:Label ID="NroParte" runat="server" Text='<%# Bind("NroParte") %>'></asp:Label>
+                                </ItemTemplate>
+                            </asp:TemplateField>
+
+                            <asp:TemplateField HeaderText="Descripcion" ItemStyle-Width="260px">
+                                <EditItemTemplate>
+                                    <asp:TextBox ID="Descripcion" runat="server" Width="260px" Text='<%# Bind("Descripcion") %>' />
+                                </EditItemTemplate>
+                                <ItemTemplate>
+                                    <asp:Label ID="Descripcion" runat="server" Text='<%# Bind("Descripcion") %>'></asp:Label>
+                                </ItemTemplate>
+                            </asp:TemplateField>
+                            
+                            <asp:TemplateField HeaderText="Tipo Trabajo" ItemStyle-Width="130px">
+                                <EditItemTemplate>
+                                    <asp:Label ID="TipoTrabajo" runat="server" Text='<%# Eval("NOMTIPOTRABAJO") %>'></asp:Label>                                                                                                         
+                                </EditItemTemplate>
+                                <ItemTemplate>
+                                    <asp:Label ID="TipoTrabajo" runat="server" Text='<%# Eval("NOMTIPOTRABAJO") %>'></asp:Label>
+                                </ItemTemplate>
+                            </asp:TemplateField>
+
+                            <asp:TemplateField HeaderText="Cantidad" ItemStyle-Width="50px">
+                                <EditItemTemplate>
+                                    <asp:TextBox ID="Cantidad" runat="server" Width="50px" Text='<%# Bind("Cantidad") %>'/>
+                                </EditItemTemplate>
+                                <ItemTemplate>
+                                    <asp:Label ID="Cantidad" runat="server" Text='<%# Bind("Cantidad") %>'></asp:Label>
+                                </ItemTemplate>
+                            </asp:TemplateField>
+
+                            <asp:TemplateField HeaderText="Nro Serie" ItemStyle-Width="100px">
+                                <EditItemTemplate>
+                                    <asp:TextBox ID="NroSerie" runat="server" Width="100px" Text='<%# Bind("NroSerie") %>' />
+                                </EditItemTemplate>
+                                <ItemTemplate>
+                                    <asp:Label ID="NroSerie" runat="server" Text='<%# Bind("NroSerie") %>'></asp:Label>
+                                </ItemTemplate>
+                            </asp:TemplateField>
+
+                            <asp:TemplateField HeaderText="Precio Repuesto" ItemStyle-Width="100px">
+                                <EditItemTemplate>
+                                    <asp:TextBox ID="PrecioRep" runat="server" Width="100px" Text='<%# Bind("PrecioRep") %>' />
+                                </EditItemTemplate>
+                                <ItemTemplate>
+                                    <asp:Label ID="PrecioRep" runat="server" Text='<%# Bind("PrecioRep") %>'></asp:Label>
+                                </ItemTemplate>
+                            </asp:TemplateField>
+
+                            <asp:TemplateField HeaderText="Costo MO" ItemStyle-Width="100px">
+                                <EditItemTemplate>
+                                    <asp:TextBox ID="CostoMO" runat="server" ReadOnly="true" Width="100px" Text='<%# Bind("CostoMO") %>' />
+                                </EditItemTemplate>
+                                <ItemTemplate>
+                                    <asp:Label ID="CostoMO" runat="server" Text='<%# Bind("CostoMO") %>'></asp:Label>
+                                </ItemTemplate>
+                            </asp:TemplateField>
+
+                            <asp:TemplateField HeaderText="Precio MO" ItemStyle-Width="100px">
+                                <EditItemTemplate>
+                                    <asp:TextBox ID="PrecioMO" runat="server" Width="100px" Text='<%# Bind("PrecioMO") %>'/>
+                                </EditItemTemplate>
+                                <ItemTemplate>
+                                    <asp:Label ID="PrecioMO" runat="server" Text='<%# Bind("PrecioMO") %>'></asp:Label>
+                                </ItemTemplate>
+                            </asp:TemplateField>
+
+                            <asp:TemplateField HeaderText="Tipo Tarifa Original" ItemStyle-Width="100px" Visible="false">
+                                <EditItemTemplate>
+                                    <asp:Label ID="TipoTarifaOriginal" runat="server" Text='<%# Bind("TipoTarifaOriginal") %>'></asp:Label>
+                                </EditItemTemplate>
+                                <ItemTemplate>
+                                    <asp:Label ID="TipoTarifaOriginal" runat="server" Text='<%# Bind("TipoTarifaOriginal") %>'></asp:Label>
+                                </ItemTemplate>
+                            </asp:TemplateField>
+
+                            <asp:TemplateField HeaderText="Total" ItemStyle-Width="100px">
+                                <EditItemTemplate>
+                                    <asp:TextBox ID="Total" runat="server" ReadOnly="true" Width="100px" Text='<%# Bind("Total") %>'/>
+                                </EditItemTemplate>
+                                <ItemTemplate>
+                                    <asp:Label ID="Total" runat="server" Text='<%# Bind("Total") %>'></asp:Label>
+                                </ItemTemplate>
+                            </asp:TemplateField>
+
+                            <asp:TemplateField HeaderText="Total No Exceder" ItemStyle-Width="100px">
+                                <EditItemTemplate>
+                                    <asp:TextBox ID="TotalExceder" runat="server" Width="100px" Text='<%# Bind("TotalExceder") %>'/>
+                                </EditItemTemplate>
+                                <ItemTemplate>
+                                    <asp:Label ID="TotalExceder" runat="server" Text='<%# Bind("TotalExceder") %>'></asp:Label>
+                                </ItemTemplate>
+                            </asp:TemplateField>
+
+                            <asp:TemplateField HeaderText="Editar" ShowHeader="false">
+                                <EditItemTemplate>
+                                    <asp:LinkButton ID="btnUpdate" runat="server" CausesValidation="true" CommandName="bActualizar" Text="A"></asp:LinkButton>
+                                    <asp:LinkButton ID="btnCancel" runat="server" CausesValidation="false" CommandName="bCancelar" Text="C"></asp:LinkButton>
+                                    <asp:LinkButton ID="btnCalcula" runat="server" CausesValidation="false" CommandName="bCalcula" Text="S"></asp:LinkButton>
+                                </EditItemTemplate>
+                                <ItemTemplate>
+                                    <asp:LinkButton ID="btnEdit" runat="server" CausesValidation="false" CommandName="bEditar" Text="E" Enabled="false"></asp:LinkButton>
+                                    <asp:LinkButton ID="btnDelete" runat="server" CausesValidation="false" CommandName="bBorrar" Text="B"></asp:LinkButton>
+                                </ItemTemplate>
+                            </asp:TemplateField>
+                        </Columns>
+                    </asp:GridView></ContentTemplate>
+                    </asp:UpdatePanel>
+                </asp:Panel>
+            </div>
+
+            <div id="tab-costo">
+                <asp:UpdatePanel ID="panelTransCom" runat="server" UpdateMode="Conditional">
+                    <ContentTemplate>        
+        
+                        <%--TRANSPORTE --%>
+                        <fieldset style="width: 30%; padding-left:13px; padding-right:13px;">
+                            <legend>Transporte</legend>
+                            <table align="center">
+                                <tr>
+                                    <td>Incluye Transporte</td>
+                                    <td></td>
+                                    <td>
+                                        <asp:CheckBox ID="chkTransporte" runat="server" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Region Cotizacion</td>
+                                    <td></td>
+                                    <td>
+                                        <asp:DropDownList ID="cboRegion" runat="server" Width="200px" 
+                                            oninit="cboRegion_Init">
+                                        </asp:DropDownList>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Tipo Traslado</td>
+                                    <td></td>
+                                    <td>
+                                        <asp:DropDownList ID="cboTraslado" runat="server" Width="150px" 
+                                            oninit="cboTraslado_Init">
+                                        </asp:DropDownList>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Total Traslado</td>
+                                    <td></td>
+                                    <td>
+                                        <asp:TextBox ID="txtTotalTransporte" runat="server" style="text-align: right;" ReadOnly="true" Width="100px">0</asp:TextBox>
+                                    </td>
+                                </tr>
+                                <tr>                
+                                    <td colspan="3" style="text-align:center;">
+                                        <asp:Button ID="Button2" runat="server" Text="Distribuir Precio" />
+                                    </td>
+                                </tr>
+                            </table>
+                        </fieldset>
+
+                        <%--COMISION --%>
+                        <fieldset style="width: 55%;">
+                            <legend>Costo Comision</legend>
+                            <table align="center">
+                                <tr>
+                                    <td>Cantidad Personas</td>
+                                    <td>
+                                        <asp:TextBox ID="TextBox1" runat="server" Width="40px" style="text-align: right;">0</asp:TextBox>
+                                    </td>
+                                    <td>Lugar</td>
+                                    <td colspan="3">
+                                        <asp:DropDownList ID="cboLugarComision" runat="server" Width="200px" 
+                                            oninit="cboLugarComision_Init">
+                                        </asp:DropDownList>
+                                    </td>                
+                                </tr>
+                                <tr>
+                                    <td>Cantidad Dias</td>
+                                    <td>
+                                        <asp:TextBox ID="TextBox2" runat="server" Width="40px" style="text-align: right;">0</asp:TextBox>
+                                    </td>
+                                    <td>Transporte DTS</td>
+                                    <td>
+                                        <asp:TextBox ID="TextBox9" runat="server" Width="90px" ReadOnly="true" style="text-align: right;">0</asp:TextBox>
+                                    </td>
+                                    <td>Hotel</td>
+                                    <td>
+                                        <asp:TextBox ID="TextBox10" runat="server" Width="90px" ReadOnly="true" style="text-align: right;">0</asp:TextBox>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Cantidad Vehiculo</td>
+                                    <td>
+                                        <asp:TextBox ID="TextBox3" runat="server" Width="40px" style="text-align: right;">0</asp:TextBox>
+                                    </td>
+                                    <td>Transporte Hotel</td>
+                                    <td>
+                                        <asp:TextBox ID="TextBox11" runat="server" Width="90px" ReadOnly="true" style="text-align: right;">0</asp:TextBox>
+                                    </td>
+                                    <td>Fondo a Rendir</td>
+                                    <td>
+                                        <asp:TextBox ID="TextBox12" runat="server" Width="90px" ReadOnly="true" style="text-align: right;">0</asp:TextBox>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Traslado Eq/Doc Ciudad</td>
+                                    <td>
+                                        <asp:TextBox ID="TextBox4" runat="server" Width="40px" style="text-align: right;">0</asp:TextBox>
+                                    </td>
+                                    <td>Transporte Avion Persona</td>
+                                    <td>
+                                        <asp:TextBox ID="TextBox13" runat="server" Width="90px" ReadOnly="true" style="text-align: right;">0</asp:TextBox>
+                                    </td>
+                                    <td>Gasto Representacion</td>
+                                    <td>
+                                        <asp:TextBox ID="TextBox14" runat="server" Width="90px" ReadOnly="true" style="text-align: right;">0</asp:TextBox>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Traslado Eq/Doc Avion</td>
+                                    <td>
+                                        <asp:TextBox ID="TextBox5" runat="server" Width="40px" style="text-align: right;">0</asp:TextBox>
+                                    </td>
+                                    <td>Arriendo Vehiculo</td>
+                                    <td>
+                                        <asp:TextBox ID="TextBox15" runat="server" Width="90px" ReadOnly="true" style="text-align: right;">0</asp:TextBox>
+                                    </td>
+                                    <td>Total Costo Comision</td>
+                                    <td>
+                                        <asp:TextBox ID="TextBox16" runat="server" Width="90px" ReadOnly="true" style="text-align: right;">0</asp:TextBox>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Fondo a Rendir</td>
+                                    <td>
+                                        <asp:TextBox ID="TextBox6" runat="server" Width="40px" style="text-align: right;">0</asp:TextBox>
+                                    </td>
+                                    <td>Traslado Eq/Doc Ciudad</td>
+                                    <td>
+                                        <asp:TextBox ID="TextBox17" runat="server" Width="90px" ReadOnly="true" style="text-align: right;">0</asp:TextBox>
+                                    </td>
+                                    <td>Total Precio Comision</td>
+                                    <td>
+                                        <asp:TextBox ID="TextBox18" runat="server" Width="90px" ReadOnly="true" style="text-align: right;">0</asp:TextBox>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Gastos Representacion</td>
+                                    <td>
+                                        <asp:TextBox ID="TextBox7" runat="server" Width="40px" style="text-align: right;">0</asp:TextBox>
+                                    </td>
+                                    <td>Traslado Eq/Doc Avion</td>
+                                    <td>
+                                        <asp:TextBox ID="TextBox19" runat="server" Width="90px" ReadOnly="true" style="text-align: right;">0</asp:TextBox>
+                                    </td>
+                                    <td colspan="2" rowspan="2" style="text-align:center;">
+                                        <asp:Button ID="Button1" runat="server" Text="Cargar Precio" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Cantidad Com 1 Mes</td>                
+                                    <td>
+                                        <asp:TextBox ID="TextBox8" runat="server" Width="40px" style="text-align: right;">0</asp:TextBox>
+                                    </td>
+                                    <td>Viatico</td>
+                                    <td>
+                                        <asp:TextBox ID="TextBox20" runat="server" Width="90px" ReadOnly="true" style="text-align: right;">0</asp:TextBox>
+                                    </td>
+                                </tr>
+                            </table>
+                        </fieldset>
+        
+                    </ContentTemplate>
+                </asp:UpdatePanel>
+            </div>
+
+            <div id="tab-total">
+                <asp:UpdatePanel ID="panelCalculo" runat="server" UpdateMode="Conditional">
+                    <ContentTemplate>
+                        <fieldset style="width:20%;" class="inline">
+                            <legend>Margenes Comerciales</legend>
+                            <table align="center">
+                                <tr>
+                                    <td>
+                                        Total Costo MO
+                                    </td>
+                                    <td>
+                                        <asp:TextBox ID="txtTotalCostoMo" runat="server" Width="100px" 
+                                                ReadOnly="True" style="text-align: right;">0</asp:TextBox>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Total Costo Rpto
+                                    </td>
+                                    <td>
+                                        <asp:TextBox ID="txtTotalCostoRpto" runat="server" 
+                                                Width="100px" ReadOnly="True" style="text-align: right;">0</asp:TextBox>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Mg Operacional %
+                                    </td>
+                                    <td>
+                                        <asp:TextBox ID="txtMgOpPorc" runat="server" Width="100px" 
+                                                ReadOnly="True" style="text-align: right;">0</asp:TextBox>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="font-weight:bold;">
+                                        Mg Bruto %
+                                    </td>
+                                    <td>
+                                        <asp:TextBox ID="txtMgBrutoPorc" runat="server" Width="100px" 
+                                                ReadOnly="True" style="text-align: right;">0</asp:TextBox>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Mg Contribucion
+                                    </td>
+                                    <td>
+                                        <asp:TextBox ID="txtMgContribucion" runat="server" 
+                                                Width="100px" ReadOnly="True" style="text-align: right;">0</asp:TextBox>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Mg Contribucion %
+                                    </td>
+                                    <td>
+                                        <asp:TextBox ID="txtMgContribucionPorc" runat="server" 
+                                                Width="100px" ReadOnly="True" style="text-align: right;">0</asp:TextBox>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Utilidad Esperada %
+                                    </td>
+                                    <td>
+                                        <asp:TextBox ID="txtUtilidadEspPorc" runat="server" 
+                                                Width="100px" ReadOnly="True" style="text-align: right;">0</asp:TextBox>
+                                    </td>
+                                </tr>
+                            </table>
+                        </fieldset>
+
+                        <fieldset style="width:25%;" class="inline">
+                            <legend>Impuesto</legend>
+                            <table align="center">
+                                <tr>
+                                    <td>
+                                        Pago Impuesto
+                                    </td>
+                                    <td>
+                                        <asp:DropDownList ID="cboTipoImpuesto" runat="server">
+                                            <asp:ListItem Value="0">Seleccione</asp:ListItem>
+                                            <asp:ListItem Value="1">c/ IVA</asp:ListItem>
+                                            <asp:ListItem Value="2">s/ IVA</asp:ListItem>
+                                        </asp:DropDownList>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Con Descuento
+                                    </td>
+                                    <td>
+                                        <asp:CheckBox ID="chkDcto" runat="server"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Tipo Moneda
+                                    </td>
+                                    <td>
+                                        <asp:TextBox ID="txtTipoMoneda" runat="server" ReadOnly="True"></asp:TextBox>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" style="text-align:center;">
+                                        <asp:Button ID="btnCalcular" runat="server" Text="Calcular" Width="90px" 
+                                            onclick="btnCalcular_Click" />
+                                    </td>
+                                </tr>
+                            </table>
+                        </fieldset>
+
+                        <fieldset style="width:15%;" class="inline">
+                            <legend>Precio Total</legend>
+                            <table align="center">
+                                <tr>
+                                    <td>
+                                        Neto
+                                    </td>
+                                    <td>
+                                        <asp:TextBox ID="txtNeto" runat="server" Width="100px" 
+                                                ReadOnly="True" style="text-align: right;">0</asp:TextBox>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Descuento
+                                    </td>
+                                    <td>
+                                        <asp:TextBox ID="txtDcto" runat="server" Width="100px" 
+                                                Enabled="False" style="text-align: right;">0</asp:TextBox>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Neto Dcto
+                                    </td>
+                                    <td>
+                                        <asp:TextBox ID="txtNetoDcto" runat="server" Width="100px" 
+                                                ReadOnly="True" style="text-align: right;">0</asp:TextBox>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        IVA
+                                    </td>
+                                    <td>
+                                        <asp:TextBox ID="txtIva" runat="server" Width="100px" 
+                                                ReadOnly="True" style="text-align: right;">0</asp:TextBox>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Total
+                                    </td>
+                                    <td>
+                                        <asp:TextBox ID="txtTotal" runat="server" Width="100px" 
+                                                ReadOnly="True" style="text-align: right;">0</asp:TextBox>
+                                    </td>
+                                </tr>
+                            </table>
+                        </fieldset>
+                    </ContentTemplate>
+                </asp:UpdatePanel>
+            </div>
+
+            <div id="tab-total-ex">
+                Solo para cotizaciones de mantenimiento
+            </div>
+
+            <div id="tab-notas">
+                <asp:UpdatePanel runat="server" ID="panelNota" UpdateMode="Conditional">
+                    <ContentTemplate>
+                        <table cellpadding="5px">
+                            <tr>
+                                <td>Nota 1:</td>
+                                <td>
+                                    <asp:TextBox ID="txtNotaUno" runat="server" TextMode="MultiLine" Width="625px" Height="50px" onKeyPress="return taLimit(this)" onKeyUp="return taCount(this,'myCounter')">Sin Nota</asp:TextBox>                
+                                </td>
+                                <td>
+                                    Caracteres restantes: <span id="myCounter">400</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Nota 2:</td>
+                                <td>
+                                    <asp:TextBox ID="txtNotaDos" runat="server" TextMode="MultiLine" Width="625px" Height="50px" onKeyPress="return taLimit(this)" onKeyUp="return taCount(this,'myCounterDos')">Sin Nota</asp:TextBox>
+                                </td>
+                                <td>
+                                    Caracteres restantes: <span id="myCounterDos">400</span>
+                                </td>
+                            </tr>
+                        </table>
+                    </ContentTemplate>
+                </asp:UpdatePanel>
+            </div>
+
+            <div id="tab-factura">
+                <asp:UpdatePanel runat="server" ID="panelComentarirFac" UpdateMode="Conditional">
+                    <ContentTemplate>
+                        <table cellpadding="5px">
+                            <tr>
+                                <td style="width:90px;">
+                                    Facturación
+                                      <br />
+                                    <asp:DropDownList ID="cboFacturacion" runat="server" 
+                                        Width="140px" oninit="cboFacturacion_Init"> 
+                                    </asp:DropDownList>
+                                </td>
+                                <td>
+                                </td>
+                                <td class="style12">Comentario Facturacion<br />
+                                    <asp:TextBox ID="txtFacturacion" runat="server" Height="50px" 
+                                        TextMode="MultiLine" Width="421px" ReadOnly="true"></asp:TextBox>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="width:90px;">
+                                    Forma Pago Facturación
+                                    <br />
+                                    <asp:DropDownList ID="cboFormaPago" runat="server" Width="140px" 
+                                        oninit="cboFormaPago_Init">
+                                    </asp:DropDownList>
+                                </td>
+                                <td>
+                                </td>
+                                <td class="style12">Comentario Forma Pago Facturacion<br />
+                                    <asp:TextBox ID="txtFormaPago" runat="server" Height="50px" 
+                                        TextMode="MultiLine" Width="422px">a contar de la fecha de facturación</asp:TextBox>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="width:90px;">
+                                    Plazo Entrega<br />
+                                    <asp:DropDownList ID="cboPlazoEntrega" runat="server" Width="140px" 
+                                        oninit="cboPlazoEntrega_Init">
+                                    </asp:DropDownList>                
+                                </td>
+                                <td>
+                                </td>
+                                <td class="style12">Comentario Plazo Entrega<br />
+                                    <asp:TextBox ID="txtPlazoEntrega" runat="server" Height="50px" 
+                                        TextMode="MultiLine" Width="422px" ReadOnly="true"></asp:TextBox>
+                                </td>
+                            </tr>
+                        </table>
+
+                        <div id="dialog-comentario-fac" style="display:none;">
+                            Seleccione una opcion la cual puede modificar, o bien escriba una nueva.
+                            <br /><br />
+                            <asp:RadioButtonList ID="rblComentarioFac" runat="server" 
+                                oninit="rblComentarioFac_Init">
+                            </asp:RadioButtonList>
+                            <br /> 
+                            <textarea name="txta-fac" id="txta-fac" rows="6" cols="60" maxlength="200"></textarea>
+                        </div>
+
+                        <div id="dialog-comentario-pen" style="display:none;">
+                            Seleccione una opcion la cual puede modificar, o bien escriba una nueva.
+                            <br /><br />
+                            <asp:RadioButtonList ID="rblComentarioPen" runat="server" 
+                                oninit="rblComentarioPen_Init">
+                            </asp:RadioButtonList>
+                            <br />
+                            <textarea name="txta-pen" id="txta-pen" rows="6" cols="60" maxlength="200"></textarea>                  
+                        </div>
+
+                    </ContentTemplate>
+                </asp:UpdatePanel>
+            </div>
+
+            <div id="tab-garantia">
+                <asp:UpdatePanel ID="panelJefe" runat="server" UpdateMode="Conditional">    
+                    <ContentTemplate>
+                    <script type="text/javascript">
+                        Sys.Application.add_load(chgSectorEntrega);
+                    </script>
+                        <table cellpadding="5px">
+                        <tr>
+                            <td>Texto solo cotizaciones<br /> clientes extranjeros</td>
+                            <td>
+                                <asp:DropDownList ID="cboTextCotEx" runat="server">
+                                    <asp:ListItem>Seleccione...</asp:ListItem>
+                                    <asp:ListItem>Todos los costos de traslado e impuestos serán de cargo del cliente.</asp:ListItem>
+                                    <asp:ListItem>Los costos de traslado e impuestos en origen serán de cargo del cliente.</asp:ListItem>
+                                    <asp:ListItem>Los costos e impuestos de exportación serán de cargo de DTS Ltda.</asp:ListItem>
+                                    <asp:ListItem>Todos los costos de traslado e impuestos aduaneros serán de cargo de DTS Ltda.</asp:ListItem>
+                                    <asp:ListItem>Otro</asp:ListItem>
+                                </asp:DropDownList>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Lugar Ejecucion Trabajos</td>
+                            <td>
+                                <asp:DropDownList ID="cboEjecTrab" runat="server" oninit="cboEjecTrab_Init">
+                                </asp:DropDownList>                                           
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Lugar de Entrega</td>
+                            <td>
+                                <asp:DropDownList ID="cboLugarEntrega" runat="server" 
+                                    oninit="cboLugarEntrega_Init">
+                                </asp:DropDownList>
+                        &nbsp;&nbsp;&nbsp;&nbsp; Sector Entrega
+                                <asp:TextBox ID="txtSectorEntrega" runat="server" Width="400px"></asp:TextBox>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Validez Oferta</td>
+                            <td>
+                                <asp:TextBox ID="txtValidezOferta" runat="server" style="text-align:center;"></asp:TextBox>
+                                <asp:CalendarExtender ID="CalendarExtender2" runat="server" TargetControlID="txtValidezOferta" FirstDayOfWeek="Monday" Format="dd/MM/yyyy">
+                                </asp:CalendarExtender>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Garantia</td>
+                            <td>
+                                <asp:DropDownList ID="cboGarantia" runat="server" oninit="cboGarantia_Init">
+                                </asp:DropDownList>
+
+                            &nbsp;&nbsp;&nbsp;&nbsp; Validez Garantia
+
+                                <asp:DropDownList ID="cboValidezGar" runat="server" oninit="cboValidezGar_Init">
+                                </asp:DropDownList>            
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Aceptador por</td>
+                            <td>
+                                <asp:DropDownList ID="cboJefe" runat="server" AutoPostBack="True" 
+                                    oninit="cboJefe_Init" 
+                                    onselectedindexchanged="cboJefe_SelectedIndexChanged">
+                                </asp:DropDownList>&nbsp;&nbsp;&nbsp;&nbsp;
+                                Mail&nbsp;<asp:TextBox ID="txtMailJefe" runat="server" ReadOnly="True"></asp:TextBox>&nbsp;&nbsp;&nbsp;&nbsp;
+                                Cargo&nbsp;<asp:TextBox ID="txtCargoJefe" runat="server" Width="180px" 
+                                    ReadOnly="True"></asp:TextBox>
+                            </td>
+                        </tr>
+                        </table>                    
+                    </ContentTemplate>
+                </asp:UpdatePanel>
+            </div>
+
+            <div id="tab-adjunto">
+                Archivos Adjuntos
+                <asp:UpdatePanel ID="udpArchivo" runat="server" UpdateMode="Conditional">
+                    <ContentTemplate>
+                        <asp:GridView ID="gvArchivo" runat="server" AutoGenerateColumns="False" 
+                        DataKeyNames="ADJUNTO_ID,COTIZ_ID" PageSize="5" 
+                    PagerSettings-PageButtonCount="10" PagerSettings-Mode="NumericFirstLast" 
+                    PagerSettings-FirstPageText="Primera" PagerSettings-LastPageText="Ultima" 
+                            AllowPaging="true" onpageindexchanging="gvArchivo_PageIndexChanging" 
+                            onrowcommand="gvArchivo_RowCommand">
+                            <RowStyle CssClass="gvArchivoDet" />
+                            <Columns>
+
+                                <asp:TemplateField HeaderText="Item" ItemStyle-Width="50px">
+                                    <ItemTemplate>
+                                        <asp:Label ID="ADJUNTO_ID" runat="server" CssClass="adj_nroitem" Text='<%# Bind("ADJUNTO_ID") %>'></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+
+                                <asp:TemplateField HeaderText="ID Cotiz" ItemStyle-Width="100px" Visible="false">
+                                    <ItemTemplate>
+                                        <asp:Label ID="COTIZ_ID" runat="server" CssClass="adj_cotid" Text='<%# Bind("COTIZ_ID") %>'></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+
+                                <asp:TemplateField HeaderText="Nombre Adjunto" ItemStyle-Width="250px">
+                                    <ItemTemplate>
+                                        <asp:HyperLink ID="ADJUNTO_NOMBRE" CssClass="adj_direccion" runat="server" Text='<%# Eval("ADJUNTO_NOMBRE") %>' NavigateUrl='<%# Eval("ADJUNTO_DIR") %>' Target="_blank"></asp:HyperLink>                            
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+
+                                <asp:TemplateField HeaderText="Link Doc" ItemStyle-Width="100px" Visible="false">
+                                    <ItemTemplate>
+                                        <asp:Label ID="ADJUNTO_DIR" runat="server" Text='<%# Bind("ADJUNTO_DIR") %>'></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                      
+                                <asp:TemplateField HeaderText="Borrar" ItemStyle-Width="60px">
+                                    <ItemTemplate>
+                                        <a href="javascript:void(null);" id="btn-del-file" onclick="borraArchivo();" style="display:inline-block;" class="ui-icon ui-icon-close"></a>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                            </Columns>            
+                        </asp:GridView>
+
+                        <asp:Button ID="btnUpdateDoc" runat="server" style="display:none;" OnClick="btnUpdateDoc_Click"/>
+
+                    </ContentTemplate>        
+                </asp:UpdatePanel>
+            </div>
+        </div>
+    </div>
+
+    <%--SELECCION DE EQUIPO A COTIZAR --%>  
+    
     
     <%--DETALLE DE EQUIPOS AGREGADOS--%>
     <br />
-    <asp:Panel ID="Panel1" runat="server" Width="100%" Height="165px"><%-- ACA VA EL GRIDVIEW ScrollBars="Vertical" --%>
-        <asp:UpdatePanel ID="UpdatePanel5" runat="server" UpdateMode="Conditional"><ContentTemplate>
-        <asp:GridView ID="GV1" runat="server" AutoGenerateColumns="False" 
-            DataKeyNames="Item,IdCotizacion" PageSize="5" 
-        PagerSettings-PageButtonCount="10" PagerSettings-Mode="NumericFirstLast" 
-        PagerSettings-FirstPageText="Primera" PagerSettings-LastPageText="Ultima" 
-                AllowPaging="true" >
-            <Columns>
-
-                <asp:TemplateField HeaderText="Id Cotizacion" ShowHeader="false" Visible="false">
-                    <EditItemTemplate>
-                        <asp:Label ID="IdCotizacion" runat="server" Text='<%# Bind("IdCotizacion") %>'></asp:Label>
-                    </EditItemTemplate>
-                    <ItemTemplate>
-                        <asp:Label ID="IdCotizacion" runat="server" Text='<%# Bind("IdCotizacion") %>'></asp:Label>
-                    </ItemTemplate>
-                </asp:TemplateField>
-                            
-                <asp:TemplateField HeaderText="Item" ItemStyle-Width="40px">
-                    <EditItemTemplate>
-                        <asp:Label ID="Item" runat="server" Text='<%# Bind("Item") %>'></asp:Label>
-                    </EditItemTemplate>
-                    <ItemTemplate>
-                        <asp:Label ID="Item" runat="server" Text='<%# Bind("Item") %>'></asp:Label>
-                    </ItemTemplate>
-                </asp:TemplateField>
-
-                <asp:TemplateField HeaderText="Nro Parte" ItemStyle-Width="160px">
-                    <EditItemTemplate>
-                        <asp:Label ID="NroParte" runat="server" Text='<%# Bind("NroParte") %>'></asp:Label>
-                    </EditItemTemplate>
-                    <ItemTemplate>
-                        <asp:Label ID="NroParte" runat="server" Text='<%# Bind("NroParte") %>'></asp:Label>
-                    </ItemTemplate>
-                </asp:TemplateField>
-
-                <asp:TemplateField HeaderText="Descripcion" ItemStyle-Width="260px">
-                    <EditItemTemplate>
-                        <asp:TextBox ID="Descripcion" runat="server" Width="260px" Text='<%# Bind("Descripcion") %>' />
-                    </EditItemTemplate>
-                    <ItemTemplate>
-                        <asp:Label ID="Descripcion" runat="server" Text='<%# Bind("Descripcion") %>'></asp:Label>
-                    </ItemTemplate>
-                </asp:TemplateField>
-                            
-                <asp:TemplateField HeaderText="Tipo Trabajo" ItemStyle-Width="130px">
-                    <EditItemTemplate>
-                        <asp:Label ID="TipoTrabajo" runat="server" Text='<%# Eval("NOMTIPOTRABAJO") %>'></asp:Label>                                                                                                         
-                    </EditItemTemplate>
-                    <ItemTemplate>
-                        <asp:Label ID="TipoTrabajo" runat="server" Text='<%# Eval("NOMTIPOTRABAJO") %>'></asp:Label>
-                    </ItemTemplate>
-                </asp:TemplateField>
-
-                <asp:TemplateField HeaderText="Cantidad" ItemStyle-Width="50px">
-                    <EditItemTemplate>
-                        <asp:TextBox ID="Cantidad" runat="server" Width="50px" Text='<%# Bind("Cantidad") %>'/>
-                    </EditItemTemplate>
-                    <ItemTemplate>
-                        <asp:Label ID="Cantidad" runat="server" Text='<%# Bind("Cantidad") %>'></asp:Label>
-                    </ItemTemplate>
-                </asp:TemplateField>
-
-                <asp:TemplateField HeaderText="Nro Serie" ItemStyle-Width="100px">
-                    <EditItemTemplate>
-                        <asp:TextBox ID="NroSerie" runat="server" Width="100px" Text='<%# Bind("NroSerie") %>' />
-                    </EditItemTemplate>
-                    <ItemTemplate>
-                        <asp:Label ID="NroSerie" runat="server" Text='<%# Bind("NroSerie") %>'></asp:Label>
-                    </ItemTemplate>
-                </asp:TemplateField>
-
-                <asp:TemplateField HeaderText="Precio Repuesto" ItemStyle-Width="100px">
-                    <EditItemTemplate>
-                        <asp:TextBox ID="PrecioRep" runat="server" Width="100px" Text='<%# Bind("PrecioRep") %>' />
-                    </EditItemTemplate>
-                    <ItemTemplate>
-                        <asp:Label ID="PrecioRep" runat="server" Text='<%# Bind("PrecioRep") %>'></asp:Label>
-                    </ItemTemplate>
-                </asp:TemplateField>
-
-                <asp:TemplateField HeaderText="Costo MO" ItemStyle-Width="100px">
-                    <EditItemTemplate>
-                        <asp:TextBox ID="CostoMO" runat="server" ReadOnly="true" Width="100px" Text='<%# Bind("CostoMO") %>' />
-                    </EditItemTemplate>
-                    <ItemTemplate>
-                        <asp:Label ID="CostoMO" runat="server" Text='<%# Bind("CostoMO") %>'></asp:Label>
-                    </ItemTemplate>
-                </asp:TemplateField>
-
-                <asp:TemplateField HeaderText="Precio MO" ItemStyle-Width="100px">
-                    <EditItemTemplate>
-                        <asp:TextBox ID="PrecioMO" runat="server" Width="100px" Text='<%# Bind("PrecioMO") %>'/>
-                    </EditItemTemplate>
-                    <ItemTemplate>
-                        <asp:Label ID="PrecioMO" runat="server" Text='<%# Bind("PrecioMO") %>'></asp:Label>
-                    </ItemTemplate>
-                </asp:TemplateField>
-
-                <asp:TemplateField HeaderText="Tipo Tarifa Original" ItemStyle-Width="100px" Visible="false">
-                    <EditItemTemplate>
-                        <asp:Label ID="TipoTarifaOriginal" runat="server" Text='<%# Bind("TipoTarifaOriginal") %>'></asp:Label>
-                    </EditItemTemplate>
-                    <ItemTemplate>
-                        <asp:Label ID="TipoTarifaOriginal" runat="server" Text='<%# Bind("TipoTarifaOriginal") %>'></asp:Label>
-                    </ItemTemplate>
-                </asp:TemplateField>
-
-                <asp:TemplateField HeaderText="Total" ItemStyle-Width="100px">
-                    <EditItemTemplate>
-                        <asp:TextBox ID="Total" runat="server" ReadOnly="true" Width="100px" Text='<%# Bind("Total") %>'/>
-                    </EditItemTemplate>
-                    <ItemTemplate>
-                        <asp:Label ID="Total" runat="server" Text='<%# Bind("Total") %>'></asp:Label>
-                    </ItemTemplate>
-                </asp:TemplateField>
-
-                <asp:TemplateField HeaderText="Total No Exceder" ItemStyle-Width="100px">
-                    <EditItemTemplate>
-                        <asp:TextBox ID="TotalExceder" runat="server" Width="100px" Text='<%# Bind("TotalExceder") %>'/>
-                    </EditItemTemplate>
-                    <ItemTemplate>
-                        <asp:Label ID="TotalExceder" runat="server" Text='<%# Bind("TotalExceder") %>'></asp:Label>
-                    </ItemTemplate>
-                </asp:TemplateField>
-
-                <asp:TemplateField HeaderText="Editar" ShowHeader="false">
-                    <EditItemTemplate>
-                        <asp:LinkButton ID="btnUpdate" runat="server" CausesValidation="true" CommandName="bActualizar" Text="A"></asp:LinkButton>
-                        <asp:LinkButton ID="btnCancel" runat="server" CausesValidation="false" CommandName="bCancelar" Text="C"></asp:LinkButton>
-                        <asp:LinkButton ID="btnCalcula" runat="server" CausesValidation="false" CommandName="bCalcula" Text="S"></asp:LinkButton>
-                    </EditItemTemplate>
-                    <ItemTemplate>
-                        <asp:LinkButton ID="btnEdit" runat="server" CausesValidation="false" CommandName="bEditar" Text="E" Enabled="false"></asp:LinkButton>
-                        <asp:LinkButton ID="btnDelete" runat="server" CausesValidation="false" CommandName="bBorrar" Text="B"></asp:LinkButton>
-                    </ItemTemplate>
-                </asp:TemplateField>
-            </Columns>
-        </asp:GridView></ContentTemplate>
-        </asp:UpdatePanel>
-    </asp:Panel>
+    
     <br />
     
     <%-- CUADROS DE DIALOGO PARA TRANSPORTE Y COMISION --%>
-    <asp:UpdatePanel ID="panelTransCom" runat="server" UpdateMode="Conditional">
-        <ContentTemplate>        
-        
-            <%--TRANSPORTE --%>
-            <fieldset style="width: 30%; padding-left:13px; padding-right:13px;">
-                <legend>Transporte</legend>
-                <table align="center">
-                    <tr>
-                        <td>Incluye Transporte</td>
-                        <td></td>
-                        <td>
-                            <asp:CheckBox ID="chkTransporte" runat="server" />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Region Cotizacion</td>
-                        <td></td>
-                        <td>
-                            <asp:DropDownList ID="cboRegion" runat="server" Width="200px" 
-                                oninit="cboRegion_Init">
-                            </asp:DropDownList>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Tipo Traslado</td>
-                        <td></td>
-                        <td>
-                            <asp:DropDownList ID="cboTraslado" runat="server" Width="150px" 
-                                oninit="cboTraslado_Init">
-                            </asp:DropDownList>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Total Traslado</td>
-                        <td></td>
-                        <td>
-                            <asp:TextBox ID="txtTotalTransporte" runat="server" style="text-align: right;" ReadOnly="true" Width="100px">0</asp:TextBox>
-                        </td>
-                    </tr>
-                    <tr>                
-                        <td colspan="3" style="text-align:center;">
-                            <asp:Button ID="Button2" runat="server" Text="Distribuir Precio" />
-                        </td>
-                    </tr>
-                </table>
-            </fieldset>
-
-            <%--COMISION --%>
-            <fieldset style="width: 55%;">
-                <legend>Costo Comision</legend>
-                <table align="center">
-                    <tr>
-                        <td>Cantidad Personas</td>
-                        <td>
-                            <asp:TextBox ID="TextBox1" runat="server" Width="40px" style="text-align: right;">0</asp:TextBox>
-                        </td>
-                        <td>Lugar</td>
-                        <td colspan="3">
-                            <asp:DropDownList ID="cboLugarComision" runat="server" Width="200px" 
-                                oninit="cboLugarComision_Init">
-                            </asp:DropDownList>
-                        </td>                
-                    </tr>
-                    <tr>
-                        <td>Cantidad Dias</td>
-                        <td>
-                            <asp:TextBox ID="TextBox2" runat="server" Width="40px" style="text-align: right;">0</asp:TextBox>
-                        </td>
-                        <td>Transporte DTS</td>
-                        <td>
-                            <asp:TextBox ID="TextBox9" runat="server" Width="90px" ReadOnly="true" style="text-align: right;">0</asp:TextBox>
-                        </td>
-                        <td>Hotel</td>
-                        <td>
-                            <asp:TextBox ID="TextBox10" runat="server" Width="90px" ReadOnly="true" style="text-align: right;">0</asp:TextBox>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Cantidad Vehiculo</td>
-                        <td>
-                            <asp:TextBox ID="TextBox3" runat="server" Width="40px" style="text-align: right;">0</asp:TextBox>
-                        </td>
-                        <td>Transporte Hotel</td>
-                        <td>
-                            <asp:TextBox ID="TextBox11" runat="server" Width="90px" ReadOnly="true" style="text-align: right;">0</asp:TextBox>
-                        </td>
-                        <td>Fondo a Rendir</td>
-                        <td>
-                            <asp:TextBox ID="TextBox12" runat="server" Width="90px" ReadOnly="true" style="text-align: right;">0</asp:TextBox>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Traslado Eq/Doc Ciudad</td>
-                        <td>
-                            <asp:TextBox ID="TextBox4" runat="server" Width="40px" style="text-align: right;">0</asp:TextBox>
-                        </td>
-                        <td>Transporte Avion Persona</td>
-                        <td>
-                            <asp:TextBox ID="TextBox13" runat="server" Width="90px" ReadOnly="true" style="text-align: right;">0</asp:TextBox>
-                        </td>
-                        <td>Gasto Representacion</td>
-                        <td>
-                            <asp:TextBox ID="TextBox14" runat="server" Width="90px" ReadOnly="true" style="text-align: right;">0</asp:TextBox>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Traslado Eq/Doc Avion</td>
-                        <td>
-                            <asp:TextBox ID="TextBox5" runat="server" Width="40px" style="text-align: right;">0</asp:TextBox>
-                        </td>
-                        <td>Arriendo Vehiculo</td>
-                        <td>
-                            <asp:TextBox ID="TextBox15" runat="server" Width="90px" ReadOnly="true" style="text-align: right;">0</asp:TextBox>
-                        </td>
-                        <td>Total Costo Comision</td>
-                        <td>
-                            <asp:TextBox ID="TextBox16" runat="server" Width="90px" ReadOnly="true" style="text-align: right;">0</asp:TextBox>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Fondo a Rendir</td>
-                        <td>
-                            <asp:TextBox ID="TextBox6" runat="server" Width="40px" style="text-align: right;">0</asp:TextBox>
-                        </td>
-                        <td>Traslado Eq/Doc Ciudad</td>
-                        <td>
-                            <asp:TextBox ID="TextBox17" runat="server" Width="90px" ReadOnly="true" style="text-align: right;">0</asp:TextBox>
-                        </td>
-                        <td>Total Precio Comision</td>
-                        <td>
-                            <asp:TextBox ID="TextBox18" runat="server" Width="90px" ReadOnly="true" style="text-align: right;">0</asp:TextBox>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Gastos Representacion</td>
-                        <td>
-                            <asp:TextBox ID="TextBox7" runat="server" Width="40px" style="text-align: right;">0</asp:TextBox>
-                        </td>
-                        <td>Traslado Eq/Doc Avion</td>
-                        <td>
-                            <asp:TextBox ID="TextBox19" runat="server" Width="90px" ReadOnly="true" style="text-align: right;">0</asp:TextBox>
-                        </td>
-                        <td colspan="2" rowspan="2" style="text-align:center;">
-                            <asp:Button ID="Button1" runat="server" Text="Cargar Precio" />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Cantidad Com 1 Mes</td>                
-                        <td>
-                            <asp:TextBox ID="TextBox8" runat="server" Width="40px" style="text-align: right;">0</asp:TextBox>
-                        </td>
-                        <td>Viatico</td>
-                        <td>
-                            <asp:TextBox ID="TextBox20" runat="server" Width="90px" ReadOnly="true" style="text-align: right;">0</asp:TextBox>
-                        </td>
-                    </tr>
-                </table>
-            </fieldset>
-        
-        </ContentTemplate>
-    </asp:UpdatePanel>
+    
 
     <br />
     <br />
 
     <%--CALCULO DE VALORES--%>
-    <asp:UpdatePanel ID="panelCalculo" runat="server" UpdateMode="Conditional">
-        <ContentTemplate>
-            <fieldset style="width:20%;" class="inline">
-                <legend>Margenes Comerciales</legend>
-                <table align="center">
-                    <tr>
-                        <td>
-                            Total Costo MO
-                        </td>
-                        <td>
-                            <asp:TextBox ID="txtTotalCostoMo" runat="server" Width="100px" 
-                                    ReadOnly="True" style="text-align: right;">0</asp:TextBox>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            Total Costo Rpto
-                        </td>
-                        <td>
-                            <asp:TextBox ID="txtTotalCostoRpto" runat="server" 
-                                    Width="100px" ReadOnly="True" style="text-align: right;">0</asp:TextBox>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            Mg Operacional %
-                        </td>
-                        <td>
-                            <asp:TextBox ID="txtMgOpPorc" runat="server" Width="100px" 
-                                    ReadOnly="True" style="text-align: right;">0</asp:TextBox>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="font-weight:bold;">
-                            Mg Bruto %
-                        </td>
-                        <td>
-                            <asp:TextBox ID="txtMgBrutoPorc" runat="server" Width="100px" 
-                                    ReadOnly="True" style="text-align: right;">0</asp:TextBox>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            Mg Contribucion
-                        </td>
-                        <td>
-                            <asp:TextBox ID="txtMgContribucion" runat="server" 
-                                    Width="100px" ReadOnly="True" style="text-align: right;">0</asp:TextBox>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            Mg Contribucion %
-                        </td>
-                        <td>
-                            <asp:TextBox ID="txtMgContribucionPorc" runat="server" 
-                                    Width="100px" ReadOnly="True" style="text-align: right;">0</asp:TextBox>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            Utilidad Esperada %
-                        </td>
-                        <td>
-                            <asp:TextBox ID="txtUtilidadEspPorc" runat="server" 
-                                    Width="100px" ReadOnly="True" style="text-align: right;">0</asp:TextBox>
-                        </td>
-                    </tr>
-                </table>
-            </fieldset>
-
-            <fieldset style="width:25%;" class="inline">
-                <legend>Impuesto</legend>
-                <table align="center">
-                    <tr>
-                        <td>
-                            Pago Impuesto
-                        </td>
-                        <td>
-                            <asp:DropDownList ID="cboTipoImpuesto" runat="server">
-                                <asp:ListItem Value="0">Seleccione</asp:ListItem>
-                                <asp:ListItem Value="1">c/ IVA</asp:ListItem>
-                                <asp:ListItem Value="2">s/ IVA</asp:ListItem>
-                            </asp:DropDownList>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            Con Descuento
-                        </td>
-                        <td>
-                            <asp:CheckBox ID="chkDcto" runat="server"/>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            Tipo Moneda
-                        </td>
-                        <td>
-                            <asp:TextBox ID="txtTipoMoneda" runat="server" ReadOnly="True"></asp:TextBox>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="2" style="text-align:center;">
-                            <asp:Button ID="btnCalcular" runat="server" Text="Calcular" Width="90px" 
-                                onclick="btnCalcular_Click" />
-                        </td>
-                    </tr>
-                </table>
-            </fieldset>
-
-            <fieldset style="width:15%;" class="inline">
-                <legend>Precio Total</legend>
-                <table align="center">
-                    <tr>
-                        <td>
-                            Neto
-                        </td>
-                        <td>
-                            <asp:TextBox ID="txtNeto" runat="server" Width="100px" 
-                                    ReadOnly="True" style="text-align: right;">0</asp:TextBox>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            Descuento
-                        </td>
-                        <td>
-                            <asp:TextBox ID="txtDcto" runat="server" Width="100px" 
-                                    Enabled="False" style="text-align: right;">0</asp:TextBox>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            Neto Dcto
-                        </td>
-                        <td>
-                            <asp:TextBox ID="txtNetoDcto" runat="server" Width="100px" 
-                                    ReadOnly="True" style="text-align: right;">0</asp:TextBox>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            IVA
-                        </td>
-                        <td>
-                            <asp:TextBox ID="txtIva" runat="server" Width="100px" 
-                                    ReadOnly="True" style="text-align: right;">0</asp:TextBox>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            Total
-                        </td>
-                        <td>
-                            <asp:TextBox ID="txtTotal" runat="server" Width="100px" 
-                                    ReadOnly="True" style="text-align: right;">0</asp:TextBox>
-                        </td>
-                    </tr>
-                </table>
-            </fieldset>
-        </ContentTemplate>
-    </asp:UpdatePanel>
+    
 
     <%--NOTAS DE LA COTIZACION--%>
     <br />
-    <asp:UpdatePanel runat="server" ID="panelNota" UpdateMode="Conditional">
-        <ContentTemplate>
-            <table cellpadding="5px">
-                <tr>
-                    <td>Nota 1:</td>
-                    <td>
-                        <asp:TextBox ID="txtNotaUno" runat="server" TextMode="MultiLine" Width="625px" Height="50px" onKeyPress="return taLimit(this)" onKeyUp="return taCount(this,'myCounter')">Sin Nota</asp:TextBox>                
-                    </td>
-                    <td>
-                        Caracteres restantes: <span id="myCounter">400</span>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Nota 2:</td>
-                    <td>
-                        <asp:TextBox ID="txtNotaDos" runat="server" TextMode="MultiLine" Width="625px" Height="50px" onKeyPress="return taLimit(this)" onKeyUp="return taCount(this,'myCounterDos')">Sin Nota</asp:TextBox>
-                    </td>
-                    <td>
-                        Caracteres restantes: <span id="myCounterDos">400</span>
-                    </td>
-                </tr>
-            </table>
-        </ContentTemplate>
-    </asp:UpdatePanel>
+    
 
     <%--PANEL COMENTARIOS FACTURACION --%>
     <br />
-    <asp:UpdatePanel runat="server" ID="panelComentarirFac" UpdateMode="Conditional">
-        <ContentTemplate>
-            <table cellpadding="5px">
-                <tr>
-                    <td style="width:90px;">
-                        Facturación
-                          <br />
-                        <asp:DropDownList ID="cboFacturacion" runat="server" 
-                            Width="140px" oninit="cboFacturacion_Init"> 
-                        </asp:DropDownList>
-                    </td>
-                    <td>
-                    </td>
-                    <td class="style12">Comentario Facturacion<br />
-                        <asp:TextBox ID="txtFacturacion" runat="server" Height="50px" 
-                            TextMode="MultiLine" Width="421px" ReadOnly="true"></asp:TextBox>
-                    </td>
-                </tr>
-                <tr>
-                    <td style="width:90px;">
-                        Forma Pago Facturación
-                        <br />
-                        <asp:DropDownList ID="cboFormaPago" runat="server" Width="140px" 
-                            oninit="cboFormaPago_Init">
-                        </asp:DropDownList>
-                    </td>
-                    <td>
-                    </td>
-                    <td class="style12">Comentario Forma Pago Facturacion<br />
-                        <asp:TextBox ID="txtFormaPago" runat="server" Height="50px" 
-                            TextMode="MultiLine" Width="422px">a contar de la fecha de facturación</asp:TextBox>
-                    </td>
-                </tr>
-                <tr>
-                    <td style="width:90px;">
-                        Plazo Entrega<br />
-                        <asp:DropDownList ID="cboPlazoEntrega" runat="server" Width="140px" 
-                            oninit="cboPlazoEntrega_Init">
-                        </asp:DropDownList>                
-                    </td>
-                    <td>
-                    </td>
-                    <td class="style12">Comentario Plazo Entrega<br />
-                        <asp:TextBox ID="txtPlazoEntrega" runat="server" Height="50px" 
-                            TextMode="MultiLine" Width="422px" ReadOnly="true"></asp:TextBox>
-                    </td>
-                </tr>
-            </table>
-
-            <div id="dialog-comentario-fac" style="display:none;">
-                Seleccione una opcion la cual puede modificar, o bien escriba una nueva.
-                <br /><br />
-                <asp:RadioButtonList ID="rblComentarioFac" runat="server" 
-                    oninit="rblComentarioFac_Init">
-                </asp:RadioButtonList>
-                <br /> 
-                <textarea name="txta-fac" id="txta-fac" rows="6" cols="60" maxlength="200"></textarea>
-            </div>
-
-            <div id="dialog-comentario-pen" style="display:none;">
-                Seleccione una opcion la cual puede modificar, o bien escriba una nueva.
-                <br /><br />
-                <asp:RadioButtonList ID="rblComentarioPen" runat="server" 
-                    oninit="rblComentarioPen_Init">
-                </asp:RadioButtonList>
-                <br />
-                <textarea name="txta-pen" id="txta-pen" rows="6" cols="60" maxlength="200"></textarea>                  
-            </div>
-
-        </ContentTemplate>
-    </asp:UpdatePanel>
+    
 
     <%--PANEL GARANTIA Y LUGAR DE EJECUCION --%>
     <br />
-    <asp:UpdatePanel ID="panelJefe" runat="server" UpdateMode="Conditional">    
-        <ContentTemplate>
-        <script type="text/javascript">
-            Sys.Application.add_load(chgSectorEntrega);
-        </script>
-            <table cellpadding="5px">
-            <tr>
-                <td>Texto solo cotizaciones<br /> clientes extranjeros</td>
-                <td>
-                    <asp:DropDownList ID="cboTextCotEx" runat="server">
-                        <asp:ListItem>Seleccione...</asp:ListItem>
-                        <asp:ListItem>Todos los costos de traslado e impuestos serán de cargo del cliente.</asp:ListItem>
-                        <asp:ListItem>Los costos de traslado e impuestos en origen serán de cargo del cliente.</asp:ListItem>
-                        <asp:ListItem>Los costos e impuestos de exportación serán de cargo de DTS Ltda.</asp:ListItem>
-                        <asp:ListItem>Todos los costos de traslado e impuestos aduaneros serán de cargo de DTS Ltda.</asp:ListItem>
-                        <asp:ListItem>Otro</asp:ListItem>
-                    </asp:DropDownList>
-                </td>
-            </tr>
-            <tr>
-                <td>Lugar Ejecucion Trabajos</td>
-                <td>
-                    <asp:DropDownList ID="cboEjecTrab" runat="server" oninit="cboEjecTrab_Init">
-                    </asp:DropDownList>                                           
-                </td>
-            </tr>
-            <tr>
-                <td>Lugar de Entrega</td>
-                <td>
-                    <asp:DropDownList ID="cboLugarEntrega" runat="server" 
-                        oninit="cboLugarEntrega_Init">
-                    </asp:DropDownList>
-            &nbsp;&nbsp;&nbsp;&nbsp; Sector Entrega
-                    <asp:TextBox ID="txtSectorEntrega" runat="server" Width="400px"></asp:TextBox>
-                </td>
-            </tr>
-            <tr>
-                <td>Validez Oferta</td>
-                <td>
-                    <asp:TextBox ID="txtValidezOferta" runat="server" style="text-align:center;"></asp:TextBox>
-                    <asp:CalendarExtender ID="CalendarExtender2" runat="server" TargetControlID="txtValidezOferta" FirstDayOfWeek="Monday" Format="dd/MM/yyyy">
-                    </asp:CalendarExtender>
-                </td>
-            </tr>
-            <tr>
-                <td>Garantia</td>
-                <td>
-                    <asp:DropDownList ID="cboGarantia" runat="server" oninit="cboGarantia_Init">
-                    </asp:DropDownList>
-
-                &nbsp;&nbsp;&nbsp;&nbsp; Validez Garantia
-
-                    <asp:DropDownList ID="cboValidezGar" runat="server" oninit="cboValidezGar_Init">
-                    </asp:DropDownList>            
-                </td>
-            </tr>
-            <tr>
-                <td>Aceptador por</td>
-                <td>
-                    <asp:DropDownList ID="cboJefe" runat="server" AutoPostBack="True" 
-                        oninit="cboJefe_Init" 
-                        onselectedindexchanged="cboJefe_SelectedIndexChanged">
-                    </asp:DropDownList>&nbsp;&nbsp;&nbsp;&nbsp;
-                    Mail&nbsp;<asp:TextBox ID="txtMailJefe" runat="server" ReadOnly="True"></asp:TextBox>&nbsp;&nbsp;&nbsp;&nbsp;
-                    Cargo&nbsp;<asp:TextBox ID="txtCargoJefe" runat="server" Width="180px" 
-                        ReadOnly="True"></asp:TextBox>
-                </td>
-            </tr>
-            </table>                    
-        </ContentTemplate>
-    </asp:UpdatePanel>
+    
 
     <%--DIV PARA ELIMINAR EL ARCHIVO SELECCIONADO --%>
     <div id="dialog-archivo" title="Quitar Archivo" style="display:none;">
@@ -1033,55 +1151,8 @@
     
     <br /><br />
     <%--PANEL DE DATOS ADJUNTOS --%>
-    Archivos Adjuntos
-    <asp:UpdatePanel ID="udpArchivo" runat="server" UpdateMode="Conditional">
-        <ContentTemplate>
-            <asp:GridView ID="gvArchivo" runat="server" AutoGenerateColumns="False" 
-            DataKeyNames="ADJUNTO_ID,COTIZ_ID" PageSize="5" 
-        PagerSettings-PageButtonCount="10" PagerSettings-Mode="NumericFirstLast" 
-        PagerSettings-FirstPageText="Primera" PagerSettings-LastPageText="Ultima" 
-                AllowPaging="true" onpageindexchanging="gvArchivo_PageIndexChanging" 
-                onrowcommand="gvArchivo_RowCommand">
-                <RowStyle CssClass="gvArchivoDet" />
-                <Columns>
-
-                    <asp:TemplateField HeaderText="Item" ItemStyle-Width="50px">
-                        <ItemTemplate>
-                            <asp:Label ID="ADJUNTO_ID" runat="server" CssClass="adj_nroitem" Text='<%# Bind("ADJUNTO_ID") %>'></asp:Label>
-                        </ItemTemplate>
-                    </asp:TemplateField>
-
-                    <asp:TemplateField HeaderText="ID Cotiz" ItemStyle-Width="100px" Visible="false">
-                        <ItemTemplate>
-                            <asp:Label ID="COTIZ_ID" runat="server" CssClass="adj_cotid" Text='<%# Bind("COTIZ_ID") %>'></asp:Label>
-                        </ItemTemplate>
-                    </asp:TemplateField>
-
-                    <asp:TemplateField HeaderText="Nombre Adjunto" ItemStyle-Width="250px">
-                        <ItemTemplate>
-                            <asp:HyperLink ID="ADJUNTO_NOMBRE" CssClass="adj_direccion" runat="server" Text='<%# Eval("ADJUNTO_NOMBRE") %>' NavigateUrl='<%# Eval("ADJUNTO_DIR") %>' Target="_blank"></asp:HyperLink>                            
-                        </ItemTemplate>
-                    </asp:TemplateField>
-
-                    <asp:TemplateField HeaderText="Link Doc" ItemStyle-Width="100px" Visible="false">
-                        <ItemTemplate>
-                            <asp:Label ID="ADJUNTO_DIR" runat="server" Text='<%# Bind("ADJUNTO_DIR") %>'></asp:Label>
-                        </ItemTemplate>
-                    </asp:TemplateField>
-                                      
-                    <asp:TemplateField HeaderText="Borrar" ItemStyle-Width="60px">
-                        <ItemTemplate>
-                            <a href="javascript:void(null);" id="btn-del-file" onclick="borraArchivo();" style="display:inline-block;" class="ui-icon ui-icon-close"></a>
-                        </ItemTemplate>
-                    </asp:TemplateField>
-                </Columns>            
-            </asp:GridView>
-
-            <asp:Button ID="btnUpdateDoc" runat="server" style="display:none;" OnClick="btnUpdateDoc_Click"/>
-
-        </ContentTemplate>        
-    </asp:UpdatePanel>
-
+    
+    <%--DIALGO PARA MOSTRAR INGRESO SECTOR EN LUGAR DE ENTREGA Y DIALOG PARA MOSTRAR EL CUADRO DONDE SE SELECCIONAN LOS ARCHIVOS A ADJUNTAR --%>
     <div id="dialog-sector" style="display:none;">
         Ingrese sector de entrega
         <br /><br />
@@ -1111,6 +1182,96 @@
             </td>
         </tr>
       </table>
+
+    <%--DIALOG PARA BUSCAR Y AGREGAR EQUIPO --%>
+    <div id="dialog-equipo-busca" title="Buscar Equipo" style="display:none;">
+        <fieldset>
+            <legend>
+                Criterios de Busqueda
+            </legend>
+            <table>
+                <tr>
+                    <td>
+                        <label id="lbl-eq-nombre">Nombre</label>
+                    </td>
+                    <td>
+                        <input id="txt-eq-nombre" name="txt-eq-nombre" type="text" />
+                    </td>
+                    <td>
+                        <label id="lbl-eq-modelo">Modelo</label>
+                    </td>
+                    <td>
+                        <input id="txt-eq-modelo" name="txt-eq-modelo" type="text" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label id="lbl-eq-nparte">Nro Parte</label>
+                    </td>
+                    <td>
+                        <input id="txt-eq-nparte" name="txt-eq-nparte" type="text" />
+                    </td>
+                    <td>
+                        <label id="lbl-eq-nserie">Nro Serie</label>
+                    </td>
+                    <td>
+                        <input id="txt-eq-nserie" name="txt-eq-nserie" type="text" />
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4">
+                        <input id="btn-eq-busca" type="button" value="Buscar" />
+                    </td>
+                </tr>
+            </table>
+        </fieldset>
+        <asp:UpdatePanel ID="upEquipoBusca" runat="server" UpdateMode="Conditional">
+            <ContentTemplate>
+                <asp:GridView ID="gvEquipoBusca" runat="server" AutoGenerateColumns="false"
+                    AllowPaging="true" PageSize="5" PagerSettings-PageButtonCount="5" DataKeyNames="NroParte"
+                    PagerSettings-Mode="NumericFirstLast" PagerSettings-FirstPageText="Primera" 
+                    PagerSettings-LastPageText="Ultima" Width="950px" HeaderStyle-HorizontalAlign="Center" RowStyle-HorizontalAlign="Left" Font-Size="Small">
+                    <RowStyle CssClass="gvEquipoBuscaCss" />
+                    <EmptyDataTemplate>
+                        <h1>NO SE HAN ENCONTRADO ELEMENTOS PARA EL CRITERIO DE BUSQUEDA INGRESADO</h1>
+                    </EmptyDataTemplate>
+                    <Columns>
+                    
+                        <asp:TemplateField HeaderText="Nombre">
+                            <ItemTemplate>
+                                <asp:Label ID="lblequiponombre" CssClass="eqnombre_" runat="server" Text='<%# Bind("EQUIPONOMBRE") %>'></asp:Label>                                
+                            </ItemTemplate>
+                        </asp:TemplateField>
+
+                        <asp:TemplateField HeaderText="Modelo">
+                            <ItemTemplate>
+                                <asp:Label ID="lblequipomodelo" CssClass="eqmodelo_" runat="server" Text='<%# Bind("EQUIPOMODELO") %>'></asp:Label>                                
+                            </ItemTemplate>
+                        </asp:TemplateField>
+
+                        <asp:TemplateField HeaderText="Nro Parte">
+                            <ItemTemplate>
+                                <asp:Label ID="lblequiponparte" CssClass="eqnparte_" runat="server" Text='<%# Bind("EQUIPONPARTE") %>'></asp:Label>                                
+                            </ItemTemplate>
+                        </asp:TemplateField>
+
+                        <asp:TemplateField HeaderText="Nro Serie">
+                            <ItemTemplate>
+                                <asp:Label ID="lblequiponserie" CssClass="eqnserie_" runat="server" Text='<%# Bind("EQUIPONSERIE") %>'></asp:Label>                                
+                            </ItemTemplate>
+                        </asp:TemplateField>
+
+                        <asp:TemplateField HeaderText="Condicion">
+                            <ItemTemplate>
+                                <asp:Label ID="lblequipocondicion" CssClass="eqcondicion_" runat="server" Text='<%# Bind("EQUIPOCONDICION") %>'></asp:Label>                                
+                            </ItemTemplate>
+                        </asp:TemplateField>
+
+                    </Columns>                
+                </asp:GridView>
+            </ContentTemplate>
+        </asp:UpdatePanel>
+    </div>
 
       <%--SECTOR DE JAVASCRIPT--%>
         <script type="text/javascript">
@@ -1237,6 +1398,10 @@
                 });
             });
 
+            $(function () {
+                $("#tab").tabs();
+            });
+
             $("#<%=txtPlazoEntrega.ClientID %>").on('click', function () {
                 $("#txta-pen").val($("#<%=txtPlazoEntrega.ClientID %>").val());
                 $("#dialog-comentario-pen").dialog({
@@ -1309,6 +1474,24 @@
                 $.cookie('nomtipo', $("#<%=rblTipoCliente.ClientID%>").find(":checked").val());
                 $.cookie('nomestado', $("#<%=rblEstadoCliente.ClientID%>").find(":checked").val());
                 $("#<%=btnUpdLsCliente.ClientID %>").click();
+            });
+
+            $("#btn-eq-busca").on('click', function () {
+                var client_id = $("#<%=txtHiddIdCliente.ClientID %>").val();
+                if (client_id == "" || client_id == null) {
+                    //$("#<%=btnBuscarListaEquipo.ClientID %>").click();
+                    $("<div id='dialog-aux-eq' title='Error Cliente'>Debe seleccionar un cliente para proceder a buscar un equipo.</div>").dialog({
+                        modal: true,
+                        buttons: {
+                            "Cerrar": function () {
+                                $(this).dialog('close');
+                                $("#dialog-equipo-busca").dialog('close');
+                            }
+                        }
+                    });
+                } else {
+                    alert("cliente no esta nulo");
+                }
             });
         </script>
 

@@ -74,5 +74,28 @@ namespace MANCAL_WEB_BL
 
             objProDet.deleteDetalleProy(det[1], item);
         }
+
+        public List<CotizacionEquipo> getEquipo(String nombre, String modelo, String nroparte, String nroserie, String cliid) 
+        {   
+            objProDet=new dl_detalle_pro();
+            List<CotizacionEquipo> ls = new List<CotizacionEquipo>();
+            int idcliente = Convert.ToInt32(cliid);
+
+            DataTable dt = objProDet.selectEquipoBuscar(nombre, modelo, nroparte, nroserie, idcliente);
+
+            foreach (DataRow dr in dt.Rows) 
+            {
+                CotizacionEquipo cot = new CotizacionEquipo();
+                cot.equiponombre = dr["NOMBRE"].ToString();
+                cot.equipomodelo = dr["MODELO"].ToString();
+                cot.equiponparte = dr["N_PARTE"].ToString();
+                cot.equiponserie = dr["N_SERIE"].ToString();
+                cot.equipocondicion = dr["CONDICION"].ToString();
+
+                ls.Add(cot);
+            }
+
+            return ls;
+        }
     }
 }

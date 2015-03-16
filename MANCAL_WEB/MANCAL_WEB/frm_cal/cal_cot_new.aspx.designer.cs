@@ -238,6 +238,24 @@ namespace MANCAL_WEB.frm_cal {
         protected global::System.Web.UI.WebControls.GridView gvListaCliente;
         
         /// <summary>
+        /// Control upBtnBuscarEquipo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel upBtnBuscarEquipo;
+        
+        /// <summary>
+        /// Control btnBuscarListaEquipo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnBuscarListaEquipo;
+        
+        /// <summary>
         /// Control upSelectEqCotiza.
         /// </summary>
         /// <remarks>
@@ -956,5 +974,23 @@ namespace MANCAL_WEB.frm_cal {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnSavePrint;
+        
+        /// <summary>
+        /// Control upEquipoBusca.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel upEquipoBusca;
+        
+        /// <summary>
+        /// Control gvEquipoBusca.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView gvEquipoBusca;
     }
 }

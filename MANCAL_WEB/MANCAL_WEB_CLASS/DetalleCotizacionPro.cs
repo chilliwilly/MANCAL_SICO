@@ -10,7 +10,7 @@ namespace MANCAL_WEB_CLASS
         public String idventa { get; set; }
         public String item { get; set; }
         public String nroparte { get; set; }
-        public String descripcion { get; set; }
+        public String descripcion { get; set; }//nombre
         public String nroserie { get; set; }
         public String cantidad { get; set; }
         public String costorepuesto { get; set; }

@@ -338,5 +338,10 @@ namespace MANCAL_WEB.frm_cal
             gvArchivo.DataSource = objAdj.getAdjunto(idu);
             gvArchivo.DataBind();
         }
+
+        protected void btnBuscarListaEquipo_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
