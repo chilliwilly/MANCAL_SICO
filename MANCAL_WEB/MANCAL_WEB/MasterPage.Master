@@ -9,7 +9,8 @@
     <link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css" />
     <script type="text/javascript" src="//code.jquery.com/jquery-1.10.2.js"></script>
     <script type="text/javascript" src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
-    <script type="text/javascript" src="//ajax.aspnetcdn.com/ajax/jquery.validate/1.11.0/jquery.validate.js"></script>
+    <%--<script type="text/javascript" src="//ajax.aspnetcdn.com/ajax/jquery.validate/1.11.0/jquery.validate.js"></script>--%>
+    <script type="text/javascript" src="../Scripts/jquery.validate.js"></script>
     <script type="text/javascript" src="../Scripts/jsEquipo.js"></script>
     <script type="text/javascript" src="../Scripts/jquery.cookie.js"></script>
     <asp:ContentPlaceHolder ID="HeadContent" runat="server">
@@ -23,7 +24,7 @@
                 <table>
                     <tr>
                         <td><asp:Image ID="Image1" runat="server" ImageUrl="~/img_files/LOGO DTS UN Man Cal.bmp" Width="240px"/></td>
-                        <td><h1 style="color:Black;">SISTEMA COTIZACION MANTENIMIENTO - CALIBRACIONES</h1></td>
+                        <td><h1 style="color:Black;"></h1></td>
                     </tr>
                 </table> 
             </div>
@@ -31,7 +32,7 @@
 
             </div>
             <div class="clear hideSkiplink">
-                <asp:Menu ID="NavigationMenu" runat="server" CssClass="menu" EnableViewState="false" IncludeStyleBlock="false" Orientation="Horizontal">
+                <asp:Menu ID="NavigationMenu" runat="server" CssClass="menu" EnableViewState="false" IncludeStyleBlock="false" Orientation="Horizontal" SkipLinkText="">
 
                 </asp:Menu>
             </div>

@@ -18,7 +18,7 @@ namespace MANCAL_WEB_CLASS
         public String costomo { get; set; }
         public String preciomo { get; set; }
         public String preciototal { get; set; }
-
+        
         public DetalleCotizacionPro() { }
 
         public DetalleCotizacionPro(String item, String nroparte, String descripcion, String nroserie, String cantidad, String costorepuesto, String preciorepuesto, String costomo, String preciomo, String preciototal)

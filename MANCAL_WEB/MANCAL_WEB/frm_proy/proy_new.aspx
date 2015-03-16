@@ -11,18 +11,26 @@
                 chgTipoCoti();
                 $("#dialog-ins").dialog({
                     modal: true,
-                    width: "350px",
+                    width: "500px",
                     title: "Agregar Equipo",
                     buttons: {
-                        "Calcular": sumDetEquipo,
-                        "Agregar": setDetEquipo,
+                        "Calcular": function () {
+                            if ($('#frm-equipo-ins').valid()) {
+                                sumDetEquipo();
+                            }
+                        },
+                        "Agregar": function () {
+                            if ($('#frm-equipo-ins').valid()) {
+                                setDetEquipo();
+                            }
+                        },
                         "Cerrar": function () {
                             $(this).dialog('close');
                         }
                     }
                 });
             });
-        }
+        }        
 
         function chgSectorEntrega() {
             $("#<%=cboLugarEntrega.ClientID %>").on('change', function () {
@@ -33,6 +41,20 @@
                 } else {
                     $("#<%=txtSectorEntrega.ClientID %>").val("");
                 }
+            });
+        }
+
+        function btnBuscarCliente() {
+            $("#btn-busca-cli").on('click', function () {
+                $("#dialog-busca-cli").dialog({
+                    modal: true,
+                    width: "1000px",
+                    buttons: {
+                        "Cerrar": function () {
+                            $(this).dialog('close');
+                        }
+                    }
+                });
             });
         }
     </script>
@@ -86,172 +108,303 @@
 
 <asp:ToolkitScriptManager ID="ToolkitScriptManager1" runat="server" EnableScriptGlobalization="True" ScriptMode="Release" EnablePartialRendering="true" LoadScriptsBeforeUI="false">
 </asp:ToolkitScriptManager>        
+    
+    <%--PANEL DE INGRESO DATOS COTIZACION ENCABEZADO --%>
+    <asp:UpdatePanel ID="panelCli" runat="server" UpdateMode="Conditional">
+        <ContentTemplate>
+            <script type="text/javascript">
+                Sys.Application.add_load(btnBuscarCliente);
+     	    </script>
 
-    <asp:UpdatePanel ID="panelCli" runat="server" UpdateMode="Conditional"><ContentTemplate>
-        <table style="width: 100%;">
-            <tr>
-                <td class="style5">
-                    Tipo Cotización
-                </td>
-                <td class="style6">
-                    <asp:DropDownList ID="cboTipoCotizacion" runat="server" Width="263px" 
-                        oninit="cboTipoCotizacion_Init" onchange="chgTipoCoti();"> 
-                    </asp:DropDownList>
-                </td>
-                <td class="style9">
-                    <asp:TextBox ID="txtCorrelativo" runat="server" Width="30px" Visible="false"></asp:TextBox>
-                </td>
-                <td class="style8">
-                    Nro Cotización
-                </td>
-                <td class="style9">
-                    <asp:TextBox ID="txtIdCotizacion" runat="server" Width="130px" ReadOnly="True"></asp:TextBox>
-                </td>                
-            </tr>
-            <tr>
-                <td class="style5">
-                    Fecha Cotizacion
-                </td>
-                <td class="style6">
-                                    <%-- ACA VA EL CONTROLTOOLKIT --%>                      
-                    <asp:TextBox ID="txtFecha" runat="server" AutoPostBack="True" style="text-align:center;"></asp:TextBox>
-                    <asp:CalendarExtender ID="CalendarExtender1" TargetControlID="txtFecha" runat="server"
-                        FirstDayOfWeek="Monday" Format="dd/MM/yyyy">
-                    </asp:CalendarExtender>
-                </td>
-                <td class="style9">
-                </td>
-                <td class="style8">
-                    Cliente
-                </td>                
-                <td class="style9"><%--CBO CLIENTE --%>
-                    <asp:TextBox ID="txtCliente" runat="server" Width="263px"></asp:TextBox>
-                </td>
-            </tr>
-            <tr>
-            <td class="style5">
-                    Vendedor
-                </td>
-                <td class="style6">
-                    <asp:DropDownList ID="cboVendedor" runat="server" Height="22px" Width="263px" 
-                        AutoPostBack="True" oninit="cboVendedor_Init">
-                    </asp:DropDownList>
-                </td>
-                <td class="style9">
-                    <%--<asp:TextBox ID="txtCodEmpresa" runat="server" Width="30px"></asp:TextBox>--%>
-                </td>
-                <td class="style8">
-                    Cliente Informe
-                </td>
-                <td class="style9">
-                    <asp:TextBox ID="txtClienteInforme" runat="server" Width="263px"></asp:TextBox>
-                </td>
-            </tr>
-            <tr>
-                <%-- VENDEDOR--%>
-                <td class="style5">
-                    Correo Vendedor</td>
-                    <td class="style6">
-                        <asp:TextBox ID="txtMailVendedor" runat="server" Width="260px" ReadOnly="True"></asp:TextBox>
+            <table style="width: 100%;">
+                <tr>
+                    <td class="style5">
+                        Tipo Cotización
                     </td>
-                <td class="style9">
-                    <%--<asp:TextBox ID="txtInicialVendedor" runat="server" Width="30px" Height="22px"></asp:TextBox>--%>
-                </td>
-                <td class="style4">
-                    Cliente Contacto
-                </td>
-                <td>
-                    <asp:TextBox ID="txtContactoCliente" runat="server" Width="263px"></asp:TextBox>
-                </td>
-            </tr>
-            <tr>
-                <td class="style1" rowspan="3">
-                    Referencias
-                </td>
-                <td class="style2" rowspan="3">
-                    <asp:TextBox ID="txtReferencia" runat="server" Height="68px" Width="260px" 
-                        TextMode="MultiLine">Sin Referencia.</asp:TextBox>
-                </td>
+                    <td class="style6">
+                        <asp:DropDownList ID="cboTipoCotizacion" runat="server" Width="263px" 
+                            oninit="cboTipoCotizacion_Init" onchange="chgTipoCoti();"> 
+                        </asp:DropDownList>
+                    </td>
+                    <td class="style9">
+                        <asp:TextBox ID="txtCorrelativo" runat="server" Width="30px" Visible="false"></asp:TextBox>
+                    </td>
+                    <td class="style8">
+                        Nro Cotización
+                    </td>
+                    <td class="style9">
+                        <asp:TextBox ID="txtIdCotizacion" runat="server" Width="130px" ReadOnly="True"></asp:TextBox>
+                    </td>                
+                </tr>
+                <tr>
+                    <td class="style5">
+                        Fecha Cotizacion
+                    </td>
+                    <td class="style6">
+                                        <%-- ACA VA EL CONTROLTOOLKIT --%>                      
+                        <asp:TextBox ID="txtFecha" runat="server" AutoPostBack="True" style="text-align:center;"></asp:TextBox>
+                        <asp:CalendarExtender ID="CalendarExtender1" TargetControlID="txtFecha" runat="server"
+                            FirstDayOfWeek="Monday" Format="dd/MM/yyyy">
+                        </asp:CalendarExtender>
+                    </td>
                     <td class="style9">
                     </td>
-                <td class="style4">
-                    Cliente Dirección
-                </td>
-                <td>
-                    <asp:TextBox ID="txtDireccionCliente" runat="server" Width="263px"></asp:TextBox>
-                </td>
-            </tr>
-            <tr>
+                    <td class="style8">
+                        Cliente
+                    </td>                
+                    <td class="style9"><%--CBO CLIENTE --%>
+                        <asp:TextBox ID="txtCliente" runat="server" Width="263px"></asp:TextBox>
+                        &nbsp;&nbsp;&nbsp;
+                        <a href="javascript:void(null);" id="btn-busca-cli" style="display:inline-block;" class="ui-icon ui-icon-search"></a>
+                    </td>
+                </tr>
+                <tr>
+                <td class="style5">
+                        Vendedor
+                    </td>
+                    <td class="style6">
+                        <asp:DropDownList ID="cboVendedor" runat="server" Height="22px" Width="263px" 
+                            AutoPostBack="True" oninit="cboVendedor_Init">
+                        </asp:DropDownList>
+                    </td>
+                    <td class="style9">
+                        <%--<asp:TextBox ID="txtCodEmpresa" runat="server" Width="30px"></asp:TextBox>--%>
+                    </td>
+                    <td class="style8">
+                        Cliente Informe
+                    </td>
+                    <td class="style9">
+                        <asp:TextBox ID="txtClienteInforme" runat="server" Width="263px"></asp:TextBox>
+                    </td>
+                </tr>
+                <tr>
+                    <%-- VENDEDOR--%>
+                    <td class="style5">
+                        Correo Vendedor</td>
+                        <td class="style6">
+                            <asp:TextBox ID="txtMailVendedor" runat="server" Width="260px" ReadOnly="True"></asp:TextBox>
+                        </td>
+                    <td class="style9">
+                        <%--<asp:TextBox ID="txtInicialVendedor" runat="server" Width="30px" Height="22px"></asp:TextBox>--%>
+                    </td>
+                    <td class="style4">
+                        Cliente Contacto
+                    </td>
+                    <td>
+                        <asp:TextBox ID="txtContactoCliente" runat="server" Width="263px"></asp:TextBox>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="style1" rowspan="3">
+                        Referencias
+                    </td>
+                    <td class="style2" rowspan="3">
+                        <asp:TextBox ID="txtReferencia" runat="server" Height="68px" Width="260px" 
+                            TextMode="MultiLine">Sin Referencia.</asp:TextBox>
+                    </td>
+                        <td class="style9">
+                        </td>
+                    <td class="style4">
+                        Cliente Dirección
+                    </td>
+                    <td>
+                        <asp:TextBox ID="txtDireccionCliente" runat="server" Width="263px"></asp:TextBox>
+                    </td>
+                </tr>
+                <tr>
                 
-                <td>
-                    &nbsp;
-                </td>
-                <td class="style4">
-                    Cliente Mail
-                </td>
-                <td>
-                    <asp:TextBox ID="txtMailCliente" runat="server" Width="263px"></asp:TextBox>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                </td>
-                <td class="style4">
-                    Cliente Fono
-                </td>
-                <td>
-                    <asp:TextBox ID="txtFonoCliente" runat="server" Width="263px"></asp:TextBox>
-                </td>
-            </tr>
-            <tr>
-            <td></td>
-                <td>
-                    <asp:TextBox ID="txtIdContactoCli" runat="server" Width="20px" Visible="false"></asp:TextBox>
-                    <asp:HiddenField ID="txtHiddenTipoTarifa" runat="server" />
-                </td>
-                <td></td> 
-                <td class="style8">
-                    Tipo Tarifa
-                </td>
-                <td class="style9">
-                    <asp:DropDownList ID="cboTipoTarifa" runat="server" Width="263px" 
-                        AutoPostBack="true" oninit="cboTipoTarifa_Init">
-                    </asp:DropDownList>
-                </td>               
-            </tr>
-            <tr>
-                <td>
-                    Anexo
-                </td>
-                <td colspan="4">
-                    <asp:DropDownList ID="cboAnexo" runat="server" oninit="cboAnexo_Init">
-                    </asp:DropDownList>
-                </td>
-            </tr>
-        </table><br /></ContentTemplate></asp:UpdatePanel>
+                    <td>
+                        &nbsp;
+                    </td>
+                    <td class="style4">
+                        Cliente Mail
+                    </td>
+                    <td>
+                        <asp:TextBox ID="txtMailCliente" runat="server" Width="263px"></asp:TextBox>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                    </td>
+                    <td class="style4">
+                        Cliente Fono
+                    </td>
+                    <td>
+                        <asp:TextBox ID="txtFonoCliente" runat="server" Width="263px"></asp:TextBox>
+                    </td>
+                </tr>
+                <tr>
+                <td></td>
+                    <td>
+                        <asp:TextBox ID="txtIdContactoCli" runat="server" Width="20px" Visible="false"></asp:TextBox>
+                        <asp:HiddenField ID="txtHiddenTipoTarifa" runat="server" />
+                    </td>
+                    <td></td> 
+                    <td class="style8">
+                        Tipo Tarifa
+                    </td>
+                    <td class="style9">
+                        <asp:DropDownList ID="cboTipoTarifa" runat="server" Width="263px" 
+                            AutoPostBack="true" oninit="cboTipoTarifa_Init">
+                        </asp:DropDownList>
+                    </td>               
+                </tr>
+                <tr>
+                    <td>
+                        Anexo
+                        <asp:HiddenField ID="txtHiddIdCliente" runat="server" />
+                    </td>
+                    <td colspan="4">
+                        <asp:DropDownList ID="cboAnexo" runat="server" oninit="cboAnexo_Init">
+                        </asp:DropDownList>
+                    </td>
+                </tr>
+            </table>
+            <br />
+            <asp:Button ID="btnUpdLsCliente" runat="server" style="display:none;" 
+                    onclick="btnUpdLsCliente_Click" />
+        </ContentTemplate>
+    </asp:UpdatePanel>
+        
+    <%--CUADRO QUE SE UTILIZARA PARA BUSCAR CLIENTE --%> 
+    <div id="dialog-busca-cli" style="display:none;" title="Buscar Cliente">
+        <fieldset>
+            <legend>
+                Criterios de Busqueda
+            </legend>
+            <table>
+                <tr>
+                    <td>
+                        <label id="lbl-busca-nom-cli">Nombre Cliente:</label> 
+                    </td>
+                    <td>
+                        <input type="text" id="txt-busca-nom-cli" name="txt-busca-nom-cli" value="" />
+                    </td>
+                    <td>                        
+                        <label id="lbl-busca-nom-cta">Nombre Cuenta:</label> 
+                    </td>
+                    <td>
+                        <input type="text" id="txt-busca-nom-cta" name="txt-busca-nom-cta" value="" />
+                    </td>                   
+                </tr>   
+                <tr>
+                    <td>
+                        <label id="lbl-busca-nom-cont">Nombre Contacto:</label>
+                    </td>
+                    <td>
+                        <input type="text" id="txt-busca-nom-cont" name="txt-busca-nom-cont" value="" />
+                    </td>
+                </tr>                             
+                <tr>
+                    <td colspan="2">
+                        <label style="font-weight:bold;">Tipo Cliente</label><br />
+                        <asp:RadioButtonList ID="rblTipoCliente" RepeatDirection="Horizontal" runat="server" 
+                            oninit="rblTipoCliente_Init"></asp:RadioButtonList>
+                    </td>                    
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <label style="font-weight:bold;">Estado Cliente</label><br />
+                        <asp:RadioButtonList ID="rblEstadoCliente" RepeatDirection="Horizontal" runat="server" 
+                            oninit="rblEstadoCliente_Init"></asp:RadioButtonList>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <input type="button" id="btn-busca-cliente" value="Buscar Cliente"/>
+                    </td>
+                </tr>
+            </table>
+        </fieldset>
+        <asp:UpdatePanel ID="upListaCliente" runat="server" UpdateMode="Conditional" 
+            onload="upListaCliente_Load"><%--onload="upListaCliente_Load"--%>
+            <ContentTemplate>                    
 
-    <%--SELECCION DE EQUIPO A COTIZAR --%>      
+                <asp:GridView ID="gvListaCliente" runat="server" AutoGenerateColumns="false"
+                    AllowPaging="true" PageSize="5" PagerSettings-PageButtonCount="5" DataKeyNames="IdCliente"
+                    PagerSettings-Mode="NumericFirstLast" PagerSettings-FirstPageText="Primera" 
+                    PagerSettings-LastPageText="Ultima" Width="950px" HeaderStyle-HorizontalAlign="Center" RowStyle-HorizontalAlign="Left" Font-Size="Small"
+                    onpageindexchanging="gvListaCliente_PageIndexChanging" 
+                    oninit="gvListaCliente_Init"><%--oninit="gvListaCliente_Init"--%>
+                    <RowStyle CssClass="gridListaCliente" />
+                    <Columns>
 
-    <%--DETALLE DEL EQUIPO BUSCADO--%>
+                        <asp:TemplateField HeaderText="ID" HeaderStyle-CssClass="ocultaCol" ItemStyle-CssClass="ocultaCol">
+                            <ItemTemplate>
+                                <asp:Label ID="lblidcliente" CssClass="idcliente_" runat="server" Text='<%# Bind("IDCLIENTE") %>'></asp:Label>                                
+                            </ItemTemplate>
+                        </asp:TemplateField>
+
+                        <asp:TemplateField HeaderText="NOMBRE CLIENTE">
+                            <ItemTemplate>
+                                <asp:Label ID="lblnomcliente" CssClass="nomcliente_" runat="server" Text='<%# Bind("NOMCLIENTE") %>'></asp:Label>
+                            </ItemTemplate>
+                        </asp:TemplateField>
+
+                        <asp:TemplateField HeaderText="NOMBRE CUENTA">
+                            <ItemTemplate>
+                                <asp:Label ID="lblnomcuenta" CssClass="nomcuenta_" runat="server" Text='<%# Bind("NOMCUENTA") %>'></asp:Label>
+                            </ItemTemplate>
+                        </asp:TemplateField>
+
+                        <asp:TemplateField HeaderText="NOMBRE CONTACTO">
+                            <ItemTemplate>
+                                <asp:Label ID="lblNombreContacto" CssClass="nomcontacto_" runat="server" Text='<%# Bind("NOMCONTACTO") %>'></asp:Label>
+                            </ItemTemplate>
+                        </asp:TemplateField>
+
+                        <asp:TemplateField HeaderText="CARGO CONTACTO" HeaderStyle-CssClass="ocultaCol" ItemStyle-CssClass="ocultaCol">
+                            <ItemTemplate>
+                                <asp:Label ID="lblCargoContacto" CssClass="carcontacto_" runat="server" Text='<%# Bind("CARGOCONTACTO") %>'></asp:Label>
+                            </ItemTemplate>
+                        </asp:TemplateField>
+
+                        <asp:TemplateField HeaderText="FONO CONTACTO" HeaderStyle-CssClass="ocultaCol" ItemStyle-CssClass="ocultaCol">
+                            <ItemTemplate>
+                                <asp:Label ID="lblFonoContacto" CssClass="fonocontacto_" runat="server" Text='<%# Bind("FONOCONTACTO")&"-"&Bind("CELCONTACTO") %>'></asp:Label>
+                            </ItemTemplate>
+                        </asp:TemplateField>
+
+                        <asp:TemplateField HeaderText="EMAIL CONTACTO" HeaderStyle-CssClass="ocultaCol" ItemStyle-CssClass="ocultaCol">
+                            <ItemTemplate>
+                                <asp:Label ID="lblMailContacto" CssClass="mailcontacto_" runat="server" Text='<%# Bind("MAILCONTACTO") %>'></asp:Label>
+                            </ItemTemplate>
+                        </asp:TemplateField>
+
+                        <asp:TemplateField HeaderText="DIRECCION" HeaderStyle-CssClass="ocultaCol" ItemStyle-CssClass="ocultaCol">
+                            <ItemTemplate>
+                                <asp:Label ID="lbldireccion" CssClass="direccioncli_" runat="server" Text='<%# Bind("DIRCLIENTE") %>'></asp:Label>
+                            </ItemTemplate>
+                        </asp:TemplateField>
+
+                        <asp:TemplateField HeaderText="" ItemStyle-HorizontalAlign="Center">
+                            <ItemTemplate>
+                                <a href="javascript:void(null);" id="btn-select-cli" onclick="seleccionaCliente();" style="display:inline-block;" class="ui-icon ui-icon-check"></a>                                
+                            </ItemTemplate>
+                        </asp:TemplateField>
+
+                    </Columns>
+                </asp:GridView>
+            </ContentTemplate>
+        </asp:UpdatePanel>
+    </div>
+
+    <%--DETALLE DEL EQUIPO INGRESADO--%>
     <br /> 
     Datos Equipo
-    <asp:UpdatePanel ID="UpdatePanel4" runat="server" UpdateMode="Conditional"><ContentTemplate>
-        <script type="text/javascript">
-            Sys.Application.add_load(agregarEquipo);
-     	</script>       
+    <asp:UpdatePanel ID="UpdatePanel4" runat="server" UpdateMode="Conditional">
+        <ContentTemplate>
+            <script type="text/javascript">
+                Sys.Application.add_load(agregarEquipo);
+     	    </script>       
 
-        <table cellpadding="5px"><%--BOTON  QUE CALCULA EN CASO DE MODIFICAR LA CANTIDAD U OTROS VALORES QUE AFECTEN EL MONTO --%>
-            <tr>
-                <td><input type="button" name="btnAddEquipo" id="btnAddEquipo" value="Agregar Equipo" /></td>
-            </tr>
-        </table>
-        <table>
-            <tr>
-                <td class="bold">
-                    SIGNIFICADO LETRAS DETALLE COTIZACIÓN: E; Editar / B; Borrar
-                </td>
-            </tr>
-        </table>
+            <table cellpadding="5px"><%--BOTON  QUE CALCULA EN CASO DE MODIFICAR LA CANTIDAD U OTROS VALORES QUE AFECTEN EL MONTO --%>
+                <tr>
+                    <td>
+                        <input type="button" name="btnAddEquipo" id="btnAddEquipo" value="Agregar Equipo" />
+                    </td>
+                </tr>
+            </table>
         </ContentTemplate>
     </asp:UpdatePanel>
     
@@ -265,7 +418,7 @@
 
             <div id="tab-mod">
                 <div id="dialog-mod" title="Actualizar Fila">
-                    <form action="" id="frm-equipo-add">
+                    <form action="" id="frm-equipo-mod">
                         <table>
                             <tr>
                                 <td>
@@ -350,7 +503,7 @@
 
             <div id="tab-del">
                 <div id="dialog-del" title="Eliminar Fila">
-                    Esta seguro que desea este elemento?
+                    Esta seguro que desea eliminar este elemento?
                     <br /><br />
                     <input type="button" id="btn-del-row" value="Eliminar" name="btn-del-row" />
                 </div>
@@ -438,12 +591,11 @@
 	    </form>
     </div>
 
-    <%--DIV PARA MODIFICAR EQUIPO CON JQUERY Y AJAX --%>
-
     <%--DETALLE DE EQUIPOS AGREGADOS--%>
     <br />
     <asp:Panel ID="Panel1" runat="server" Width="100%" Height="165px"><%-- ACA VA EL GRIDVIEW ScrollBars="Vertical" --%>
-        <asp:UpdatePanel ID="UpdatePanel5" runat="server" UpdateMode="Conditional"><ContentTemplate>
+        <asp:UpdatePanel ID="UpdatePanel5" runat="server" UpdateMode="Conditional">
+        <ContentTemplate>
         <asp:GridView ID="GV1" runat="server" AutoGenerateColumns="False" 
             DataKeyNames="Item,IdVenta" PageSize="5" 
         PagerSettings-PageButtonCount="10" PagerSettings-Mode="NumericFirstLast" 
@@ -675,8 +827,8 @@
                     </tr>
                     <tr>
                         <td colspan="2" style="text-align:center;">
-                            <asp:Button ID="btnCalcular" runat="server" Text="Calcular" Width="90px" />
-                            <input type="button" value="Calcular" id="btn-calcular-total" />
+                            <asp:Button ID="btnCalcular" runat="server" Text="Calcular" Width="90px" 
+                                onclick="btnCalcular_Click" />
                         </td>
                     </tr>
                 </table>
@@ -910,7 +1062,16 @@
         </ContentTemplate>
     </asp:UpdatePanel>  
 
+    <%--DIV PARA ELIMINAR EL ARCHIVO SELECCIONADO --%>
+    <div id="dialog-archivo" title="Quitar Archivo" style="display:none;">
+        Esta seguro que desea quitar el archivo?
+        <br /><br />
+        <input type="button" id="btn-del-archivo" name="btn-del-archivo" value="Eliminar" />
+    </div>
+
     <br /><br />
+
+    <%-- PANEL DE ARCHIVOS ADJUNTOS --%>
     Archivos Adjuntos
     <asp:UpdatePanel ID="udpArchivo" runat="server" UpdateMode="Conditional">
         <ContentTemplate>
@@ -920,32 +1081,38 @@
         PagerSettings-FirstPageText="Primera" PagerSettings-LastPageText="Ultima" 
                 AllowPaging="true" onpageindexchanging="gvArchivo_PageIndexChanging" 
                 onrowcommand="gvArchivo_RowCommand">
+                <RowStyle CssClass="gvArchivoDet" />
                 <Columns>
 
                     <asp:TemplateField HeaderText="Item" ItemStyle-Width="50px">
                         <ItemTemplate>
-                            <asp:Label ID="ADJUNTO_ID" runat="server" CssClass="costo_rep" Text='<%# Bind("ADJUNTO_ID") %>'></asp:Label>
+                            <asp:Label ID="ADJUNTO_ID" runat="server" CssClass="adj_nroitem" Text='<%# Bind("ADJUNTO_ID") %>'></asp:Label>
                         </ItemTemplate>
                     </asp:TemplateField>
 
                     <asp:TemplateField HeaderText="ID Cotiz" ItemStyle-Width="100px" Visible="false">
                         <ItemTemplate>
-                            <asp:Label ID="COTIZ_ID" runat="server" CssClass="costo_rep" Text='<%# Bind("COTIZ_ID") %>'></asp:Label>
+                            <asp:Label ID="COTIZ_ID" runat="server" CssClass="adj_cotid" Text='<%# Bind("COTIZ_ID") %>'></asp:Label>
                         </ItemTemplate>
                     </asp:TemplateField>
 
                     <asp:TemplateField HeaderText="Nombre Adjunto" ItemStyle-Width="250px">
                         <ItemTemplate>
-                            <asp:HyperLink ID="ADJUNTO_NOMBRE" runat="server" Text='<%# Eval("ADJUNTO_NOMBRE") %>' NavigateUrl='<%# Eval("ADJUNTO_DIR") %>' Target="_blank"></asp:HyperLink>                            
+                            <asp:HyperLink ID="ADJUNTO_NOMBRE" CssClass="adj_direccion" runat="server" Text='<%# Eval("ADJUNTO_NOMBRE") %>' NavigateUrl='<%# Eval("ADJUNTO_DIR") %>' Target="_blank"></asp:HyperLink>                            
                         </ItemTemplate>
                     </asp:TemplateField>
 
                     <asp:TemplateField HeaderText="Link Doc" ItemStyle-Width="100px" Visible="false">
                         <ItemTemplate>
-                            <asp:Label ID="ADJUNTO_DIR" runat="server" CssClass="costo_rep" Text='<%# Bind("ADJUNTO_DIR") %>'></asp:Label>
+                            <asp:Label ID="ADJUNTO_DIR" runat="server" Text='<%# Bind("ADJUNTO_DIR") %>'></asp:Label>
                         </ItemTemplate>
                     </asp:TemplateField>
                                       
+                    <asp:TemplateField HeaderText="Borrar" ItemStyle-Width="60px">
+                        <ItemTemplate>
+                            <a href="javascript:void(null);" id="btn-del-file" onclick="borraArchivo();" style="display:inline-block;" class="ui-icon ui-icon-close"></a>
+                        </ItemTemplate>
+                    </asp:TemplateField>
                 </Columns>            
             </asp:GridView>
 
@@ -963,27 +1130,34 @@
     <div id="dialog-doc" style="display:none;">
         <asp:AjaxFileUpload ID="fuProyecto" runat="server" OnUploadComplete="fuProyecto_UploadComplete" />
     </div>
-        
-<%--PEGAR LO CORTADO--%>    
-<br /><br /><br />
+       
+    <br /><br /><br />
     <table cellpadding="5px">
         <tr>
             <td>
                 <asp:Button ID="btnSave" runat="server" 
-                Text="Guardar Cotizacion" Width="130px"/>
+                Text="Guardar" Width="130px"/>
             </td>
-
+            <td>
+                <asp:Button ID="btnSaveDraft" runat="server" Text="Guardar Borrador" />
+            </td>
             <td>
                 <asp:Button ID="btnSavePrint" runat="server" Text="Guardar e Imprimir"/>
-            </td>
+            </td>            
             <td>
                 <input type="button" id="btn-doc" name="btn-doc" value="Adjuntar Documento" />
             </td>
         </tr>
-      </table>
+    </table>
 
       <%--SECTOR DE JAVASCRIPT--%>
-        <script type="text/javascript">            
+        <script type="text/javascript">
+            $.cookie('nomclient', '');
+            $.cookie('nomcuenta', '');
+            $.cookie('nomcontact', '');
+            $.cookie('nomtipo', '');
+            $.cookie('nomestado', '');
+             
             maxL = 400;
             var bName = navigator.appName;
             function taLimit(taObj) {
@@ -1023,7 +1197,7 @@
                 cambiaAjaxUploader();
             });
 
-            var itemnro;
+            var itemnro;            
             var pccookie = $.cookie("pcusr");
             function dataEquipo() {//solo para insertar
                 var objEquipo = new Object();                
@@ -1061,14 +1235,26 @@
                 return objEquipomod;
             }
 
+            //FUNCION LLAMADA DESDE AGREGAR EQUIPO
             function sumDetEquipo() {
                 var coti = $('#<%=cboTipoCotizacion.ClientID %>').val();
                 var mone = $('#<%=cboTipoTarifa.ClientID %>').val();
 
                 itemnro = itemnro ? itemnro : "1";
-                
-                var tot = sumEquipo(dataEquipo(), coti, mone);
-                $("#txt_monto_ins").val(tot);
+
+                if (coti == 0) {
+                    $(this).dialog('close');
+                    limpiaIngreso();
+                    alert("Debe seleccionar un tipo de cotizacion");
+                }
+                else if (mone == 0) {
+                    $(this).dialog('close');
+                    alert("Debe Seleccionar un tipo de tarifa");
+                }
+                else {
+                    var tot = sumEquipo(dataEquipo(), coti, mone);
+                    $("#txt_monto_ins").val(tot);
+                }
             }
 
             function setDetEquipo() {
@@ -1085,16 +1271,24 @@
                 if (tc == 5) {
                     $("#txt_cmo_ins").attr("disabled", "disabled");
                     $("#txt_pmo_ins").attr("disabled", "disabled");
+                    $("#txt_cmo").attr("disabled", "disabled");
+                    $("#txt_pmo").attr("disabled", "disabled");
                 }
                 else if (tc == 6) {
                     $("#txt_cmo_ins").removeAttr("disabled");
                     $("#txt_pmo_ins").removeAttr("disabled");
                     $("#txt_crep_ins").attr("disabled", "disabled");
+                    $("#txt_cmo").removeAttr("disabled");
+                    $("#txt_pmo").removeAttr("disabled");
+                    $("#txt_crep").attr("disabled", "disabled");
                 }
                 else if (tc == 7) {
                     $("#txt_cmo_ins").removeAttr("disabled");
                     $("#txt_pmo_ins").removeAttr("disabled");
                     $("#txt_crep_ins").removeAttr("disabled");
+                    $("#txt_cmo").removeAttr("disabled");
+                    $("#txt_pmo").removeAttr("disabled");
+                    $("#txt_crep").removeAttr("disabled");
                 }
             }
 
@@ -1134,6 +1328,28 @@
                 });
             }
 
+            var arch_idcoti;
+            var arch_nroitem;
+            function delDetalleArch() {
+                $('.gvArchivoDet').on('click', function () {
+                    arch_nroitem = $('.adj_nroitem', $(this).closest('tr')).html();
+                    arch_idcoti = pccookie;// $('.adj_cotid', $(this).closest('tr')).html();
+                });
+            }
+
+            var cliid;
+            function dataCliente() {
+                $('.gridListaCliente').on('click', function () {
+                    $("#<%=txtHiddIdCliente.ClientID %>").val($('.idcliente_', $(this).closest('tr')).html()); //$('.idcliente_', $(this).closest('tr')).html(); //$('.idcliente_', find('td:first').text() txtIdCotizacion                  
+                    $("#<%=txtCliente.ClientID %>").val($('.nomcliente_', $(this).closest('tr')).html());
+                    $("#<%=txtClienteInforme.ClientID %>").val($('.nomcuenta_', $(this).closest('tr')).html());
+                    $("#<%=txtContactoCliente.ClientID %>").val($('.nomcontacto_', $(this).closest('tr')).html());
+                    $("#<%=txtDireccionCliente.ClientID %>").val($('.direccioncli_', $(this).closest('tr')).html());
+                    $("#<%=txtMailCliente.ClientID %>").val($('.mailcontacto_', $(this).closest('tr')).html());
+                    $("#<%=txtFonoCliente.ClientID %>").val($('.fonocontacto_', $(this).closest('tr')).html());
+                });
+            }
+
             function editaNroParte() {
                 updDetalle();
 
@@ -1148,7 +1364,31 @@
                 });
             }
 
+            function borraArchivo() {
+                delDetalleArch();
+
+                $("#dialog-archivo").dialog({
+                    modal: true,
+                    width: "400px",
+                    buttons: {
+                        "Cerrar": function () {
+                            $(this).dialog('close');
+                        }
+                    }
+                });
+            }
+
+            function seleccionaCliente() {
+                dataCliente();
+                
+                $("#dialog-busca-cli").dialog('close');
+
+                //$("#<%=txtCliente.ClientID %>").val(clinom);
+                //$("#<%=txtClienteInforme.ClientID %>").val(clicta);
+                //$("#<%=txtDireccionCliente.ClientID %>").val(clidir);
+            }
             /*
+            editaNroParte
             ********************
             */
 
@@ -1175,6 +1415,22 @@
 
             /*
             ********************
+            */
+
+            /*
+            eliminaArchivo
+            */
+            $("#btn-del-archivo").on('click', function () {
+                var nitem = arch_nroitem;
+                var ncoti = arch_idcoti;
+
+                delArchivo(nitem, ncoti);
+                arch_nroitem = "";
+                arch_idcoti = "";
+                $("#<%=btnUpdateDoc.ClientID %>").click();
+            });
+            /*
+            **************
             */
 
             $(function () {
@@ -1279,8 +1535,43 @@
                 rules: {
                     txt_nroparte_ins: {
                         required: true
+                    },
+                    txt_descrip_ins: {
+                        required: true
+                    },
+                    txt_serie_ins: {
+                        required: true
+                    },
+                    txt_cantidad_ins: {
+                        required: true,
+                        number: true
+                    },
+                    txt_crep_ins: {
+                        required: true,
+                        number: true
+                    },
+                    txt_prep_ins: {
+                        required: true,
+                        number: true
+                    },
+                    txt_cmo_ins: {
+                        required: true,
+                        number: true
+                    },
+                    txt_pmo_ins: {
+                        required: true,
+                        number: true
                     }
                 }
+            });
+
+            $("#btn-busca-cliente").on('click', function () {                
+                $.cookie('nomclient', $("#txt-busca-nom-cli").val());
+                $.cookie('nomcuenta', $("#txt-busca-nom-cta").val());
+                $.cookie('nomcontact', $("#txt-busca-nom-cont").val());
+                $.cookie('nomtipo', $("#<%=rblTipoCliente.ClientID%>").find(":checked").val());
+                $.cookie('nomestado', $("#<%=rblEstadoCliente.ClientID%>").find(":checked").val());
+                $("#<%=btnUpdLsCliente.ClientID %>").click();
             });
         </script>
 

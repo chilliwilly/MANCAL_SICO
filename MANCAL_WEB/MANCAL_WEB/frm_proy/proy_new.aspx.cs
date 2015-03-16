@@ -16,6 +16,8 @@ namespace MANCAL_WEB.frm_proy
     {
         bl_carga_cbo objCbo;
         bl_adjunto objAdj;
+        bl_calculo objCalculo;
+        bl_cliente objCliente;
         bl_detalle_pro objDet = new bl_detalle_pro();
         String un = "MAN";
         
@@ -171,6 +173,26 @@ namespace MANCAL_WEB.frm_proy
             }
         }
 
+        protected void rblTipoCliente_Init(object sender, EventArgs e)
+        {
+            objCbo = new bl_carga_cbo();
+
+            foreach (var rad in objCbo.getTipoCliente()) 
+            {
+                rblTipoCliente.Items.Add(new ListItem(rad.nomtipocli, rad.idtipocli));
+            }
+        }
+
+        protected void rblEstadoCliente_Init(object sender, EventArgs e)
+        {
+            objCbo = new bl_carga_cbo();
+
+            foreach (var rad in objCbo.getEstadoCliente()) 
+            {
+                rblEstadoCliente.Items.Add(new ListItem(rad.nomestadocli, rad.idestadocli));
+            }
+        }
+
         #endregion
 
         protected void cboJefe_SelectedIndexChanged(object sender, EventArgs e)
@@ -182,14 +204,42 @@ namespace MANCAL_WEB.frm_proy
             txtMailJefe.Text = cj.jef_mai;
         }
 
-        //protected void btnCalcula_Click(object sender, EventArgs e)
-        //{
-        //    this.txtCantidad_TextChanged(sender, e);
-        //    this.txtCostoRepuesto_TextChanged(sender, e);
-        //    this.txtPrecioTipoTarifa_TextChanged(sender, e);
-        //    this.txtValorMO_TextChanged(sender, e);
-        //    this.txtValorRepuesto_TextChanged(sender, e);
-        //}
+        protected void btnCalcular_Click(object sender, EventArgs e)
+        {
+            objCalculo = new bl_calculo();
+            Cotizacion c = new Cotizacion();
+
+            c.cot_tipomoneda = cboTipoTarifa.SelectedValue;
+            c.cot_afecto = cboTipoImpuesto.SelectedValue;
+            c.tc_id = Convert.ToInt32(cboTipoCotizacion.SelectedValue);
+            c.cot_descuento = txtDcto.Text;
+            c.cot_id = System.Environment.UserName;
+            c.cot_fecha = txtFecha.Text;
+
+            c = objCalculo.getMargenTotal(c, "PRO");
+
+            txtTotalCostoMo.Text = c.cot_totcostmo;
+            txtTotalCostoRpto.Text = c.cot_totvalrpto;
+            txtMgOpPorc.Text = c.cot_mgopporc;
+            txtMgBrutoPorc.Text = c.cot_mgbrutoporc;
+            txtMgContribucion.Text = c.cot_mgcontrib;
+            txtMgContribucionPorc.Text = c.cot_mgcontribporc;
+            txtUtilidadEspPorc.Text = c.cot_utilesperaporc;
+            txtTipoMoneda.Text = c.cot_tipomoneda;
+
+            txtNeto.Text = c.cot_neto;
+            txtNetoDcto.Text = c.cot_netodcto;
+            txtIva.Text = c.cot_iva;
+            txtTotal.Text = c.cot_total;
+
+            panelCalculo.Update();
+
+            if (!String.IsNullOrEmpty(c.cot_msgautoriza)) 
+            {
+                String msgautoriza = "alert(\"" + c.cot_msgautoriza + ".\");";
+                ScriptManager.RegisterStartupScript(this, GetType(), "Mensaje", msgautoriza, true);
+            }
+        }
 
         protected void btnAgrega_Click(object sender, EventArgs e)
         {
@@ -236,61 +286,6 @@ namespace MANCAL_WEB.frm_proy
 
         #region Metodos Privados
 
-        //private void calculaTotalEquipo() 
-        //{
-        //    String qty = this.txtCantidad.Text;
-        //    String crpto = this.txtCostoRepuesto.Text;
-        //    String prpto = this.txtValorRepuesto.Text;
-        //    String cmo = this.txtValorMO.Text;
-        //    String pmo = this.txtPrecioTipoTarifa.Text;
-        //    String tmoneda = this.cboTipoTarifa.SelectedValue;
-        //    String tcoti = this.cboTipoCotizacion.SelectedValue;            
-
-        //    if (String.IsNullOrEmpty(tmoneda))
-        //    {
-        //        String ndmo = "alert(\"Debe seleccionar un tipo tarifa.\");";
-        //        ScriptManager.RegisterStartupScript(this, GetType(), "Mensaje", ndmo, true);
-        //    }
-        //    else
-        //    {
-        //        DetalleCotizacionPro objDC = new DetalleCotizacionPro();
-        //        objDC.cantidad = qty;
-        //        objDC.costorepuesto = crpto;
-        //        objDC.preciorepuesto = prpto;
-        //        objDC.costomo = cmo;
-        //        objDC.preciomo = pmo;
-
-        //        if (int.Parse(qty) <= 0)
-        //        {
-        //            String ndmo = "alert(\"Cantidad no puede ser menor o igual a 0. Favor revisar.\");";
-        //            ScriptManager.RegisterStartupScript(this, GetType(), "Mensaje", ndmo, true);
-        //        }
-        //        else
-        //        {
-        //            this.txtMonto.Text = objDet.getTotalEquipo(objDC, tcoti, tmoneda);
-        //        }
-        //    }
-        //}
-
-        //private void ingresarEquipo() 
-        //{
-        //    DetalleCotizacionPro dcp = new DetalleCotizacionPro();
-        //    objDet = new bl_detalle_pro();
-
-        //    dcp.idventa = System.Environment.UserName;
-        //    dcp.nroparte = txtNroParte.Text;
-        //    dcp.descripcion = txtDescripcion.Text;
-        //    dcp.nroserie = txtNroSerie.Text;
-        //    dcp.cantidad = txtCantidad.Text;
-        //    dcp.costorepuesto = txtCostoRepuesto.Text;
-        //    dcp.preciorepuesto = txtValorRepuesto.Text;
-        //    dcp.costomo = txtValorMO.Text;
-        //    dcp.preciomo = txtPrecioTipoTarifa.Text;
-        //    dcp.preciototal = txtMonto.Text;
-
-        //    objDet.setEquipo(dcp);
-        //}
-
         private void getListArchivo(String idu)
         {
             objAdj = new bl_adjunto();
@@ -305,18 +300,14 @@ namespace MANCAL_WEB.frm_proy
             GV1.DataBind();
         }
 
-        //public void limpiaCamposEquipo()
-        //{
-        //    txtNroParte.Text = "";
-        //    txtDescripcion.Text = "";
-        //    txtNroSerie.Text = "";
-        //    txtCantidad.Text = "1";
-        //    txtCostoRepuesto.Text = "0";
-        //    txtValorRepuesto.Text = "0";
-        //    txtValorMO.Text = "0";
-        //    txtPrecioTipoTarifa.Text = "0";
-        //    txtMonto.Text = "0";
-        //}
+        public void mostrarCliente(String clinom, String clicta, String nomcont, String clitipo, String cliestado) 
+        {
+            objCliente = new bl_cliente();
+            gvListaCliente.DataSource = objCliente.getListaCliente(clinom, clicta, nomcont, clitipo, cliestado);
+            gvListaCliente.DataBind();
+        }
+
+        #endregion
 
         protected void btnUpdate_Click(object sender, EventArgs e)
         {
@@ -335,64 +326,44 @@ namespace MANCAL_WEB.frm_proy
         }
 
         protected void GV1_RowCommand(object sender, GridViewCommandEventArgs e)
-        {            
+        {
 
         }
 
-        #endregion
+        protected void gvListaCliente_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            String cli_nom = Request.Cookies["nomclient"].Value ?? null;
+            String cli_cta = Request.Cookies["nomcuenta"].Value ?? null;
+            String cli_cont = Request.Cookies["nomcontact"].Value ?? null;
+            String cli_tipo = Request.Cookies["nomtipo"].Value ?? null;
+            String cli_estado = Request.Cookies["nomestado"].Value ?? null;
 
-        #region Cambio_Valores_Ingreso_Equipo
+            gvListaCliente.PageIndex = e.NewPageIndex;
 
-        //protected void txtCantidad_TextChanged(object sender, EventArgs e)
-        //{
-        //    TextBox revtxt = sender as TextBox;
+            mostrarCliente(cli_nom, cli_cta, cli_cont, cli_tipo, cli_estado);
+        }
 
-        //    if (revtxt != null)
-        //    {
-        //        this.calculaTotalEquipo();
-        //    }
-        //}
+        protected void btnUpdLsCliente_Click(object sender, EventArgs e)
+        {
+            String cli_nom = Request.Cookies["nomclient"].Value ?? null;
+            String cli_cta = Request.Cookies["nomcuenta"].Value ?? null;
+            String cli_cont = Request.Cookies["nomcontact"].Value ?? null;
+            String cli_tipo = Request.Cookies["nomtipo"].Value ?? null;
+            String cli_estado = Request.Cookies["nomestado"].Value ?? null;
 
-        //protected void txtCostoRepuesto_TextChanged(object sender, EventArgs e)
-        //{
-        //    TextBox revtxt = sender as TextBox;
+            mostrarCliente(cli_nom, cli_cta, cli_cont, cli_tipo, cli_estado);
+            upListaCliente.Update();
+        }
 
-        //    if (revtxt != null)
-        //    {
-        //        this.calculaTotalEquipo();
-        //    }
-        //}
+        protected void upListaCliente_Load(object sender, EventArgs e)
+        {
+            mostrarCliente("", "", "", "", "");
+            upListaCliente.Update();
+        }
 
-        //protected void txtValorRepuesto_TextChanged(object sender, EventArgs e)
-        //{
-        //    TextBox revtxt = sender as TextBox;
-
-        //    if (revtxt != null)
-        //    {
-        //        this.calculaTotalEquipo();
-        //    }
-        //}
-
-        //protected void txtValorMO_TextChanged(object sender, EventArgs e)
-        //{
-        //    TextBox revtxt = sender as TextBox;
-
-        //    if (revtxt != null)
-        //    {
-        //        this.calculaTotalEquipo();
-        //    }
-        //}
-
-        //protected void txtPrecioTipoTarifa_TextChanged(object sender, EventArgs e)
-        //{
-        //    TextBox revtxt = sender as TextBox;
-
-        //    if (revtxt != null)
-        //    {
-        //        this.calculaTotalEquipo();
-        //    }
-        //}
-
-        #endregion
+        protected void gvListaCliente_Init(object sender, EventArgs e)
+        {
+            mostrarCliente("", "", "", "", "");
+        }
     }
 }

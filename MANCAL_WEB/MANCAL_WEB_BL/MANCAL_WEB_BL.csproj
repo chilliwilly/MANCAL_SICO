@@ -43,7 +43,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="bl_adjunto.cs" />
+    <Compile Include="bl_calculo.cs" />
     <Compile Include="bl_carga_cbo.cs" />
+    <Compile Include="bl_cliente.cs" />
     <Compile Include="bl_codificar_pwd.cs" />
     <Compile Include="bl_detalle_pro.cs" />
     <Compile Include="bl_equipo.cs" />

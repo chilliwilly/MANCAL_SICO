@@ -406,5 +406,51 @@ namespace MANCAL_WEB_DL
             }
             return dt;
         }
+
+        public DataTable selectTextTipoCliente() 
+        {
+            DataTable dt = new DataTable();
+
+            using (OracleConnection con = new OracleConnection(conStr)) 
+            {
+                con.Open();
+                String qry = "SELECT * FROM TBL_TIPO_CLIENTE ORDER BY TIPOCLI_ID";
+                using (OracleCommand cmd = new OracleCommand(qry, con)) 
+                {
+                    cmd.CommandType = CommandType.Text;
+
+                    using (OracleDataAdapter oda = new OracleDataAdapter(cmd)) 
+                    {
+                        oda.Fill(dt);
+                    }
+                }
+                con.Close();
+            }
+
+            return dt;
+        }
+
+        public DataTable selectTextEstadoCliente() 
+        {
+            DataTable dt = new DataTable();
+
+            using (OracleConnection con = new OracleConnection(conStr)) 
+            {
+                con.Open();
+                String qry = "SELECT * FROM TBL_ESTADO_CLIENTE ORDER BY ESTCLI_ID";
+                using (OracleCommand cmd = new OracleCommand(qry, con)) 
+                {
+                    cmd.CommandType = CommandType.Text;
+
+                    using (OracleDataAdapter oda = new OracleDataAdapter(cmd)) 
+                    {
+                        oda.Fill(dt);
+                    }
+                }
+                con.Close();
+            }
+
+            return dt;
+        }
     }
 }

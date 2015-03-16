@@ -79,6 +79,38 @@ function getCommFac() { //OBTIENE COMENTARIO FATURACION
     });
 }
 
+function delArchivo(item, coti) {
+    $.ajax({
+        type: "POST",
+        url: "/asmx_files/js_llenado.asmx/delDatoArchivo",
+        datatype: "json",
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify({ "item_": item, "coti_": coti }),
+        success: function (data, status) {
+            alert("Archivo Eliminado");
+        },
+        error: function (data) {
+            alert("Error al eliminar archivo");
+        }
+    });
+}
+
+function getFiltroCliente(nom, cta, tip, est) {
+    $.ajax({
+        type: "POST",
+        url: "proy_new.aspx/setFiltroCliente",
+        datatype: "json",
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify({ "clinom": nom, "clicta": cta, "clitipo": tip, "cliestado": est}),
+        success: function (data, status) {
+            
+        },
+        error: function (data) {
+            alert("Error al buscar cliente");
+        }
+    });
+}
+
 function cambiaAjaxUploader() {
     Sys.Extended.UI.Resources.AjaxFileUpload_SelectFile = "Seleccione";
     Sys.Extended.UI.Resources.AjaxFileUpload_DropFiles = "Seleccione Archivos";

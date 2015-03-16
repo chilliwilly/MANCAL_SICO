@@ -492,3 +492,13 @@ overflow:auto;	/* Hide overflow content */
 z-index:1000001;
 
 }
+
+.error
+{
+    color:Red;
+}
+
+.ocultaCol
+{
+    display:none;
+}

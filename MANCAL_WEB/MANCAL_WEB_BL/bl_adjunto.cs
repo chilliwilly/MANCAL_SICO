@@ -18,11 +18,26 @@ namespace MANCAL_WEB_BL
             objAdjunto.insertArchivo(nomdoc, dirdoc, usr_pc);
         }
 
-        public void delAdjunto(String iddoc, String cotizdoc)
+        public String delAdjunto(String iddoc, String cotizdoc)
         {
             objAdjunto = new dl_adjunto();
             int id_adj = int.Parse(iddoc);
             objAdjunto.deleteArchivo(id_adj, cotizdoc);
+
+            List<CotizacionAdjunto> cotAdj = getAdjunto(cotizdoc);
+            String nomArch = "";
+
+            foreach (CotizacionAdjunto ca in cotAdj)
+            {
+                if (ca.adjunto_id.Equals(iddoc))
+                {
+                    String[] dirArch = ca.adjunto_dir.Split('/');
+                    nomArch = dirArch[2];
+                    break;
+                }
+            }
+
+            return nomArch;
         }
 
         public List<CotizacionAdjunto> getAdjunto(String idncotiz)
@@ -35,10 +50,10 @@ namespace MANCAL_WEB_BL
             foreach (DataRow dr in dt.Rows)
             {
                 CotizacionAdjunto objAdju = new CotizacionAdjunto();
-                objAdju.adjunto_id = dr["ARCHP_ITEM"].ToString();
-                objAdju.cotiz_id = dr["PROY_NUMERO"].ToString();
-                objAdju.adjunto_nombre = dr["ARCHP_NOMBRE"].ToString();
-                objAdju.adjunto_dir = dr["ARCHP_DIRECCION"].ToString();
+                objAdju.adjunto_id = dr["ARCH_ITEM"].ToString();
+                objAdju.cotiz_id = dr["ARCH_ID_CP"].ToString();
+                objAdju.adjunto_nombre = dr["ARCH_NOMBRE"].ToString();
+                objAdju.adjunto_dir = dr["ARCH_DIRECCION"].ToString();
                 lsAdj.Add(objAdju);
             }
 
@@ -50,7 +65,7 @@ namespace MANCAL_WEB_BL
             String arch = System.IO.Path.GetFileName(file_name);
             String[] nomArch = arch.Split('.');
             String dirArch = arch;
-
+            
             addAdjunto(pc_usr, nomArch[0], dirArch);
 
             return dirArch;

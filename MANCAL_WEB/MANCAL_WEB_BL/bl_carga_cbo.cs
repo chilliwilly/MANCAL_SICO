@@ -374,5 +374,41 @@ namespace MANCAL_WEB_BL
             }
             return cot;
         }
+
+        public List<CotizacionEstadoCliente> getEstadoCliente() 
+        {
+            List<CotizacionEstadoCliente> ls = new List<CotizacionEstadoCliente>();
+            objCbo = new dl_carga_cbo();
+
+            DataTable dt = objCbo.selectTextEstadoCliente();
+
+            foreach (DataRow dr in dt.Rows) 
+            {
+                CotizacionEstadoCliente cli = new CotizacionEstadoCliente();
+                cli.idestadocli = dr["ESTCLI_ID"].ToString();
+                cli.nomestadocli = dr["ESTCLI_NOMBRE"].ToString();
+
+                ls.Add(cli);
+            }
+            return ls;
+        }
+
+        public List<CotizacionTipoCliente> getTipoCliente() 
+        {
+            List<CotizacionTipoCliente> ls = new List<CotizacionTipoCliente>();
+            objCbo = new dl_carga_cbo();
+
+            DataTable dt = objCbo.selectTextTipoCliente();
+
+            foreach (DataRow dr in dt.Rows) 
+            {
+                CotizacionTipoCliente cot = new CotizacionTipoCliente();
+                cot.idtipocli = dr["TIPOCLI_ID"].ToString();
+                cot.nomtipocli = dr["TIPOCLI_NOMBRE"].ToString();
+
+                ls.Add(cot);
+            }
+            return ls;
+        }
     }
 }

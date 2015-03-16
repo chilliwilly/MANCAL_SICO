@@ -65,5 +65,13 @@ namespace MANCAL_WEB.asmx_files
 
             objBL.delEquipo(objDet);
         }
+
+        [WebMethod]
+        public void delDatoArchivo(String item_, String coti_)
+        {
+            MANCAL_WEB_BL.bl_adjunto objAdjunto = new MANCAL_WEB_BL.bl_adjunto();
+            String nomArchivo = objAdjunto.delAdjunto(item_, coti_);
+            System.IO.File.Delete(Server.MapPath("~/adjunto_doc/") + nomArchivo);
+        }
     }
 }

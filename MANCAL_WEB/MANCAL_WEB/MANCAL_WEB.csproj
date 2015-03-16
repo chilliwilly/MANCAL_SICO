@@ -39,6 +39,15 @@
     <Reference Include="AjaxMin">
       <HintPath>..\..\..\..\AjaxControlToolkit.Binary.NET40\AjaxMin.dll</HintPath>
     </Reference>
+    <Reference Include="Blowfish">
+      <HintPath>..\..\..\..\..\Desktop\Blowfish\Blowfish.dll</HintPath>
+    </Reference>
+    <Reference Include="IKVM.OpenJDK.Core">
+      <HintPath>..\..\..\..\..\Desktop\Blowfish\IKVM.OpenJDK.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="IKVM.Runtime">
+      <HintPath>..\..\..\..\..\Desktop\Blowfish\IKVM.Runtime.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -96,6 +105,7 @@
     <Content Include="img_files\logo.png" />
     <Content Include="img_files\logomanttocal.png" />
     <Content Include="img_files\logo_dts.png" />
+    <Content Include="img_files\search_ico.png" />
     <Content Include="img_files\Stage_BG_btm.png" />
     <Content Include="img_files\titlebar_bg.jpg" />
     <Content Include="index.aspx" />
@@ -105,6 +115,7 @@
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-ui.js" />
     <Content Include="Scripts\jquery.cookie.js" />
+    <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jsEquipo.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
