@@ -73,5 +73,17 @@ namespace MANCAL_WEB.asmx_files
             String nomArchivo = objAdjunto.delAdjunto(item_, coti_);
             System.IO.File.Delete(Server.MapPath("~/adjunto_doc/") + nomArchivo);
         }
+
+        [WebMethod]
+        public static MANCAL_WEB_CLASS.DetalleCotizacionPro getDatoEq(String ideq, String idtarifa, String fcoti) 
+        {            
+            MANCAL_WEB_CLASS.DetalleCotizacionPro det = new MANCAL_WEB_CLASS.DetalleCotizacionPro();
+
+            bl_detalle_pro objdp = new bl_detalle_pro();
+
+            det = objdp.getDatoEquipo(ideq, idtarifa, fcoti);            
+
+            return det;
+        }
     }
 }

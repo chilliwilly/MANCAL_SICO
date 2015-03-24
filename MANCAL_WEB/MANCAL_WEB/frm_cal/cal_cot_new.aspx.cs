@@ -17,7 +17,10 @@ namespace MANCAL_WEB.frm_cal
         bl_carga_cbo objCbo;
         bl_adjunto objAdj;
         bl_cliente objCliente;
+        bl_detalle_pro objDet;
         String un = "CAL";
+        String cli_nom, cli_cta, cli_cont, cli_tipo, cli_estado;
+        String eq_nombre, eq_modelo, eq_nparte;
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -58,6 +61,16 @@ namespace MANCAL_WEB.frm_cal
             foreach (var ct in objCbo.lsTarifaTipo())
             {
                 cboTipoTarifa.Items.Add(new ListItem(ct.tt_nom, ct.tt_idn));
+            }
+        }
+
+        protected void cbo_eq_read_trabajo_Init(object sender, EventArgs e) 
+        {
+            objCbo = new bl_carga_cbo();
+
+            foreach (var cj in objCbo.lsTrabajoTipo(un, "COT")) 
+            {
+                cbo_eq_read_trabajo.Items.Add(new ListItem(cj.nom_ttrabajo, cj.idn_ttrabajo));
             }
         }
 
@@ -213,13 +226,11 @@ namespace MANCAL_WEB.frm_cal
 
         #endregion
 
+        #region Metodos Protected
+
         protected void gvListaCliente_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
-            String cli_nom = Request.Cookies["nomclient"].Value ?? null;
-            String cli_cta = Request.Cookies["nomcuenta"].Value ?? null;
-            String cli_cont = Request.Cookies["nomcontact"].Value ?? null;
-            String cli_tipo = Request.Cookies["nomtipo"].Value ?? null;
-            String cli_estado = Request.Cookies["nomestado"].Value ?? null;
+            setValueCliente();
 
             gvListaCliente.PageIndex = e.NewPageIndex;
 
@@ -313,6 +324,8 @@ namespace MANCAL_WEB.frm_cal
             fuCalibracion.SaveAs(Server.MapPath("~/adjunto_doc/") + adjunto);
         }
 
+        #endregion
+
         public void mostrarCliente(String clinom, String clicta, String nomcont, String clitipo, String cliestado)
         {
             objCliente = new bl_cliente();
@@ -322,12 +335,7 @@ namespace MANCAL_WEB.frm_cal
 
         protected void btnUpdLsCliente_Click(object sender, EventArgs e)
         {
-            String cli_nom = Request.Cookies["nomclient"].Value ?? null;
-            String cli_cta = Request.Cookies["nomcuenta"].Value ?? null;
-            String cli_cont = Request.Cookies["nomcontact"].Value ?? null;
-            String cli_tipo = Request.Cookies["nomtipo"].Value ?? null;
-            String cli_estado = Request.Cookies["nomestado"].Value ?? null;
-
+            setValueCliente();
             mostrarCliente(cli_nom, cli_cta, cli_cont, cli_tipo, cli_estado);
             upListaCliente.Update();
         }
@@ -339,9 +347,53 @@ namespace MANCAL_WEB.frm_cal
             gvArchivo.DataBind();
         }
 
+        private void getListaEquipo(String nom, String np, String modelo) 
+        {
+            objDet = new bl_detalle_pro();
+            String systemid = "2";
+            gvEquipoBusca.DataSource = objDet.getEquipo(nom, np, modelo, systemid, cboTipoTarifa.SelectedValue, txtFecha.Text);
+            gvEquipoBusca.DataBind();
+        }
+
         protected void btnBuscarListaEquipo_Click(object sender, EventArgs e)
         {
+            setValueEquipo();
+            getListaEquipo(eq_nombre, eq_nparte, eq_modelo);
+            upEquipoBusca.Update();
+        }
 
+        protected void btnUpdDatoEquipo_Click(object sender, EventArgs e) 
+        {
+            objDet = new bl_detalle_pro();
+            DetalleCotizacionPro det = objDet.getDatoEquipo(Request.Cookies["eqid"].Value, cboTipoTarifa.SelectedValue, txtFecha.Text);
+
+            var script_pmo = "$('#txt-eq-read-pmo').val('" + det.preciomo + "')";
+            ClientScript.RegisterStartupScript(typeof(String), "txteqreadpmo", script_pmo, true);
+        }
+
+        public void setValueCliente() 
+        {
+            cli_nom = Request.Cookies["nomclient"].Value ?? null;
+            cli_cta = Request.Cookies["nomcuenta"].Value ?? null;
+            cli_cont = Request.Cookies["nomcontact"].Value ?? null;
+            cli_tipo = Request.Cookies["nomtipo"].Value ?? null;
+            cli_estado = Request.Cookies["nomestado"].Value ?? null;
+        }
+
+        public void setValueEquipo() 
+        {
+            eq_nombre = Request.Cookies["eqnombre"].Value ?? null;
+            eq_modelo = Request.Cookies["eqmodelo"].Value ?? null;
+            eq_nparte = Request.Cookies["eqnparte"].Value ?? null;
+            //eq_nserie = Request.Cookies["eqnserie"].Value ?? null;
+            //eq_codcli = Request.Cookies["eqcodcli"].Value ?? null;
+        }
+
+        protected void gvEquipoBusca_PageIndexChanging(object sender, GridViewPageEventArgs e) 
+        {
+            setValueEquipo();
+            gvEquipoBusca.PageIndex = e.NewPageIndex;
+            getListaEquipo(eq_nombre, eq_nparte, eq_modelo);
         }
     }
 }

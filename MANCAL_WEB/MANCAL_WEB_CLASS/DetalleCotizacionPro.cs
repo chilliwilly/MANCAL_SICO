@@ -17,6 +17,7 @@ namespace MANCAL_WEB_CLASS
         public String preciorepuesto { get; set; }
         public String costomo { get; set; }
         public String preciomo { get; set; }
+        public String tarifaoriginal { get; set; }
         public String preciototal { get; set; }
         
         public DetalleCotizacionPro() { }

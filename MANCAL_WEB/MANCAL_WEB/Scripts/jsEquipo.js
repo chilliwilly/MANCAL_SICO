@@ -111,6 +111,42 @@ function getFiltroCliente(nom, cta, tip, est) {
     });
 }
 
+function getEquipoDato(id_eq, id_ta, fe_co) {
+    var EqCot = new EquipoCotizacion();
+    $.ajax({
+        type: "POST",
+        url: "/asmx_files/js_llenado.asmx/getDatoEq",
+        datatype: "json",
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify({ "ideq": id_eq, "idtarifa": id_ta, "fcoti": fe_co }),
+        succes: function (data, status) {
+            alert(data.d);
+        },
+        error: function (data) {
+            alert("Error al recuperar datos del equipo");
+        }
+    });
+}
+
+function EquipoCotizacion() {
+    this.equipoid = "";
+    this.equiponombre = "";
+    this.equipomodelo = "";
+    this.equiponparte = "";
+    this.equiponserie = "";
+    this.equipopmo = "";
+    this.equipogasto = "";
+    this.setValues = function (obj) {
+        this.equipoid = "";
+        this.equiponombre = "";
+        this.equipomodelo = "";
+        this.equiponparte = "";
+        this.equiponserie = "";
+        this.equipopmo = "";
+        this.equipogasto = "";
+    };
+}
+
 function cambiaAjaxUploader() {
     Sys.Extended.UI.Resources.AjaxFileUpload_SelectFile = "Seleccione";
     Sys.Extended.UI.Resources.AjaxFileUpload_DropFiles = "Seleccione Archivos";

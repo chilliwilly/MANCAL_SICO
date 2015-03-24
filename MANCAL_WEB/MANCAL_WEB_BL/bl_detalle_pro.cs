@@ -12,6 +12,8 @@ namespace MANCAL_WEB_BL
     {
         dl_detalle_pro objProDet;
 
+        #region Metodos Para Proyecto
+
         public List<DetalleCotizacionPro> getDetalleCotizacion(String idu, String tmo) 
         {
             objProDet = new dl_detalle_pro();
@@ -75,13 +77,21 @@ namespace MANCAL_WEB_BL
             objProDet.deleteDetalleProy(det[1], item);
         }
 
-        public List<CotizacionEquipo> getEquipo(String nombre, String modelo, String nroparte, String nroserie, String cliid) 
+        #endregion
+
+        #region Metodos Cotizacion
+
+        //METODO PARA OBTENER LISTA DE EQUIPO PARA SER SELECCIONADOS
+        public List<CotizacionEquipo> getEquipo(String nombre, String nroparte, String modelo, String sysid, String idtarifa, String fcoti) 
         {   
             objProDet=new dl_detalle_pro();
             List<CotizacionEquipo> ls = new List<CotizacionEquipo>();
-            int idcliente = Convert.ToInt32(cliid);
+            int id_sys = Convert.ToInt32(sysid);
+            int id_ta = Convert.ToInt32(idtarifa);
+            DateTime fechcot = Convert.ToDateTime(fcoti);
 
-            DataTable dt = objProDet.selectEquipoBuscar(nombre, modelo, nroparte, nroserie, idcliente);
+            DataTable dt = objProDet.selectEquipoBuscar(nombre.ToUpper(), nroparte.ToUpper(), modelo.ToUpper(), id_sys);
+            DataTable dt_eq = new DataTable();
 
             foreach (DataRow dr in dt.Rows) 
             {
@@ -89,13 +99,51 @@ namespace MANCAL_WEB_BL
                 cot.equiponombre = dr["NOMBRE"].ToString();
                 cot.equipomodelo = dr["MODELO"].ToString();
                 cot.equiponparte = dr["N_PARTE"].ToString();
-                cot.equiponserie = dr["N_SERIE"].ToString();
-                cot.equipocondicion = dr["CONDICION"].ToString();
+                cot.equipoid = dr["ID_PP_PLANTILLA"].ToString();
+
+                int id_eq = Convert.ToInt32(dr["ID_PP_PLANTILLA"].ToString());
+                dt_eq = objProDet.selectDatoEquipo(id_sys, id_eq, id_ta, fechcot).Tables["CUR_PRECIO_EQ"];
+
+                foreach (DataRow dr_eq in dt_eq.Rows) 
+                {
+                    cot.equipotarifaorig = dr_eq["TARIFA_ORIG"].ToString();
+                    cot.equipopmo = dr_eq["PRECIO_MO"].ToString();
+                    cot.equipocostorep = dr_eq["VAL_RPTO"].ToString();
+                    cot.equipocmo = dr_eq["VAL_MO"].ToString();
+                    cot.equipototal = dr_eq["PRECIO_VENTA"].ToString();
+                }
 
                 ls.Add(cot);
             }
 
             return ls;
         }
+
+        //CALIBRACIONES METODO PARA OBTENER PRECIO DEL EQUIPO AL SELECCIONARLO
+        public DetalleCotizacionPro getDatoEquipo(String ideq, String idtarifa, String fcoti) 
+        {
+            DetalleCotizacionPro cot = new DetalleCotizacionPro();
+            objProDet = new dl_detalle_pro();
+
+            int id_sys = 2;
+            int id_eq = Convert.ToInt32(ideq);
+            int id_ta = Convert.ToInt32(idtarifa);
+            DateTime fechcot = Convert.ToDateTime(fcoti);
+
+            DataTable dt = objProDet.selectDatoEquipo(id_sys, id_eq, id_ta, fechcot).Tables["CUR_PRECIO_EQ"];
+
+            foreach (DataRow dr in dt.Rows) 
+            {
+                cot.tarifaoriginal = dr["TARIFA_ORIG"].ToString();
+                cot.preciomo = dr["PRECIO_MO"].ToString();
+                cot.costorepuesto = dr["VAL_RPTO"].ToString();
+                cot.costomo = dr["VAL_MO"].ToString();
+                cot.preciototal = dr["PRECIO_VENTA"].ToString();
+            }
+
+            return cot;
+        } 
+
+        #endregion
     }
 }

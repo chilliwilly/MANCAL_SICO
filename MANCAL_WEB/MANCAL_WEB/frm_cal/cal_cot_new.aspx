@@ -32,7 +32,7 @@
         }
 
         function agregarEquipo() {
-            $("#btnAddEquipo").on('click', function () {
+            $("#btnAddEquipo").on('click', function () {                
                 $("#dialog-equipo-busca").dialog({
                     modal: true,
                     width: "1000px",
@@ -1192,6 +1192,14 @@
             <table>
                 <tr>
                     <td>
+                        Nombre Cliente
+                    </td>
+                    <td colspan="3">
+                        <input type="text" id="txt-cliente-bloq" name="txt-cliente-bloq" readonly="readonly" disabled="disabled" style="width:400px;"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
                         <label id="lbl-eq-nombre">Nombre</label>
                     </td>
                     <td>
@@ -1228,15 +1236,22 @@
         <asp:UpdatePanel ID="upEquipoBusca" runat="server" UpdateMode="Conditional">
             <ContentTemplate>
                 <asp:GridView ID="gvEquipoBusca" runat="server" AutoGenerateColumns="false"
-                    AllowPaging="true" PageSize="5" PagerSettings-PageButtonCount="5" DataKeyNames="NroParte"
+                    AllowPaging="true" PageSize="5" PagerSettings-PageButtonCount="5" DataKeyNames="EquipoId"
                     PagerSettings-Mode="NumericFirstLast" PagerSettings-FirstPageText="Primera" 
-                    PagerSettings-LastPageText="Ultima" Width="950px" HeaderStyle-HorizontalAlign="Center" RowStyle-HorizontalAlign="Left" Font-Size="Small">
+                    PagerSettings-LastPageText="Ultima" Width="950px" HeaderStyle-HorizontalAlign="Center" RowStyle-HorizontalAlign="Left" Font-Size="Small"
+                    OnPageIndexChanging="gvEquipoBusca_PageIndexChanging">
                     <RowStyle CssClass="gvEquipoBuscaCss" />
                     <EmptyDataTemplate>
                         <h1>NO SE HAN ENCONTRADO ELEMENTOS PARA EL CRITERIO DE BUSQUEDA INGRESADO</h1>
                     </EmptyDataTemplate>
                     <Columns>
                     
+                        <asp:TemplateField HeaderText="ID" HeaderStyle-CssClass="ocultaCol" ItemStyle-CssClass="ocultaCol">
+                            <ItemTemplate>
+                                <asp:Label ID="lblequipoid" CssClass="eqid_" runat="server" Text='<%# Bind("EQUIPOID")%>'></asp:Label>
+                            </ItemTemplate>
+                        </asp:TemplateField>
+
                         <asp:TemplateField HeaderText="Nombre">
                             <ItemTemplate>
                                 <asp:Label ID="lblequiponombre" CssClass="eqnombre_" runat="server" Text='<%# Bind("EQUIPONOMBRE") %>'></asp:Label>                                
@@ -1255,15 +1270,21 @@
                             </ItemTemplate>
                         </asp:TemplateField>
 
-                        <asp:TemplateField HeaderText="Nro Serie">
+                        <asp:TemplateField HeaderText="PMO" HeaderStyle-CssClass="ocultaCol" ItemStyle-CssClass="ocultaCol">
                             <ItemTemplate>
-                                <asp:Label ID="lblequiponserie" CssClass="eqnserie_" runat="server" Text='<%# Bind("EQUIPONSERIE") %>'></asp:Label>                                
+                                <asp:Label ID="lblequipopmo" CssClass="eqpmo_" runat="server" Text='<%# Bind("EQUIPOPMO") %>'></asp:Label>
                             </ItemTemplate>
                         </asp:TemplateField>
 
-                        <asp:TemplateField HeaderText="Condicion">
+                        <asp:TemplateField HeaderText="Total" HeaderStyle-CssClass="ocultaCol" ItemStyle-CssClass="ocultaCol">
                             <ItemTemplate>
-                                <asp:Label ID="lblequipocondicion" CssClass="eqcondicion_" runat="server" Text='<%# Bind("EQUIPOCONDICION") %>'></asp:Label>                                
+                                <asp:Label ID="lblequipototal" CssClass="eqtotal_" runat="server" Text='<%# Bind("EQUIPOTOTAL") %>'></asp:Label>
+                            </ItemTemplate>
+                        </asp:TemplateField>
+
+                        <asp:TemplateField HeaderText="" ItemStyle-HorizontalAlign="Center">
+                            <ItemTemplate>
+                                <a href="javascript:void(null);" id="btn-select-equ" onclick="seleccionEquipo();" style="display:inline-block;" class="ui-icon ui-icon-check"></a>                                
                             </ItemTemplate>
                         </asp:TemplateField>
 
@@ -1271,6 +1292,97 @@
                 </asp:GridView>
             </ContentTemplate>
         </asp:UpdatePanel>
+    </div>
+
+    <%--DIALOG DONDE SE MODIFICAN PRECIOS/OTROS DEL EQUIPO SELECCIONADO --%>
+    <asp:UpdatePanel ID="upUpdDatoEquipo" runat="server" UpdateMode="Conditional">
+        <ContentTemplate>
+            <asp:Button ID="btnUpdDatoEquipo" runat="server" Text="Button" onclick="btnUpdDatoEquipo_Click"/><!-- onclick="btnUpdDatoEquipo_Click"-->
+        </ContentTemplate>
+    </asp:UpdatePanel>    
+    <div id="dialog-equipo-precio" title="Datos Equipo" style="display:none;">
+        Modificacion de los datos del equipo a cotizar
+        <br /><br />
+        <table>
+            <tr>
+                <td>
+                    ID
+                </td>
+                <td>
+                    <input type="text" id="txt-eq-read-id" name="txt-eq-read-id" readonly="readonly" class="text ui-widget-content ui-corner-all" />
+                </td>
+            </tr>
+            <tr>
+                <td>Nombre</td>
+                <td><input type="text" id="txt-eq-read-nom" name="txt-eq-read-nom" readonly="readonly" class="text ui-widget-content ui-corner-all"/></td>
+            </tr>
+            <tr>
+                <td>Modelo</td>
+                <td><input type="text" id="txt-eq-read-mod" name="txt-eq-read-mod" readonly="readonly" class="text ui-widget-content ui-corner-all"/></td>
+            </tr>
+            <tr>
+                <td>Nro Parte</td>
+                <td><input type="text" id="txt-eq-read-np" name="txt-eq-read-np" class="text ui-widget-content ui-corner-all" placeholder="Ingrese Nro Parte"/></td>
+            </tr>
+            <tr>
+                <td>Nro Serie</td>
+                <td><input type="text" id="txt-eq-read-ns" name="txt-eq-read-ns" class="text ui-widget-content ui-corner-all" placeholder="Ingrese Nro Serie"/></td>
+            </tr>
+            <tr>
+                <td>Cantidad</td>
+                <td><input type="number" id="txt-eq-read-qty" name="txt-eq-read-qty" class="text ui-widget-content ui-corner-all" value="1"/></td>
+            </tr>
+            <tr>
+                <td>
+                    Tipo Trabajo
+                </td>
+                <td>
+                    <%--<input type="text" id="txt-eq-read-trabajo" name="txt-eq-read-trabajo" />--%>
+                    <asp:DropDownList ID="cbo_eq_read_trabajo" runat="server" oninit="cbo_eq_read_trabajo_Init">
+                    </asp:DropDownList>
+                </td>
+            </tr>
+            <tr>
+                <td>Precio MO</td>
+                <td><input type="text" id="txt-eq-read-pmo" name="txt-eq-read-pmo" class="text ui-widget-content ui-corner-all" value="0"/></td>
+            </tr>
+            <tr>
+                <td>Gastos</td>
+                <td><input type="text" id="txt-eq-read-gasto" name="txt-eq-read-gasto" class="text ui-widget-content ui-corner-all" value="0"/></td>
+            </tr>
+            <tr>
+                <td>Precio Carga</td>
+                <td><input type="text" id="txt-eq-read-pcarga" name="txt-eq-read-pcarga" readonly="readonly" class="text ui-widget-content ui-corner-all" value="0"/></td>
+            </tr>
+            <tr>
+                <td>Precio Venta</td>
+                <td><input type="text" id="txt-eq-read-pventa" name="txt-eq-read-pventa" readonly="readonly" class="text ui-widget-content ui-corner-all" value="0"/></td>
+            </tr>
+            <tr>
+                <td>Estado</td>
+                <td><input type="text" id="txt-eq-read-estado" name="txt-eq-read-estado" readonly="readonly" class="text ui-widget-content ui-corner-all"/></td>
+            </tr>
+            <tr>
+                <td>Nota de Pedido</td>
+                <td><input type="text" id="txt-eq-read-notap" name="txt-eq-read-notap" readonly="readonly" class="text ui-widget-content ui-corner-all"/></td>
+            </tr>
+            <tr>
+                <td>Linea Prod</td>
+                <td><input type="text" id="txt-eq-read-lprod" name="txt-eq-read-lprod" readonly="readonly" class="text ui-widget-content ui-corner-all"/></td>
+            </tr>
+            <tr>
+                <td>O Compra</td>
+                <td><input type="text" id="txt-eq-read-oc" name="txt-eq-read-oc" readonly="readonly" class="text ui-widget-content ui-corner-all"/></td>
+            </tr>
+            <tr>
+                <td>SAOT</td>
+                <td><input type="text" id="txt-eq-read-saot" name="txt-eq-read-saot" readonly="readonly" class="text ui-widget-content ui-corner-all"/></td>
+            </tr>
+            <tr>
+                <td>Puntos Calibracion</td>
+                <td><input type="text" id="txt-eq-read-puntos" name="txt-eq-read-puntos" readonly="readonly" class="text ui-widget-content ui-corner-all"/></td>
+            </tr>
+        </table>
     </div>
 
       <%--SECTOR DE JAVASCRIPT--%>
@@ -1336,6 +1448,19 @@
                     $("#<%=txtDireccionCliente.ClientID %>").val($('.direccioncli_', $(this).closest('tr')).html());
                     $("#<%=txtMailCliente.ClientID %>").val($('.mailcontacto_', $(this).closest('tr')).html());
                     $("#<%=txtFonoCliente.ClientID %>").val($('.fonocontacto_', $(this).closest('tr')).html());
+                    $("#txt-cliente-bloq").val($("#<%=txtCliente.ClientID %>").val());
+                });
+            }
+            
+            function dataEquipo() {
+                $('.gvEquipoBuscaCss').on('click', function () {
+                    $("#txt-eq-read-id").val($('.eqid_', $(this).closest('tr')).html());
+                    $("#txt-eq-read-nom").val($('.eqnombre_', $(this).closest('tr')).html());
+                    $("#txt-eq-read-mod").val($('.eqmodelo_', $(this).closest('tr')).html());
+                    $("#txt-eq-read-np").val($('.eqnparte_', $(this).closest('tr')).html());
+                    $("#txt-eq-read-pmo").val($('.eqpmo_', $(this).closest('tr')).html());
+                    $("#txt-eq-read-pventa").val($('.eqtotal_', $(this).closest('tr')).html());
+                    //$("#txt-eq-read-ns").val($('.eqnserie_', $(this).closest('tr')).html());
                 });
             }
 
@@ -1357,6 +1482,31 @@
                 dataCliente();
 
                 $("#dialog-busca-cli").dialog('close');
+            }
+
+            function seleccionEquipo() {
+                dataEquipo();                
+                $("#dialog-equipo-busca").dialog('close');
+                $("#dialog-equipo-precio").dialog({
+                    modal: true,
+                    width: "500px",
+                    buttons: {
+                        "Calcular": function () {
+                            $(this).dialog('close');
+                        },
+                        "Agregar": function () {
+                            $(this).dialog('close');
+                        },
+                        "Cerrar": function () {
+                            $(this).dialog('close');
+                        }
+                    }
+                });                
+            }
+
+            function mostrarID() {
+                var idequipobusca = $("#txt-eq-read-id").val();
+                alert(idequipobusca);
             }
 
             function llenaSectorEntrega() {
@@ -1477,10 +1627,9 @@
             });
 
             $("#btn-eq-busca").on('click', function () {
-                var client_id = $("#<%=txtHiddIdCliente.ClientID %>").val();
-                if (client_id == "" || client_id == null) {
-                    //$("#<%=btnBuscarListaEquipo.ClientID %>").click();
-                    $("<div id='dialog-aux-eq' title='Error Cliente'>Debe seleccionar un cliente para proceder a buscar un equipo.</div>").dialog({
+                var tarifa_id = $("#<%=cboTipoTarifa.ClientID %>").val(); //txtHiddIdCliente
+                if (tarifa_id == 0) {//(tarifa_id == "" || tarifa_id == null) {
+                    $("<div id='dialog-aux-eq' title='Error Tarifa'>Debe seleccionar un tipo tarifa para proceder a buscar un equipo.</div>").dialog({
                         modal: true,
                         buttons: {
                             "Cerrar": function () {
@@ -1490,7 +1639,12 @@
                         }
                     });
                 } else {
-                    alert("cliente no esta nulo");
+                    $.cookie('eqnombre', $("#txt-eq-nombre").val());
+                    $.cookie('eqmodelo', $("#txt-eq-modelo").val());
+                    $.cookie('eqnparte', $("#txt-eq-nparte").val());
+                    //$.cookie('eqnserie', $("#txt-eq-nserie").val());
+                    //$.cookie('eqcodcli', $("#<%=txtHiddIdCliente.ClientID %>").val());
+                    $("#<%=btnBuscarListaEquipo.ClientID %>").click();
                 }
             });
         </script>
