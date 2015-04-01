@@ -79,11 +79,52 @@ namespace MANCAL_WEB.asmx_files
         {            
             MANCAL_WEB_CLASS.DetalleCotizacionPro det = new MANCAL_WEB_CLASS.DetalleCotizacionPro();
 
-            bl_detalle_pro objdp = new bl_detalle_pro();
+            //bl_detalle_pro objdp = new bl_detalle_pro();
 
-            det = objdp.getDatoEquipo(ideq, idtarifa, fcoti);            
+            //det = objdp.getDatoEquipo(ideq, idtarifa, fcoti);            
 
             return det;
+        }
+
+        [WebMethod]
+        public MANCAL_WEB_CLASS.CotizacionEquipo getCotEquipo(Object obj) 
+        {
+            MANCAL_WEB_CLASS.CotizacionEquipo eq = MANCAL_WEB_CLASS.CotizacionEquipo.objCotEq(obj);
+
+            return null;
+        }
+
+        [WebMethod]
+        public String[] getCalculaEquipo(Object obj, String id_sys, String id_tarifa, String f_cot) 
+        {
+            String[] a_calculo = new String[2];
+
+            MANCAL_WEB_CLASS.CotizacionEquipo det = MANCAL_WEB_CLASS.CotizacionEquipo.objCalEq(obj);
+            bl_detalle_pro m_det = new bl_detalle_pro();
+
+            a_calculo = m_det.calculaEquipo(det.equipoid, id_sys, det.equipocantidad, det.equipopmo, det.equipocalgasto, det.equipocalpcarga, id_tarifa, f_cot);
+
+            return a_calculo;
+        }
+
+        [WebMethod]
+        public void setEquipoSeleccion(Object obj) 
+        {
+            MANCAL_WEB_CLASS.CotizacionEquipo det = MANCAL_WEB_CLASS.CotizacionEquipo.objCalEqGuarda(obj);
+            bl_detalle_pro o_det = new bl_detalle_pro();
+
+            o_det.setDetCotCal(det);
+        }
+
+        [WebMethod]
+        public MANCAL_WEB_CLASS.CotizacionEquipo getEqComercial(String e_id, String e_tarifa, String e_fecha)
+        {
+            MANCAL_WEB_CLASS.CotizacionEquipo c = new MANCAL_WEB_CLASS.CotizacionEquipo();
+            bl_detalle_pro o_det = new bl_detalle_pro();
+            String idsys = "2";
+            c = o_det.getEquipoValCom(idsys, e_id, e_tarifa, e_fecha);
+
+            return c;
         }
     }
 }

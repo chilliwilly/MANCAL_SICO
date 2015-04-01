@@ -262,7 +262,7 @@ namespace MANCAL_WEB_DL
         }
 
         //METODO PARA OBTENER PRECIO DEL EQUIPO AL SELECCIONARLO
-        public DataSet selectDatoEquipo(int idsys, int idequ, int idtar, DateTime fcot)
+        public DataSet selectValorEquipo(int idsys, int idequ, int idtar, DateTime fcot)
         {
             DataSet ds = new DataSet();
 
@@ -301,6 +301,110 @@ namespace MANCAL_WEB_DL
             return ds;
         }
 
+        //CALIBRACION METODO PARA CALCULAR EL TOTAL DEL EQUIPO AL MOMENTO DE MODIFICAR LOS CAMPOS PRECIOS MODIFICABLES DEL EQUIPO
+        public DataSet selectCalculoEquipo(int eqid, int sysid, int eqqty, String eqpmo, String eqgasto, String eqcarga, int idtarifa, DateTime fechacot)
+        {
+            DataSet ds = new DataSet();
+
+            using (OracleConnection con = new OracleConnection(conStr))
+            {
+                con.Open();
+                String qry = "FN_MANCAL_CAL_CALCULO_EQUIPO";
+                using (OracleCommand cmd = new OracleCommand(qry, con))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    cmd.Parameters.Add(new OracleParameter("RET_PRECIO_VENTA", OracleDbType.RefCursor)).Direction = ParameterDirection.ReturnValue;
+
+                    cmd.Parameters.Add(new OracleParameter("P_ID_EQUIPO", OracleDbType.Int32)).Value = eqid;
+                    cmd.Parameters["P_ID_EQUIPO"].Direction = ParameterDirection.Input;
+
+                    cmd.Parameters.Add(new OracleParameter("P_ID_SISTEMA", OracleDbType.Int32)).Value = sysid;
+                    cmd.Parameters["P_ID_SISTEMA"].Direction = ParameterDirection.Input;
+
+                    cmd.Parameters.Add(new OracleParameter("P_CANTIDAD", OracleDbType.Int32)).Value = eqqty;
+                    cmd.Parameters["P_CANTIDAD"].Direction = ParameterDirection.Input;
+
+                    cmd.Parameters.Add(new OracleParameter("P_PRECIOMO", OracleDbType.Varchar2)).Value = eqpmo;
+                    cmd.Parameters["P_PRECIOMO"].Direction = ParameterDirection.Input;
+
+                    cmd.Parameters.Add(new OracleParameter("P_GASTOSEQ", OracleDbType.Varchar2)).Value = eqgasto;
+                    cmd.Parameters["P_GASTOSEQ"].Direction = ParameterDirection.Input;
+
+                    cmd.Parameters.Add(new OracleParameter("P_PRECIOCARGA", OracleDbType.Varchar2)).Value = eqcarga;
+                    cmd.Parameters["P_PRECIOCARGA"].Direction = ParameterDirection.Input;
+
+                    cmd.Parameters.Add(new OracleParameter("P_ID_TARIFA", OracleDbType.Int32)).Value = idtarifa;
+                    cmd.Parameters["P_ID_TARIFA"].Direction = ParameterDirection.Input;
+
+                    cmd.Parameters.Add(new OracleParameter("P_FECHACOTI", OracleDbType.Date)).Value = fechacot;
+                    cmd.Parameters["P_FECHACOTI"].Direction = ParameterDirection.Input;
+
+                    cmd.ExecuteNonQuery();
+
+                    using (OracleDataAdapter oda = new OracleDataAdapter(cmd))
+                    {
+                        oda.Fill(ds, "RET_PRECIO_VENTA");
+                    }
+                }
+                con.Close();
+            }
+            return ds;
+        }
+
         #endregion
+
+        //METODO DL QUE PASA COMO XML LOS DATOS DEL EQUIPO SELECCIONADO
+        public void insertDetCotCal(String dtDetCotCal) 
+        {
+            using (OracleConnection con = new OracleConnection(conStr)) 
+            {
+                con.Open();
+                String qry = "PKG_MANCAL_DMLCOT_DETEQUIPO.SP_DETEQUIPO_INSERT";
+                using (OracleCommand cmd = new OracleCommand(qry, con)) 
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    cmd.Parameters.Add(new OracleParameter("P_DATO_DET_COT", OracleDbType.Clob)).Value = dtDetCotCal;
+                    cmd.Parameters["P_DATO_DET_COT"].Direction = ParameterDirection.Input;
+
+                    cmd.ExecuteNonQuery();
+                }
+                con.Close();
+            }
+        }
+
+        public DataSet selectEquipoCot(String id_cot, int id_tarifa) 
+        {
+            DataSet ds = new DataSet();
+
+            using (OracleConnection con = new OracleConnection(conStr)) 
+            {
+                con.Open();
+                con.BeginTransaction();
+                String qry = "PKG_MANCAL_DMLCOT_DETEQUIPO.FN_DETEQUIPO_SELECT";
+                using (OracleCommand cmd = new OracleCommand(qry, con)) 
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    cmd.Parameters.Add(new OracleParameter("CUR_DET", OracleDbType.RefCursor)).Direction = ParameterDirection.ReturnValue;
+
+                    cmd.Parameters.Add(new OracleParameter("P_ID_COTIZACION", OracleDbType.Varchar2)).Value = id_cot;
+                    cmd.Parameters["P_ID_COTIZACION"].Direction = ParameterDirection.Input;
+
+                    cmd.Parameters.Add(new OracleParameter("P_TIPO_TARIFA", OracleDbType.Int32)).Value = id_tarifa;
+                    cmd.Parameters["P_TIPO_TARIFA"].Direction = ParameterDirection.Input;
+
+                    cmd.ExecuteNonQuery();
+
+                    using (OracleDataAdapter oda = new OracleDataAdapter(cmd)) 
+                    {
+                        oda.Fill(ds, "CUR_DET");
+                    }
+                }
+                con.Close();
+            }
+            return ds;
+        }
     }
 }

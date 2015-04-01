@@ -111,6 +111,20 @@ function getFiltroCliente(nom, cta, tip, est) {
     });
 }
 
+//FUNCION LLAMADA AL MOMENTO DE QUEERER AGREGAR PUNTOS AL EQUIPO
+function dialogPunto() {
+    $("#dialog-equipo-punto").dialog({
+        modal: true,
+        buttons: {
+            "Cerrar": function () {
+                $(this).dialog('close');
+            }
+        }
+    });
+}
+
+/************************************************************/
+/************************************************************/
 function getEquipoDato(id_eq, id_ta, fe_co) {
     var EqCot = new EquipoCotizacion();
     $.ajax({
@@ -128,23 +142,137 @@ function getEquipoDato(id_eq, id_ta, fe_co) {
     });
 }
 
+//FUNCION QUE ES LLAMADA AL PRESIONAR CALCULAR PARA UN UNICO EQUIPO - WEBSERVICE getCalculaEquipo
+function equipoCal_Total(obj, id_sys, id_tarifa, f_cot) {
+    $.ajax({
+        type: "POST",
+        url: "/asmx_files/js_llenado.asmx/getCalculaEquipo",
+        datatype: "json",
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify({ "obj": obj, "id_sys": id_sys, "id_tarifa": id_tarifa, "f_cot": f_cot }),
+        success: function (data, status) {
+            var arr = data.d;
+            //$.each(arr, function (index, a) {
+            //    alert(a);
+            //});
+            if (arr[1] == null || arr[1] == "") {
+                $("#txt-eq-read-pventa").val(arr[0]);
+            } else {
+                alert(arr[1]);
+                $("#txt-eq-read-pmo").val(arr[0]);
+            }
+        },
+        error: function (data) {
+            alert("Error al calcular equipo");
+        }
+    });
+}
+
+//FUNCION QUE ES LLAMADA AL MOMENTO DE PRESIONAR GUARDAR EQUIPO - WEBSERVICE setEquipoSeleccion
+function equipoCal_Guarda(obj) {
+    $.ajax({
+        type: "POST",
+        url: "/asmx_files/js_llenado.asmx/setEquipoSeleccion",
+        datatype: "json",
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify({ "obj": obj }),
+        success: function (data, status) {
+            alert("Equipo Guardado");
+        },
+        error: function (data) {
+            alert("Error al guardar equipo");
+        }
+    });
+}
+
+//FUNCION QUE TRAE VALORES COMERCIALES DEL EQUIPO A PARTIR DEL EQUIPO SELECCIONADO EN LA BUSQUEDA
+function getValorEquipo_Cal(eq_id, eq_tarifa, eq_fech) {
+    $.ajax({
+        type: "POST",
+        url: "/asmx_files/js_llenado.asmx/getEqComercial",
+        datatype: "json",
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify({ "e_id": eq_id, "e_tarifa": eq_tarifa, "e_fecha": eq_fech }),
+        success: function (data, status) {
+            var objData = data.d;
+            $("#txt-eq-read-pmo").val(objData.equipopmo);
+            $("#txt-eq-read-crpto").val(objData.equipocostorep);
+            $("#txt-eq-read-cmo").val(objData.equipocmo);
+            $("#txt-eq-read-tto").val(objData.equipotarifaorig);
+            $("#txt-eq-read-peso").val(objData.equipocalpeso);
+            $("#txt-eq-read-pventa").val(objData.equipototal);
+        },
+        error: function (data) {
+            alert("Error al buscar datos comerciales del equipo");
+        }
+    });
+}
+
 function EquipoCotizacion() {
     this.equipoid = "";
     this.equiponombre = "";
     this.equipomodelo = "";
     this.equiponparte = "";
     this.equiponserie = "";
+    this.equipocantidad = "";
+    this.equipotrabajo = "";
     this.equipopmo = "";
-    this.equipogasto = "";
-    this.setValues = function (obj) {
-        this.equipoid = "";
-        this.equiponombre = "";
-        this.equipomodelo = "";
-        this.equiponparte = "";
-        this.equiponserie = "";
-        this.equipopmo = "";
-        this.equipogasto = "";
+    this.equipocostorep = "";
+    this.equipocmo = "";
+    this.equipotarifaorig = "";
+    this.equipocalgasto = "";
+    this.equipocalpcarga = "";
+    this.equipototal = "";
+    this.equipocalpeso = "";
+    this.equipodet_idn = "";
+    this.equipocalnp = "";
+    this.equipolp_idn = "";
+    this.equipocaloc = "";
+    this.equipocalsaot = "";
+    this.setValueEqCot = function (obj) {
+        this.equipoid = obj.equipoid;
+        this.equiponombre = obj.equiponombre;
+        this.equipomodelo = obj.equipomodelo;
+        this.equiponparte = obj.equiponparte;
+        this.equiponserie = obj.equiponserie;
+        this.equipocantidad = obj.equipocantidad;
+        this.equipotrabajo = obj.equipotrabajo;
+        this.equipopmo = obj.equipopmo;
+        this.equipocostorep = obj.equipocostorep;
+        this.equipocmo = obj.equipocmo;
+        this.equipotarifaorig = obj.equipotarifaorig;
+        this.equipocalgasto = obj.equipocalgasto;
+        this.equipocalpcarga = obj.equipocalpcarga;
+        this.equipototal = obj.equipototal;
+        this.equipocalpeso = obj.equipocalpeso;
+        this.equipodet_idn = obj.equipodet_idn;
+        this.equipocalnp = obj.equipocalnp;
+        this.equipolp_idn = obj.equipolp_idn;
+        this.equipocaloc = obj.equipocaloc;
+        this.equipocalsaot = obj.equipocalsaot;
     };
+}
+/************************************************************/
+/************************************************************/
+
+function limpiaEquipoDialog() {
+    $("#txt-eq-read-tto").val("0");
+    $("#txt-eq-read-pmo").val("0");
+    $("#txt-eq-read-crpto").val("0");
+    $("#txt-eq-read-cmo").val("0");
+    $("#txt-eq-read-pventa").val("0");
+    $("#txt-eq-read-np").val("");
+    $("#txt-eq-read-ns").val("");
+    $("#txt-eq-read-mod").val("");
+    $("#txt-eq-read-nom").val("");
+    $("#txt-eq-read-peso").val("0");
+    $("#txt-eq-read-qty").val("1");
+    $("#txt-eq-read-gasto").val("0");
+    $("#txt-eq-read-pcarga").val("0");
+    $("#txt-eq-read-id").val("");
+    $("#txt-eq-read-notap").val("");
+    $("#txt-eq-read-oc").val("");
+    $("#txt-eq-read-saot").val("");
 }
 
 function cambiaAjaxUploader() {

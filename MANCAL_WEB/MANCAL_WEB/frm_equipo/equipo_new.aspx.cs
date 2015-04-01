@@ -29,6 +29,9 @@ namespace MANCAL_WEB.frm_equipo
             ////String cryptCod=crypt.encryptString(cod);
 
             //Label1.Text = codif;
+            MANCAL_WEB_BL.bl_detalle_pro obj = new MANCAL_WEB_BL.bl_detalle_pro();
+            MANCAL_WEB_CLASS.CotizacionEquipo c = new MANCAL_WEB_CLASS.CotizacionEquipo();
+            obj.setDetCotCal(c);
         }
     }
 }

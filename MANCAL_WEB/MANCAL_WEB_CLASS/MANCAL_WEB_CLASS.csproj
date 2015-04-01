@@ -45,13 +45,17 @@
     <Compile Include="CotizacionCliente.cs" />
     <Compile Include="CotizacionEnvio.cs" />
     <Compile Include="CotizacionEquipo.cs" />
+    <Compile Include="CotizacionEquipoCal.cs" />
     <Compile Include="CotizacionEstadoCliente.cs" />
+    <Compile Include="CotizacionEstadoDet.cs" />
     <Compile Include="CotizacionGarantia.cs" />
     <Compile Include="CotizacionGarantiaVal.cs" />
     <Compile Include="CotizacionJefe.cs" />
+    <Compile Include="CotizacionLineaProd.cs" />
     <Compile Include="CotizacionLugarCom.cs" />
     <Compile Include="CotizacionLugarEjec.cs" />
     <Compile Include="CotizacionLugarEntr.cs" />
+    <Compile Include="CotizacionMagnitud.cs" />
     <Compile Include="CotizacionRegion.cs" />
     <Compile Include="CotizacionTarifa.cs" />
     <Compile Include="CotizacionTextoFactura.cs" />

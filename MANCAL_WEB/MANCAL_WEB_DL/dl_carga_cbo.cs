@@ -452,5 +452,85 @@ namespace MANCAL_WEB_DL
 
             return dt;
         }
+
+        public DataTable selectEstadoDetCot() 
+        {
+            DataTable dt = new DataTable();
+
+            using (OracleConnection con = new OracleConnection(conStr)) 
+            {
+                con.Open();
+                String qry = "SELECT * FROM TBL_ESTADO_DET_COTIZACION ORDER BY DCE_ID";
+                using (OracleCommand cmd = new OracleCommand(qry, con)) 
+                {
+                    cmd.CommandType = CommandType.Text;
+
+                    using (OracleDataAdapter oda = new OracleDataAdapter(cmd)) 
+                    {
+                        oda.Fill(dt);
+                    }
+                }
+                con.Close();
+            }
+
+            return dt;
+        }
+
+        public DataTable selectLineaProd() 
+        {
+            DataTable dt = new DataTable();
+
+            using (OracleConnection con = new OracleConnection(conStr)) 
+            {
+                con.Open();
+                String qry = "SELECT * FROM TBL_LINEA_PRODUCTO ORDER BY LP_ID";
+                using (OracleCommand cmd = new OracleCommand(qry, con)) 
+                {
+                    cmd.CommandType = CommandType.Text;
+
+                    using (OracleDataAdapter oda = new OracleDataAdapter(cmd)) 
+                    {
+                        oda.Fill(dt);
+                    }
+                }
+                con.Close();
+            }
+            return dt;
+        }
+
+        public DataTable selectMagnitud(int cod_sys) 
+        {
+            DataTable dt = new DataTable();
+
+            using (OracleConnection con = new OracleConnection(conStr)) 
+            {
+                con.Open();
+                con.BeginTransaction();
+                String qry_sp = "SP_SPAC_SEARCH_ESPECIALIDAD";
+                using (OracleCommand cmd_sp = new OracleCommand(qry_sp, con)) 
+                {
+                    cmd_sp.CommandType = CommandType.StoredProcedure;
+
+                    cmd_sp.Parameters.Add(new OracleParameter("P_ID_SISTEMA", OracleDbType.Int32)).Value = cod_sys;
+                    cmd_sp.Parameters["P_ID_SISTEMA"].Direction = ParameterDirection.Input;
+
+                    cmd_sp.ExecuteNonQuery();
+                }
+
+                String qry = "SELECT * FROM TBL_SPAC_SEARCH_ESPECIALID_TMP ORDER BY NOMBRE";
+                using (OracleCommand cmd = new OracleCommand(qry, con)) 
+                {
+                    cmd.CommandType = CommandType.Text;
+
+                    using (OracleDataAdapter oda = new OracleDataAdapter(cmd)) 
+                    {
+                        oda.Fill(dt);
+                    }
+                }
+                con.Close();
+            }
+
+            return dt;
+        }
     }
 }

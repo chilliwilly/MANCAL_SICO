@@ -410,5 +410,61 @@ namespace MANCAL_WEB_BL
             }
             return ls;
         }
+
+        public List<CotizacionEstadoDet> getEstadoDet() 
+        {
+            List<CotizacionEstadoDet> ls = new List<CotizacionEstadoDet>();
+            objCbo = new dl_carga_cbo();
+
+            DataTable dt = objCbo.selectEstadoDetCot();            
+
+            foreach (DataRow dr in dt.Rows) 
+            {
+                CotizacionEstadoDet cot = new CotizacionEstadoDet();
+                cot.idestadodet = dr["DCE_ID"].ToString();
+                cot.nomestadodet = dr["DCE_NOMBRE"].ToString();
+                
+                ls.Add(cot);
+            }
+            return ls;
+        }
+
+        public List<CotizacionLineaProd> getLineaProd() 
+        {
+            List<CotizacionLineaProd> ls = new List<CotizacionLineaProd>();
+            objCbo = new dl_carga_cbo();
+
+            DataTable dt = objCbo.selectLineaProd();
+
+            foreach (DataRow dr in dt.Rows) 
+            {
+                CotizacionLineaProd clp = new CotizacionLineaProd();
+                clp.idnlineaprod = dr["LP_ID"].ToString();
+                clp.nomlineaprod = dr["LP_NOMBRE"].ToString();
+
+                ls.Add(clp);
+            }
+            return ls;
+        }
+
+        public List<CotizacionMagnitud> getMagnitud(String codsys) 
+        {
+            List<CotizacionMagnitud> ls = new List<CotizacionMagnitud>();
+            objCbo = new dl_carga_cbo();
+
+            int cod = Convert.ToInt32(codsys);
+            DataTable dt = objCbo.selectMagnitud(cod);
+
+            foreach (DataRow dr in dt.Rows) 
+            {
+                CotizacionMagnitud cm = new CotizacionMagnitud();
+                cm.idnmagnitud = dr["ID_ESPECIALIDAD"].ToString();
+                cm.nommagnitud = dr["NOMBRE"].ToString();
+
+                ls.Add(cm);
+            }
+
+            return ls;
+        }
     }
 }

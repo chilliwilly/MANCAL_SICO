@@ -248,7 +248,13 @@
         </ContentTemplate>
     </asp:UpdatePanel>
 
-    <%--CUADRO QUE SE UTILIZARA PARA BUSCAR CLIENTE --%> 
+    <%--CUADRO QUE SE UTILIZARA PARA BUSCAR CLIENTE --%>
+    <asp:UpdatePanel ID="upUpdDatoEquipo" runat="server" UpdateMode="Conditional" style="display:none;">
+        <ContentTemplate>
+            <asp:Button ID="btnUpdDatoEquipo" runat="server" 
+                onclick="btnUpdDatoEquipo_Click"/><!-- onclick="btnUpdDatoEquipo_Click"-->
+        </ContentTemplate>
+    </asp:UpdatePanel>
     <div id="dialog-busca-cli" style="display:none;" title="Buscar Cliente">
         <fieldset>
             <legend>
@@ -372,7 +378,7 @@
     </div>
 
     <div id="dialog-tab">
-        <div id="tab"> 
+        <div id="tab" style="height:380px;"> 
             <ul>
                 <li><a href="#tab-det-cot">Detalle Cotizacion</a></li>
                 <li><a href="#tab-costo">Otros Costos</a></li>
@@ -391,7 +397,7 @@
                         <asp:Button ID="btnBuscarListaEquipo" runat="server" 
                             onclick="btnBuscarListaEquipo_Click" />
                     </ContentTemplate>
-                </asp:UpdatePanel>
+                </asp:UpdatePanel>                
                 <asp:UpdatePanel ID="upSelectEqCotiza" runat="server" UpdateMode="Conditional">
                     <ContentTemplate>
                         <script type="text/javascript">
@@ -407,148 +413,174 @@
                 </asp:UpdatePanel>
 
                 <br />
+                
+                <%-- ACA VA EL GRIDVIEW ScrollBars="Vertical" --%>
+                <%--<asp:Panel ID="Panel1" runat="server" Width="100%" Height="165px">--%>
+                    <asp:UpdatePanel ID="UpdatePanel5" runat="server" UpdateMode="Conditional">
+                        <ContentTemplate>
+                            <asp:GridView ID="GV1" runat="server" AutoGenerateColumns="False" 
+                                DataKeyNames="equipocotid,equipoitem,equipoid" PageSize="5" 
+                                PagerSettings-PageButtonCount="10" PagerSettings-Mode="NumericFirstLast" 
+                                PagerSettings-FirstPageText="Primera" PagerSettings-LastPageText="Ultima" 
+                                        AllowPaging="true" OnPageIndexChanging="GV1_PageIndexChanging" Font-Size="Small">
+                                    <RowStyle CssClass="cssDetEq" />
+                                <Columns>
 
-                <asp:Panel ID="Panel1" runat="server" Width="100%" Height="165px"><%-- ACA VA EL GRIDVIEW ScrollBars="Vertical" --%>
-                    <asp:UpdatePanel ID="UpdatePanel5" runat="server" UpdateMode="Conditional"><ContentTemplate>
-                    <asp:GridView ID="GV1" runat="server" AutoGenerateColumns="False" 
-                        DataKeyNames="Item,IdCotizacion" PageSize="5" 
-                    PagerSettings-PageButtonCount="10" PagerSettings-Mode="NumericFirstLast" 
-                    PagerSettings-FirstPageText="Primera" PagerSettings-LastPageText="Ultima" 
-                            AllowPaging="true" >
-                        <Columns>
-
-                            <asp:TemplateField HeaderText="Id Cotizacion" ShowHeader="false" Visible="false">
-                                <EditItemTemplate>
-                                    <asp:Label ID="IdCotizacion" runat="server" Text='<%# Bind("IdCotizacion") %>'></asp:Label>
-                                </EditItemTemplate>
-                                <ItemTemplate>
-                                    <asp:Label ID="IdCotizacion" runat="server" Text='<%# Bind("IdCotizacion") %>'></asp:Label>
-                                </ItemTemplate>
-                            </asp:TemplateField>
+                                    <asp:TemplateField HeaderText="Id Cotizacion" HeaderStyle-CssClass="ocultaCol" ItemStyle-CssClass="ocultaCol">
+                                        <ItemTemplate>
+                                            <asp:Label ID="equipocotid" CssClass="equipocotid_" runat="server" Text='<%# Bind("EQUIPOCOTID") %>'></asp:Label>
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
                             
-                            <asp:TemplateField HeaderText="Item" ItemStyle-Width="40px">
-                                <EditItemTemplate>
-                                    <asp:Label ID="Item" runat="server" Text='<%# Bind("Item") %>'></asp:Label>
-                                </EditItemTemplate>
-                                <ItemTemplate>
-                                    <asp:Label ID="Item" runat="server" Text='<%# Bind("Item") %>'></asp:Label>
-                                </ItemTemplate>
-                            </asp:TemplateField>
+                                    <asp:TemplateField HeaderText="Item" ItemStyle-Width="40px" HeaderStyle-CssClass="ocultaCol" ItemStyle-CssClass="ocultaCol">
+                                        <ItemTemplate>
+                                            <asp:Label ID="equipoid" CssClass="equipoid_" runat="server" Text='<%# Bind("EQUIPOID") %>'></asp:Label>
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
 
-                            <asp:TemplateField HeaderText="Nro Parte" ItemStyle-Width="160px">
-                                <EditItemTemplate>
-                                    <asp:Label ID="NroParte" runat="server" Text='<%# Bind("NroParte") %>'></asp:Label>
-                                </EditItemTemplate>
-                                <ItemTemplate>
-                                    <asp:Label ID="NroParte" runat="server" Text='<%# Bind("NroParte") %>'></asp:Label>
-                                </ItemTemplate>
-                            </asp:TemplateField>
+                                    <asp:TemplateField HeaderText="Item" ItemStyle-Width="40px">
+                                        <ItemTemplate>
+                                            <asp:Label ID="equipoitem" CssClass="equipoitem_" runat="server" Text='<%# Bind("EQUIPOITEM") %>'></asp:Label>
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
 
-                            <asp:TemplateField HeaderText="Descripcion" ItemStyle-Width="260px">
-                                <EditItemTemplate>
-                                    <asp:TextBox ID="Descripcion" runat="server" Width="260px" Text='<%# Bind("Descripcion") %>' />
-                                </EditItemTemplate>
-                                <ItemTemplate>
-                                    <asp:Label ID="Descripcion" runat="server" Text='<%# Bind("Descripcion") %>'></asp:Label>
-                                </ItemTemplate>
-                            </asp:TemplateField>
+                                    <asp:TemplateField HeaderText="Nombre" ItemStyle-Width="250px">
+                                        <ItemTemplate>
+                                            <asp:Label ID="equiponombre" CssClass="equiponombre_" runat="server" Text='<%# Bind("EQUIPONOMBRE") %>'></asp:Label>
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
                             
-                            <asp:TemplateField HeaderText="Tipo Trabajo" ItemStyle-Width="130px">
-                                <EditItemTemplate>
-                                    <asp:Label ID="TipoTrabajo" runat="server" Text='<%# Eval("NOMTIPOTRABAJO") %>'></asp:Label>                                                                                                         
-                                </EditItemTemplate>
-                                <ItemTemplate>
-                                    <asp:Label ID="TipoTrabajo" runat="server" Text='<%# Eval("NOMTIPOTRABAJO") %>'></asp:Label>
-                                </ItemTemplate>
-                            </asp:TemplateField>
+                                    <asp:TemplateField HeaderText="Modelo" ItemStyle-Width="110px">
+                                        <ItemTemplate>
+                                            <asp:Label ID="equipomodelo" CssClass="equipomodelo_" runat="server" Text='<%# Eval("EQUIPOMODELO") %>'></asp:Label>
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
 
-                            <asp:TemplateField HeaderText="Cantidad" ItemStyle-Width="50px">
-                                <EditItemTemplate>
-                                    <asp:TextBox ID="Cantidad" runat="server" Width="50px" Text='<%# Bind("Cantidad") %>'/>
-                                </EditItemTemplate>
-                                <ItemTemplate>
-                                    <asp:Label ID="Cantidad" runat="server" Text='<%# Bind("Cantidad") %>'></asp:Label>
-                                </ItemTemplate>
-                            </asp:TemplateField>
+                                    <asp:TemplateField HeaderText="Nro Parte" ItemStyle-Width="80px">
+                                        <ItemTemplate>
+                                            <asp:Label ID="equiponparte" CssClass="equiponparte_" runat="server" Text='<%# Bind("EQUIPONPARTE") %>'></asp:Label>
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
 
-                            <asp:TemplateField HeaderText="Nro Serie" ItemStyle-Width="100px">
-                                <EditItemTemplate>
-                                    <asp:TextBox ID="NroSerie" runat="server" Width="100px" Text='<%# Bind("NroSerie") %>' />
-                                </EditItemTemplate>
-                                <ItemTemplate>
-                                    <asp:Label ID="NroSerie" runat="server" Text='<%# Bind("NroSerie") %>'></asp:Label>
-                                </ItemTemplate>
-                            </asp:TemplateField>
+                                    <asp:TemplateField HeaderText="Nro Serie" ItemStyle-Width="80px">
+                                        <ItemTemplate>
+                                            <asp:Label ID="equiponserie" CssClass="equiponserie_" runat="server" Text='<%# Bind("EQUIPONSERIE") %>'></asp:Label>
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
 
-                            <asp:TemplateField HeaderText="Precio Repuesto" ItemStyle-Width="100px">
-                                <EditItemTemplate>
-                                    <asp:TextBox ID="PrecioRep" runat="server" Width="100px" Text='<%# Bind("PrecioRep") %>' />
-                                </EditItemTemplate>
-                                <ItemTemplate>
-                                    <asp:Label ID="PrecioRep" runat="server" Text='<%# Bind("PrecioRep") %>'></asp:Label>
-                                </ItemTemplate>
-                            </asp:TemplateField>
+                                    <asp:TemplateField HeaderText="Qty" ItemStyle-Width="40px">
+                                        <ItemTemplate>
+                                            <asp:Label ID="equipocantidad" CssClass="equipocantidad_" runat="server" Text='<%# Bind("EQUIPOCANTIDAD") %>'></asp:Label>
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
 
-                            <asp:TemplateField HeaderText="Costo MO" ItemStyle-Width="100px">
-                                <EditItemTemplate>
-                                    <asp:TextBox ID="CostoMO" runat="server" ReadOnly="true" Width="100px" Text='<%# Bind("CostoMO") %>' />
-                                </EditItemTemplate>
-                                <ItemTemplate>
-                                    <asp:Label ID="CostoMO" runat="server" Text='<%# Bind("CostoMO") %>'></asp:Label>
-                                </ItemTemplate>
-                            </asp:TemplateField>
+                                    <asp:TemplateField HeaderText="Precio MO" ItemStyle-Width="100px">
+                                        <ItemTemplate>
+                                            <asp:Label ID="equipopmo" CssClass="equipopmo_" runat="server" Text='<%# Bind("EQUIPOPMO") %>'></asp:Label>
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
 
-                            <asp:TemplateField HeaderText="Precio MO" ItemStyle-Width="100px">
-                                <EditItemTemplate>
-                                    <asp:TextBox ID="PrecioMO" runat="server" Width="100px" Text='<%# Bind("PrecioMO") %>'/>
-                                </EditItemTemplate>
-                                <ItemTemplate>
-                                    <asp:Label ID="PrecioMO" runat="server" Text='<%# Bind("PrecioMO") %>'></asp:Label>
-                                </ItemTemplate>
-                            </asp:TemplateField>
+                                    <asp:TemplateField HeaderText="Gastos" ItemStyle-Width="100px">
+                                        <ItemTemplate>
+                                            <asp:Label ID="equipocalgasto" CssClass="equipocalgasto_" runat="server" Text='<%# Bind("EQUIPOCALGASTO") %>'></asp:Label>
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
 
-                            <asp:TemplateField HeaderText="Tipo Tarifa Original" ItemStyle-Width="100px" Visible="false">
-                                <EditItemTemplate>
-                                    <asp:Label ID="TipoTarifaOriginal" runat="server" Text='<%# Bind("TipoTarifaOriginal") %>'></asp:Label>
-                                </EditItemTemplate>
-                                <ItemTemplate>
-                                    <asp:Label ID="TipoTarifaOriginal" runat="server" Text='<%# Bind("TipoTarifaOriginal") %>'></asp:Label>
-                                </ItemTemplate>
-                            </asp:TemplateField>
+                                    <asp:TemplateField HeaderText="Precio Carga" ItemStyle-Width="100px">
+                                        <ItemTemplate>
+                                            <asp:Label ID="equipocalpcarga" CssClass="equipocalpcarga_" runat="server" Text='<%# Bind("EQUIPOCALPCARGA") %>'></asp:Label>
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
 
-                            <asp:TemplateField HeaderText="Total" ItemStyle-Width="100px">
-                                <EditItemTemplate>
-                                    <asp:TextBox ID="Total" runat="server" ReadOnly="true" Width="100px" Text='<%# Bind("Total") %>'/>
-                                </EditItemTemplate>
-                                <ItemTemplate>
-                                    <asp:Label ID="Total" runat="server" Text='<%# Bind("Total") %>'></asp:Label>
-                                </ItemTemplate>
-                            </asp:TemplateField>
+                                    <asp:TemplateField HeaderText="Total" ItemStyle-Width="100px">
+                                        <ItemTemplate>
+                                            <asp:Label ID="equipototal" CssClass="equipototal_" runat="server" Text='<%# Bind("EQUIPOTOTAL") %>'></asp:Label>
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
 
-                            <asp:TemplateField HeaderText="Total No Exceder" ItemStyle-Width="100px">
-                                <EditItemTemplate>
-                                    <asp:TextBox ID="TotalExceder" runat="server" Width="100px" Text='<%# Bind("TotalExceder") %>'/>
-                                </EditItemTemplate>
-                                <ItemTemplate>
-                                    <asp:Label ID="TotalExceder" runat="server" Text='<%# Bind("TotalExceder") %>'></asp:Label>
-                                </ItemTemplate>
-                            </asp:TemplateField>
+                                    <asp:TemplateField HeaderText="Total No Exceder" ItemStyle-Width="100px" HeaderStyle-CssClass="ocultaCol" ItemStyle-CssClass="ocultaCol">
+                                        <ItemTemplate>
+                                            <asp:Label ID="equipocalid" CssClass="equipocalid_" runat="server" Text='<%# Bind("EQUIPOCALID") %>'></asp:Label>
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
 
-                            <asp:TemplateField HeaderText="Editar" ShowHeader="false">
-                                <EditItemTemplate>
-                                    <asp:LinkButton ID="btnUpdate" runat="server" CausesValidation="true" CommandName="bActualizar" Text="A"></asp:LinkButton>
-                                    <asp:LinkButton ID="btnCancel" runat="server" CausesValidation="false" CommandName="bCancelar" Text="C"></asp:LinkButton>
-                                    <asp:LinkButton ID="btnCalcula" runat="server" CausesValidation="false" CommandName="bCalcula" Text="S"></asp:LinkButton>
-                                </EditItemTemplate>
-                                <ItemTemplate>
-                                    <asp:LinkButton ID="btnEdit" runat="server" CausesValidation="false" CommandName="bEditar" Text="E" Enabled="false"></asp:LinkButton>
-                                    <asp:LinkButton ID="btnDelete" runat="server" CausesValidation="false" CommandName="bBorrar" Text="B"></asp:LinkButton>
-                                </ItemTemplate>
-                            </asp:TemplateField>
-                        </Columns>
-                    </asp:GridView></ContentTemplate>
+                                    <asp:TemplateField HeaderText="Total No Exceder" ItemStyle-Width="100px" HeaderStyle-CssClass="ocultaCol" ItemStyle-CssClass="ocultaCol">
+                                        <ItemTemplate>
+                                            <asp:Label ID="equipotrabajoid" CssClass="equipotrabajoid_" runat="server" Text='<%# Bind("EQUIPOTRABAJOID") %>'></asp:Label>
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+
+                                    <asp:TemplateField HeaderText="Total No Exceder" ItemStyle-Width="100px" HeaderStyle-CssClass="ocultaCol" ItemStyle-CssClass="ocultaCol">
+                                        <ItemTemplate>
+                                            <asp:Label ID="equipotrabajo" CssClass="equipotrabajo_" runat="server" Text='<%# Bind("EQUIPOTRABAJO") %>'></asp:Label>
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+
+                                    <asp:TemplateField HeaderText="Total No Exceder" ItemStyle-Width="100px" HeaderStyle-CssClass="ocultaCol" ItemStyle-CssClass="ocultaCol">
+                                        <ItemTemplate>
+                                            <asp:Label ID="equipocalnp" CssClass="equipocalnp_" runat="server" Text='<%# Bind("EQUIPOCALNP") %>'></asp:Label>
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+
+                                    <asp:TemplateField HeaderText="Total No Exceder" ItemStyle-Width="100px" HeaderStyle-CssClass="ocultaCol" ItemStyle-CssClass="ocultaCol">
+                                        <ItemTemplate>
+                                            <asp:Label ID="equipocaloc" CssClass="equipocaloc_" runat="server" Text='<%# Bind("EQUIPOCALOC") %>'></asp:Label>
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+
+                                    <asp:TemplateField HeaderText="Total No Exceder" ItemStyle-Width="100px" HeaderStyle-CssClass="ocultaCol" ItemStyle-CssClass="ocultaCol">
+                                        <ItemTemplate>
+                                            <asp:Label ID="equipocalsaot" CssClass="equipocalsaot_" runat="server" Text='<%# Bind("EQUIPOCALSAOT") %>'></asp:Label>
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+
+                                    <asp:TemplateField HeaderText="Total No Exceder" ItemStyle-Width="100px" HeaderStyle-CssClass="ocultaCol" ItemStyle-CssClass="ocultaCol">
+                                        <ItemTemplate>
+                                            <asp:Label ID="equipolp_idn" CssClass="equipolp_idn_" runat="server" Text='<%# Bind("EQUIPOLP_IDN") %>'></asp:Label>
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+
+                                    <asp:TemplateField HeaderText="Total No Exceder" ItemStyle-Width="100px" HeaderStyle-CssClass="ocultaCol" ItemStyle-CssClass="ocultaCol">
+                                        <ItemTemplate>
+                                            <asp:Label ID="equipolp_nom" CssClass="equipolp_nom_" runat="server" Text='<%# Bind("EQUIPOLP_NOM") %>'></asp:Label>
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+
+                                    <asp:TemplateField HeaderText="Total No Exceder" ItemStyle-Width="100px" HeaderStyle-CssClass="ocultaCol" ItemStyle-CssClass="ocultaCol">
+                                        <ItemTemplate>
+                                            <asp:Label ID="equipodet_idn" CssClass="equipodet_idn_" runat="server" Text='<%# Bind("EQUIPODET_IDN") %>'></asp:Label>
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+
+                                    <asp:TemplateField HeaderText="Total No Exceder" ItemStyle-Width="100px" HeaderStyle-CssClass="ocultaCol" ItemStyle-CssClass="ocultaCol">
+                                        <ItemTemplate>
+                                            <asp:Label ID="equipodet_nom" CssClass="equipodet_nom_" runat="server" Text='<%# Bind("EQUIPODET_NOM") %>'></asp:Label>
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+
+                                    <asp:TemplateField HeaderText="Otros">
+                                        <ItemTemplate>
+                                            <a href="javascript:void(null);" id="btn-det-cal-det" onclick="seleccionDetalleCal();" style="display:inline-block;" class="ui-icon ui-icon-circle-plus"></a>
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+
+                                    <asp:TemplateField HeaderText="Puntos">
+                                        <ItemTemplate>
+                                            <a href="javascript:void(null);" id="btn-det-cal-punto" onclick="" style="display:inline-block;" class="ui-icon ui-icon-circle-plus">a</a>
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+
+                                    <asp:TemplateField HeaderText="Editar">
+                                        <ItemTemplate>
+                                            <a href="javascript:void(null);" id="btn-det-cal-edita" onclick="" style="display:inline-block;" class="ui-icon ui-icon-transferthick-e-w"></a>
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+
+                                </Columns>
+                            </asp:GridView>
+                        </ContentTemplate>
                     </asp:UpdatePanel>
-                </asp:Panel>
+                <%--</asp:Panel>--%>
             </div>
 
             <div id="tab-costo">
@@ -556,18 +588,18 @@
                     <ContentTemplate>        
         
                         <%--TRANSPORTE --%>
-                        <fieldset style="width: 30%; padding-left:13px; padding-right:13px;">
+                        <fieldset style="width: 20%; padding-left:13px; padding-right:13px;">
                             <legend>Transporte</legend>
-                            <table align="center">
+                            <table align="center" style="font-size:small;">
                                 <tr>
-                                    <td>Incluye Transporte</td>
+                                    <td>Transporte</td>
                                     <td></td>
                                     <td>
                                         <asp:CheckBox ID="chkTransporte" runat="server" />
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td>Region Cotizacion</td>
+                                    <td>Region</td>
                                     <td></td>
                                     <td>
                                         <asp:DropDownList ID="cboRegion" runat="server" Width="200px" 
@@ -576,7 +608,7 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td>Tipo Traslado</td>
+                                    <td>Traslado</td>
                                     <td></td>
                                     <td>
                                         <asp:DropDownList ID="cboTraslado" runat="server" Width="150px" 
@@ -585,7 +617,7 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td>Total Traslado</td>
+                                    <td>Total</td>
                                     <td></td>
                                     <td>
                                         <asp:TextBox ID="txtTotalTransporte" runat="server" style="text-align: right;" ReadOnly="true" Width="100px">0</asp:TextBox>
@@ -600,9 +632,9 @@
                         </fieldset>
 
                         <%--COMISION --%>
-                        <fieldset style="width: 55%;">
+                        <fieldset style="width: 60%;">
                             <legend>Costo Comision</legend>
-                            <table align="center">
+                            <table align="center" style="font-size:small;">
                                 <tr>
                                     <td>Cantidad Personas</td>
                                     <td>
@@ -1113,34 +1145,19 @@
         </div>
     </div>
 
-    <%--SELECCION DE EQUIPO A COTIZAR --%>  
-    
+    <%--SELECCION DE EQUIPO A COTIZAR --%>      
     
     <%--DETALLE DE EQUIPOS AGREGADOS--%>
-    <br />
-    
-    <br />
     
     <%-- CUADROS DE DIALOGO PARA TRANSPORTE Y COMISION --%>
-    
 
-    <br />
-    <br />
-
-    <%--CALCULO DE VALORES--%>
-    
+    <%--CALCULO DE VALORES--%>    
 
     <%--NOTAS DE LA COTIZACION--%>
-    <br />
-    
 
-    <%--PANEL COMENTARIOS FACTURACION --%>
-    <br />
-    
+    <%--PANEL COMENTARIOS FACTURACION --%>    
 
-    <%--PANEL GARANTIA Y LUGAR DE EJECUCION --%>
-    <br />
-    
+    <%--PANEL GARANTIA Y LUGAR DE EJECUCION --%>    
 
     <%--DIV PARA ELIMINAR EL ARCHIVO SELECCIONADO --%>
     <div id="dialog-archivo" title="Quitar Archivo" style="display:none;">
@@ -1148,8 +1165,6 @@
         <br /><br />
         <input type="button" id="btn-del-archivo" name="btn-del-archivo" value="Eliminar" />
     </div>
-    
-    <br /><br />
     <%--PANEL DE DATOS ADJUNTOS --%>
     
     <%--DIALGO PARA MOSTRAR INGRESO SECTOR EN LUGAR DE ENTREGA Y DIALOG PARA MOSTRAR EL CUADRO DONDE SE SELECCIONAN LOS ARCHIVOS A ADJUNTAR --%>
@@ -1164,7 +1179,7 @@
     </div>
 
     <%--BOTONES DE GUARDAR/IMPRIMIR/ADJUNTAR--%>    
-    <br /><br /><br />
+    <br /><br />
     <table cellpadding="5px">
         <tr>
             <td>
@@ -1270,9 +1285,33 @@
                             </ItemTemplate>
                         </asp:TemplateField>
 
+                        <asp:TemplateField HeaderText="Peso" HeaderStyle-CssClass="ocultaCol" ItemStyle-CssClass="ocultaCol">
+                            <ItemTemplate>
+                                <asp:Label ID="lblequipopeso" CssClass="eqpeso_" runat="server" Text='<%# Bind("EQUIPOCALPESO") %>'></asp:Label>
+                            </ItemTemplate>
+                        </asp:TemplateField>
+
                         <asp:TemplateField HeaderText="PMO" HeaderStyle-CssClass="ocultaCol" ItemStyle-CssClass="ocultaCol">
                             <ItemTemplate>
                                 <asp:Label ID="lblequipopmo" CssClass="eqpmo_" runat="server" Text='<%# Bind("EQUIPOPMO") %>'></asp:Label>
+                            </ItemTemplate>
+                        </asp:TemplateField>
+
+                        <asp:TemplateField HeaderText="CREP" HeaderStyle-CssClass="ocultaCol" ItemStyle-CssClass="ocultaCol">
+                            <ItemTemplate>
+                                <asp:Label ID="lblcostorep" CssClass="eqcrep_" runat="server" Text='<%# Bind("EQUIPOCOSTOREP") %>'></asp:Label>
+                            </ItemTemplate>
+                        </asp:TemplateField>
+
+                        <asp:TemplateField HeaderText="CMO" HeaderStyle-CssClass="ocultaCol" ItemStyle-CssClass="ocultaCol">
+                            <ItemTemplate>
+                                <asp:Label ID="lblcostomo" CssClass="eqcmo_" runat="server" Text='<%# Bind("EQUIPOCMO") %>'></asp:Label>
+                            </ItemTemplate>
+                        </asp:TemplateField>
+
+                        <asp:TemplateField HeaderText="TTO" HeaderStyle-CssClass="ocultaCol" ItemStyle-CssClass="ocultaCol">
+                            <ItemTemplate>
+                                <asp:Label ID="lbltarifaorig" CssClass="eqtto_" runat="server" Text='<%# Bind("EQUIPOTARIFAORIG") %>'></asp:Label>
                             </ItemTemplate>
                         </asp:TemplateField>
 
@@ -1294,12 +1333,7 @@
         </asp:UpdatePanel>
     </div>
 
-    <%--DIALOG DONDE SE MODIFICAN PRECIOS/OTROS DEL EQUIPO SELECCIONADO --%>
-    <asp:UpdatePanel ID="upUpdDatoEquipo" runat="server" UpdateMode="Conditional">
-        <ContentTemplate>
-            <asp:Button ID="btnUpdDatoEquipo" runat="server" Text="Button" onclick="btnUpdDatoEquipo_Click"/><!-- onclick="btnUpdDatoEquipo_Click"-->
-        </ContentTemplate>
-    </asp:UpdatePanel>    
+    <%--DIALOG DONDE SE MODIFICAN PRECIOS/OTROS DEL EQUIPO SELECCIONADO --%>        
     <div id="dialog-equipo-precio" title="Datos Equipo" style="display:none;">
         Modificacion de los datos del equipo a cotizar
         <br /><br />
@@ -1346,41 +1380,133 @@
                 <td>Precio MO</td>
                 <td><input type="text" id="txt-eq-read-pmo" name="txt-eq-read-pmo" class="text ui-widget-content ui-corner-all" value="0"/></td>
             </tr>
+            <tr style="display:none;"><!--OCULTAR-->
+                <td>Costo Rpto</td>
+                <td><input type="text" id="txt-eq-read-crpto" name="txt-eq-read-crpto" class="text ui-widget-content ui-corner-all" value="0" /></td>
+            </tr>
+            <tr style="display:none;"><!--OCULTAR-->
+                <td>Costo MO</td>
+                <td><input type="text" id="txt-eq-read-cmo" name="txt-eq-read-cmo" class="text ui-widget-content ui-corner-all" value="0" /></td>
+            </tr>
+            <tr style="display:none;"><!--OCULTAR-->
+                <td>Tarifa Original</td>
+                <td><input type="text" id="txt-eq-read-tto" name="txt-eq-read-tto" class="text ui-widget-content ui-corner-all" value="0" /></td>
+            </tr>
             <tr>
                 <td>Gastos</td>
-                <td><input type="text" id="txt-eq-read-gasto" name="txt-eq-read-gasto" class="text ui-widget-content ui-corner-all" value="0"/></td>
+                <td><input type="number" id="txt-eq-read-gasto" name="txt-eq-read-gasto" class="text ui-widget-content ui-corner-all" value="0"/></td>
             </tr>
             <tr>
                 <td>Precio Carga</td>
-                <td><input type="text" id="txt-eq-read-pcarga" name="txt-eq-read-pcarga" readonly="readonly" class="text ui-widget-content ui-corner-all" value="0"/></td>
+                <td><input type="number" id="txt-eq-read-pcarga" name="txt-eq-read-pcarga" readonly="readonly" class="text ui-widget-content ui-corner-all" value="0"/></td>
             </tr>
             <tr>
                 <td>Precio Venta</td>
                 <td><input type="text" id="txt-eq-read-pventa" name="txt-eq-read-pventa" readonly="readonly" class="text ui-widget-content ui-corner-all" value="0"/></td>
             </tr>
+            <tr style="display:none;">
+                <td>Peso</td>
+                <td><input type="text" id="txt-eq-read-peso" name="txt-eq-read-peso" readonly="readonly" class="text ui-widget-content ui-corner-all" value="0" /></td>
+            </tr>
             <tr>
                 <td>Estado</td>
-                <td><input type="text" id="txt-eq-read-estado" name="txt-eq-read-estado" readonly="readonly" class="text ui-widget-content ui-corner-all"/></td>
+                <td>
+                    <asp:DropDownList ID="cbo_eq_read_estado" runat="server" OnInit="cbo_eq_read_estado_Init">
+                    </asp:DropDownList>
+                </td>
             </tr>
             <tr>
                 <td>Nota de Pedido</td>
-                <td><input type="text" id="txt-eq-read-notap" name="txt-eq-read-notap" readonly="readonly" class="text ui-widget-content ui-corner-all"/></td>
+                <td><input type="text" id="txt-eq-read-notap" name="txt-eq-read-notap" class="text ui-widget-content ui-corner-all" placeholder="Solo si posee NP"/></td>
             </tr>
             <tr>
                 <td>Linea Prod</td>
-                <td><input type="text" id="txt-eq-read-lprod" name="txt-eq-read-lprod" readonly="readonly" class="text ui-widget-content ui-corner-all"/></td>
+                <td>
+                    <asp:DropDownList ID="cbo_eq_read_lprod" runat="server" OnInit="cbo_eq_read_lprod_Init">
+                    </asp:DropDownList>
+                </td>
             </tr>
             <tr>
                 <td>O Compra</td>
-                <td><input type="text" id="txt-eq-read-oc" name="txt-eq-read-oc" readonly="readonly" class="text ui-widget-content ui-corner-all"/></td>
+                <td><input type="text" id="txt-eq-read-oc" name="txt-eq-read-oc" class="text ui-widget-content ui-corner-all"  placeholder="Solo si posee OC"/></td>
             </tr>
             <tr>
                 <td>SAOT</td>
-                <td><input type="text" id="txt-eq-read-saot" name="txt-eq-read-saot" readonly="readonly" class="text ui-widget-content ui-corner-all"/></td>
+                <td><input type="text" id="txt-eq-read-saot" name="txt-eq-read-saot" class="text ui-widget-content ui-corner-all"  placeholder="Solo si posee SAOT"/></td>
             </tr>
             <tr>
                 <td>Puntos Calibracion</td>
-                <td><input type="text" id="txt-eq-read-puntos" name="txt-eq-read-puntos" readonly="readonly" class="text ui-widget-content ui-corner-all"/></td>
+                <td>
+                    <%--<input type="text" id="txt-eq-read-puntos" name="txt-eq-read-puntos" class="text ui-widget-content ui-corner-all"  placeholder="Solo si posee"/>--%>
+                    <a href="javascript:void(null);" id="btn-select-equ" onclick="dialogPunto();" style="display:inline-block;" class="ui-icon 	ui-icon-circle-plus">Agregar Puntos</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div id="dialog-equipo-punto" title="Puntos a Cotizar" style="display:none;">
+        Puntos del equipo a cotizar
+        <br /><br />
+        <asp:DropDownList ID="cbo_magnitud" runat="server" OnInit="cbo_punto_magnitud_Init">
+        </asp:DropDownList>
+        <br /><br />
+        <input type="text" id="txt-in-punto-cal" name="txt-in-punto-cal" placeholder="Ingrese puntos" />
+        <br /><br />
+        <input type="button" id="btn-in-punto-cal" name="btn-in-punto-cal" value="Ingresar" />        
+        <asp:GridView ID="gvListaPunto" runat="server">
+        </asp:GridView>
+    </div>
+    <div id="dialog-equipo-dato-cal"  title="Otros Datos Equipo" style="display:none;">
+        <table>
+            <tr>
+                <td>
+                    Tipo Trabajo
+                </td>
+                <td>
+                    <asp:DropDownList ID="cbo_eq_dato_cal_tt" runat="server" oninit="cbo_eq_dato_cal_tt_Init">
+                    </asp:DropDownList>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Estado
+                </td>
+                <td>
+                    <asp:DropDownList ID="cbo_eq_dato_cal_est" runat="server" OnInit="cbo_eq_dato_cal_est_Init">
+                    </asp:DropDownList>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Nota Pedido
+                </td>
+                <td>
+                    <input type="text" id="txt-eq-dato-cal-np" name="txt-eq-dato-cal-np" class="text ui-widget-content ui-corner-all" placeholder="Solo si posee NP"/>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Line Producto
+                </td>
+                <td>
+                    <asp:DropDownList ID="cbo_eq_dato_cal_lp" runat="server" OnInit="cbo_eq_dato_cal_lp_Init">
+                    </asp:DropDownList>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Orden Compra
+                </td>
+                <td>
+                    <input type="text" id="txt-eq-dato-cal-oc" name="txt-eq-dato-cal-oc" class="text ui-widget-content ui-corner-all" placeholder="Solo si posee OC"/>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    SAOT
+                </td>
+                <td>
+                    <input type="text" id="txt-eq-dato-cal-saot" name="txt-eq-dato-cal-saot" class="text ui-widget-content ui-corner-all" placeholder="Solo si posee SAOT"/>
+                </td>
             </tr>
         </table>
     </div>
@@ -1392,6 +1518,7 @@
             $.cookie('nomcontact', '');
             $.cookie('nomtipo', '');
             $.cookie('nomestado', '');
+            var objEqJs = new EquipoCotizacion();
 
             maxL = 400;
             var bName = navigator.appName;
@@ -1458,9 +1585,24 @@
                     $("#txt-eq-read-nom").val($('.eqnombre_', $(this).closest('tr')).html());
                     $("#txt-eq-read-mod").val($('.eqmodelo_', $(this).closest('tr')).html());
                     $("#txt-eq-read-np").val($('.eqnparte_', $(this).closest('tr')).html());
-                    $("#txt-eq-read-pmo").val($('.eqpmo_', $(this).closest('tr')).html());
-                    $("#txt-eq-read-pventa").val($('.eqtotal_', $(this).closest('tr')).html());
-                    //$("#txt-eq-read-ns").val($('.eqnserie_', $(this).closest('tr')).html());
+                    //$("#txt-eq-read-pmo").val($('.eqpmo_', $(this).closest('tr')).html());
+                    //$("#txt-eq-read-crpto").val($('.eqcrep_', $(this).closest('tr')).html());
+                    //$("#txt-eq-read-cmo").val($('.eqcmo_', $(this).closest('tr')).html());
+                    //$("#txt-eq-read-tto").val($('.eqtto_', $(this).closest('tr')).html());
+                    //$("#txt-eq-read-peso").val($('.eqpeso_', $(this).closest('tr')).html());
+                    //$("#txt-eq-read-pventa").val($('.eqtotal_', $(this).closest('tr')).html());                    
+                    getValorEquipo_Cal($('.eqid_', $(this).closest('tr')).html(), $("#<%=cboTipoTarifa.ClientID %>").val(), $("#<%=txtFecha.ClientID %>").val());
+                });
+            }
+
+            function dataGridCal() {
+                $('.cssDetEq').on('click', function () {
+                    $("#<%=cbo_eq_dato_cal_tt.ClientID %>").val($('.equipotrabajoid_', $(this).closest('tr')).html());
+                    $("#<%=cbo_eq_dato_cal_est.ClientID %>").val($('.equipodet_idn_', $(this).closest('tr')).html());
+                    $("#<%=cbo_eq_dato_cal_lp.ClientID %>").val($('.equipolp_idn_', $(this).closest('tr')).html());
+                    $("#txt-eq-dato-cal-np").val($('.equipocalnp_', $(this).closest('tr')).html());
+                    $("#txt-eq-dato-cal-oc").val($('.equipocaloc_', $(this).closest('tr')).html());
+                    $("#txt-eq-dato-cal-saot").val($('.equipocalsaot_', $(this).closest('tr')).html());
                 });
             }
 
@@ -1485,23 +1627,52 @@
             }
 
             function seleccionEquipo() {
-                dataEquipo();                
+                dataEquipo();
                 $("#dialog-equipo-busca").dialog('close');
+                $("#<%=cbo_eq_read_trabajo.ClientID %>").val("8");
+                $("#<%=cbo_eq_read_estado.ClientID %>").val("1");
                 $("#dialog-equipo-precio").dialog({
                     modal: true,
                     width: "500px",
                     buttons: {
                         "Calcular": function () {
-                            $(this).dialog('close');
+                            objEqJs.equipoid = $("#txt-eq-read-id").val();
+                            objEqJs.equipocantidad = $("#txt-eq-read-qty").val();
+                            objEqJs.equipopmo = $("#txt-eq-read-pmo").val();
+                            objEqJs.equipocalgasto = $("#txt-eq-read-gasto").val();
+                            objEqJs.equipocalpcarga = $("#txt-eq-read-pcarga").val();
+                            equipoCal_Total(objEqJs, "2", $("#<%=cboTipoTarifa.ClientID %>").val(), $("#<%=txtFecha.ClientID %>").val());
                         },
                         "Agregar": function () {
+                            //$(this).dialog('close');
+                            setEquipoCal();
+                            equipoCal_Guarda(objEqJs);
+                            limpiaEquipoDialog();
+                            $("#<%=cbo_eq_read_lprod.ClientID %>").val("N");
+                            $("#<%= cbo_eq_read_estado.ClientID %>").val("1");
+                            $("#<%=cbo_eq_read_trabajo.ClientID %>").val("8");
+                            $("#<%=btnUpdDatoEquipo.ClientID %>").click();
                             $(this).dialog('close');
                         },
                         "Cerrar": function () {
                             $(this).dialog('close');
                         }
                     }
-                });                
+                });
+            }
+
+            function seleccionDetalleCal() {
+                dataGridCal();
+                $("#dialog-equipo-dato-cal").dialog({
+                    modal: true,
+                    width: "500px",
+                    buttons: {
+                        "Actualizar": function () { },
+                        "Cerrar": function () {
+                            $(this).dialog('close');
+                        }
+                    }
+                });
             }
 
             function mostrarID() {
@@ -1647,6 +1818,30 @@
                     $("#<%=btnBuscarListaEquipo.ClientID %>").click();
                 }
             });
+
+            function setEquipoCal() {
+                objEqJs.equipotarifaorig = $("#txt-eq-read-tto").val();
+                objEqJs.equipopmo = $("#txt-eq-read-pmo").val();
+                objEqJs.equipocostorep = $("#txt-eq-read-crpto").val();
+                objEqJs.equipocmo = $("#txt-eq-read-cmo").val();
+                objEqJs.equipototal = $("#txt-eq-read-pventa").val();
+                objEqJs.equiponparte = $("#txt-eq-read-np").val();
+                objEqJs.equiponserie = $("#txt-eq-read-ns").val();
+                objEqJs.equipomodelo = $("#txt-eq-read-mod").val();
+                objEqJs.equiponombre = $("#txt-eq-read-nom").val();
+                objEqJs.equipocalpeso = $("#txt-eq-read-peso").val();
+                objEqJs.equipocantidad = $("#txt-eq-read-qty").val();
+                objEqJs.equipocalgasto = $("#txt-eq-read-gasto").val();
+                objEqJs.equipocalpcarga = $("#txt-eq-read-pcarga").val();
+                objEqJs.equipoid = $("#txt-eq-read-id").val();
+                objEqJs.equipocotid = $.cookie('pcusr');
+                objEqJs.equipocalnp = $("#txt-eq-read-notap").val();
+                objEqJs.equipocaloc = $("#txt-eq-read-oc").val();
+                objEqJs.equipocalsaot = $("#txt-eq-read-saot").val();
+                objEqJs.equipolp_idn = $("#<%=cbo_eq_read_lprod.ClientID %>").val();
+                objEqJs.equipodet_idn = $("#<%= cbo_eq_read_estado.ClientID %>").val();
+                objEqJs.equipotrabajo = $("#<%=cbo_eq_read_trabajo.ClientID %>").val();
+            }
         </script>
 
 </asp:Content>

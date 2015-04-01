@@ -70,7 +70,65 @@ namespace MANCAL_WEB.frm_cal
 
             foreach (var cj in objCbo.lsTrabajoTipo(un, "COT")) 
             {
-                cbo_eq_read_trabajo.Items.Add(new ListItem(cj.nom_ttrabajo, cj.idn_ttrabajo));
+                cbo_eq_read_trabajo.Items.Add(new ListItem(cj.nom_ttrabajo, cj.idn_ttrabajo));                
+            }
+        }
+
+        protected void cbo_eq_dato_cal_tt_Init(object sender, EventArgs e)
+        {
+            objCbo = new bl_carga_cbo();
+
+            foreach (var cj in objCbo.lsTrabajoTipo(un, "COT"))
+            {
+                cbo_eq_dato_cal_tt.Items.Add(new ListItem(cj.nom_ttrabajo, cj.idn_ttrabajo));
+            }
+        }
+
+        protected void cbo_eq_read_lprod_Init(object sender, EventArgs e) 
+        {
+            objCbo = new bl_carga_cbo();
+
+            cbo_eq_read_lprod.Items.Add(new ListItem("Seleccione", "N"));
+
+            foreach (var clp in objCbo.getLineaProd()) 
+            {
+                cbo_eq_read_lprod.Items.Add(new ListItem(clp.nomlineaprod, clp.idnlineaprod));                
+            }
+        }
+
+        protected void cbo_eq_dato_cal_lp_Init(object sender, EventArgs e) 
+        {
+            objCbo = new bl_carga_cbo();
+
+            cbo_eq_dato_cal_lp.Items.Add(new ListItem("Seleccione", "N"));
+
+            foreach (var clp in objCbo.getLineaProd()) 
+            {
+                cbo_eq_dato_cal_lp.Items.Add(new ListItem(clp.nomlineaprod, clp.idnlineaprod));
+            }
+        }
+
+        protected void cbo_eq_read_estado_Init(object sender, EventArgs e) 
+        {
+            objCbo = new bl_carga_cbo();
+
+            cbo_eq_read_estado.Items.Add(new ListItem("Seleccione", "0"));
+
+            foreach (var ce in objCbo.getEstadoDet()) 
+            {
+                cbo_eq_read_estado.Items.Add(new ListItem(ce.nomestadodet, ce.idestadodet));                
+            }
+        }
+
+        protected void cbo_eq_dato_cal_est_Init(object sender, EventArgs e) 
+        {
+            objCbo = new bl_carga_cbo();
+
+            cbo_eq_dato_cal_est.Items.Add(new ListItem("Seleccione", "0"));
+
+            foreach (var ce in objCbo.getEstadoDet())
+            {
+                cbo_eq_dato_cal_est.Items.Add(new ListItem(ce.nomestadodet, ce.idestadodet));
             }
         }
 
@@ -224,6 +282,19 @@ namespace MANCAL_WEB.frm_cal
             }
         }
 
+        protected void cbo_punto_magnitud_Init(object sender, EventArgs e) 
+        {
+            objCbo = new bl_carga_cbo();
+            String cod = "2";
+
+            cbo_magnitud.Items.Add(new ListItem("Seleccione", "0"));
+
+            foreach (var cbo in objCbo.getMagnitud(cod)) 
+            {
+                cbo_magnitud.Items.Add(new ListItem(cbo.nommagnitud, cbo.idnmagnitud));
+            }
+        }
+
         #endregion
 
         #region Metodos Protected
@@ -292,6 +363,14 @@ namespace MANCAL_WEB.frm_cal
 
             txtCargoJefe.Text = cj.jef_car;
             txtMailJefe.Text = cj.jef_mai;
+        }
+
+        protected void GV1_PageIndexChanging(object sender, GridViewPageEventArgs e) 
+        {
+            String usr = System.Environment.UserName;
+
+            GV1.PageIndex = e.NewPageIndex;
+            getListaDetalle(usr, cboTipoTarifa.SelectedValue);
         }
 
         protected void gvArchivo_PageIndexChanging(object sender, GridViewPageEventArgs e)
@@ -364,11 +443,9 @@ namespace MANCAL_WEB.frm_cal
 
         protected void btnUpdDatoEquipo_Click(object sender, EventArgs e) 
         {
-            objDet = new bl_detalle_pro();
-            DetalleCotizacionPro det = objDet.getDatoEquipo(Request.Cookies["eqid"].Value, cboTipoTarifa.SelectedValue, txtFecha.Text);
-
-            var script_pmo = "$('#txt-eq-read-pmo').val('" + det.preciomo + "')";
-            ClientScript.RegisterStartupScript(typeof(String), "txteqreadpmo", script_pmo, true);
+            String usr = System.Environment.UserName;
+            getListaDetalle(usr, cboTipoTarifa.SelectedValue);
+            UpdatePanel5.Update();
         }
 
         public void setValueCliente() 
@@ -394,6 +471,13 @@ namespace MANCAL_WEB.frm_cal
             setValueEquipo();
             gvEquipoBusca.PageIndex = e.NewPageIndex;
             getListaEquipo(eq_nombre, eq_nparte, eq_modelo);
+        }
+
+        public void getListaDetalle(String idcot, String idtarifa) 
+        {
+            objDet = new bl_detalle_pro();
+            GV1.DataSource = objDet.getDetalleCot(idcot, idtarifa);
+            GV1.DataBind();
         }
     }
 }
