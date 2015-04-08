@@ -126,5 +126,53 @@ namespace MANCAL_WEB.asmx_files
 
             return c;
         }
+
+        [WebMethod]
+        public String getCotTotalTrans(String cotid, String trasid, String regiid, String tariid, String cotfec) 
+        {
+            MANCAL_WEB_BL.bl_calculo obj = new MANCAL_WEB_BL.bl_calculo();
+            String total = obj.getTotalTransporte(cotid, trasid, regiid, tariid, cotfec);
+
+            return total;
+        }
+
+        [WebMethod]
+        public void setCotTotalSinTrans(String idcot) 
+        {
+            MANCAL_WEB_BL.bl_calculo obj = new MANCAL_WEB_BL.bl_calculo();
+            obj.setTotalSinTransporte(idcot);
+        }
+
+        [WebMethod]
+        public MANCAL_WEB_CLASS.CotizacionComision getCotComision(Object obj, String idc, String ttar, String fcot) 
+        {            
+            MANCAL_WEB_CLASS.CotizacionComision cc = MANCAL_WEB_CLASS.CotizacionComision.objCotCom(obj);
+            bl_calculo cal = new bl_calculo();
+
+            MANCAL_WEB_CLASS.CotizacionComision retCom = cal.getTotalComision(cc.lug_id, cc.ccom_qtypersona, cc.ccom_qtycommes, cc.ccom_qtyveh, cc.ccom_qtydia, cc.ccom_qtranseqt, cc.ccom_qtranseqa, cc.ccom_fondor, cc.ccom_qgasrepr, idc, ttar, fcot);
+
+            return retCom;
+        }
+
+        [WebMethod]
+        public MANCAL_WEB_CLASS.Cotizacion getCotTotalMargen(Object obj, String idun) 
+        {
+            MANCAL_WEB_CLASS.Cotizacion coti = MANCAL_WEB_CLASS.Cotizacion.objCotiTotal(obj);
+            bl_calculo cal = new bl_calculo();
+
+            MANCAL_WEB_CLASS.Cotizacion infoCot = cal.getMargenTotal(coti, idun);
+
+            return infoCot;
+        }
+
+        [WebMethod]//costo comision
+        public void setTotalCostoCom(Object obj, String idc, String ttar, String fcot) //sec_prev = sector previo
+        { 
+        //devolver a 0 costo comision recalcular dcc_gasto y restarlo del actual y dejar en 0 factor comision.
+            MANCAL_WEB_CLASS.CotizacionComision cc = MANCAL_WEB_CLASS.CotizacionComision.objCotCom(obj);
+            bl_calculo cal = new bl_calculo();
+
+            cal.setSinCostoComision(cc.lug_id, cc.ccom_qtypersona, cc.ccom_qtycommes, cc.ccom_qtyveh, cc.ccom_qtydia, cc.ccom_qtranseqt, cc.ccom_qtranseqa, cc.ccom_fondor, cc.ccom_qgasrepr, idc, ttar, fcot);
+        }
     }
 }

@@ -595,7 +595,8 @@
                                     <td>Transporte</td>
                                     <td></td>
                                     <td>
-                                        <asp:CheckBox ID="chkTransporte" runat="server" />
+                                        <input type="checkbox" id="chkTransporte" />
+                                        <%--<asp:CheckBox ID="chkTransporte" runat="server" />--%>
                                     </td>
                                 </tr>
                                 <tr>
@@ -605,6 +606,13 @@
                                         <asp:DropDownList ID="cboRegion" runat="server" Width="200px" 
                                             oninit="cboRegion_Init">
                                         </asp:DropDownList>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Dirección</td>
+                                    <td></td>
+                                    <td>
+                                        <input type="text" id="txtDirTransporte" name="txtDirTransporte" style="width:200px;" />
                                     </td>
                                 </tr>
                                 <tr>
@@ -620,12 +628,14 @@
                                     <td>Total</td>
                                     <td></td>
                                     <td>
-                                        <asp:TextBox ID="txtTotalTransporte" runat="server" style="text-align: right;" ReadOnly="true" Width="100px">0</asp:TextBox>
+                                        <input type="text" id="txtTotalTransporte" name="txtTotalTransporte" readonly="readonly" style="width:100px; text-align:right;" value="0" />
+                                        <%--<asp:TextBox ID="TextBox21" runat="server" style="text-align: right;" ReadOnly="true" Width="100px">0</asp:TextBox>--%>
                                     </td>
                                 </tr>
                                 <tr>                
                                     <td colspan="3" style="text-align:center;">
-                                        <asp:Button ID="Button2" runat="server" Text="Distribuir Precio" />
+                                        <%--<asp:Button ID="Button2" runat="server" Text="Distribuir Precio" />--%>
+                                        <input type="button" id="btnAddTransporte" value="Distribuir Precio" />
                                     </td>
                                 </tr>
                             </table>
@@ -637,8 +647,8 @@
                             <table align="center" style="font-size:small;">
                                 <tr>
                                     <td>Cantidad Personas</td>
-                                    <td>
-                                        <asp:TextBox ID="TextBox1" runat="server" Width="40px" style="text-align: right;">0</asp:TextBox>
+                                    <td>                                        
+                                        <input type="number" id="txt-com-qty-persona" name="txt-com-qty-persona" style="text-align:right; width:40px;" value="0" />
                                     </td>
                                     <td>Lugar</td>
                                     <td colspan="3">
@@ -649,95 +659,95 @@
                                 </tr>
                                 <tr>
                                     <td>Cantidad Dias</td>
-                                    <td>
-                                        <asp:TextBox ID="TextBox2" runat="server" Width="40px" style="text-align: right;">0</asp:TextBox>
+                                    <td>                                        
+                                        <input type="number" id="txt-com-qty-dia" name="txt-com-qty-dia" style="text-align:right; width:40px;" value="0" />
                                     </td>
                                     <td>Transporte DTS</td>
                                     <td>
-                                        <asp:TextBox ID="TextBox9" runat="server" Width="90px" ReadOnly="true" style="text-align: right;">0</asp:TextBox>
+                                        <input type="text" style="text-align:right; width:90px;" value="0" id="txt-com-trans-dts" name="txt-com-trans-dts" readonly="readonly"/>
                                     </td>
                                     <td>Hotel</td>
                                     <td>
-                                        <asp:TextBox ID="TextBox10" runat="server" Width="90px" ReadOnly="true" style="text-align: right;">0</asp:TextBox>
+                                        <input type="text" style="text-align:right; width:90px;" value="0" id="txt-com-hotel" name="txt-com-hotel" readonly="readonly"/>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>Cantidad Vehiculo</td>
                                     <td>
-                                        <asp:TextBox ID="TextBox3" runat="server" Width="40px" style="text-align: right;">0</asp:TextBox>
+                                        <input type="number" style="text-align:right; width:40px;" value="0" id="txt-com-qty-veh" name="txt-com-qty-veh" />
                                     </td>
                                     <td>Transporte Hotel</td>
                                     <td>
-                                        <asp:TextBox ID="TextBox11" runat="server" Width="90px" ReadOnly="true" style="text-align: right;">0</asp:TextBox>
+                                        <input type="text" style="text-align:right; width:90px;" value="0" id="txt-com-trans-hotel" name="txt-com-trans-hotel" readonly="readonly"/>
                                     </td>
                                     <td>Fondo a Rendir</td>
                                     <td>
-                                        <asp:TextBox ID="TextBox12" runat="server" Width="90px" ReadOnly="true" style="text-align: right;">0</asp:TextBox>
+                                        <input type="text" style="text-align:right; width:90px;" value="0" id="txt-com-fondo-rend" name="txt-com-fondo-rend" readonly="readonly"/>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>Traslado Eq/Doc Ciudad</td>
                                     <td>
-                                        <asp:TextBox ID="TextBox4" runat="server" Width="40px" style="text-align: right;">0</asp:TextBox>
+                                        <input type="number" style="text-align:right; width:40px;" value="0" id="txt-com-eq-c" name="txt-com-eq-c" />
                                     </td>
                                     <td>Transporte Avion Persona</td>
                                     <td>
-                                        <asp:TextBox ID="TextBox13" runat="server" Width="90px" ReadOnly="true" style="text-align: right;">0</asp:TextBox>
+                                        <input type="text" style="text-align:right; width:90px;" value="0" id="txt-com-trans-av-per" name="txt-com-trans-av-per" readonly="readonly"/>
                                     </td>
-                                    <td>Gasto Representacion</td>
+                                    <td>Gasto Repr.</td>
                                     <td>
-                                        <asp:TextBox ID="TextBox14" runat="server" Width="90px" ReadOnly="true" style="text-align: right;">0</asp:TextBox>
+                                        <input type="text" style="text-align:right; width:90px;" value="0" id="txt-com-gasto-rep" name="txt-com-gasto-rep" readonly="readonly"/>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>Traslado Eq/Doc Avion</td>
                                     <td>
-                                        <asp:TextBox ID="TextBox5" runat="server" Width="40px" style="text-align: right;">0</asp:TextBox>
+                                        <input type="number" style="text-align:right; width:40px;" value="0" id="txt-com-eq-a" name="txt-com-eq-a" />
                                     </td>
                                     <td>Arriendo Vehiculo</td>
                                     <td>
-                                        <asp:TextBox ID="TextBox15" runat="server" Width="90px" ReadOnly="true" style="text-align: right;">0</asp:TextBox>
+                                        <input type="text" style="text-align:right; width:90px;" value="0" id="txt-com-arr-veh" name="txt-com-arr-veh" readonly="readonly"/>
                                     </td>
-                                    <td>Total Costo Comision</td>
+                                    <td>Total Costo Com.</td>
                                     <td>
-                                        <asp:TextBox ID="TextBox16" runat="server" Width="90px" ReadOnly="true" style="text-align: right;">0</asp:TextBox>
+                                        <input type="text" style="text-align:right; width:90px;" value="0" id="txt-com-tot-cos-com" name="txt-com-tot-cos-com" readonly="readonly"/>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>Fondo a Rendir</td>
                                     <td>
-                                        <asp:TextBox ID="TextBox6" runat="server" Width="40px" style="text-align: right;">0</asp:TextBox>
+                                        <input type="number" style="text-align:right; width:40px;" value="0" id="txt-com-fondo-rendir" name="txt-com-fondo-rendir" />
                                     </td>
                                     <td>Traslado Eq/Doc Ciudad</td>
                                     <td>
-                                        <asp:TextBox ID="TextBox17" runat="server" Width="90px" ReadOnly="true" style="text-align: right;">0</asp:TextBox>
+                                        <input type="text" style="text-align:right; width:90px;" value="0" id="txt-com-tras-eq-c" name="txt-com-tras-eq-c" readonly="readonly"/>
                                     </td>
-                                    <td>Total Precio Comision</td>
+                                    <td>Total Precio Com.</td>
                                     <td>
-                                        <asp:TextBox ID="TextBox18" runat="server" Width="90px" ReadOnly="true" style="text-align: right;">0</asp:TextBox>
+                                        <input type="text" style="text-align:right; width:90px;" value="0" id="txt-com-tot-p-com" name="txt-com-tot-p-com" readonly="readonly"/>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>Gastos Representacion</td>
                                     <td>
-                                        <asp:TextBox ID="TextBox7" runat="server" Width="40px" style="text-align: right;">0</asp:TextBox>
+                                        <input type="number" style="text-align:right; width:40px;" value="0" id="txt-com-rep-gasto" name="txt-com-rep-gasto" />
                                     </td>
                                     <td>Traslado Eq/Doc Avion</td>
                                     <td>
-                                        <asp:TextBox ID="TextBox19" runat="server" Width="90px" ReadOnly="true" style="text-align: right;">0</asp:TextBox>
+                                        <input type="text" style="text-align:right; width:90px;" value="0" id="txt-com-tras-eq-a" name="txt-com-tras-eq-a" readonly="readonly"/>
                                     </td>
-                                    <td colspan="2" rowspan="2" style="text-align:center;">
-                                        <asp:Button ID="Button1" runat="server" Text="Cargar Precio" />
+                                    <td colspan="2" rowspan="2" style="text-align:center;">                                        
+                                        <input type="button" id="btnAddComision" value="Cargar Comision" />
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>Cantidad Com 1 Mes</td>                
                                     <td>
-                                        <asp:TextBox ID="TextBox8" runat="server" Width="40px" style="text-align: right;">0</asp:TextBox>
+                                        <input type="number" style="text-align:right; width:40px;" value="0" id="txt-com-qty-com-mes" name="txt-com-qty-com-mes" />
                                     </td>
                                     <td>Viatico</td>
                                     <td>
-                                        <asp:TextBox ID="TextBox20" runat="server" Width="90px" ReadOnly="true" style="text-align: right;">0</asp:TextBox>
+                                        <input type="text" style="text-align:right; width:90px;" value="0" id="txt-com-viatico" name="txt-com-viatico" readonly="readonly"/>
                                     </td>
                                 </tr>
                             </table>
@@ -750,16 +760,17 @@
             <div id="tab-total">
                 <asp:UpdatePanel ID="panelCalculo" runat="server" UpdateMode="Conditional">
                     <ContentTemplate>
-                        <fieldset style="width:20%;" class="inline">
+                        <fieldset style="width:25%;" class="inline">
                             <legend>Margenes Comerciales</legend>
-                            <table align="center">
+                            <table align="center" style="font-size:small;">
                                 <tr>
                                     <td>
                                         Total Costo MO
                                     </td>
                                     <td>
-                                        <asp:TextBox ID="txtTotalCostoMo" runat="server" Width="100px" 
-                                                ReadOnly="True" style="text-align: right;">0</asp:TextBox>
+                                        <%--<asp:TextBox ID="txtTotalCostoMo" runat="server" Width="100px" 
+                                                ReadOnly="True" style="text-align: right;">0</asp:TextBox>--%>
+                                        <input type="text" id="txtTotalCostoMo" name="txtTotalCostoMo" value="0" readonly="readonly" style="text-align:right; width:100px;"/>
                                     </td>
                                 </tr>
                                 <tr>
@@ -767,8 +778,9 @@
                                         Total Costo Rpto
                                     </td>
                                     <td>
-                                        <asp:TextBox ID="txtTotalCostoRpto" runat="server" 
-                                                Width="100px" ReadOnly="True" style="text-align: right;">0</asp:TextBox>
+                                        <%--<asp:TextBox ID="txtTotalCostoRpto" runat="server" 
+                                                Width="100px" ReadOnly="True" style="text-align: right;">0</asp:TextBox>--%>
+                                        <input type="text" id="txtTotalCostoRpto" name="txtTotalCostoRpto" value="0" readonly="readonly" style="text-align:right; width:100px;"/>
                                     </td>
                                 </tr>
                                 <tr>
@@ -776,8 +788,9 @@
                                         Mg Operacional %
                                     </td>
                                     <td>
-                                        <asp:TextBox ID="txtMgOpPorc" runat="server" Width="100px" 
-                                                ReadOnly="True" style="text-align: right;">0</asp:TextBox>
+                                        <%--<asp:TextBox ID="txtMgOpPorc" runat="server" Width="100px" 
+                                                ReadOnly="True" style="text-align: right;">0</asp:TextBox>--%>
+                                        <input type="text" id="txtMgOpPorc" name="txtMgOpPorc" value="0" readonly="readonly" style="text-align:right; width:100px;"/>
                                     </td>
                                 </tr>
                                 <tr>
@@ -785,8 +798,9 @@
                                         Mg Bruto %
                                     </td>
                                     <td>
-                                        <asp:TextBox ID="txtMgBrutoPorc" runat="server" Width="100px" 
-                                                ReadOnly="True" style="text-align: right;">0</asp:TextBox>
+                                        <%--<asp:TextBox ID="txtMgBrutoPorc" runat="server" Width="100px" 
+                                                ReadOnly="True" style="text-align: right;">0</asp:TextBox>--%>
+                                        <input type="text" id="txtMgBrutoPorc" name="txtMgBrutoPorc" value="0" readonly="readonly" style="text-align:right; width:100px;"/>
                                     </td>
                                 </tr>
                                 <tr>
@@ -794,8 +808,9 @@
                                         Mg Contribucion
                                     </td>
                                     <td>
-                                        <asp:TextBox ID="txtMgContribucion" runat="server" 
-                                                Width="100px" ReadOnly="True" style="text-align: right;">0</asp:TextBox>
+                                        <%--<asp:TextBox ID="txtMgContribucion" runat="server" 
+                                                Width="100px" ReadOnly="True" style="text-align: right;">0</asp:TextBox>--%>
+                                        <input type="text" id="txtMgContribucion" name="txtMgContribucion" value="0" readonly="readonly" style="text-align:right; width:100px;"/>
                                     </td>
                                 </tr>
                                 <tr>
@@ -803,8 +818,9 @@
                                         Mg Contribucion %
                                     </td>
                                     <td>
-                                        <asp:TextBox ID="txtMgContribucionPorc" runat="server" 
-                                                Width="100px" ReadOnly="True" style="text-align: right;">0</asp:TextBox>
+                                        <%--<asp:TextBox ID="txtMgContribucionPorc" runat="server" 
+                                                Width="100px" ReadOnly="True" style="text-align: right;">0</asp:TextBox>--%>
+                                        <input type="text" id="txtMgContribucionPorc" name="txtMgContribucionPorc" value="0" readonly="readonly" style="text-align:right; width:100px;"/>
                                     </td>
                                 </tr>
                                 <tr>
@@ -812,8 +828,9 @@
                                         Utilidad Esperada %
                                     </td>
                                     <td>
-                                        <asp:TextBox ID="txtUtilidadEspPorc" runat="server" 
-                                                Width="100px" ReadOnly="True" style="text-align: right;">0</asp:TextBox>
+                                        <%--<asp:TextBox ID="txtUtilidadEspPorc" runat="server" 
+                                                Width="100px" ReadOnly="True" style="text-align: right;">0</asp:TextBox>--%>
+                                        <input type="text" id="txtUtilidadEspPorc" name="txtUtilidadEspPorc" value="0" readonly="readonly" style="text-align:right; width:100px;"/>
                                     </td>
                                 </tr>
                             </table>
@@ -821,10 +838,10 @@
 
                         <fieldset style="width:25%;" class="inline">
                             <legend>Impuesto</legend>
-                            <table align="center">
+                            <table align="center" style="font-size:small;">
                                 <tr>
                                     <td>
-                                        Pago Impuesto
+                                        Impuesto
                                     </td>
                                     <td>
                                         <asp:DropDownList ID="cboTipoImpuesto" runat="server">
@@ -836,7 +853,7 @@
                                 </tr>
                                 <tr>
                                     <td>
-                                        Con Descuento
+                                        Descuento
                                     </td>
                                     <td>
                                         <asp:CheckBox ID="chkDcto" runat="server"/>
@@ -847,13 +864,15 @@
                                         Tipo Moneda
                                     </td>
                                     <td>
-                                        <asp:TextBox ID="txtTipoMoneda" runat="server" ReadOnly="True"></asp:TextBox>
+                                        <%--<asp:TextBox ID="txtTipoMoneda" runat="server" ReadOnly="True"></asp:TextBox>--%>
+                                        <input type="text" id="txtTipoMoneda" name="txtTipoMoneda" readonly="readonly"/>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td colspan="2" style="text-align:center;">
-                                        <asp:Button ID="btnCalcular" runat="server" Text="Calcular" Width="90px" 
-                                            onclick="btnCalcular_Click" />
+                                        <%--<asp:Button ID="btnCalcular" runat="server" Text="Calcular" Width="90px" 
+                                            onclick="btnCalcular_Click" />--%>
+                                        <input type="button" id="btnCalcularTotal" value="Calcular" />
                                     </td>
                                 </tr>
                             </table>
@@ -861,14 +880,15 @@
 
                         <fieldset style="width:15%;" class="inline">
                             <legend>Precio Total</legend>
-                            <table align="center">
+                            <table align="center" style="font-size:small;">
                                 <tr>
                                     <td>
                                         Neto
                                     </td>
                                     <td>
-                                        <asp:TextBox ID="txtNeto" runat="server" Width="100px" 
-                                                ReadOnly="True" style="text-align: right;">0</asp:TextBox>
+                                        <%--<asp:TextBox ID="txtNeto" runat="server" Width="100px" 
+                                                ReadOnly="True" style="text-align: right;">0</asp:TextBox>--%>
+                                        <input type="text" id="txtNeto" name="txtNeto" value="0" readonly="readonly" style="text-align:right; width:100px;"/>
                                     </td>
                                 </tr>
                                 <tr>
@@ -876,8 +896,9 @@
                                         Descuento
                                     </td>
                                     <td>
-                                        <asp:TextBox ID="txtDcto" runat="server" Width="100px" 
-                                                Enabled="False" style="text-align: right;">0</asp:TextBox>
+                                        <%--<asp:TextBox ID="txtDcto" runat="server" Width="100px" 
+                                                Enabled="False" style="text-align: right;">0</asp:TextBox>--%>
+                                        <input type="text" id="txtDcto" name="txtDcto" value="0" style="text-align:right; width:100px;" disabled="disabled"/>
                                     </td>
                                 </tr>
                                 <tr>
@@ -885,8 +906,9 @@
                                         Neto Dcto
                                     </td>
                                     <td>
-                                        <asp:TextBox ID="txtNetoDcto" runat="server" Width="100px" 
-                                                ReadOnly="True" style="text-align: right;">0</asp:TextBox>
+                                        <%--<asp:TextBox ID="txtNetoDcto" runat="server" Width="100px" 
+                                                ReadOnly="True" style="text-align: right;">0</asp:TextBox>--%>
+                                        <input type="text" id="txtNetoDcto" name="txtNetoDcto" value="0" readonly="readonly" style="text-align:right; width:100px;"/>
                                     </td>
                                 </tr>
                                 <tr>
@@ -894,8 +916,9 @@
                                         IVA
                                     </td>
                                     <td>
-                                        <asp:TextBox ID="txtIva" runat="server" Width="100px" 
-                                                ReadOnly="True" style="text-align: right;">0</asp:TextBox>
+                                        <%--<asp:TextBox ID="txtIva" runat="server" Width="100px" 
+                                                ReadOnly="True" style="text-align: right;">0</asp:TextBox>--%>
+                                        <input type="text" id="txtIva" name="txtIva" value="0" readonly="readonly" style="text-align:right; width:100px;"/>
                                     </td>
                                 </tr>
                                 <tr>
@@ -903,8 +926,9 @@
                                         Total
                                     </td>
                                     <td>
-                                        <asp:TextBox ID="txtTotal" runat="server" Width="100px" 
-                                                ReadOnly="True" style="text-align: right;">0</asp:TextBox>
+                                        <%--<asp:TextBox ID="txtTotal" runat="server" Width="100px" 
+                                                ReadOnly="True" style="text-align: right;">0</asp:TextBox>--%>
+                                        <input type="text" id="txtTotal" name="txtTotal" value="0" readonly="readonly" style="text-align:right; width:100px;"/>
                                     </td>
                                 </tr>
                             </table>
@@ -1519,6 +1543,8 @@
             $.cookie('nomtipo', '');
             $.cookie('nomestado', '');
             var objEqJs = new EquipoCotizacion();
+            var objComCot = new ComisionCotizacion();
+            var objInfoCot = new InfoCotizacion();
 
             maxL = 400;
             var bName = navigator.appName;
@@ -1551,6 +1577,10 @@
                 $(".td").css("text-align", "left");
                 $(".td").css("font-weight", "bold");
                 cambiaAjaxUploader();
+                $("#<%=cbo_eq_dato_cal_tt.ClientID %>").prop("disabled", true);
+                $("#btnAddComision").attr('disabled', 'disabled');
+                transporteVal();
+                bloqueaCampoComision();
             });
 
             var itemnro;
@@ -1757,10 +1787,10 @@
 
             $("#<%=chkDcto.ClientID %>").on('click', function () {
                 if ($("#<%=chkDcto.ClientID %>").is(':checked')) {
-                    $('#<%=txtDcto.ClientID %>').removeAttr("disabled");
+                    $('#txtDcto').removeAttr("disabled");
                 } else {
-                    $('#<%=txtDcto.ClientID %>').attr("disabled", "disabled");
-                    $('#<%=txtDcto.ClientID %>').val("0");
+                    $('#txtDcto').attr("disabled", "disabled");
+                    $('#txtDcto').val("0");
                 }
             });
 
@@ -1842,6 +1872,106 @@
                 objEqJs.equipodet_idn = $("#<%= cbo_eq_read_estado.ClientID %>").val();
                 objEqJs.equipotrabajo = $("#<%=cbo_eq_read_trabajo.ClientID %>").val();
             }
+
+            function setInfoMgTotCot() {
+                objInfoCot.cot_tipomoneda = $("#<%=cboTipoTarifa.ClientID %>").val();
+                objInfoCot.cot_afecto = $("#<%=cboTipoImpuesto.ClientID %>").val();
+                objInfoCot.tc_id = $("#<%=cboTipoCotizacion.ClientID %>").val();
+                objInfoCot.cot_descuento = $("#txtDcto").val();
+                objInfoCot.cot_id = $.cookie('pcusr');
+                objInfoCot.cot_fecha = $("#<%=txtFecha.ClientID %>").val();
+            }
+
+            function setDatoComision() {
+                if ($("#<%=cboLugarComision.ClientID %>").val() == 0) {
+                    objComCot.lug_id = prevLCom;
+                } else {
+                    objComCot.lug_id = $("#<%=cboLugarComision.ClientID %>").val();
+                }
+                objComCot.ccom_qtypersona = $("#txt-com-qty-persona").val();
+                objComCot.ccom_qtydia = $("#txt-com-qty-dia").val();
+                objComCot.ccom_qtyveh = $("#txt-com-qty-veh").val();
+                objComCot.ccom_qtranseqt = $("#txt-com-eq-c").val();
+                objComCot.ccom_qtranseqa = $("#txt-com-eq-a").val();
+                objComCot.ccom_fondor = $("#txt-com-fondo-rendir").val();
+                objComCot.ccom_qgasrepr = $("#txt-com-rep-gasto").val();
+                objComCot.ccom_qtycommes = $("#txt-com-qty-com-mes").val();
+            }
+
+            function transporteVal() {
+                if ($("#chkTransporte").is(":not(:checked)")) {
+                    $("#txtDirTransporte").prop("disabled", true);
+                    $("#<%=cboRegion.ClientID %>").prop("disabled", true);
+                    $("#<%=cboTraslado.ClientID %>").prop("disabled", true);
+                    $("#btnAddTransporte").attr('disabled', 'disabled');
+                }
+            }
+
+            $("#chkTransporte").on('click', function () {
+                if ($(this).is(":checked")) {
+                    $("#txtDirTransporte").prop("disabled", false);
+                    $("#<%=cboRegion.ClientID %>").prop("disabled", false);
+                    $("#<%=cboTraslado.ClientID %>").prop("disabled", false);
+                    $("#btnAddTransporte").removeAttr('disabled');
+                } else {
+                    $("#txtDirTransporte").prop("disabled", true);
+                    $("#<%=cboRegion.ClientID %>").prop("disabled", true);
+                    $("#<%=cboTraslado.ClientID %>").prop("disabled", true);
+                    $("#btnAddTransporte").attr('disabled', 'disabled');
+                    $("#txtDirTransporte").val("");
+                    $("#txtTotalTransporte").val("0");
+                    $("#<%=cboRegion.ClientID %>").val("0");
+                    $("#<%=cboTraslado.ClientID %>").val("0");
+                    getTotalSinTransCot($.cookie('pcusr'));
+                    $("#<%=btnUpdDatoEquipo.ClientID %>").click();
+                }
+            });
+
+            $("#btnAddTransporte").on('click', function () {
+                getTotalTransCot($.cookie('pcusr'),
+                                $("#<%=cboTraslado.ClientID %>").val(),
+                                $("#<%=cboRegion.ClientID %>").val(),
+                                $("#<%=cboTipoTarifa.ClientID %>").val(),
+                                $("#<%=txtFecha.ClientID %>").val());
+                $("#<%=btnUpdDatoEquipo.ClientID %>").click();
+            });
+
+            var prevLCom = "";
+            $("#<%=cboLugarComision.ClientID %>").on('focus', function () {
+                prevLCom = $("#<%=cboLugarComision.ClientID %>").val();
+            });
+
+            $("#<%=cboLugarComision.ClientID %>").change(function () {
+                if ($("#<%=cboLugarComision.ClientID %>").val() == 0) {
+                    $("#btnAddComision").attr('disabled', 'disabled');
+                    setDatoComision();
+                    bloqueaCampoComision();                    
+                    setTotalCostoComision(objComCot,
+                                          $.cookie('pcusr'),
+                                          $("#<%=cboTipoTarifa.ClientID %>").val(),
+                                          $("#<%=txtFecha.ClientID %>").val());
+                    $("#<%=btnUpdDatoEquipo.ClientID %>").click();
+                } else {
+                    $("#btnAddComision").removeAttr('disabled');
+                    desbloqueaCampoComision();
+                }
+                $("#chkTransporte").focus();
+            });
+
+            $("#btnAddComision").on('click', function () {
+                setDatoComision();
+                getTotalCostoComision(objComCot,
+                                      $.cookie('pcusr'),
+                                      $("#<%=cboTipoTarifa.ClientID %>").val(),
+                                      $("#<%=txtFecha.ClientID %>").val());
+                $("#<%=btnUpdDatoEquipo.ClientID %>").click();
+                //alert("boton ejecutado");
+            });
+
+            $("#btnCalcularTotal").on('click', function () {
+                setInfoMgTotCot();
+                getMargenTotalCot(objInfoCot, "CAL");
+            });
         </script>
 
 </asp:Content>

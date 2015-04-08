@@ -211,7 +211,7 @@ namespace MANCAL_WEB.frm_proy
 
             c.cot_tipomoneda = cboTipoTarifa.SelectedValue;
             c.cot_afecto = cboTipoImpuesto.SelectedValue;
-            c.tc_id = Convert.ToInt32(cboTipoCotizacion.SelectedValue);
+            c.tc_id = cboTipoCotizacion.SelectedValue;
             c.cot_descuento = txtDcto.Text;
             c.cot_id = System.Environment.UserName;
             c.cot_fecha = txtFecha.Text;

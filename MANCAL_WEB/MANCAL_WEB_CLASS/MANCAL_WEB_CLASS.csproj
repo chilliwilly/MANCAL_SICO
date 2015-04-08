@@ -43,6 +43,7 @@
     <Compile Include="Cotizacion.cs" />
     <Compile Include="CotizacionAdjunto.cs" />
     <Compile Include="CotizacionCliente.cs" />
+    <Compile Include="CotizacionComision.cs" />
     <Compile Include="CotizacionEnvio.cs" />
     <Compile Include="CotizacionEquipo.cs" />
     <Compile Include="CotizacionEquipoCal.cs" />

@@ -208,6 +208,160 @@ function getValorEquipo_Cal(eq_id, eq_tarifa, eq_fech) {
     });
 }
 
+//FUNCION UTILIZADA PARA SETEAR LOS VALORES PARA TRANSPORTE POR EQUIPO EN EL DETALLE - WEBMETHOD getCotTotalTrans
+function getTotalTransCot(cotid, trasid, regiid, tariid, cotfec) {
+    $.ajax({
+        type: "POST",
+        url: "/asmx_files/js_llenado.asmx/getCotTotalTrans",
+        datatype: "json",
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify({ "cotid": cotid, "trasid": trasid, "regiid": regiid, "tariid": tariid, "cotfec": cotfec }),
+        success: function (data, status) {
+            $("#txtTotalTransporte").val(data.d);
+        },
+        error: function (data) {
+            alert("Error al distribuir costos transporte");
+        }
+    });
+}
+
+//FUNCION UTILIZADA CUANDO QUITO EL TRANSPORTE - WEBMETHOD setCotTotalSinTrans
+function getTotalSinTransCot(idcot) {
+    $.ajax({
+        type: "POST",
+        url: "/asmx_files/js_llenado.asmx/setCotTotalSinTrans",
+        datatype: "json",
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify({ "idcot": idcot }),
+        success: function (data, status) {
+        },
+        error: function (data) {
+            alert("Error al restaurar costo transporte");
+        }
+    });
+}
+
+function getTotalCostoComision(obj, idcot, ttarifa, fcot) {
+    $.ajax({
+        type: "POST",
+        url: "/asmx_files/js_llenado.asmx/getCotComision",
+        datatype: "json",
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify({ "obj": obj, "idc": idcot, "ttar": ttarifa, "fcot": fcot }),
+        success: function (data, status) {
+            var retObj = data.d;
+            $("#txt-com-trans-dts").val(retObj.ccom_transdts);
+            $("#txt-com-trans-hotel").val(retObj.ccom_transhotel);
+            $("#txt-com-trans-av-per").val(retObj.ccom_psjavionper);
+            $("#txt-com-arr-veh").val(retObj.ccom_alqveh);
+            $("#txt-com-tras-eq-c").val(retObj.ccom_transeqt);
+            $("#txt-com-tras-eq-a").val(retObj.ccom_transeqa);
+            $("#txt-com-viatico").val(retObj.ccom_viatico);
+            $("#txt-com-hotel").val(retObj.ccom_hotel);
+            $("#txt-com-fondo-rend").val(retObj.ccom_frendir);
+            $("#txt-com-gasto-rep").val(retObj.ccom_gasrepr);
+            $("#txt-com-tot-cos-com").val(retObj.ccom_totalcom);
+            $("#txt-com-tot-p-com").val(retObj.ccom_totalcommg);
+        },
+        error: function (data) {
+            alert("Error al cargar datos de comision");
+        }
+    });
+}
+
+//FUNCION QUE AL DEJAR EN SELECCIONAR EL CBO DE COMISION ESTE ACTUALIZARA A 0 LOS VALORES CORRESPONDIENTES
+function setTotalCostoComision(obj, idcot, ttarifa, fcot) {
+    $.ajax({
+        type: "POST",
+        url: "/asmx_files/js_llenado.asmx/setTotalCostoCom",
+        datatype: "ajax",
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify({ "obj": obj, "idc": idcot, "ttar": ttarifa, "fcot": fcot }),
+        success: function (data, status) {
+            alert("Costo de comision actualizados");
+        },
+        error: function (data) {
+            alert("Error al invalidar costo de comision");
+        }
+    });
+}
+
+function getMargenTotalCot(obj, un_nom) {
+    $.ajax({
+        type: "POST",
+        url: "/asmx_files/js_llenado.asmx/getCotTotalMargen",
+        datatype: "json",
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify({ "obj": obj, "idun": un_nom }),
+        success: function (data, status) {
+            var cotObj = data.d;
+            $("#txtTotalCostoMo").val(cotObj.cot_totcostmo);
+            $("#txtTotalCostoRpto").val(cotObj.cot_totvalrpto);
+            $("#txtMgOpPorc").val(cotObj.cot_mgopporc);
+            $("#txtMgBrutoPorc").val(cotObj.cot_mgbrutoporc);
+            $("#txtMgContribucion").val(cotObj.cot_mgcontrib);
+            $("#txtMgContribucionPorc").val(cotObj.cot_mgcontribporc);
+            $("#txtUtilidadEspPorc").val(cotObj.cot_utilesperaporc);
+            $("#txtTipoMoneda").val(cotObj.cot_tipomoneda);
+            $("#txtNeto").val(cotObj.cot_neto);
+            $("#txtNetoDcto").val(cotObj.cot_netodcto);
+            $("#txtIva").val(cotObj.cot_iva);
+            $("#txtTotal").val(cotObj.cot_total);
+
+            if (cotObj.cot_msgautoriza != "Y") {
+                alert(cotObj.cot_msgautoriza);
+            }
+        },
+        error: function (data) {
+            alert("Error al calcular margenes y/o total");
+        }
+    });
+}
+
+function bloqueaCampoComision() {
+    $("#txt-com-qty-persona").prop("disabled", true);
+    $("#txt-com-qty-dia").prop("disabled", true);
+    $("#txt-com-qty-veh").prop("disabled", true);
+    $("#txt-com-eq-c").prop("disabled", true);
+    $("#txt-com-eq-a").prop("disabled", true);
+    $("#txt-com-fondo-rendir").prop("disabled", true);
+    $("#txt-com-rep-gasto").prop("disabled", true);
+    $("#txt-com-qty-com-mes").prop("disabled", true);
+
+    $("#txt-com-qty-persona").val("0");
+    $("#txt-com-qty-dia").val("0");
+    $("#txt-com-qty-veh").val("0");
+    $("#txt-com-eq-c").val("0");
+    $("#txt-com-eq-a").val("0");
+    $("#txt-com-fondo-rendir").val("0");
+    $("#txt-com-rep-gasto").val("0");
+    $("#txt-com-qty-com-mes").val("0");
+
+    $("#txt-com-trans-dts").val("0");
+    $("#txt-com-trans-hotel").val("0");
+    $("#txt-com-trans-av-per").val("0");
+    $("#txt-com-arr-veh").val("0");
+    $("#txt-com-tras-eq-c").val("0");
+    $("#txt-com-tras-eq-a").val("0");
+    $("#txt-com-viatico").val("0");
+    $("#txt-com-hotel").val("0");
+    $("#txt-com-fondo-rend").val("0");
+    $("#txt-com-gasto-rep").val("0");
+    $("#txt-com-tot-cos-com").val("0");
+    $("#txt-com-tot-p-com").val("0");
+}
+
+function desbloqueaCampoComision() {
+    $("#txt-com-qty-persona").prop("disabled", false);
+    $("#txt-com-qty-dia").prop("disabled", false);
+    $("#txt-com-qty-veh").prop("disabled", false);
+    $("#txt-com-eq-c").prop("disabled", false);
+    $("#txt-com-eq-a").prop("disabled", false);
+    $("#txt-com-fondo-rendir").prop("disabled", false);
+    $("#txt-com-rep-gasto").prop("disabled", false);
+    $("#txt-com-qty-com-mes").prop("disabled", false);
+}
+
 function EquipoCotizacion() {
     this.equipoid = "";
     this.equiponombre = "";
@@ -251,6 +405,40 @@ function EquipoCotizacion() {
         this.equipocaloc = obj.equipocaloc;
         this.equipocalsaot = obj.equipocalsaot;
     };
+}
+
+function ComisionCotizacion() {
+    this.ccom_qtypersona = "";
+    this.ccom_qtydia = "";
+    this.ccom_qtyveh = "";
+    this.ccom_qtranseqt = "";
+    this.ccom_qtranseqa = "";
+    this.ccom_fondor = "";
+    this.ccom_qgasrepr = "";
+    this.ccom_qtycommes = "";
+    this.ccom_transdts = "";
+    this.ccom_transhotel = "";
+    this.ccom_psjavionper = "";
+    this.ccom_alqveh = "";
+    this.ccom_transeqt = "";
+    this.ccom_transeqa = "";
+    this.ccom_viatico = "";
+    this.ccom_hotel = "";
+    this.ccom_frendir = "";
+    this.ccom_gasrepr = "";
+    this.ccom_totalcom = "";
+    this.ccom_totalcommg = "";
+    this.lug_id = "";
+    this.cot_numero = "";
+}
+
+function InfoCotizacion() {
+    this.cot_tipomoneda = "";
+    this.cot_afecto = "";
+    this.tc_id = "";
+    this.cot_descuento = "";
+    this.cot_id = "";
+    this.cot_fecha = "";
 }
 /************************************************************/
 /************************************************************/
