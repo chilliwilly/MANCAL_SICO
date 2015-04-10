@@ -43,7 +43,7 @@
                     }
                 });
             });
-        }
+        }        
     </script>
 
 
@@ -401,7 +401,7 @@
                 <asp:UpdatePanel ID="upSelectEqCotiza" runat="server" UpdateMode="Conditional">
                     <ContentTemplate>
                         <script type="text/javascript">
-                            Sys.Application.add_load(agregarEquipo);
+                            Sys.Application.add_load(agregarEquipo);                                                       
      	                </script>       
 
                         <table cellpadding="5px"><%--BOTON  QUE CALCULA EN CASO DE MODIFICAR LA CANTIDAD U OTROS VALORES QUE AFECTEN EL MONTO --%>
@@ -572,7 +572,7 @@
 
                                     <asp:TemplateField HeaderText="Editar">
                                         <ItemTemplate>
-                                            <a href="javascript:void(null);" id="btn-det-cal-edita" onclick="" style="display:inline-block;" class="ui-icon ui-icon-transferthick-e-w"></a>
+                                            <a href="javascript:void(null);" id="btn-det-cal-edita" onclick="seleccionDetalleCalPrecio();" style="display:inline-block;" class="ui-icon ui-icon-transferthick-e-w"></a>
                                         </ItemTemplate>
                                     </asp:TemplateField>
 
@@ -1357,7 +1357,12 @@
         </asp:UpdatePanel>
     </div>
 
-    <%--DIALOG DONDE SE MODIFICAN PRECIOS/OTROS DEL EQUIPO SELECCIONADO --%>        
+    <%--DIALOG DONDE SE MODIFICAN PRECIOS/OTROS DEL EQUIPO SELECCIONADO --%>
+    <asp:UpdatePanel ID="upActualizaGVPunto" runat="server" UpdateMode="Conditional">
+        <ContentTemplate>
+            <asp:Button ID="btnActualizaGVPunto" runat="server" OnClick="btnActualizaGVPunto_Click" />
+        </ContentTemplate>
+    </asp:UpdatePanel>        
     <div id="dialog-equipo-precio" title="Datos Equipo" style="display:none;">
         Modificacion de los datos del equipo a cotizar
         <br /><br />
@@ -1462,7 +1467,7 @@
                 <td>Puntos Calibracion</td>
                 <td>
                     <%--<input type="text" id="txt-eq-read-puntos" name="txt-eq-read-puntos" class="text ui-widget-content ui-corner-all"  placeholder="Solo si posee"/>--%>
-                    <a href="javascript:void(null);" id="btn-select-equ" onclick="dialogPunto();" style="display:inline-block;" class="ui-icon 	ui-icon-circle-plus">Agregar Puntos</a>
+                    <a href="javascript:void(null);" id="btn-select-equ" onclick="dialogPunto();" style="display:inline-block;" class="ui-icon 	ui-icon-circle-plus"></a>
                 </td>
             </tr>
         </table>
@@ -1470,14 +1475,99 @@
     <div id="dialog-equipo-punto" title="Puntos a Cotizar" style="display:none;">
         Puntos del equipo a cotizar
         <br /><br />
+        Magnitud:<br />
         <asp:DropDownList ID="cbo_magnitud" runat="server" OnInit="cbo_punto_magnitud_Init">
         </asp:DropDownList>
         <br /><br />
+        <%--<asp:DropDownList ID="cbo_funcion" runat="server">
+        </asp:DropDownList>--%>
+        Funcion:<br />
+        <select id="cbo_funcion" name="cbo_funcion"></select>
+        <br /><br />
+        Puntos:<br />
         <input type="text" id="txt-in-punto-cal" name="txt-in-punto-cal" placeholder="Ingrese puntos" />
         <br /><br />
-        <input type="button" id="btn-in-punto-cal" name="btn-in-punto-cal" value="Ingresar" />        
-        <asp:GridView ID="gvListaPunto" runat="server">
-        </asp:GridView>
+        <input type="button" id="btn-in-punto-cal" name="btn-in-punto-cal" value="Ingresar" />
+        <br /><br />
+        <asp:UpdatePanel ID="upListaPunto" runat="server" UpdateMode="Conditional">
+            <ContentTemplate>
+                <asp:GridView ID="gvListaPunto" runat="server" AutoGenerateColumns="False" 
+                    DataKeyNames="" PageSize="5" PagerSettings-PageButtonCount="10" PagerSettings-Mode="NumericFirstLast" PagerSettings-FirstPageText="Primera" PagerSettings-LastPageText="Ultima" 
+                    AllowPaging="true" Font-Size="Small" OnPageIndexChanging="gvListaPunto_PageIndexChanging">
+                    <RowStyle CssClass="gvListaPuntocss" />
+                    <Columns>
+                
+                        <asp:TemplateField HeaderText="Item">
+                            <ItemTemplate>
+                                <asp:Label ID="cp_id" CssClass="cp_id_" runat="server" Text='<%# Bind("CP_ID") %>'></asp:Label>
+                            </ItemTemplate>
+                        </asp:TemplateField>
+
+                        <asp:TemplateField HeaderText="Especialidad">
+                            <ItemTemplate>
+                                <asp:Label ID="cp_no_esp" CssClass="cp_no_esp_" runat="server" Text='<%# Bind("CP_NO_ESP") %>'></asp:Label>
+                            </ItemTemplate>
+                        </asp:TemplateField>
+
+                        <asp:TemplateField HeaderText="Especialidad" HeaderStyle-CssClass="ocultaCol" ItemStyle-CssClass="ocultaCol">
+                            <ItemTemplate>
+                                <asp:Label ID="cp_id_esp" CssClass="cp_id_esp_" runat="server" Text='<%# Bind("CP_ID_ESP") %>'></asp:Label>
+                            </ItemTemplate>
+                        </asp:TemplateField>
+
+                        <asp:TemplateField HeaderText="Magnitud">
+                            <ItemTemplate>
+                                <asp:Label ID="cp_no_mag" CssClass="cp_no_mag_" runat="server" Text='<%# Bind("CP_NO_MAG") %>'></asp:Label>
+                            </ItemTemplate>
+                        </asp:TemplateField>
+
+                        <asp:TemplateField HeaderText="Magnitud" HeaderStyle-CssClass="ocultaCol" ItemStyle-CssClass="ocultaCol">
+                            <ItemTemplate>
+                                <asp:Label ID="cp_id_mag" CssClass="cp_id_mag_" runat="server" Text='<%# Bind("CP_ID_MAG") %>'></asp:Label>
+                            </ItemTemplate>
+                        </asp:TemplateField>
+
+                        <asp:TemplateField HeaderText="Puntos">
+                            <ItemTemplate>
+                                <asp:Label ID="cp_punto" CssClass="cp_punto_" runat="server" Text='<%# Bind("CP_PUNTO") %>'></asp:Label>
+                            </ItemTemplate>
+                        </asp:TemplateField>
+
+                        <asp:TemplateField HeaderText="Id Cotizacion" HeaderStyle-CssClass="ocultaCol" ItemStyle-CssClass="ocultaCol">
+                            <ItemTemplate>
+                                <asp:Label ID="cp_cot_id" CssClass="cp_cot_id_" runat="server" Text='<%# Bind("CP_DCOT_ID") %>'></asp:Label>
+                            </ItemTemplate>
+                        </asp:TemplateField>
+
+                        <asp:TemplateField HeaderText="Id Cotizacion" HeaderStyle-CssClass="ocultaCol" ItemStyle-CssClass="ocultaCol">
+                            <ItemTemplate>
+                                <asp:Label ID="cp_numero" CssClass="cp_numero_" runat="server" Text='<%# Bind("CP_NUMERO") %>'></asp:Label>
+                            </ItemTemplate>
+                        </asp:TemplateField>
+
+                        <asp:TemplateField HeaderText="Id Cotizacion" HeaderStyle-CssClass="ocultaCol" ItemStyle-CssClass="ocultaCol">
+                            <ItemTemplate>
+                                <asp:Label ID="cp_item" CssClass="cp_item_" runat="server" Text='<%# Bind("CP_ITEM") %>'></asp:Label>
+                            </ItemTemplate>
+                        </asp:TemplateField>
+
+                        <asp:TemplateField HeaderText="Id Cotizacion" HeaderStyle-CssClass="ocultaCol" ItemStyle-CssClass="ocultaCol">
+                            <ItemTemplate>
+                                <asp:Label ID="cp_id_equipo" CssClass="cp_id_equipo_" runat="server" Text='<%# Bind("CP_ID_EQUIPO") %>'></asp:Label>
+                            </ItemTemplate>
+                        </asp:TemplateField>
+
+                        <asp:TemplateField HeaderText="Editar">
+                            <ItemTemplate>
+                                <a href="javascript:void(null);" id="btn-det-cal-edita" onclick="" style="display:inline-block;" class="ui-icon ui-icon-transferthick-e-w"></a>
+                            </ItemTemplate>
+                        </asp:TemplateField>
+
+                    </Columns>
+                </asp:GridView>    
+            </ContentTemplate>
+        </asp:UpdatePanel>       
+        
     </div>
     <div id="dialog-equipo-dato-cal"  title="Otros Datos Equipo" style="display:none;">
         <table>
@@ -1487,7 +1577,7 @@
                 </td>
                 <td>
                     <asp:DropDownList ID="cbo_eq_dato_cal_tt" runat="server" oninit="cbo_eq_dato_cal_tt_Init">
-                    </asp:DropDownList>
+                    </asp:DropDownList>                    
                 </td>
             </tr>
             <tr>
@@ -1535,6 +1625,85 @@
         </table>
     </div>
 
+    <%--DIALOG PARA EDITAR PRECIOS O ELIMINAR EQUIPO SELECCIONADO DEL GRIDVIEW --%>
+    <div id="dialog-tab-edit-eq" title="Edicion Equipo" style="display:none;">
+        <div id="tab-edit-eq">
+            <ul>
+                <li><a href="#tab-edit-eq-valor">Editar Precios</a></li>
+                <li><a href="#tab-edit-eq-delete">Eliminar Equipo</a></li>
+            </ul>
+
+            <div id="tab-edit-eq-valor">
+                <form action="" id="frm-edit-eq-valor">
+                    <table>
+                        <tr>
+                            <td>Item</td>
+                            <td><input type="text" id="edit_eq_item" name="edit-eq-item" class="text ui-widget-content ui-corner-all" readonly="readonly"/></td>
+                        </tr>
+                        <tr style="display:none;">
+                            <td>Id Equipo</td>
+                            <td><input type="text" id="edit_eq_id_eq" name="edit-eq-id-eq" class="text ui-widget-content ui-corner-all"/></td>
+                        </tr>
+                        <tr style="display:none;">
+                            <td>Id Coti</td>
+                            <td><input type="text" id="edit_eq_id_cot" name="edit-eq-id-cot" class="text ui-widget-content ui-corner-all"/></td>
+                        </tr>
+                        <tr>
+                            <td>Nro Parte</td>
+                            <td><input type="text" id="edit_eq_nparte" name="edit-eq-nparte" class="text ui-widget-content ui-corner-all"/></td>
+                        </tr>
+                        <tr>
+                            <td>Nro Serie</td>
+                            <td><input type="text" id="edit_eq_nserie" name="edit-eq-nserie" class="text ui-widget-content ui-corner-all"/></td>
+                        </tr>
+                        <tr>
+                            <td>Cantidad</td>
+                            <td><input type="number" id="edit_eq_qty" name="edit-eq-qty" class="text ui-widget-content ui-corner-all"/></td>
+                        </tr>
+                        <tr style="display:none;">
+                            <td>Costo MO</td>
+                            <td><input type="text" id="edit_eq_cmo" name="edit-eq-cmo" class="text ui-widget-content ui-corner-all"/></td>
+                        </tr>
+                        <tr>
+                            <td>Precio MO</td>
+                            <td><input type="number" id="edit_eq_pmo" name="edit-eq-pmo" class="text ui-widget-content ui-corner-all"/></td>
+                        </tr>
+                        <tr style="display:none;">
+                            <td>Costo Rpto</td>
+                            <td><input type="text" id="edit_eq_crep" name="edit-eq-crep" class="text ui-widget-content ui-corner-all"/></td>
+                        </tr>
+                        <tr style="display:none;">
+                            <td>T Original</td>
+                            <td><input type="text" id="edit_eq_torig" name="edit-eq-torig" class="text ui-widget-content ui-corner-all"/></td>
+                        </tr>
+                        <tr>
+                            <td>Gastos</td>
+                            <td>
+                                <input type="number" id="edit_eq_gasto" name="edit-eq-gasto" class="text ui-widget-content ui-corner-all"/>
+                                <input type="number" id="edit_eq_gasto_h" name="edit-eq-gasto-h" class="text ui-widget-content ui-corner-all" style="display:none;"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Precio Carga</td>
+                            <td><input type="text" id="edit_eq_pcarga" name="edit-eq-pcarga" class="text ui-widget-content ui-corner-all" readonly="readonly"/></td>
+                        </tr>
+                        <tr>
+                            <td>Total</td>
+                            <td><input type="text" id="edit_eq_total" name="edit-eq-total" class="text ui-widget-content ui-corner-all" readonly="readonly"/></td>
+                        </tr>
+                    </table>
+                </form>                
+            </div>
+
+            <div id="tab-edit-eq-delete">
+                Esta seguro que desea borrar el equipo seleccionado?
+                <br /><br />
+                <input type="button" id="btn_edit_eq_del" value="Eliminar Equipo" />
+            </div>
+
+        </div>
+    </div>
+    
       <%--SECTOR DE JAVASCRIPT--%>
         <script type="text/javascript">
             $.cookie('nomclient', '');
@@ -1542,6 +1711,7 @@
             $.cookie('nomcontact', '');
             $.cookie('nomtipo', '');
             $.cookie('nomestado', '');
+            $.cookie('idequipocot', '');
             var objEqJs = new EquipoCotizacion();
             var objComCot = new ComisionCotizacion();
             var objInfoCot = new InfoCotizacion();
@@ -1615,24 +1785,41 @@
                     $("#txt-eq-read-nom").val($('.eqnombre_', $(this).closest('tr')).html());
                     $("#txt-eq-read-mod").val($('.eqmodelo_', $(this).closest('tr')).html());
                     $("#txt-eq-read-np").val($('.eqnparte_', $(this).closest('tr')).html());
-                    //$("#txt-eq-read-pmo").val($('.eqpmo_', $(this).closest('tr')).html());
-                    //$("#txt-eq-read-crpto").val($('.eqcrep_', $(this).closest('tr')).html());
-                    //$("#txt-eq-read-cmo").val($('.eqcmo_', $(this).closest('tr')).html());
-                    //$("#txt-eq-read-tto").val($('.eqtto_', $(this).closest('tr')).html());
-                    //$("#txt-eq-read-peso").val($('.eqpeso_', $(this).closest('tr')).html());
-                    //$("#txt-eq-read-pventa").val($('.eqtotal_', $(this).closest('tr')).html());                    
+                    $.cookie('idequipocot', $('.eqid_', $(this).closest('tr')).html());
                     getValorEquipo_Cal($('.eqid_', $(this).closest('tr')).html(), $("#<%=cboTipoTarifa.ClientID %>").val(), $("#<%=txtFecha.ClientID %>").val());
                 });
             }
 
+            var dgcItem = "";
             function dataGridCal() {
                 $('.cssDetEq').on('click', function () {
+                    dgcItem = $('.equipoitem_', $(this).closest('tr')).html();
                     $("#<%=cbo_eq_dato_cal_tt.ClientID %>").val($('.equipotrabajoid_', $(this).closest('tr')).html());
                     $("#<%=cbo_eq_dato_cal_est.ClientID %>").val($('.equipodet_idn_', $(this).closest('tr')).html());
                     $("#<%=cbo_eq_dato_cal_lp.ClientID %>").val($('.equipolp_idn_', $(this).closest('tr')).html());
                     $("#txt-eq-dato-cal-np").val($('.equipocalnp_', $(this).closest('tr')).html());
                     $("#txt-eq-dato-cal-oc").val($('.equipocaloc_', $(this).closest('tr')).html());
                     $("#txt-eq-dato-cal-saot").val($('.equipocalsaot_', $(this).closest('tr')).html());
+                });
+            }
+
+            function dataGridCalPrecio() {
+                $('.cssDetEq').on('click', function () {
+                    $("#edit_eq_item").val($('.equipoitem_', $(this).closest('tr')).html());
+                    $("#edit_eq_id_eq").val($('.equipoid_', $(this).closest('tr')).html());
+                    $("#edit_eq_id_cot").val($('.equipocotid_', $(this).closest('tr')).html());
+                    $("#edit_eq_nparte").val($('.equiponparte_', $(this).closest('tr')).html());
+                    $("#edit_eq_nserie").val($('.equiponserie_', $(this).closest('tr')).html());
+                    $("#edit_eq_qty").val($('.equipocantidad_', $(this).closest('tr')).html());                    
+                    $("#edit_eq_pmo").val($('.equipopmo_', $(this).closest('tr')).html());
+                    $("#edit_eq_gasto").val($('.equipocalgasto_', $(this).closest('tr')).html());
+                    $("#edit_eq_gasto_h").val($('.equipocalgasto_', $(this).closest('tr')).html());
+                    $("#edit_eq_pcarga").val($('.equipocalpcarga_', $(this).closest('tr')).html());
+                    $("#edit_eq_total").val($('.equipototal_', $(this).closest('tr')).html());
+
+                    getValoresEquipoEdit($('.equipoid_', $(this).closest('tr')).html(),
+                                         $("#<%=cboTipoTarifa.ClientID %>").val(),
+                                         $("#<%=txtFecha.ClientID %>").val());
                 });
             }
 
@@ -1697,7 +1884,16 @@
                     modal: true,
                     width: "500px",
                     buttons: {
-                        "Actualizar": function () { },
+                        "Actualizar": function () {
+                            modValoresDetCalProd(dgcItem,
+                                                 $.cookie('pcusr'),
+                                                 $("#txt-eq-dato-cal-np").val(),
+                                                 $("#txt-eq-dato-cal-oc").val(),
+                                                 $("#txt-eq-dato-cal-saot").val(),
+                                                 $("#<%=cbo_eq_dato_cal_lp.ClientID %>").val(),
+                                                 $("#<%=cbo_eq_dato_cal_est.ClientID %>").val());
+                            $("#<%=btnUpdDatoEquipo.ClientID %>").click();
+                        },
                         "Cerrar": function () {
                             $(this).dialog('close');
                         }
@@ -1705,7 +1901,44 @@
                 });
             }
 
-            function mostrarID() {
+            var oldGasto = "";
+            function seleccionDetalleCalPrecio() {
+                dataGridCalPrecio();
+
+                $("#dialog-tab-edit-eq").dialog({
+                    modal: true,
+                    width: "500px",
+                    buttons: {
+                        "Calcular": function () {
+                            validaPrecioGastoChange($("#edit_eq_gasto_h").val(), $("#edit_eq_gasto").val());
+                            validaPrecioMOChange();
+                            objEqJs.equipoid = $("#edit_eq_id_eq").val();
+                            objEqJs.equipocantidad = $("#edit_eq_qty").val();
+                            objEqJs.equipopmo = $("#edit_eq_pmo").val();
+                            objEqJs.equipocalgasto = $("#edit_eq_gasto").val();
+                            objEqJs.equipocalpcarga = $("#edit_eq_pcarga").val();
+                            getTotalEquipoEdit(objEqJs, "2", $("#<%=cboTipoTarifa.ClientID %>").val(), $("#<%=txtFecha.ClientID %>").val());
+                        },
+                        "Actualizar": function () {
+                            setEquipoCalEdit();
+                            setValoresEquipoEdit(objEqJs, $("#<%=cboTipoTarifa.ClientID %>").val());
+                            $("#<%=btnUpdDatoEquipo.ClientID %>").click();                            
+                        },
+                        "Cerrar": function () {                            
+                            $(this).dialog('close');
+                        }
+                    }
+                });
+            }
+
+            $("#btn_edit_eq_del").on('click', function () {
+                delValoresEquiposEdit($.cookie('pcusr'), 
+                                      $("#edit_eq_item").val(),
+                                      $("#edit_eq_id_eq").val());
+                $("#<%=btnUpdDatoEquipo.ClientID %>").click();
+            });
+
+            function mostrarid() {
                 var idequipobusca = $("#txt-eq-read-id").val();
                 alert(idequipobusca);
             }
@@ -1751,6 +1984,7 @@
 
             $(function () {
                 $("#tab").tabs();
+                $("#tab-edit-eq").tabs();
             });
 
             $("#<%=txtPlazoEntrega.ClientID %>").on('click', function () {
@@ -1873,37 +2107,49 @@
                 objEqJs.equipotrabajo = $("#<%=cbo_eq_read_trabajo.ClientID %>").val();
             }
 
+            function setEquipoCalEdit() {
+                objEqJs.equipopmo = $("#edit_eq_pmo").val();
+                objEqJs.equipototal = $("#edit_eq_total").val();
+                objEqJs.equiponparte = $("#edit_eq_nparte").val();
+                objEqJs.equiponserie = $("#edit_eq_nserie").val();
+                objEqJs.equipocantidad = $("#edit_eq_qty").val();
+                objEqJs.equipocalgasto = $("#edit_eq_gasto").val();
+                objEqJs.equipocalpcarga = $("#edit_eq_pcarga").val();
+                objEqJs.equipoitem = $("#edit_eq_item").val();
+                objEqJs.equipocotid = $.cookie('pcusr');
+            }
+
             function setInfoMgTotCot() {
-                objInfoCot.cot_tipomoneda = $("#<%=cboTipoTarifa.ClientID %>").val();
-                objInfoCot.cot_afecto = $("#<%=cboTipoImpuesto.ClientID %>").val();
-                objInfoCot.tc_id = $("#<%=cboTipoCotizacion.ClientID %>").val();
-                objInfoCot.cot_descuento = $("#txtDcto").val();
-                objInfoCot.cot_id = $.cookie('pcusr');
-                objInfoCot.cot_fecha = $("#<%=txtFecha.ClientID %>").val();
+                objinfocot.cot_tipomoneda = $("#<%=cboTipoTarifa.ClientID %>").val();
+                objinfocot.cot_afecto = $("#<%=cboTipoImpuesto.ClientID %>").val();
+                objinfocot.tc_id = $("#<%=cboTipoCotizacion.ClientID %>").val();
+                objinfocot.cot_descuento = $("#txtdcto").val();
+                objinfocot.cot_id = $.cookie('pcusr');
+                objinfocot.cot_fecha = $("#<%=txtFecha.ClientID %>").val();
             }
 
             function setDatoComision() {
                 if ($("#<%=cboLugarComision.ClientID %>").val() == 0) {
-                    objComCot.lug_id = prevLCom;
+                    objcomcot.lug_id = prevlcom;
                 } else {
-                    objComCot.lug_id = $("#<%=cboLugarComision.ClientID %>").val();
+                    objcomcot.lug_id = $("#<%=cboLugarComision.ClientID %>").val();
                 }
-                objComCot.ccom_qtypersona = $("#txt-com-qty-persona").val();
-                objComCot.ccom_qtydia = $("#txt-com-qty-dia").val();
-                objComCot.ccom_qtyveh = $("#txt-com-qty-veh").val();
-                objComCot.ccom_qtranseqt = $("#txt-com-eq-c").val();
-                objComCot.ccom_qtranseqa = $("#txt-com-eq-a").val();
-                objComCot.ccom_fondor = $("#txt-com-fondo-rendir").val();
-                objComCot.ccom_qgasrepr = $("#txt-com-rep-gasto").val();
-                objComCot.ccom_qtycommes = $("#txt-com-qty-com-mes").val();
+                objcomcot.ccom_qtypersona = $("#txt-com-qty-persona").val();
+                objcomcot.ccom_qtydia = $("#txt-com-qty-dia").val();
+                objcomcot.ccom_qtyveh = $("#txt-com-qty-veh").val();
+                objcomcot.ccom_qtranseqt = $("#txt-com-eq-c").val();
+                objcomcot.ccom_qtranseqa = $("#txt-com-eq-a").val();
+                objcomcot.ccom_fondor = $("#txt-com-fondo-rendir").val();
+                objcomcot.ccom_qgasrepr = $("#txt-com-rep-gasto").val();
+                objcomcot.ccom_qtycommes = $("#txt-com-qty-com-mes").val();
             }
 
             function transporteVal() {
-                if ($("#chkTransporte").is(":not(:checked)")) {
-                    $("#txtDirTransporte").prop("disabled", true);
+                if ($("#chktransporte").is(":not(:checked)")) {
+                    $("#txtdirtransporte").prop("disabled", true);
                     $("#<%=cboRegion.ClientID %>").prop("disabled", true);
                     $("#<%=cboTraslado.ClientID %>").prop("disabled", true);
-                    $("#btnAddTransporte").attr('disabled', 'disabled');
+                    $("#btnaddtransporte").attr('disabled', 'disabled');
                 }
             }
 
@@ -1958,6 +2204,10 @@
                 $("#chkTransporte").focus();
             });
 
+            $("#<%=cbo_magnitud.ClientID %>").change(function () {
+                getListaMagniFunct($(this).val());
+            });
+
             $("#btnAddComision").on('click', function () {
                 setDatoComision();
                 getTotalCostoComision(objComCot,
@@ -1971,6 +2221,35 @@
             $("#btnCalcularTotal").on('click', function () {
                 setInfoMgTotCot();
                 getMargenTotalCot(objInfoCot, "CAL");
+            });
+
+            $("#btn-in-punto-cal").on('click', function () {
+                setListaPuntoEquipo($.cookie('pcusr'),
+                                    $("#<%=cbo_magnitud.ClientID %>").val(),
+                                    $("#cbo_funcion").val(),
+                                    $("#txt-in-punto-cal").val(),
+                                    $("#txt-eq-read-id").val());
+                $("#<%=btnActualizaGVPunto.ClientID %>").click();
+                $("#<%=cbo_magnitud.ClientID %>").val("0");
+                $("#cbo_funcion").val("0");
+                $("#txt-in-punto-cal").val("");
+            });
+
+            $('#frm-edit-eq-valor').validate({
+                rules: {
+                    edit_eq_qty: {
+                        required: true,
+                        number: true
+                    },
+                    edit_eq_pmo: {
+                        required: true,
+                        number: true
+                    },
+                    edit_eq_gasto: {
+                        required: true,
+                        number: true
+                    }
+                }
             });
         </script>
 

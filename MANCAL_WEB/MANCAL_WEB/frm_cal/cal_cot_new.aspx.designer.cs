@@ -661,6 +661,24 @@ namespace MANCAL_WEB.frm_cal {
         protected global::System.Web.UI.WebControls.GridView gvEquipoBusca;
         
         /// <summary>
+        /// Control upActualizaGVPunto.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel upActualizaGVPunto;
+        
+        /// <summary>
+        /// Control btnActualizaGVPunto.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnActualizaGVPunto;
+        
+        /// <summary>
         /// Control cbo_eq_read_trabajo.
         /// </summary>
         /// <remarks>
@@ -695,6 +713,15 @@ namespace MANCAL_WEB.frm_cal {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList cbo_magnitud;
+        
+        /// <summary>
+        /// Control upListaPunto.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel upListaPunto;
         
         /// <summary>
         /// Control gvListaPunto.

@@ -279,5 +279,75 @@ namespace MANCAL_WEB_BL
 
             return ls;
         }
+
+        public void setDatoPuntoEquipo(String cot_id, String esp_id, String fun_id, String punto_in, String id_detcot, String id_item, String equ_id) 
+        {
+            objProDet = new dl_detalle_pro();
+            
+            int idesp = Convert.ToInt32(esp_id);
+            int idfun = Convert.ToInt32(fun_id);
+            int iddc = Convert.ToInt32(id_detcot);
+            int iditm = Convert.ToInt32(id_item);
+            int idequ = Convert.ToInt32(equ_id);
+
+            objProDet.insertDatoPuntoEquipo(cot_id, idesp, idfun, punto_in, iddc, iditm, idequ);
+        }
+
+        public List<CotizacionPunto> getListaPuntoEquipo(String idcot, String idequ) 
+        {
+            objProDet = new dl_detalle_pro();
+            List<CotizacionPunto> ls = new List<CotizacionPunto>();
+            int equid = Convert.ToInt32(idequ);
+
+            DataTable dt = objProDet.selectDatoPuntoEquipo(idcot, equid).Tables["CUR_DETPUNTO"];
+
+            foreach (DataRow dr in dt.Rows) 
+            {
+                CotizacionPunto cp = new CotizacionPunto();
+                cp.cp_id = dr["PDCC_ID"].ToString();
+                cp.cp_id_esp = dr["PDCC_ID_ESP"].ToString();
+                cp.cp_no_esp = dr["NOM_ESP"].ToString();
+                cp.cp_id_mag = dr["PDCC_ID_MAG"].ToString();
+                cp.cp_no_mag = dr["NOM_MAG"].ToString();
+                cp.cp_punto = dr["PDCC_PUNTO"].ToString();
+                cp.cp_dcot_id = dr["DCC_ID"].ToString();
+                cp.cp_numero = dr["COT_NUMERO"].ToString();
+                cp.cp_item = dr["DC_ITEM"].ToString();
+                cp.cp_id_equipo = dr["DC_ID_EQUIPO"].ToString();
+
+                ls.Add(cp);
+            }
+
+            return ls;
+        }
+
+        public void setValorEquipoDetEdit(CotizacionEquipo ceq, String idtarifa) 
+        {
+            objProDet = new dl_detalle_pro();
+            int tarifaid = Convert.ToInt32(idtarifa);
+            int cantidad = Convert.ToInt32(ceq.equipocantidad);
+            int nitem = Convert.ToInt32(ceq.equipoitem);
+            
+            objProDet.updateValorEquipoDet(ceq.equipocotid, nitem, ceq.equiponparte, ceq.equiponserie, cantidad, ceq.equipopmo, ceq.equipocalgasto, ceq.equipocalpcarga, ceq.equipototal, tarifaid);
+        }
+
+        public void delEquipoCot(String idcot, String nitem, String equid) 
+        {
+            objProDet = new dl_detalle_pro();
+            int itemn = Convert.ToInt32(nitem);
+            int ideq = Convert.ToInt32(equid);
+
+            objProDet.deleteEquipoCot(idcot, itemn, ideq);
+        }
+
+        public void modEquipoDetCalProd(String item_, String cotiid_, String np_, String oc_, String saot_, String lp_, String estado_) 
+        {
+            objProDet = new dl_detalle_pro();
+            int nitem = Convert.ToInt32(item_);
+            int nlp = Convert.ToInt32(lp_);
+            int nestado = Convert.ToInt32(estado_);
+
+            objProDet.updateEquipoDetCalProd(nitem, cotiid_, np_, oc_, saot_, nlp, nestado);
+        }
     }
 }

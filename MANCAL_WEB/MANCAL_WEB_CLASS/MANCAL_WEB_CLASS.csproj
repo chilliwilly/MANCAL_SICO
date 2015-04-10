@@ -57,6 +57,8 @@
     <Compile Include="CotizacionLugarEjec.cs" />
     <Compile Include="CotizacionLugarEntr.cs" />
     <Compile Include="CotizacionMagnitud.cs" />
+    <Compile Include="CotizacionMagnitudFuncion.cs" />
+    <Compile Include="CotizacionPunto.cs" />
     <Compile Include="CotizacionRegion.cs" />
     <Compile Include="CotizacionTarifa.cs" />
     <Compile Include="CotizacionTextoFactura.cs" />

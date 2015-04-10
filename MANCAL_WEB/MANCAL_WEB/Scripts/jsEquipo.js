@@ -115,9 +115,13 @@ function getFiltroCliente(nom, cta, tip, est) {
 function dialogPunto() {
     $("#dialog-equipo-punto").dialog({
         modal: true,
+        width: "565",
+        height: "522",
+//        top: "76px",
+//        left: "375px",
         buttons: {
             "Cerrar": function () {
-                $(this).dialog('close');
+                $(this).dialog('close');                
             }
         }
     });
@@ -316,6 +320,160 @@ function getMargenTotalCot(obj, un_nom) {
             alert("Error al calcular margenes y/o total");
         }
     });
+}
+
+function getListaMagniFunct(idmag) {
+    $.ajax({
+        type: "POST",
+        url: "/asmx_files/js_llenado.asmx/getListaMagFun",
+        datatype: "json",
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify({ "id_mag": idmag, "id_sys": "2" }),
+        success: function (data, status) {
+            var lsFun = data.d;
+            //alert(lsFun);
+            $("#cbo_funcion").empty().append($("<option></option>").val("0").html("Seleccione"));
+            $.each(lsFun, function () {
+                $("#cbo_funcion").append($("<option></option>").val(this['Value']).html(this['Text']));
+            });
+        },
+        error: function (data) {
+            alert("Error al cargar funciones de la magnitud");
+        }
+    });
+}
+
+function setListaPuntoEquipo(cotid, espid, funid, punto, equid) {
+    $.ajax({
+        type: "POST",
+        url: "/asmx_files/js_llenado.asmx/setDatoPuntoCot",
+        datatype: "json",
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify({ "idcot": cotid, "idesp": espid, "idfun": funid, "txtpunto": punto, "idequ": equid }),
+        success: function (data, status) {
+            alert("Puntos agregados");
+        },
+        error: function (data) {
+            alert("Error al agregar dato de puntos");
+        }
+    });
+}
+
+//---------------------------------------------------//
+//---------------------------------------------------//
+
+//INICIO FUNCIONES DE EDICION DE EQUIPO EN EL DETALLE
+
+//---------------------------------------------------//
+//---------------------------------------------------//
+function getValoresEquipoEdit(e_id, e_tarifa, e_fecha) {
+    $.ajax({
+        type: "POST",
+        url: "/asmx_files/js_llenado.asmx/getEqComercial",
+        datatype: "json",
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify({ "e_id": e_id, "e_tarifa": e_tarifa, "e_fecha": e_fecha }),
+        success: function (data, status) {
+            var lsDato = data.d;
+            $("#edit_eq_cmo").val(lsDato.equipocmo);
+            $("#edit_eq_crep").val(lsDato.equipocostorep);
+            $("#edit_eq_torig").val(lsDato.equipotarifaorig);
+        },
+        error: function (data) {
+            alert("Error al buscar datos del item");
+        }
+    });
+}
+
+function getTotalEquipoEdit(obj, id_sys, id_tarifa, f_cot) {
+    $.ajax({
+        type: "POST",
+        url: "/asmx_files/js_llenado.asmx/getCalculaEquipo",
+        datatype: "json",
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify({ "obj": obj, "id_sys": id_sys, "id_tarifa": id_tarifa, "f_cot": f_cot }),
+        success: function (data, status) {
+            var arr = data.d;
+            if (arr[1] == null || arr[1] == "") {
+                $("#edit_eq_total").val(arr[0]);
+            } else {
+                alert(arr[1]);
+                $("#edit_eq_pmo").val(arr[0]);
+            }
+        },
+        error: function (data) {
+            alert("Error al calcular equipo");
+        }
+    });
+}
+
+function setValoresEquipoEdit(objEqEdit, intarifa) {
+    $.ajax({
+        type: "POST",
+        url: "/asmx_files/js_llenado.asmx/setValorEquEdit",
+        datatype: "json",
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify({ "obj": objEqEdit, "tarifa": intarifa }),
+        success: function (data, status) {
+            alert("Equipo actualizado correctamente");
+        },
+        error: function (data) {
+            alert("Error al actualizar datos del equipo");
+        }
+    });
+}
+
+function delValoresEquiposEdit(cot_id, cot_item, cot_eq) {
+    $.ajax({
+        type: "POST",
+        url: "/asmx_files/js_llenado.asmx/delValorEquEdit",
+        datatype: "json",
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify({ "cotid": cot_id, "cotitem": cot_item, "coteq": cot_eq }),
+        success: function (data, status) {
+            alert("Equipo borrado correctamente");
+        },
+        error: function (data) {
+            alert("Error al borrar datos del equipo");
+        }
+    });
+}
+
+function modValoresDetCalProd(item, cotiid, np, oc, saot, lp, estado) {
+    $.ajax({
+        type: "POST",
+        url: "/asmx_files/js_llenado.asmx/modEquDetCalProd",
+        datatype: "json",
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify({ "item": item, "cotiid": cotiid, "np": np, "oc": oc, "saot": saot, "lp": lp, "estado": estado }),
+        success: function (data, status) {
+            alert("Datos actualizados correctamente");
+        },
+        error: function (data) {
+            alert("Error al actualizar datos");
+        }
+    });
+}
+//---------------------------------------------------//
+//---------------------------------------------------//
+
+//FIN FUNCIONES DE EDICION DE EQUIPO EN EL DETALLE
+
+//---------------------------------------------------//
+//---------------------------------------------------//
+
+function validaPrecioGastoChange(oldPGasto, newPGasto) {
+    if (newPGasto < oldPGasto) {
+        alert("El nuevo precio de gasto no puede ser menor al actual");
+        $("#edit_eq_gasto").val(oldPGasto);
+    }
+}
+
+function validaPrecioMOChange() {
+    if ($("#edit_eq_pmo").val() < $("#edit_eq_torig").val()) {
+        alert("El Precio MO no puede ser menor al precio base (" + $("#edit_eq_torig").val() + ")");
+        $("#edit_eq_pmo").val($("#edit_eq_torig").val());
+    }
 }
 
 function bloqueaCampoComision() {

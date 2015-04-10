@@ -406,5 +406,184 @@ namespace MANCAL_WEB_DL
             }
             return ds;
         }
+
+        public void insertDatoPuntoEquipo(String cot_id, int esp_id, int fun_id, String punto_in, int id_detcot, int id_item, int equ_id) 
+        {
+            using (OracleConnection con = new OracleConnection(conStr)) 
+            {
+                con.Open();
+                String qry = "PKG_MANCAL_DMLCOT_DETPUNTO.SP_DETPUNTO_INSERT";
+                using (OracleCommand cmd = new OracleCommand(qry, con)) 
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    cmd.Parameters.Add(new OracleParameter("P_ID_COT", OracleDbType.Varchar2)).Value = cot_id;
+                    cmd.Parameters["P_ID_COT"].Direction = ParameterDirection.Input;
+
+                    cmd.Parameters.Add(new OracleParameter("P_ID_ESP", OracleDbType.Int32)).Value = esp_id;
+                    cmd.Parameters["P_ID_ESP"].Direction = ParameterDirection.Input;
+
+                    cmd.Parameters.Add(new OracleParameter("P_ID_FUN", OracleDbType.Int32)).Value = fun_id;
+                    cmd.Parameters["P_ID_FUN"].Direction = ParameterDirection.Input;
+
+                    cmd.Parameters.Add(new OracleParameter("P_PUNTOS", OracleDbType.Varchar2)).Value = punto_in;
+                    cmd.Parameters["P_PUNTOS"].Direction = ParameterDirection.Input;
+
+                    cmd.Parameters.Add(new OracleParameter("P_ID_DC", OracleDbType.Int32)).Value = id_detcot;
+                    cmd.Parameters["P_ID_DC"].Direction = ParameterDirection.Input;
+
+                    cmd.Parameters.Add(new OracleParameter("P_ID_ITEM", OracleDbType.Int32)).Value = id_item;
+                    cmd.Parameters["P_ID_ITEM"].Direction = ParameterDirection.Input;
+
+                    cmd.Parameters.Add(new OracleParameter("P_ID_EQUIPO", OracleDbType.Int32)).Value = equ_id;
+                    cmd.Parameters["P_ID_EQUIPO"].Direction = ParameterDirection.Input;
+
+                    cmd.ExecuteNonQuery();
+                }
+                con.Close();
+            }
+        }
+
+        public DataSet selectDatoPuntoEquipo(String cot_id, int id_equ) 
+        {
+            DataSet ds = new DataSet();
+
+            using (OracleConnection con = new OracleConnection(conStr)) 
+            {
+                con.Open();
+                con.BeginTransaction();                
+                String qry = "PKG_MANCAL_DMLCOT_DETPUNTO.FN_DETPUNTO_SELECT";
+                using (OracleCommand cmd = new OracleCommand(qry, con)) 
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    cmd.Parameters.Add(new OracleParameter("CUR_DETPUNTO", OracleDbType.RefCursor)).Direction = ParameterDirection.ReturnValue;
+
+                    cmd.Parameters.Add(new OracleParameter("P_IDCOT", OracleDbType.Varchar2)).Value = cot_id;
+                    cmd.Parameters["P_IDCOT"].Direction = ParameterDirection.Input;
+
+                    cmd.Parameters.Add(new OracleParameter("P_ID_EQUIPO", OracleDbType.Int32)).Value = id_equ;
+                    cmd.Parameters["P_ID_EQUIPO"].Direction = ParameterDirection.Input;
+
+                    cmd.ExecuteNonQuery();
+
+                    using (OracleDataAdapter oda = new OracleDataAdapter(cmd)) 
+                    {
+                        oda.Fill(ds, "CUR_DETPUNTO");
+                    }
+                }
+                con.Close();
+            }
+
+            return ds;
+        }
+
+        public void updateValorEquipoDet(String idcot, int item, String nparte, String nserie, int qty, String preciomo, String gasto, String carga, String total, int ttarifa)
+        {
+            using (OracleConnection con = new OracleConnection(conStr))
+            {
+                con.Open();
+                String qry = "PKG_MANCAL_DMLCOT_DETEQUIPO.SP_DETCALEQUIPO_UPDATE";
+                using (OracleCommand cmd = new OracleCommand(qry, con))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    cmd.Parameters.Add(new OracleParameter("P_IDCOT", OracleDbType.Varchar2)).Value = idcot;
+                    cmd.Parameters["P_IDCOT"].Direction = ParameterDirection.Input;
+
+                    cmd.Parameters.Add(new OracleParameter("P_ITEM", OracleDbType.Int32)).Value = item;
+                    cmd.Parameters["P_ITEM"].Direction = ParameterDirection.Input;
+
+                    cmd.Parameters.Add(new OracleParameter("P_NPARTE", OracleDbType.Varchar2)).Value = nparte;
+                    cmd.Parameters["P_NPARTE"].Direction = ParameterDirection.Input;
+
+                    cmd.Parameters.Add(new OracleParameter("P_NSERIE", OracleDbType.Varchar2)).Value = nserie;
+                    cmd.Parameters["P_NSERIE"].Direction = ParameterDirection.Input;
+
+                    cmd.Parameters.Add(new OracleParameter("P_QTY", OracleDbType.Int32)).Value = qty;
+                    cmd.Parameters["P_QTY"].Direction = ParameterDirection.Input;
+
+                    cmd.Parameters.Add(new OracleParameter("P_PRECIOMO", OracleDbType.Varchar2)).Value = preciomo;
+                    cmd.Parameters["P_PRECIOMO"].Direction = ParameterDirection.Input;
+
+                    cmd.Parameters.Add(new OracleParameter("P_GASTO", OracleDbType.Varchar2)).Value = gasto;
+                    cmd.Parameters["P_GASTO"].Direction = ParameterDirection.Input;
+
+                    cmd.Parameters.Add(new OracleParameter("P_CARGA", OracleDbType.Varchar2)).Value = carga;
+                    cmd.Parameters["P_CARGA"].Direction = ParameterDirection.Input;
+
+                    cmd.Parameters.Add(new OracleParameter("P_TOTAL", OracleDbType.Varchar2)).Value = total;
+                    cmd.Parameters["P_TOTAL"].Direction = ParameterDirection.Input;
+
+                    cmd.Parameters.Add(new OracleParameter("P_TTARIFA", OracleDbType.Int32)).Value = ttarifa;
+                    cmd.Parameters["P_TTARIFA"].Direction = ParameterDirection.Input;
+
+                    cmd.ExecuteNonQuery();
+                }
+                con.Close();
+            }
+        }
+
+        public void deleteEquipoCot(String idcot, int item, int idequ) 
+        {
+            using (OracleConnection con = new OracleConnection(conStr)) 
+            {
+                con.Open();
+                String qry = "PKG_MANCAL_DMLCOT_DETEQUIPO.SP_DETEQUIPO_DELETE";
+                using (OracleCommand cmd = new OracleCommand(qry, con)) 
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    cmd.Parameters.Add(new OracleParameter("P_ID_EQUIPO", OracleDbType.Int32)).Value = idequ;
+                    cmd.Parameters["P_ID_EQUIPO"].Direction = ParameterDirection.Input;
+
+                    cmd.Parameters.Add(new OracleParameter("P_ID_ITEM", OracleDbType.Int32)).Value = item;
+                    cmd.Parameters["P_ID_ITEM"].Direction = ParameterDirection.Input;
+
+                    cmd.Parameters.Add(new OracleParameter("P_ID_COTIZACION", OracleDbType.Varchar2)).Value = idcot;
+                    cmd.Parameters["P_ID_COTIZACION"].Direction = ParameterDirection.Input;
+
+                    cmd.ExecuteNonQuery();
+                }
+                con.Close();
+            }
+        }
+
+        public void updateEquipoDetCalProd(int item, String cotiid, String np, String oc, String saot, int lp, int estado) 
+        {
+            using (OracleConnection con = new OracleConnection(conStr)) 
+            {
+                con.Open();
+                String qry = "PKG_MANCAL_DMLCOT_DETEQUIPO.SP_DETCALEQUIPO_UPDATE_PROD";
+                using (OracleCommand cmd = new OracleCommand(qry, con)) 
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    cmd.Parameters.Add(new OracleParameter("P_DETITEM", OracleDbType.Int32)).Value = item;
+                    cmd.Parameters["P_DETITEM"].Direction = ParameterDirection.Input;
+
+                    cmd.Parameters.Add(new OracleParameter("P_IDCOTIZ", OracleDbType.Varchar2)).Value = cotiid;
+                    cmd.Parameters["P_IDCOTIZ"].Direction = ParameterDirection.Input;
+
+                    cmd.Parameters.Add(new OracleParameter("P_NP", OracleDbType.Varchar2)).Value = np;
+                    cmd.Parameters["P_NP"].Direction = ParameterDirection.Input;
+
+                    cmd.Parameters.Add(new OracleParameter("P_OC", OracleDbType.Varchar2)).Value = oc;
+                    cmd.Parameters["P_OC"].Direction = ParameterDirection.Input;
+
+                    cmd.Parameters.Add(new OracleParameter("P_SAOT", OracleDbType.Varchar2)).Value = saot;
+                    cmd.Parameters["P_SAOT"].Direction = ParameterDirection.Input;
+
+                    cmd.Parameters.Add(new OracleParameter("P_LP", OracleDbType.Int32)).Value = lp;
+                    cmd.Parameters["P_LP"].Direction = ParameterDirection.Input;
+
+                    cmd.Parameters.Add(new OracleParameter("P_ESTADO", OracleDbType.Int32)).Value = estado;
+                    cmd.Parameters["P_ESTADO"].Direction = ParameterDirection.Input;
+
+                    cmd.ExecuteNonQuery();
+                }
+                con.Close();
+            }
+        }
     }
 }

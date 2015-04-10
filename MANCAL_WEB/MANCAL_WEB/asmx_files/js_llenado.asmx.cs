@@ -4,6 +4,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Services;
 using MANCAL_WEB_BL;
+using System.Collections;
+using System.Web.UI.WebControls;
 
 namespace MANCAL_WEB.asmx_files
 {
@@ -167,12 +169,58 @@ namespace MANCAL_WEB.asmx_files
 
         [WebMethod]//costo comision
         public void setTotalCostoCom(Object obj, String idc, String ttar, String fcot) //sec_prev = sector previo
-        { 
-        //devolver a 0 costo comision recalcular dcc_gasto y restarlo del actual y dejar en 0 factor comision.
+        {
             MANCAL_WEB_CLASS.CotizacionComision cc = MANCAL_WEB_CLASS.CotizacionComision.objCotCom(obj);
             bl_calculo cal = new bl_calculo();
 
             cal.setSinCostoComision(cc.lug_id, cc.ccom_qtypersona, cc.ccom_qtycommes, cc.ccom_qtyveh, cc.ccom_qtydia, cc.ccom_qtranseqt, cc.ccom_qtranseqa, cc.ccom_fondor, cc.ccom_qgasrepr, idc, ttar, fcot);
+        }
+
+        [WebMethod]
+        public ArrayList getListaMagFun(String id_mag, String id_sys) 
+        {
+            List<MANCAL_WEB_CLASS.CotizacionMagnitudFuncion> lsc = new List<MANCAL_WEB_CLASS.CotizacionMagnitudFuncion>();
+            ArrayList ls = new ArrayList();
+            bl_carga_cbo cc = new bl_carga_cbo();
+
+            lsc = cc.getMagFunc(id_mag, id_sys);
+
+            foreach (var item in lsc) 
+            {
+                ls.Add(new ListItem(item.nommagfunc, item.idnmagfunc));
+            }
+
+            return ls;
+        }
+
+        [WebMethod]
+        public void setDatoPuntoCot(String idcot, String idesp, String idfun, String txtpunto, String idequ) 
+        {
+            bl_detalle_pro objDetPro = new bl_detalle_pro();
+            objDetPro.setDatoPuntoEquipo(idcot, idesp, idfun, txtpunto, null, null, idequ);
+        }
+
+        [WebMethod]
+        public void setValorEquEdit(Object obj, String tarifa) 
+        {
+            MANCAL_WEB_CLASS.CotizacionEquipo det = MANCAL_WEB_CLASS.CotizacionEquipo.objCalEqEd(obj);
+            bl_detalle_pro o_det = new bl_detalle_pro();
+
+            o_det.setValorEquipoDetEdit(det, tarifa);
+        }
+
+        [WebMethod]
+        public void delValorEquEdit(String cotid, String cotitem, String coteq) 
+        {
+            bl_detalle_pro objDet = new bl_detalle_pro();
+            objDet.delEquipoCot(cotid, cotitem, coteq);
+        }
+
+        [WebMethod]
+        public void modEquDetCalProd(String item, String cotiid, String np, String oc, String saot, String lp, String estado) 
+        {
+            bl_detalle_pro objDet = new bl_detalle_pro();
+            objDet.modEquipoDetCalProd(item, cotiid, np, oc, saot, lp, estado);
         }
     }
 }

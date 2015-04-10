@@ -532,5 +532,46 @@ namespace MANCAL_WEB_DL
 
             return dt;
         }
+
+        public DataTable selectFuncionMagnitud(int id_mag, int id_sys) 
+        {
+            DataTable dt = new DataTable();
+
+            using (OracleConnection con = new OracleConnection(conStr)) 
+            {
+                con.Open();
+                con.BeginTransaction();
+                String qry_u = "SP_SPAC_SEARCH_MAGFUN";
+                using (OracleCommand cmd_u = new OracleCommand(qry_u, con)) 
+                {
+                    cmd_u.CommandType = CommandType.StoredProcedure;
+
+                    cmd_u.Parameters.Add(new OracleParameter("P_ESPECIALIDAD", OracleDbType.Int32)).Value = null;
+                    cmd_u.Parameters["P_ESPECIALIDAD"].Direction = ParameterDirection.Input;
+
+                    cmd_u.Parameters.Add(new OracleParameter("P_ID_SISTEMA", OracleDbType.Int32)).Value = id_sys;
+                    cmd_u.Parameters["P_ID_SISTEMA"].Direction = ParameterDirection.Input;
+
+                    cmd_u.ExecuteNonQuery();
+                }
+
+                String qry_d = "SELECT ID_FUNCION, NOMBRE_FUNCION FROM TBL_SPAC_SEARCH_MAGFUN_TMP WHERE ID_ESPECIALIDAD = :ID_ESP";
+                using (OracleCommand cmd_d = new OracleCommand(qry_d, con)) 
+                {
+                    cmd_d.CommandType = CommandType.Text;
+
+                    cmd_d.Parameters.Add(new OracleParameter("ID_ESP", OracleDbType.Int32)).Value = id_mag;
+                    cmd_d.Parameters["ID_ESP"].Direction = ParameterDirection.Input;
+
+                    using (OracleDataAdapter oda = new OracleDataAdapter(cmd_d)) 
+                    {
+                        oda.Fill(dt);
+                    }
+                }
+                con.Close();
+            }            
+
+            return dt;
+        }
     }
 }

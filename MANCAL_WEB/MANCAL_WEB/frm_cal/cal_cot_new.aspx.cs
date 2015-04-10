@@ -404,7 +404,7 @@ namespace MANCAL_WEB.frm_cal
         }
 
         #endregion
-
+        
         public void mostrarCliente(String clinom, String clicta, String nomcont, String clitipo, String cliestado)
         {
             objCliente = new bl_cliente();
@@ -473,11 +473,32 @@ namespace MANCAL_WEB.frm_cal
             getListaEquipo(eq_nombre, eq_nparte, eq_modelo);
         }
 
+        protected void gvListaPunto_PageIndexChanging(object sender, GridViewPageEventArgs e) 
+        {
+            gvListaPunto.PageIndex = e.NewPageIndex;
+            getListaPunto();
+        }
+
         public void getListaDetalle(String idcot, String idtarifa) 
         {
             objDet = new bl_detalle_pro();
             GV1.DataSource = objDet.getDetalleCot(idcot, idtarifa);
             GV1.DataBind();
+        }
+
+        public void getListaPunto() 
+        {
+            objDet = new bl_detalle_pro();
+            String usr = System.Environment.UserName;
+            String eqid = Request.Cookies["idequipocot"].Value ?? null;
+            gvListaPunto.DataSource = objDet.getListaPuntoEquipo(usr, eqid);
+            gvListaPunto.DataBind();
+        }
+
+        protected void btnActualizaGVPunto_Click(object sender, EventArgs e) 
+        {
+            getListaPunto();
+            upListaPunto.Update();
         }
     }
 }

@@ -104,6 +104,45 @@ namespace MANCAL_WEB_CLASS
             return ce;
         }
 
+        //OBTENER OBJETO SOLO PARA ACTUALIZAR
+        public static CotizacionEquipo objCalEqEd(Object obj) 
+        {
+            CotizacionEquipo ce = new CotizacionEquipo();
+            Dictionary<String, Object> d = (Dictionary<String, Object>)obj;
+
+            Object equipopmo = null;
+            Object equipototal = null;
+            Object equiponparte = null;
+            Object equiponserie = null;
+            Object equipocantidad = null;
+            Object equipocalgasto = null;
+            Object equipocalpcarga = null;
+            Object equipoitem = null;
+            Object equipocotid = null;
+
+            d.TryGetValue("equipopmo", out equipopmo);
+            d.TryGetValue("equipototal", out equipototal);
+            d.TryGetValue("equiponparte", out equiponparte);
+            d.TryGetValue("equiponserie", out equiponserie);
+            d.TryGetValue("equipocantidad", out equipocantidad);
+            d.TryGetValue("equipocalgasto", out equipocalgasto);
+            d.TryGetValue("equipocalpcarga", out equipocalpcarga);
+            d.TryGetValue("equipoitem", out equipoitem);
+            d.TryGetValue("equipocotid", out equipocotid);
+
+            ce.equipopmo = equipopmo.ToString();
+            ce.equipototal = equipototal.ToString();
+            ce.equiponparte = equiponparte.ToString();
+            ce.equiponserie = equiponserie.ToString();
+            ce.equipocantidad = equipocantidad.ToString();
+            ce.equipocalgasto = equipocalgasto.ToString();
+            ce.equipocalpcarga = equipocalpcarga.ToString();
+            ce.equipoitem = equipoitem.ToString();
+            ce.equipocotid = equipocotid.ToString();
+
+            return ce;
+        }
+
         //OBTENER OBJETO EQUIPO SOLO PARA CALCULAR
         public static CotizacionEquipo objCalEq(Object obj)
         {

@@ -466,5 +466,27 @@ namespace MANCAL_WEB_BL
 
             return ls;
         }
+
+        public List<CotizacionMagnitudFuncion> getMagFunc(String magid, String sysid) 
+        {
+            List<CotizacionMagnitudFuncion> ls = new List<CotizacionMagnitudFuncion>();
+            int mag_id = Convert.ToInt32(magid);
+            int sys_id = Convert.ToInt32(sysid);
+
+            objCbo = new dl_carga_cbo();
+
+            DataTable dt = objCbo.selectFuncionMagnitud(mag_id, sys_id);            
+
+            foreach (DataRow dr in dt.Rows) 
+            {
+                CotizacionMagnitudFuncion cmf = new CotizacionMagnitudFuncion();
+                cmf.idnmagfunc = dr["ID_FUNCION"].ToString();
+                cmf.nommagfunc = dr["NOMBRE_FUNCION"].ToString();
+
+                ls.Add(cmf);
+            }
+
+            return ls;
+        }
     }
 }
