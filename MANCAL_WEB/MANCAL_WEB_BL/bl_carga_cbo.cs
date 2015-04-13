@@ -488,5 +488,12 @@ namespace MANCAL_WEB_BL
 
             return ls;
         }
+
+        public String getMailVendedor(String idvendedor) 
+        {
+            objCbo = new dl_carga_cbo();
+            int idv = Convert.ToInt32(idvendedor);
+            return objCbo.selectMailVendedor(idv);
+        }
     }
 }

@@ -121,10 +121,13 @@
                         <asp:TextBox ID="txtCorrelativo" runat="server" Width="30px" Visible="false"></asp:TextBox>
                     </td>
                     <td class="style8">
-                        Nro Cotización
+                        Cliente
                     </td>
                     <td class="style9">
-                        <asp:TextBox ID="txtIdCotizacion" runat="server" Width="130px" ReadOnly="True"></asp:TextBox>
+                        <asp:TextBox ID="txtIdCotizacion" runat="server" Width="130px" ReadOnly="True" style="display:none;"></asp:TextBox>
+                        <asp:TextBox ID="txtCliente" runat="server" Width="350px" ReadOnly="true"></asp:TextBox><!--263px-->
+                        &nbsp;&nbsp;&nbsp;
+                        <a href="javascript:void(null);" id="btn-busca-cli" style="display:inline-block;" class="ui-icon ui-icon-search"></a>
                     </td>                
                 </tr>
                 <tr>
@@ -141,12 +144,10 @@
                     <td class="style9">
                     </td>
                     <td class="style8">
-                        Cliente
+                        Cuenta
                     </td>                
                     <td class="style9"><%--CBO CLIENTE --%>
-                        <asp:TextBox ID="txtCliente" runat="server" Width="263px"></asp:TextBox>
-                        &nbsp;&nbsp;&nbsp;
-                        <a href="javascript:void(null);" id="btn-busca-cli" style="display:inline-block;" class="ui-icon ui-icon-search"></a>
+                        <asp:TextBox ID="txtCuenta" runat="server" Width="350px" ReadOnly="true"></asp:TextBox>
                     </td>
                 </tr>
                 <tr>
@@ -154,8 +155,7 @@
                         Vendedor
                     </td>
                     <td class="style6">
-                        <asp:DropDownList ID="cboVendedor" runat="server" Height="22px" Width="263px" 
-                            AutoPostBack="True" oninit="cboVendedor_Init">
+                        <asp:DropDownList ID="cboVendedor" runat="server" Height="22px" Width="263px" oninit="cboVendedor_Init">
                         </asp:DropDownList>
                     </td>
                     <td class="style9">
@@ -165,7 +165,7 @@
                         Cliente Informe
                     </td>
                     <td class="style9">
-                        <asp:TextBox ID="txtClienteInforme" runat="server" Width="263px"></asp:TextBox>
+                        <asp:TextBox ID="txtClienteInforme" runat="server" Width="350px"></asp:TextBox>
                     </td>
                 </tr>
                 <tr>
@@ -173,7 +173,8 @@
                     <td class="style5">
                         Correo Vendedor</td>
                         <td class="style6">
-                            <asp:TextBox ID="txtMailVendedor" runat="server" Width="260px" ReadOnly="True"></asp:TextBox>
+                            <%--<asp:TextBox ID="txtMailVendedor" runat="server" Width="260px" ReadOnly="True"></asp:TextBox>--%>
+                            <input type="text" id="txtMailVendedor" name="txtMailVendedor" readonly="readonly" style="width:260px;" />
                         </td>
                     <td class="style9">
                         <%--<asp:TextBox ID="txtInicialVendedor" runat="server" Width="30px" Height="22px"></asp:TextBox>--%>
@@ -236,8 +237,7 @@
                         Tipo Tarifa
                     </td>
                     <td class="style9">
-                        <asp:DropDownList ID="cboTipoTarifa" runat="server" Width="263px" 
-                            AutoPostBack="true" oninit="cboTipoTarifa_Init">
+                        <asp:DropDownList ID="cboTipoTarifa" runat="server" Width="263px" oninit="cboTipoTarifa_Init">
                         </asp:DropDownList>
                     </td>               
                 </tr>
@@ -566,7 +566,7 @@
 
                                     <asp:TemplateField HeaderText="Puntos">
                                         <ItemTemplate>
-                                            <a href="javascript:void(null);" id="btn-det-cal-punto" onclick="" style="display:inline-block;" class="ui-icon ui-icon-circle-plus">a</a>
+                                            <a href="javascript:void(null);" id="btn-det-cal-punto" onclick="editaPuntos();" style="display:inline-block;" class="ui-icon ui-icon-circle-plus"></a>
                                         </ItemTemplate>
                                     </asp:TemplateField>
 
@@ -1005,9 +1005,10 @@
                             <tr>
                                 <td style="width:90px;">
                                     Plazo Entrega<br />
-                                    <asp:DropDownList ID="cboPlazoEntrega" runat="server" Width="140px" 
+                                    <%--<asp:DropDownList ID="cboPlazoEntrega" runat="server" Width="140px" 
                                         oninit="cboPlazoEntrega_Init">
-                                    </asp:DropDownList>                
+                                    </asp:DropDownList>--%>
+                                    <input type="text" id="txtPlazoEntregaD" name="txtPlazoEntregaD" placeholder="Plazo entrega dias" style="width:140px;"/>
                                 </td>
                                 <td>
                                 </td>
@@ -1211,7 +1212,7 @@
                 Text="Guardar" Width="130px"/>
             </td>
             <td>
-                <asp:Button ID="btnSaveDraft" runat="server" Text="Guardar Borrador" />
+                <asp:Button ID="btnSaveDraft" runat="server" Text="Guardar Borrador" style="display:none;"/>
             </td>
             <td>
                 <asp:Button ID="btnSavePrint" runat="server" Text="Guardar e Imprimir"/>
@@ -1229,7 +1230,7 @@
                 Criterios de Busqueda
             </legend>
             <table>
-                <tr>
+                <tr style="display:none;">
                     <td>
                         Nombre Cliente
                     </td>
@@ -1358,11 +1359,11 @@
     </div>
 
     <%--DIALOG DONDE SE MODIFICAN PRECIOS/OTROS DEL EQUIPO SELECCIONADO --%>
-    <asp:UpdatePanel ID="upActualizaGVPunto" runat="server" UpdateMode="Conditional">
+    <asp:UpdatePanel ID="upActualizaGVPunto" runat="server" UpdateMode="Conditional" style="display:none;">
         <ContentTemplate>
             <asp:Button ID="btnActualizaGVPunto" runat="server" OnClick="btnActualizaGVPunto_Click" />
         </ContentTemplate>
-    </asp:UpdatePanel>        
+    </asp:UpdatePanel>
     <div id="dialog-equipo-precio" title="Datos Equipo" style="display:none;">
         Modificacion de los datos del equipo a cotizar
         <br /><br />
@@ -1475,6 +1476,9 @@
     <div id="dialog-equipo-punto" title="Puntos a Cotizar" style="display:none;">
         Puntos del equipo a cotizar
         <br /><br />
+        <input type="text" id="txt_in_punto_eq_id" name="txt_in_punto_eq_id" style="display:none;"/>
+        <input type="text" id="txt_in_punto_eq_cot" name="txt_in_punto_eq_cot" style="display:none;"/>
+        <input type="text" id="txt_in_punto_eq_item" name="txt_in_punto_eq_item" style="display:none;"/>
         Magnitud:<br />
         <asp:DropDownList ID="cbo_magnitud" runat="server" OnInit="cbo_punto_magnitud_Init">
         </asp:DropDownList>
@@ -1488,11 +1492,12 @@
         <input type="text" id="txt-in-punto-cal" name="txt-in-punto-cal" placeholder="Ingrese puntos" />
         <br /><br />
         <input type="button" id="btn-in-punto-cal" name="btn-in-punto-cal" value="Ingresar" />
+        <input type="button" id="btn-ed-punto-cal" name="btn-ed-punto-cal" value="Agregar" />
         <br /><br />
         <asp:UpdatePanel ID="upListaPunto" runat="server" UpdateMode="Conditional">
             <ContentTemplate>
                 <asp:GridView ID="gvListaPunto" runat="server" AutoGenerateColumns="False" 
-                    DataKeyNames="" PageSize="5" PagerSettings-PageButtonCount="10" PagerSettings-Mode="NumericFirstLast" PagerSettings-FirstPageText="Primera" PagerSettings-LastPageText="Ultima" 
+                    DataKeyNames="cp_id,cp_numero,cp_item,cp_id_equipo" PageSize="5" PagerSettings-PageButtonCount="10" PagerSettings-Mode="NumericFirstLast" PagerSettings-FirstPageText="Primera" PagerSettings-LastPageText="Ultima" 
                     AllowPaging="true" Font-Size="Small" OnPageIndexChanging="gvListaPunto_PageIndexChanging">
                     <RowStyle CssClass="gvListaPuntocss" />
                     <Columns>
@@ -1559,7 +1564,7 @@
 
                         <asp:TemplateField HeaderText="Editar">
                             <ItemTemplate>
-                                <a href="javascript:void(null);" id="btn-det-cal-edita" onclick="" style="display:inline-block;" class="ui-icon ui-icon-transferthick-e-w"></a>
+                                <a href="javascript:void(null);" id="btn-det-cal-edita-punto" onclick="editaPuntoDet();" style="display:inline-block;" class="ui-icon ui-icon-transferthick-e-w"></a>
                             </ItemTemplate>
                         </asp:TemplateField>
 
@@ -1570,59 +1575,72 @@
         
     </div>
     <div id="dialog-equipo-dato-cal"  title="Otros Datos Equipo" style="display:none;">
-        <table>
-            <tr>
-                <td>
-                    Tipo Trabajo
-                </td>
-                <td>
-                    <asp:DropDownList ID="cbo_eq_dato_cal_tt" runat="server" oninit="cbo_eq_dato_cal_tt_Init">
-                    </asp:DropDownList>                    
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    Estado
-                </td>
-                <td>
-                    <asp:DropDownList ID="cbo_eq_dato_cal_est" runat="server" OnInit="cbo_eq_dato_cal_est_Init">
-                    </asp:DropDownList>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    Nota Pedido
-                </td>
-                <td>
-                    <input type="text" id="txt-eq-dato-cal-np" name="txt-eq-dato-cal-np" class="text ui-widget-content ui-corner-all" placeholder="Solo si posee NP"/>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    Line Producto
-                </td>
-                <td>
-                    <asp:DropDownList ID="cbo_eq_dato_cal_lp" runat="server" OnInit="cbo_eq_dato_cal_lp_Init">
-                    </asp:DropDownList>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    Orden Compra
-                </td>
-                <td>
-                    <input type="text" id="txt-eq-dato-cal-oc" name="txt-eq-dato-cal-oc" class="text ui-widget-content ui-corner-all" placeholder="Solo si posee OC"/>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    SAOT
-                </td>
-                <td>
-                    <input type="text" id="txt-eq-dato-cal-saot" name="txt-eq-dato-cal-saot" class="text ui-widget-content ui-corner-all" placeholder="Solo si posee SAOT"/>
-                </td>
-            </tr>
-        </table>
+        <div id="tab-equipo-dato-cal">
+            <ul>
+                <li><a href="#tab-equipo-dato-cal-otro">Editar Otros</a></li>
+                <li><a href="#tab-equipo-dato-cal-ptos">Editar Puntos</a></li>
+            </ul>
+
+            <div id="tab-equipo-dato-cal-otro">
+                <table>
+                    <tr>
+                        <td>
+                            Tipo Trabajo
+                        </td>
+                        <td>
+                            <asp:DropDownList ID="cbo_eq_dato_cal_tt" runat="server" oninit="cbo_eq_dato_cal_tt_Init">
+                            </asp:DropDownList>                    
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Estado
+                        </td>
+                        <td>
+                            <asp:DropDownList ID="cbo_eq_dato_cal_est" runat="server" OnInit="cbo_eq_dato_cal_est_Init">
+                            </asp:DropDownList>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Nota Pedido
+                        </td>
+                        <td>
+                            <input type="text" id="txt-eq-dato-cal-np" name="txt-eq-dato-cal-np" class="text ui-widget-content ui-corner-all" placeholder="Solo si posee NP"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Line Producto
+                        </td>
+                        <td>
+                            <asp:DropDownList ID="cbo_eq_dato_cal_lp" runat="server" OnInit="cbo_eq_dato_cal_lp_Init">
+                            </asp:DropDownList>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Orden Compra
+                        </td>
+                        <td>
+                            <input type="text" id="txt-eq-dato-cal-oc" name="txt-eq-dato-cal-oc" class="text ui-widget-content ui-corner-all" placeholder="Solo si posee OC"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            SAOT
+                        </td>
+                        <td>
+                            <input type="text" id="txt-eq-dato-cal-saot" name="txt-eq-dato-cal-saot" class="text ui-widget-content ui-corner-all" placeholder="Solo si posee SAOT"/>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+            <div id="tab-equipo-dato-cal-ptos">
+                <a href="javascript:void(null);" id="btn-muestra-edit-ptos" onclick="muestraEditPuntos();">Editar Puntos</a>
+            </div>
+        </div>        
     </div>
 
     <%--DIALOG PARA EDITAR PRECIOS O ELIMINAR EQUIPO SELECCIONADO DEL GRIDVIEW --%>
@@ -1703,6 +1721,54 @@
 
         </div>
     </div>
+
+    <%--DIALOG QUE EDITA LOS PUNTOS DEL GRID YA INGRESADOS --%>
+    <div id="dialog-edit-punto-grid" title="Editar Puntos Ingresados" style="display:none;">
+        <div id="tab-edit-punto">
+            <ul>
+                <li><a href="#tab-editar-punto">Editar Punto</a></li>
+                <li><a href="#tab-delete-punto">Borrar Punto</a></li>
+            </ul>
+
+            <div id="tab-editar-punto">
+                <table>
+                    <tr>
+                        <td>Item</td>
+                        <td>
+                            <input type="text" id="txt-edit-punto-item-gv" value="" class="text ui-widget-content ui-corner-all" readonly="readonly"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Magnitud</td>
+                        <td>
+                            <input type="text" id="txt-edit-punto-esp-gv" value="" class="text ui-widget-content ui-corner-all" readonly="readonly"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Funcion</td>
+                        <td>
+                            <input type="text" id="txt-edit-punto-mag-gv" value="" class="text ui-widget-content ui-corner-all" readonly="readonly"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Puntos</td>
+                        <td>
+                            <input type="text" id="txt-edit-punto-lista-gv" value="" class="text ui-widget-content ui-corner-all"/>
+                        </td>
+                    </tr>
+                </table>
+                <br /><br />
+                <input type="button" id="btn-edit-punto-upd-gv" value="Actualizar" />
+            </div>
+            
+            <div id="tab-delete-punto">
+                Esta seguro que desea borrar estos puntos?
+                <br /><br />
+                <input type="button" id="btn-edit-punto-del-gv" value="Eliminar Punto" />
+
+            </div>
+        </div>
+    </div>
     
       <%--SECTOR DE JAVASCRIPT--%>
         <script type="text/javascript">
@@ -1711,7 +1777,6 @@
             $.cookie('nomcontact', '');
             $.cookie('nomtipo', '');
             $.cookie('nomestado', '');
-            $.cookie('idequipocot', '');
             var objEqJs = new EquipoCotizacion();
             var objComCot = new ComisionCotizacion();
             var objInfoCot = new InfoCotizacion();
@@ -1751,6 +1816,7 @@
                 $("#btnAddComision").attr('disabled', 'disabled');
                 transporteVal();
                 bloqueaCampoComision();
+                $("#btn-ed-punto-cal").toggle(false);
             });
 
             var itemnro;
@@ -1770,6 +1836,7 @@
                 $('.gridListaCliente').on('click', function () {
                     $("#<%=txtHiddIdCliente.ClientID %>").val($('.idcliente_', $(this).closest('tr')).html()); //$('.idcliente_', find('td:first').text()                   
                     $("#<%=txtCliente.ClientID %>").val($('.nomcliente_', $(this).closest('tr')).html());
+                    $("#<%=txtCuenta.ClientID %>").val($('.nomcuenta_', $(this).closest('tr')).html());
                     $("#<%=txtClienteInforme.ClientID %>").val($('.nomcuenta_', $(this).closest('tr')).html());
                     $("#<%=txtContactoCliente.ClientID %>").val($('.nomcontacto_', $(this).closest('tr')).html());
                     $("#<%=txtDireccionCliente.ClientID %>").val($('.direccioncli_', $(this).closest('tr')).html());
@@ -1823,6 +1890,25 @@
                 });
             }
 
+            function dataGridCalPunto() {//POSIBLEMENTE BORRAR
+                $('.cssDetEq').on('click', function () {
+                    //$("#txt_in_punto_eq_cot").val($('.equipocotid_', $(this).closest('tr')).html());
+                    //$("#txt_in_punto_eq_id").val($('.equipoid_', $(this).closest('tr')).html());
+                    //$("#txt_in_punto_eq_item").val($('.equipoitem_', $(this).closest('tr')).html());
+                    $.cookie('iditemeq', $('.equipoitem_', $(this).closest('tr')).html());
+                    $.cookie('idequipocot', $('.equipoid_', $(this).closest('tr')).html());                    
+                });
+            }
+
+            function dataGridPunto() {
+                $('.gvListaPuntocss').on('click', function () {
+                    $("#txt-edit-punto-item-gv").val($('.cp_id_', $(this).closest('tr')).html());
+                    $("#txt-edit-punto-esp-gv").val($('.cp_no_esp_', $(this).closest('tr')).html());
+                    $("#txt-edit-punto-mag-gv").val($('.cp_no_mag_', $(this).closest('tr')).html());
+                    $("#txt-edit-punto-lista-gv").val($('.cp_punto_', $(this).closest('tr')).html());
+                });
+            }
+
             function borraArchivo() {
                 delDetalleArch();
 
@@ -1843,6 +1929,7 @@
                 $("#dialog-busca-cli").dialog('close');
             }
 
+            //FUNCION QUE MUESTRA EL CUADRO DONDE SE INGRESAN LOS DATOS DEL EQUIPO FE: PRECIO PUNTOS NP OC ETC
             function seleccionEquipo() {
                 dataEquipo();
                 $("#dialog-equipo-busca").dialog('close');
@@ -1868,7 +1955,7 @@
                             $("#<%=cbo_eq_read_lprod.ClientID %>").val("N");
                             $("#<%= cbo_eq_read_estado.ClientID %>").val("1");
                             $("#<%=cbo_eq_read_trabajo.ClientID %>").val("8");
-                            $("#<%=btnUpdDatoEquipo.ClientID %>").click();
+                            $("#<%=btnUpdDatoEquipo.ClientID %>").click();                            
                             $(this).dialog('close');
                         },
                         "Cerrar": function () {
@@ -1878,6 +1965,8 @@
                 });
             }
 
+            /*****************/
+            /*****************/
             function seleccionDetalleCal() {
                 dataGridCal();
                 $("#dialog-equipo-dato-cal").dialog({
@@ -1900,6 +1989,14 @@
                     }
                 });
             }
+
+            function muestraEditPuntos() {
+                $("#btn-in-punto-cal").toggle(false);
+                $("#btn-ed-punto-cal").toggle(true);
+                dialogPuntoEdit();
+            }
+            /*****************/
+            /*****************/
 
             var oldGasto = "";
             function seleccionDetalleCalPrecio() {
@@ -1962,6 +2059,26 @@
                 });
             }
 
+            //FUNCION QUE EDITA PUNTOS YA INGRESADOS
+            function editaPuntos() {//POSIBLEMENTE BORRAR
+                //EDITAR PUNTOS YA INGRESADOS
+                dataGridCalPunto();
+                $("#btn-in-punto-cal").toggle(false);
+                $("#btn-ed-punto-cal").toggle(true);
+                //dialogPuntoEdit();
+                alert($("#edit_eq_item").val() + " " + $("#edit_eq_id_eq").val() + " " + $.cookie('pcusr'));
+                //$.cookie('iddccpunto', $("#txt-in-punto-eq-item").val());
+                //$.cookie('idequipocot', $("#txt-in-punto-eq-id").val());
+                //dialogPunto();
+                //$("#<%=btnActualizaGVPunto.ClientID %>").click();            
+            }
+
+            //EDITA PUNTOS CUANDO SE ESTAN INGRESANDO
+            function editaPuntoDet() {
+                dataGridPunto();
+                editPuntoGV();
+            }
+
             $("#<%=txtFacturacion.ClientID %>").on('click', function () {
                 $("#txta-fac").val($("#<%=txtFacturacion.ClientID %>").val());
                 $("#dialog-comentario-fac").dialog({
@@ -1985,6 +2102,8 @@
             $(function () {
                 $("#tab").tabs();
                 $("#tab-edit-eq").tabs();
+                $("#tab-edit-punto").tabs();
+                $("#tab-equipo-dato-cal").tabs();
             });
 
             $("#<%=txtPlazoEntrega.ClientID %>").on('click', function () {
@@ -2120,32 +2239,32 @@
             }
 
             function setInfoMgTotCot() {
-                objinfocot.cot_tipomoneda = $("#<%=cboTipoTarifa.ClientID %>").val();
-                objinfocot.cot_afecto = $("#<%=cboTipoImpuesto.ClientID %>").val();
-                objinfocot.tc_id = $("#<%=cboTipoCotizacion.ClientID %>").val();
-                objinfocot.cot_descuento = $("#txtdcto").val();
-                objinfocot.cot_id = $.cookie('pcusr');
-                objinfocot.cot_fecha = $("#<%=txtFecha.ClientID %>").val();
+                objInfoCot.cot_tipomoneda = $("#<%=cboTipoTarifa.ClientID %>").val();
+                objInfoCot.cot_afecto = $("#<%=cboTipoImpuesto.ClientID %>").val();
+                objInfoCot.tc_id = $("#<%=cboTipoCotizacion.ClientID %>").val();
+                objInfoCot.cot_descuento = $("#txtDcto").val();
+                objInfoCot.cot_id = $.cookie('pcusr');
+                objInfoCot.cot_fecha = $("#<%=txtFecha.ClientID %>").val();
             }
 
             function setDatoComision() {
                 if ($("#<%=cboLugarComision.ClientID %>").val() == 0) {
-                    objcomcot.lug_id = prevlcom;
+                    objComCot.lug_id = prevLCom;
                 } else {
-                    objcomcot.lug_id = $("#<%=cboLugarComision.ClientID %>").val();
+                    objComCot.lug_id = $("#<%=cboLugarComision.ClientID %>").val();
                 }
-                objcomcot.ccom_qtypersona = $("#txt-com-qty-persona").val();
-                objcomcot.ccom_qtydia = $("#txt-com-qty-dia").val();
-                objcomcot.ccom_qtyveh = $("#txt-com-qty-veh").val();
-                objcomcot.ccom_qtranseqt = $("#txt-com-eq-c").val();
-                objcomcot.ccom_qtranseqa = $("#txt-com-eq-a").val();
-                objcomcot.ccom_fondor = $("#txt-com-fondo-rendir").val();
-                objcomcot.ccom_qgasrepr = $("#txt-com-rep-gasto").val();
-                objcomcot.ccom_qtycommes = $("#txt-com-qty-com-mes").val();
+                objComCot.ccom_qtypersona = $("#txt-com-qty-persona").val();
+                objComCot.ccom_qtydia = $("#txt-com-qty-dia").val();
+                objComCot.ccom_qtyveh = $("#txt-com-qty-veh").val();
+                objComCot.ccom_qtranseqt = $("#txt-com-eq-c").val();
+                objComCot.ccom_qtranseqa = $("#txt-com-eq-a").val();
+                objComCot.ccom_fondor = $("#txt-com-fondo-rendir").val();
+                objComCot.ccom_qgasrepr = $("#txt-com-rep-gasto").val();
+                objComCot.ccom_qtycommes = $("#txt-com-qty-com-mes").val();
             }
 
             function transporteVal() {
-                if ($("#chktransporte").is(":not(:checked)")) {
+                if ($("#chkTransporte").is(":not(:checked)")) {
                     $("#txtdirtransporte").prop("disabled", true);
                     $("#<%=cboRegion.ClientID %>").prop("disabled", true);
                     $("#<%=cboTraslado.ClientID %>").prop("disabled", true);
@@ -2204,6 +2323,10 @@
                 $("#chkTransporte").focus();
             });
 
+            $("#<%=cboVendedor.ClientID %>").change(function () {
+                getEmailVendedor($("#<%=cboVendedor.ClientID %>").val());
+            });
+
             $("#<%=cbo_magnitud.ClientID %>").change(function () {
                 getListaMagniFunct($(this).val());
             });
@@ -2224,15 +2347,41 @@
             });
 
             $("#btn-in-punto-cal").on('click', function () {
+                $.cookie('iditemeq', '');
                 setListaPuntoEquipo($.cookie('pcusr'),
                                     $("#<%=cbo_magnitud.ClientID %>").val(),
                                     $("#cbo_funcion").val(),
                                     $("#txt-in-punto-cal").val(),
-                                    $("#txt-eq-read-id").val());
+                                    $("#txt-eq-read-id").val(),
+                                    $("#txt-in-punto-eq-item").val());
                 $("#<%=btnActualizaGVPunto.ClientID %>").click();
                 $("#<%=cbo_magnitud.ClientID %>").val("0");
                 $("#cbo_funcion").val("0");
                 $("#txt-in-punto-cal").val("");
+                $.removeCookie('iditemeq');
+            });
+
+            $("#btn-edit-punto-upd-gv").on('click', function () {
+                $.cookie('iditemeq', '');
+                modPuntoDetFila($("#txt-edit-punto-item-gv").val(),
+                                $.cookie('pcusr'),
+                                $("#txt-edit-punto-lista-gv").val()
+                                );
+                $("#<%=btnActualizaGVPunto.ClientID %>").click();
+                limpiaPuntoDetFila();
+                $("#dialog-edit-punto-grid").dialog('close');
+                $.removeCookie('iditemeq');
+            });
+
+            $("#btn-edit-punto-del-gv").on('click', function () {
+                $.cookie('iditemeq', '');
+                delPuntoDetFila($("#txt-edit-punto-item-gv").val(),
+                                $.cookie('pcusr'),
+                                $("#txt-eq-read-id").val());
+                $("#<%=btnActualizaGVPunto.ClientID %>").click();
+                limpiaPuntoDetFila();
+                $("#dialog-edit-punto-grid").dialog('close');
+                $.removeCookie('iditemeq');
             });
 
             $('#frm-edit-eq-valor').validate({

@@ -156,7 +156,7 @@ namespace MANCAL_WEB.asmx_files
             return retCom;
         }
 
-        [WebMethod]
+        [WebMethod]//REVISAR EL TEMA DESCUENTO
         public MANCAL_WEB_CLASS.Cotizacion getCotTotalMargen(Object obj, String idun) 
         {
             MANCAL_WEB_CLASS.Cotizacion coti = MANCAL_WEB_CLASS.Cotizacion.objCotiTotal(obj);
@@ -221,6 +221,27 @@ namespace MANCAL_WEB.asmx_files
         {
             bl_detalle_pro objDet = new bl_detalle_pro();
             objDet.modEquipoDetCalProd(item, cotiid, np, oc, saot, lp, estado);
+        }
+
+        [WebMethod]
+        public String getVendedorMail(String venid) 
+        {
+            bl_carga_cbo mail = new bl_carga_cbo();            
+            return mail.getMailVendedor(venid);
+        }
+
+        [WebMethod]
+        public void updPuntoDetFila(String item, String coti, String punto) 
+        {
+            bl_detalle_pro det = new bl_detalle_pro();
+            det.setPuntoDetFila(item, coti, punto);
+        }
+
+        [WebMethod]
+        public void delePuntoDetFila(String item, String coti, String equi)         
+        {
+            bl_detalle_pro det = new bl_detalle_pro();
+            det.delPuntoDetFila(item, coti, equi);
         }
     }
 }

@@ -444,7 +444,7 @@ namespace MANCAL_WEB_DL
             }
         }
 
-        public DataSet selectDatoPuntoEquipo(String cot_id, int id_equ) 
+        public DataSet selectDatoPuntoEquipo(String cot_id, int id_equ, int? id_dcc) 
         {
             DataSet ds = new DataSet();
 
@@ -464,6 +464,9 @@ namespace MANCAL_WEB_DL
 
                     cmd.Parameters.Add(new OracleParameter("P_ID_EQUIPO", OracleDbType.Int32)).Value = id_equ;
                     cmd.Parameters["P_ID_EQUIPO"].Direction = ParameterDirection.Input;
+
+                    cmd.Parameters.Add(new OracleParameter("P_DCC_ID", OracleDbType.Int32)).Value = id_dcc;
+                    cmd.Parameters["P_DCC_ID"].Direction = ParameterDirection.Input;
 
                     cmd.ExecuteNonQuery();
 
@@ -579,6 +582,56 @@ namespace MANCAL_WEB_DL
 
                     cmd.Parameters.Add(new OracleParameter("P_ESTADO", OracleDbType.Int32)).Value = estado;
                     cmd.Parameters["P_ESTADO"].Direction = ParameterDirection.Input;
+
+                    cmd.ExecuteNonQuery();
+                }
+                con.Close();
+            }
+        }
+
+        public void updatePuntoDetFila(int nitem, String idcot, String puntos) 
+        {
+            using (OracleConnection con = new OracleConnection(conStr)) 
+            {
+                con.Open();
+                String qry = "PKG_MANCAL_DMLCOT_DETPUNTO.SP_DETPUNTO_UPDATE_PTO";
+                using (OracleCommand cmd = new OracleCommand(qry, con)) 
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    cmd.Parameters.Add(new OracleParameter("P_ITEM", OracleDbType.Int32)).Value = nitem;
+                    cmd.Parameters["P_ITEM"].Direction = ParameterDirection.Input;
+
+                    cmd.Parameters.Add(new OracleParameter("P_IDCOT", OracleDbType.Varchar2)).Value = idcot;
+                    cmd.Parameters["P_IDCOT"].Direction = ParameterDirection.Input;
+
+                    cmd.Parameters.Add(new OracleParameter("P_PUNTO", OracleDbType.Varchar2)).Value = puntos;
+                    cmd.Parameters["P_PUNTO"].Direction = ParameterDirection.Input;
+
+                    cmd.ExecuteNonQuery();
+                }
+                con.Close();
+            }
+        }
+
+        public void deletePuntoDetFila(int nitem, String idcot, int nequipo) 
+        {
+            using (OracleConnection con = new OracleConnection(conStr)) 
+            {
+                con.Open();
+                String qry = "PKG_MANCAL_DMLCOT_DETPUNTO.SP_DETPUNTO_DELETE";
+                using (OracleCommand cmd = new OracleCommand(qry, con)) 
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    cmd.Parameters.Add(new OracleParameter("P_IDCOT", OracleDbType.Varchar2)).Value = idcot;
+                    cmd.Parameters["P_IDCOT"].Direction = ParameterDirection.Input;
+
+                    cmd.Parameters.Add(new OracleParameter("P_PDCC_ID", OracleDbType.Int32)).Value = nitem;
+                    cmd.Parameters["P_PDCC_ID"].Direction = ParameterDirection.Input;
+
+                    cmd.Parameters.Add(new OracleParameter("P_EQUI_ID", OracleDbType.Int32)).Value = nequipo;
+                    cmd.Parameters["P_EQUI_ID"].Direction = ParameterDirection.Input;
 
                     cmd.ExecuteNonQuery();
                 }

@@ -113,6 +113,8 @@ function getFiltroCliente(nom, cta, tip, est) {
 
 //FUNCION LLAMADA AL MOMENTO DE QUEERER AGREGAR PUNTOS AL EQUIPO
 function dialogPunto() {
+    $("#btn-in-punto-cal").toggle(true);
+    $("#btn-ed-punto-cal").toggle(false);
     $("#dialog-equipo-punto").dialog({
         modal: true,
         width: "565",
@@ -122,6 +124,35 @@ function dialogPunto() {
         buttons: {
             "Cerrar": function () {
                 $(this).dialog('close');                
+            }
+        }
+    });
+}
+
+//FUNCION LLAMADA SOLO PARA DIALOG PUNTO LIMPIO
+function dialogPuntoEdit() {
+    $("#dialog-equipo-punto").dialog({
+        modal: true,
+        width: "565",
+        height: "522",
+        //        top: "76px",
+        //        left: "375px",
+        buttons: {
+            "Cerrar": function () {
+                $(this).dialog('close');
+            }
+        }
+    });
+}
+
+//FUNCION QUE LLAMA DIALOG PARA EDITAR UN PUNTO DE LA LISTA
+function editPuntoGV() {    
+    $("#dialog-edit-punto-grid").dialog({
+        modal: true,
+        width: "565",
+        buttons: {
+            "Cerrar": function () {
+                $(this).dialog('close');
             }
         }
     });
@@ -343,7 +374,7 @@ function getListaMagniFunct(idmag) {
     });
 }
 
-function setListaPuntoEquipo(cotid, espid, funid, punto, equid) {
+function setListaPuntoEquipo(cotid, espid, funid, punto, equid, eqdccid) {
     $.ajax({
         type: "POST",
         url: "/asmx_files/js_llenado.asmx/setDatoPuntoCot",
@@ -352,6 +383,7 @@ function setListaPuntoEquipo(cotid, espid, funid, punto, equid) {
         data: JSON.stringify({ "idcot": cotid, "idesp": espid, "idfun": funid, "txtpunto": punto, "idequ": equid }),
         success: function (data, status) {
             alert("Puntos agregados");
+            limpiaEditaGridDetPunto();
         },
         error: function (data) {
             alert("Error al agregar dato de puntos");
@@ -462,6 +494,77 @@ function modValoresDetCalProd(item, cotiid, np, oc, saot, lp, estado) {
 //---------------------------------------------------//
 //---------------------------------------------------//
 
+
+//---------------------------------------------------//
+//---------------------------------------------------//
+
+//FUNCIONES DE EDICION DEL PUNTO DEL EQUIPO
+
+//---------------------------------------------------//
+//---------------------------------------------------//
+function modPuntoDetFila(item, coti, punto) {
+    $.ajax({
+        type: "POST",
+        url: "/asmx_files/js_llenado.asmx/updPuntoDetFila",
+        datatype: "json",
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify({ "item": item, "coti": coti, "punto": punto }),
+        success: function (data, status) {
+            alert("Puntos actualizados correctamente");
+        },
+        error: function (data) {
+            alert("Error al actualizar puntos");
+        }
+    });
+}
+
+function delPuntoDetFila(item, coti, equi) {
+    $.ajax({
+        type: "POST",
+        url: "/asmx_files/js_llenado.asmx/delePuntoDetFila",
+        datatype: "json",
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify({ "item": item, "coti": coti, "equi": equi }),
+        success: function (data, status) {
+            alert("Puntos borrados correctamente");
+        },
+        error: function (data) {
+            alert("Error al borrar puntos");
+        }
+    });
+} 
+
+function limpiaPuntoDetFila() {
+    $("#txt-edit-punto-item-gv").val("");
+    $("#txt-edit-punto-esp-gv").val("");
+    $("#txt-edit-punto-mag-gv").val("");
+    $("#txt-edit-punto-lista-gv").val("");
+}
+//---------------------------------------------------//
+//---------------------------------------------------//
+
+//FIN FUNCIONES DE EDICION DEL PUNTO DEL EQUIPO
+
+//---------------------------------------------------//
+//---------------------------------------------------//
+
+//FUNCION PARA OBTENER EL MAIL DEL VENDEDOR
+function getEmailVendedor(idven) {
+    $.ajax({
+        type: "POST",
+        url: "/asmx_files/js_llenado.asmx/getVendedorMail",
+        datatype: "json",
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify({ "venid": idven }),
+        success: function (data, status) {
+            $("#txtMailVendedor").val(data.d);
+        },
+        error: function (data) {
+            alert("Error al buscar mail del vendedor");
+        }
+    });
+}
+
 function validaPrecioGastoChange(oldPGasto, newPGasto) {
     if (newPGasto < oldPGasto) {
         alert("El nuevo precio de gasto no puede ser menor al actual");
@@ -507,6 +610,12 @@ function bloqueaCampoComision() {
     $("#txt-com-gasto-rep").val("0");
     $("#txt-com-tot-cos-com").val("0");
     $("#txt-com-tot-p-com").val("0");
+}
+
+function limpiaEditaGridDetPunto() {
+    $("#txt_in_punto_eq_item").val("");
+    $("#txt_in_punto_eq_id").val("");
+    $("#txt_in_punto_eq_cot").val("");
 }
 
 function desbloqueaCampoComision() {

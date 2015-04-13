@@ -293,13 +293,23 @@ namespace MANCAL_WEB_BL
             objProDet.insertDatoPuntoEquipo(cot_id, idesp, idfun, punto_in, iddc, iditm, idequ);
         }
 
-        public List<CotizacionPunto> getListaPuntoEquipo(String idcot, String idequ) 
+        public List<CotizacionPunto> getListaPuntoEquipo(String idcot, String idequ, String iddcc) 
         {
             objProDet = new dl_detalle_pro();
             List<CotizacionPunto> ls = new List<CotizacionPunto>();
             int equid = Convert.ToInt32(idequ);
+            int? dccid = 0;
 
-            DataTable dt = objProDet.selectDatoPuntoEquipo(idcot, equid).Tables["CUR_DETPUNTO"];
+            if (String.IsNullOrEmpty(iddcc))
+            {
+                dccid = null;
+            }
+            else 
+            {
+                dccid = Convert.ToInt32(iddcc);
+            }
+
+            DataTable dt = objProDet.selectDatoPuntoEquipo(idcot, equid, dccid).Tables["CUR_DETPUNTO"];
 
             foreach (DataRow dr in dt.Rows) 
             {
@@ -348,6 +358,21 @@ namespace MANCAL_WEB_BL
             int nestado = Convert.ToInt32(estado_);
 
             objProDet.updateEquipoDetCalProd(nitem, cotiid_, np_, oc_, saot_, nlp, nestado);
+        }
+
+        public void setPuntoDetFila(String itemnro, String cotiid, String detpunto) //ACTUALIZA UN ITEM DE LA LISTA DE PUNTOS DEL EQUIPO
+        {
+            objProDet = new dl_detalle_pro();
+            int nroitem = Convert.ToInt32(itemnro);
+            objProDet.updatePuntoDetFila(nroitem, cotiid, detpunto);
+        }
+
+        public void delPuntoDetFila(String item, String coti, String equipo) 
+        {
+            objProDet = new dl_detalle_pro();
+            int nroitem = Convert.ToInt32(item);
+            int nroequipo = Convert.ToInt32(equipo);
+            objProDet.deletePuntoDetFila(nroitem, coti, nroequipo);
         }
     }
 }

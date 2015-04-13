@@ -573,5 +573,31 @@ namespace MANCAL_WEB_DL
 
             return dt;
         }
+
+        public String selectMailVendedor(int idven)
+        {
+            String mv = "";
+
+            using (OracleConnection con = new OracleConnection(conStr))
+            {
+                con.Open();
+                String qry = "FN_MANCAL_GET_INFO_VENDEDOR";
+                using (OracleCommand cmd = new OracleCommand(qry, con))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    cmd.Parameters.Add(new OracleParameter("RETMAIL", OracleDbType.Varchar2, 100)).Direction = ParameterDirection.ReturnValue;
+
+                    cmd.Parameters.Add(new OracleParameter("IDVENDEDOR", OracleDbType.Int32)).Value = idven;
+                    cmd.Parameters["IDVENDEDOR"].Direction = ParameterDirection.Input;
+
+                    cmd.ExecuteNonQuery();
+
+                    mv = cmd.Parameters["RETMAIL"].Value.ToString().Trim();
+                }
+                con.Close();
+            }
+            return mv;
+        }
     }
 }

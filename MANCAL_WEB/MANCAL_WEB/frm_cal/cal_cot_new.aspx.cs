@@ -152,15 +152,15 @@ namespace MANCAL_WEB.frm_cal
             }
         }
 
-        protected void cboPlazoEntrega_Init(object sender, EventArgs e)
-        {
-            objCbo = new bl_carga_cbo();
+        //protected void cboPlazoEntrega_Init(object sender, EventArgs e)
+        //{
+        //    objCbo = new bl_carga_cbo();
 
-            foreach (var f in objCbo.lsTipoPlazoEn())
-            {
-                cboPlazoEntrega.Items.Add(new ListItem(f.nom_plazoentrega, f.idn_plazoentrega));
-            }
-        }
+        //    foreach (var f in objCbo.lsTipoPlazoEn())
+        //    {
+        //        cboPlazoEntrega.Items.Add(new ListItem(f.nom_plazoentrega, f.idn_plazoentrega));
+        //    }
+        //}
 
         protected void cboEjecTrab_Init(object sender, EventArgs e)
         {
@@ -441,10 +441,13 @@ namespace MANCAL_WEB.frm_cal
             upEquipoBusca.Update();
         }
 
-        protected void btnUpdDatoEquipo_Click(object sender, EventArgs e) 
+        protected void btnUpdDatoEquipo_Click(object sender, EventArgs e) //
         {
             String usr = System.Environment.UserName;
             getListaDetalle(usr, cboTipoTarifa.SelectedValue);
+            gvListaPunto.DataSource = null;
+            gvListaPunto.DataBind();
+            upListaPunto.Update();
             UpdatePanel5.Update();
         }
 
@@ -491,7 +494,8 @@ namespace MANCAL_WEB.frm_cal
             objDet = new bl_detalle_pro();
             String usr = System.Environment.UserName;
             String eqid = Request.Cookies["idequipocot"].Value ?? null;
-            gvListaPunto.DataSource = objDet.getListaPuntoEquipo(usr, eqid);
+            String dcc = Request.Cookies["iditemeq"].Value ?? null;
+            gvListaPunto.DataSource = objDet.getListaPuntoEquipo(usr, eqid, dcc);
             gvListaPunto.DataBind();
         }
 
