@@ -558,15 +558,9 @@
                                         </ItemTemplate>
                                     </asp:TemplateField>
 
-                                    <asp:TemplateField HeaderText="Otros">
+                                    <asp:TemplateField HeaderText="Otros / Puntos">
                                         <ItemTemplate>
                                             <a href="javascript:void(null);" id="btn-det-cal-det" onclick="seleccionDetalleCal();" style="display:inline-block;" class="ui-icon ui-icon-circle-plus"></a>
-                                        </ItemTemplate>
-                                    </asp:TemplateField>
-
-                                    <asp:TemplateField HeaderText="Puntos">
-                                        <ItemTemplate>
-                                            <a href="javascript:void(null);" id="btn-det-cal-punto" onclick="editaPuntos();" style="display:inline-block;" class="ui-icon ui-icon-circle-plus"></a>
                                         </ItemTemplate>
                                     </asp:TemplateField>
 
@@ -595,8 +589,7 @@
                                     <td>Transporte</td>
                                     <td></td>
                                     <td>
-                                        <input type="checkbox" id="chkTransporte" />
-                                        <%--<asp:CheckBox ID="chkTransporte" runat="server" />--%>
+                                        <input type="checkbox" id="chkTransporte" />                                        
                                     </td>
                                 </tr>
                                 <tr>
@@ -768,8 +761,6 @@
                                         Total Costo MO
                                     </td>
                                     <td>
-                                        <%--<asp:TextBox ID="txtTotalCostoMo" runat="server" Width="100px" 
-                                                ReadOnly="True" style="text-align: right;">0</asp:TextBox>--%>
                                         <input type="text" id="txtTotalCostoMo" name="txtTotalCostoMo" value="0" readonly="readonly" style="text-align:right; width:100px;"/>
                                     </td>
                                 </tr>
@@ -778,8 +769,6 @@
                                         Total Costo Rpto
                                     </td>
                                     <td>
-                                        <%--<asp:TextBox ID="txtTotalCostoRpto" runat="server" 
-                                                Width="100px" ReadOnly="True" style="text-align: right;">0</asp:TextBox>--%>
                                         <input type="text" id="txtTotalCostoRpto" name="txtTotalCostoRpto" value="0" readonly="readonly" style="text-align:right; width:100px;"/>
                                     </td>
                                 </tr>
@@ -788,8 +777,6 @@
                                         Mg Operacional %
                                     </td>
                                     <td>
-                                        <%--<asp:TextBox ID="txtMgOpPorc" runat="server" Width="100px" 
-                                                ReadOnly="True" style="text-align: right;">0</asp:TextBox>--%>
                                         <input type="text" id="txtMgOpPorc" name="txtMgOpPorc" value="0" readonly="readonly" style="text-align:right; width:100px;"/>
                                     </td>
                                 </tr>
@@ -798,8 +785,6 @@
                                         Mg Bruto %
                                     </td>
                                     <td>
-                                        <%--<asp:TextBox ID="txtMgBrutoPorc" runat="server" Width="100px" 
-                                                ReadOnly="True" style="text-align: right;">0</asp:TextBox>--%>
                                         <input type="text" id="txtMgBrutoPorc" name="txtMgBrutoPorc" value="0" readonly="readonly" style="text-align:right; width:100px;"/>
                                     </td>
                                 </tr>
@@ -808,8 +793,6 @@
                                         Mg Contribucion
                                     </td>
                                     <td>
-                                        <%--<asp:TextBox ID="txtMgContribucion" runat="server" 
-                                                Width="100px" ReadOnly="True" style="text-align: right;">0</asp:TextBox>--%>
                                         <input type="text" id="txtMgContribucion" name="txtMgContribucion" value="0" readonly="readonly" style="text-align:right; width:100px;"/>
                                     </td>
                                 </tr>
@@ -818,8 +801,6 @@
                                         Mg Contribucion %
                                     </td>
                                     <td>
-                                        <%--<asp:TextBox ID="txtMgContribucionPorc" runat="server" 
-                                                Width="100px" ReadOnly="True" style="text-align: right;">0</asp:TextBox>--%>
                                         <input type="text" id="txtMgContribucionPorc" name="txtMgContribucionPorc" value="0" readonly="readonly" style="text-align:right; width:100px;"/>
                                     </td>
                                 </tr>
@@ -828,8 +809,6 @@
                                         Utilidad Esperada %
                                     </td>
                                     <td>
-                                        <%--<asp:TextBox ID="txtUtilidadEspPorc" runat="server" 
-                                                Width="100px" ReadOnly="True" style="text-align: right;">0</asp:TextBox>--%>
                                         <input type="text" id="txtUtilidadEspPorc" name="txtUtilidadEspPorc" value="0" readonly="readonly" style="text-align:right; width:100px;"/>
                                     </td>
                                 </tr>
@@ -864,14 +843,11 @@
                                         Tipo Moneda
                                     </td>
                                     <td>
-                                        <%--<asp:TextBox ID="txtTipoMoneda" runat="server" ReadOnly="True"></asp:TextBox>--%>
                                         <input type="text" id="txtTipoMoneda" name="txtTipoMoneda" readonly="readonly"/>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td colspan="2" style="text-align:center;">
-                                        <%--<asp:Button ID="btnCalcular" runat="server" Text="Calcular" Width="90px" 
-                                            onclick="btnCalcular_Click" />--%>
                                         <input type="button" id="btnCalcularTotal" value="Calcular" />
                                     </td>
                                 </tr>
@@ -886,8 +862,6 @@
                                         Neto
                                     </td>
                                     <td>
-                                        <%--<asp:TextBox ID="txtNeto" runat="server" Width="100px" 
-                                                ReadOnly="True" style="text-align: right;">0</asp:TextBox>--%>
                                         <input type="text" id="txtNeto" name="txtNeto" value="0" readonly="readonly" style="text-align:right; width:100px;"/>
                                     </td>
                                 </tr>
@@ -896,8 +870,6 @@
                                         Descuento
                                     </td>
                                     <td>
-                                        <%--<asp:TextBox ID="txtDcto" runat="server" Width="100px" 
-                                                Enabled="False" style="text-align: right;">0</asp:TextBox>--%>
                                         <input type="text" id="txtDcto" name="txtDcto" value="0" style="text-align:right; width:100px;" disabled="disabled"/>
                                     </td>
                                 </tr>
@@ -906,8 +878,6 @@
                                         Neto Dcto
                                     </td>
                                     <td>
-                                        <%--<asp:TextBox ID="txtNetoDcto" runat="server" Width="100px" 
-                                                ReadOnly="True" style="text-align: right;">0</asp:TextBox>--%>
                                         <input type="text" id="txtNetoDcto" name="txtNetoDcto" value="0" readonly="readonly" style="text-align:right; width:100px;"/>
                                     </td>
                                 </tr>
@@ -916,8 +886,6 @@
                                         IVA
                                     </td>
                                     <td>
-                                        <%--<asp:TextBox ID="txtIva" runat="server" Width="100px" 
-                                                ReadOnly="True" style="text-align: right;">0</asp:TextBox>--%>
                                         <input type="text" id="txtIva" name="txtIva" value="0" readonly="readonly" style="text-align:right; width:100px;"/>
                                     </td>
                                 </tr>
@@ -926,8 +894,6 @@
                                         Total
                                     </td>
                                     <td>
-                                        <%--<asp:TextBox ID="txtTotal" runat="server" Width="100px" 
-                                                ReadOnly="True" style="text-align: right;">0</asp:TextBox>--%>
                                         <input type="text" id="txtTotal" name="txtTotal" value="0" readonly="readonly" style="text-align:right; width:100px;"/>
                                     </td>
                                 </tr>
@@ -1168,21 +1134,7 @@
                 </asp:UpdatePanel>
             </div>
         </div>
-    </div>
-
-    <%--SELECCION DE EQUIPO A COTIZAR --%>      
-    
-    <%--DETALLE DE EQUIPOS AGREGADOS--%>
-    
-    <%-- CUADROS DE DIALOGO PARA TRANSPORTE Y COMISION --%>
-
-    <%--CALCULO DE VALORES--%>    
-
-    <%--NOTAS DE LA COTIZACION--%>
-
-    <%--PANEL COMENTARIOS FACTURACION --%>    
-
-    <%--PANEL GARANTIA Y LUGAR DE EJECUCION --%>    
+    </div>   
 
     <%--DIV PARA ELIMINAR EL ARCHIVO SELECCIONADO --%>
     <div id="dialog-archivo" title="Quitar Archivo" style="display:none;">
@@ -1483,8 +1435,6 @@
         <asp:DropDownList ID="cbo_magnitud" runat="server" OnInit="cbo_punto_magnitud_Init">
         </asp:DropDownList>
         <br /><br />
-        <%--<asp:DropDownList ID="cbo_funcion" runat="server">
-        </asp:DropDownList>--%>
         Funcion:<br />
         <select id="cbo_funcion" name="cbo_funcion"></select>
         <br /><br />
@@ -1564,7 +1514,13 @@
 
                         <asp:TemplateField HeaderText="Editar">
                             <ItemTemplate>
-                                <a href="javascript:void(null);" id="btn-det-cal-edita-punto" onclick="editaPuntoDet();" style="display:inline-block;" class="ui-icon ui-icon-transferthick-e-w"></a>
+                                <a href="javascript:void(null);" id="btn-det-cal-edita-punto" onclick="editaPuntoDet();" class="ui-icon ui-icon-transferthick-e-w"></a>                                
+                            </ItemTemplate>
+                        </asp:TemplateField>
+
+                        <asp:TemplateField HeaderText="Editar">
+                            <ItemTemplate>
+                                <a href="javascript:void(null);" id="btn-det-cal-edita-punto-gv" onclick="editaPuntoDetGv();" class="ui-icon ui-icon-transferthick-e-w"></a>
                             </ItemTemplate>
                         </asp:TemplateField>
 
@@ -1808,6 +1764,7 @@
                 else return eval("document." + objId);
             }
 
+            /*DOCUMENT READY*/
             $(document).ready(function () {
                 $(".td").css("text-align", "left");
                 $(".td").css("font-weight", "bold");
@@ -1817,6 +1774,7 @@
                 transporteVal();
                 bloqueaCampoComision();
                 $("#btn-ed-punto-cal").toggle(false);
+                //$("#btn-det-cal-edita-punto-gv").toggle(false);
             });
 
             var itemnro;
@@ -1858,9 +1816,13 @@
             }
 
             var dgcItem = "";
+            var dgcEquId = "";
+            var dgcItemCal = "";
             function dataGridCal() {
                 $('.cssDetEq').on('click', function () {
+                    dgcEquId = $('.equipoid_', $(this).closest('tr')).html();
                     dgcItem = $('.equipoitem_', $(this).closest('tr')).html();
+                    dgcItemCal = $('.equipocalid_', $(this).closest('tr')).html();
                     $("#<%=cbo_eq_dato_cal_tt.ClientID %>").val($('.equipotrabajoid_', $(this).closest('tr')).html());
                     $("#<%=cbo_eq_dato_cal_est.ClientID %>").val($('.equipodet_idn_', $(this).closest('tr')).html());
                     $("#<%=cbo_eq_dato_cal_lp.ClientID %>").val($('.equipolp_idn_', $(this).closest('tr')).html());
@@ -1890,22 +1852,14 @@
                 });
             }
 
-            function dataGridCalPunto() {//POSIBLEMENTE BORRAR
-                $('.cssDetEq').on('click', function () {
-                    //$("#txt_in_punto_eq_cot").val($('.equipocotid_', $(this).closest('tr')).html());
-                    //$("#txt_in_punto_eq_id").val($('.equipoid_', $(this).closest('tr')).html());
-                    //$("#txt_in_punto_eq_item").val($('.equipoitem_', $(this).closest('tr')).html());
-                    $.cookie('iditemeq', $('.equipoitem_', $(this).closest('tr')).html());
-                    $.cookie('idequipocot', $('.equipoid_', $(this).closest('tr')).html());                    
-                });
-            }
-
+            var dgpEditIdEq = "";
             function dataGridPunto() {
                 $('.gvListaPuntocss').on('click', function () {
                     $("#txt-edit-punto-item-gv").val($('.cp_id_', $(this).closest('tr')).html());
                     $("#txt-edit-punto-esp-gv").val($('.cp_no_esp_', $(this).closest('tr')).html());
                     $("#txt-edit-punto-mag-gv").val($('.cp_no_mag_', $(this).closest('tr')).html());
                     $("#txt-edit-punto-lista-gv").val($('.cp_punto_', $(this).closest('tr')).html());
+                    dgpEditIdEq = $('.cp_id_equipo_', $(this).closest('tr')).html();
                 });
             }
 
@@ -1990,9 +1944,15 @@
                 });
             }
 
-            function muestraEditPuntos() {
+            function muestraEditPuntos() {//<<<<<<<<<================================<<<<<<<=============
+                $.cookie('flag_inpunto', '2');
                 $("#btn-in-punto-cal").toggle(false);
+                //$("#btn-det-cal-edita-punto").toggle(false);
                 $("#btn-ed-punto-cal").toggle(true);
+                //$("#btn-det-cal-edita-punto-gv").toggle(true);
+                $.cookie('idequipocot', dgcEquId);
+                $.cookie('iditemeq', dgcItem);
+                $("#<%=btnActualizaGVPunto.ClientID %>").click();
                 dialogPuntoEdit();
             }
             /*****************/
@@ -2059,24 +2019,16 @@
                 });
             }
 
-            //FUNCION QUE EDITA PUNTOS YA INGRESADOS
-            function editaPuntos() {//POSIBLEMENTE BORRAR
-                //EDITAR PUNTOS YA INGRESADOS
-                dataGridCalPunto();
-                $("#btn-in-punto-cal").toggle(false);
-                $("#btn-ed-punto-cal").toggle(true);
-                //dialogPuntoEdit();
-                alert($("#edit_eq_item").val() + " " + $("#edit_eq_id_eq").val() + " " + $.cookie('pcusr'));
-                //$.cookie('iddccpunto', $("#txt-in-punto-eq-item").val());
-                //$.cookie('idequipocot', $("#txt-in-punto-eq-id").val());
-                //dialogPunto();
-                //$("#<%=btnActualizaGVPunto.ClientID %>").click();            
-            }
-
             //EDITA PUNTOS CUANDO SE ESTAN INGRESANDO
             function editaPuntoDet() {
-                dataGridPunto();
-                editPuntoGV();
+                dataGridPunto();//SET DE DATOS PARA MOSTRAR EN EL EDITOR DE PUNTOS
+                editPuntoGV();//FUNCION QUE LLAMA AL DIALOG PARA EDITAR O ELIMINAR PUNTOS
+            }
+
+            function editaPuntoDetGv() {
+                //FUNCION PARA EDITAR UN PUNTO EN ESPECIFICO DESDE EL GRID EQUIPOS
+                dataGridPunto(); //SET DE DATOS PARA MOSTRAR EN EL EDITOR DE PUNTOS
+                editPuntoGV(); //FUNCION QUE LLAMA AL DIALOG PARA EDITAR O ELIMINAR PUNTOS
             }
 
             $("#<%=txtFacturacion.ClientID %>").on('click', function () {
@@ -2348,6 +2300,7 @@
 
             $("#btn-in-punto-cal").on('click', function () {
                 $.cookie('iditemeq', '');
+                $.cookie('flag_inpunto', '1');
                 setListaPuntoEquipo($.cookie('pcusr'),
                                     $("#<%=cbo_magnitud.ClientID %>").val(),
                                     $("#cbo_funcion").val(),
@@ -2359,6 +2312,22 @@
                 $("#cbo_funcion").val("0");
                 $("#txt-in-punto-cal").val("");
                 $.removeCookie('iditemeq');
+            });
+
+            //BOTON QUE ESTABA OCULTO QUE SOLO SE MUESTRA CUANDO SE EDITA PUNTOS DESDE EL DETALLE COTIZACION
+            $("#btn-ed-punto-cal").on('click', function () {                
+                $.cookie('flag_inpunto', '2');
+                modInsDatoPuntoCot($.cookie('pcusr'),
+                                   $("#<%=cbo_magnitud.ClientID %>").val(),
+                                   $("#cbo_funcion").val(),
+                                   $("#txt-in-punto-cal").val(),
+                                   dgcItemCal,
+                                   dgcItem,
+                                   dgcEquId);
+                $("#<%=btnActualizaGVPunto.ClientID %>").click();
+                $("#<%=cbo_magnitud.ClientID %>").val("0");
+                $("#cbo_funcion").val("0");
+                $("#txt-in-punto-cal").val("");             
             });
 
             $("#btn-edit-punto-upd-gv").on('click', function () {
@@ -2375,9 +2344,12 @@
 
             $("#btn-edit-punto-del-gv").on('click', function () {
                 $.cookie('iditemeq', '');
+
+                var eq_id = (($("#txt-eq-read-id").val() == "" || $("#txt-eq-read-id").val() == null) ? dgpEditIdEq : $("#txt-eq-read-id").val());
+
                 delPuntoDetFila($("#txt-edit-punto-item-gv").val(),
                                 $.cookie('pcusr'),
-                                $("#txt-eq-read-id").val());
+                                eq_id);
                 $("#<%=btnActualizaGVPunto.ClientID %>").click();
                 limpiaPuntoDetFila();
                 $("#dialog-edit-punto-grid").dialog('close');

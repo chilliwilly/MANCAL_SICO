@@ -243,5 +243,12 @@ namespace MANCAL_WEB.asmx_files
             bl_detalle_pro det = new bl_detalle_pro();
             det.delPuntoDetFila(item, coti, equi);
         }
+
+        [WebMethod]
+        public void insModDatoPuntoCot(String idcot, String idesp, String idfun, String txtpunto, String iddcc, String iddcitem, String idequ)
+        {
+            bl_detalle_pro objDetPro = new bl_detalle_pro();
+            objDetPro.setDatoPuntoEquipo(idcot, idesp, idfun, txtpunto, iddcc, iddcitem, idequ);
+        }
     }
 }

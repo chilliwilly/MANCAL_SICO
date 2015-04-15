@@ -495,8 +495,21 @@ namespace MANCAL_WEB.frm_cal
             String usr = System.Environment.UserName;
             String eqid = Request.Cookies["idequipocot"].Value ?? null;
             String dcc = Request.Cookies["iditemeq"].Value ?? null;
+            String fl_inpunto = Request.Cookies["flag_inpunto"].Value;
+            
             gvListaPunto.DataSource = objDet.getListaPuntoEquipo(usr, eqid, dcc);
             gvListaPunto.DataBind();
+
+            if (fl_inpunto.Equals("1")) 
+            {
+                gvListaPunto.Columns[10].Visible = true;
+                gvListaPunto.Columns[11].Visible = false;
+            }
+            else if (fl_inpunto.Equals("2")) 
+            {
+                gvListaPunto.Columns[10].Visible = false;
+                gvListaPunto.Columns[11].Visible = true;
+            }
         }
 
         protected void btnActualizaGVPunto_Click(object sender, EventArgs e) 

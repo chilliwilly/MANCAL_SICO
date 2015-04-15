@@ -111,16 +111,16 @@ function getFiltroCliente(nom, cta, tip, est) {
     });
 }
 
-//FUNCION LLAMADA AL MOMENTO DE QUEERER AGREGAR PUNTOS AL EQUIPO
+//FUNCION LLAMADA AL MOMENTO DE QUEERER AGREGAR PUNTOS AL EQUIPO NUEVO
 function dialogPunto() {
     $("#btn-in-punto-cal").toggle(true);
+    //$("#btn-det-cal-edita-punto").toggle(true);
     $("#btn-ed-punto-cal").toggle(false);
+    //$("#btn-det-cal-edita-punto-gv").toggle(false);
     $("#dialog-equipo-punto").dialog({
         modal: true,
         width: "565",
         height: "522",
-//        top: "76px",
-//        left: "375px",
         buttons: {
             "Cerrar": function () {
                 $(this).dialog('close');                
@@ -129,14 +129,12 @@ function dialogPunto() {
     });
 }
 
-//FUNCION LLAMADA SOLO PARA DIALOG PUNTO LIMPIO
+//FUNCION LLAMADA SOLO PARA DIALOG PUNTO LIMPIO LLAMADO DESDE GRID EQUIPOS
 function dialogPuntoEdit() {
     $("#dialog-equipo-punto").dialog({
         modal: true,
         width: "565",
         height: "522",
-        //        top: "76px",
-        //        left: "375px",
         buttons: {
             "Cerrar": function () {
                 $(this).dialog('close');
@@ -187,9 +185,6 @@ function equipoCal_Total(obj, id_sys, id_tarifa, f_cot) {
         data: JSON.stringify({ "obj": obj, "id_sys": id_sys, "id_tarifa": id_tarifa, "f_cot": f_cot }),
         success: function (data, status) {
             var arr = data.d;
-            //$.each(arr, function (index, a) {
-            //    alert(a);
-            //});
             if (arr[1] == null || arr[1] == "") {
                 $("#txt-eq-read-pventa").val(arr[0]);
             } else {
@@ -374,6 +369,7 @@ function getListaMagniFunct(idmag) {
     });
 }
 
+//FUNCION UTILIZADA CUANDO SE INSERTAN PUNTOS PRO PRIMERA VEZ
 function setListaPuntoEquipo(cotid, espid, funid, punto, equid, eqdccid) {
     $.ajax({
         type: "POST",
@@ -381,6 +377,24 @@ function setListaPuntoEquipo(cotid, espid, funid, punto, equid, eqdccid) {
         datatype: "json",
         contentType: "application/json; charset=utf-8",
         data: JSON.stringify({ "idcot": cotid, "idesp": espid, "idfun": funid, "txtpunto": punto, "idequ": equid }),
+        success: function (data, status) {
+            alert("Puntos agregados");
+            limpiaEditaGridDetPunto();
+        },
+        error: function (data) {
+            alert("Error al agregar dato de puntos");
+        }
+    });
+}
+
+//FUNCION QUE SE UTILIZA PARA AGREGAR PUNTOS LUEGO DE EDITAR EL DETALLE COTIZACION
+function modInsDatoPuntoCot(idcot, idesp, idfun, txtpunto, iddcc, iddcitem, idequ) {
+    $.ajax({
+        type: "POST",
+        url: "/asmx_files/js_llenado.asmx/insModDatoPuntoCot",
+        datatype: "json",
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify({ "idcot": idcot, "idesp": idesp, "idfun": idfun, "txtpunto": txtpunto, "iddcc": iddcc, "iddcitem": iddcitem, "idequ": idequ }),
         success: function (data, status) {
             alert("Puntos agregados");
             limpiaEditaGridDetPunto();
@@ -518,6 +532,7 @@ function modPuntoDetFila(item, coti, punto) {
     });
 }
 
+//FUNCION QUE ELIMINA EQUIPO PUNTO DEL DETALLE
 function delPuntoDetFila(item, coti, equi) {
     $.ajax({
         type: "POST",
