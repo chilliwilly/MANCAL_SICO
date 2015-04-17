@@ -280,6 +280,7 @@ namespace MANCAL_WEB_BL
             return ls;
         }
 
+        //UTILIZADO POR WEBMETHOD setDatoPuntoCot
         public void setDatoPuntoEquipo(String cot_id, String esp_id, String fun_id, String punto_in, String id_detcot, String id_item, String equ_id) 
         {
             objProDet = new dl_detalle_pro();
@@ -360,19 +361,21 @@ namespace MANCAL_WEB_BL
             objProDet.updateEquipoDetCalProd(nitem, cotiid_, np_, oc_, saot_, nlp, nestado);
         }
 
-        public void setPuntoDetFila(String itemnro, String cotiid, String detpunto) //ACTUALIZA UN ITEM DE LA LISTA DE PUNTOS DEL EQUIPO
+        public void setPuntoDetFila(String itemnro, String cotiid, String detpunto, String indcc) //ACTUALIZA UN ITEM DE LA LISTA DE PUNTOS DEL EQUIPO
         {
             objProDet = new dl_detalle_pro();
             int nroitem = Convert.ToInt32(itemnro);
-            objProDet.updatePuntoDetFila(nroitem, cotiid, detpunto);
+            int dccin = Convert.ToInt32(indcc);
+            objProDet.updatePuntoDetFila(nroitem, cotiid, detpunto, dccin);
         }
 
-        public void delPuntoDetFila(String item, String coti, String equipo) 
+        public void delPuntoDetFila(String item, String coti, String equipo, String dccin) 
         {
             objProDet = new dl_detalle_pro();
             int nroitem = Convert.ToInt32(item);
             int nroequipo = Convert.ToInt32(equipo);
-            objProDet.deletePuntoDetFila(nroitem, coti, nroequipo);
+            int in_dcc = Convert.ToInt32(dccin);
+            objProDet.deletePuntoDetFila(nroitem, coti, nroequipo, in_dcc);
         }
     }
 }

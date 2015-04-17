@@ -1692,6 +1692,7 @@
                         <td>Item</td>
                         <td>
                             <input type="text" id="txt-edit-punto-item-gv" value="" class="text ui-widget-content ui-corner-all" readonly="readonly"/>
+                            <input type="text" id="txt-edit-punto-dccid-gv" value="" style="display:none;" />
                         </td>
                     </tr>
                     <tr>
@@ -1856,6 +1857,7 @@
             function dataGridPunto() {
                 $('.gvListaPuntocss').on('click', function () {
                     $("#txt-edit-punto-item-gv").val($('.cp_id_', $(this).closest('tr')).html());
+                    $("#txt-edit-punto-dccid-gv").val($('.cp_cot_id_', $(this).closest('tr')).html());
                     $("#txt-edit-punto-esp-gv").val($('.cp_no_esp_', $(this).closest('tr')).html());
                     $("#txt-edit-punto-mag-gv").val($('.cp_no_mag_', $(this).closest('tr')).html());
                     $("#txt-edit-punto-lista-gv").val($('.cp_punto_', $(this).closest('tr')).html());
@@ -1903,14 +1905,22 @@
                         },
                         "Agregar": function () {
                             //$(this).dialog('close');
-                            setEquipoCal();
-                            equipoCal_Guarda(objEqJs);
-                            limpiaEquipoDialog();
-                            $("#<%=cbo_eq_read_lprod.ClientID %>").val("N");
-                            $("#<%= cbo_eq_read_estado.ClientID %>").val("1");
-                            $("#<%=cbo_eq_read_trabajo.ClientID %>").val("8");
-                            $("#<%=btnUpdDatoEquipo.ClientID %>").click();                            
-                            $(this).dialog('close');
+                            if (!validaNparteNserie()) {
+                                if (!validaIngresoDetEquipo()) {
+                                    setEquipoCal();
+                                    equipoCal_Guarda(objEqJs);
+                                    limpiaEquipoDialog();
+                                    $("#<%=cbo_eq_read_lprod.ClientID %>").val("N");
+                                    $("#<%= cbo_eq_read_estado.ClientID %>").val("1");
+                                    $("#<%=cbo_eq_read_trabajo.ClientID %>").val("8");
+                                    $("#<%=btnUpdDatoEquipo.ClientID %>").click();
+                                    $(this).dialog('close');
+                                } else {
+                                    alert("El equipo que esta ingresando ya existe en el detalle verifique el Nro de Parte que esta tratando de ingresar");
+                                }
+                            } else {
+                                alert("El numero de parte o el numero de serie no puede quedar en blanco");
+                            }
                         },
                         "Cerrar": function () {
                             $(this).dialog('close');
@@ -2298,15 +2308,16 @@
                 getMargenTotalCot(objInfoCot, "CAL");
             });
 
+            //FUNCION DE AGREGAR PUNTOS CUANDO SE INGRESA EQUIPO AL DETALLE COTIZACION
             $("#btn-in-punto-cal").on('click', function () {
-                $.cookie('iditemeq', '');
+                $.cookie('iditemeq', getNumeroFilaGVDetCot());
                 $.cookie('flag_inpunto', '1');
                 setListaPuntoEquipo($.cookie('pcusr'),
                                     $("#<%=cbo_magnitud.ClientID %>").val(),
                                     $("#cbo_funcion").val(),
                                     $("#txt-in-punto-cal").val(),
                                     $("#txt-eq-read-id").val(),
-                                    $("#txt-in-punto-eq-item").val());
+                                    $("#txt_in_punto_eq_item").val());
                 $("#<%=btnActualizaGVPunto.ClientID %>").click();
                 $("#<%=cbo_magnitud.ClientID %>").val("0");
                 $("#cbo_funcion").val("0");
@@ -2315,7 +2326,8 @@
             });
 
             //BOTON QUE ESTABA OCULTO QUE SOLO SE MUESTRA CUANDO SE EDITA PUNTOS DESDE EL DETALLE COTIZACION
-            $("#btn-ed-punto-cal").on('click', function () {                
+            $("#btn-ed-punto-cal").on('click', function () {
+                $.cookie('iditemeq', $("#txt-edit-punto-dccid-gv").val()); //txt-edit-punto-item-gv
                 $.cookie('flag_inpunto', '2');
                 modInsDatoPuntoCot($.cookie('pcusr'),
                                    $("#<%=cbo_magnitud.ClientID %>").val(),
@@ -2327,15 +2339,16 @@
                 $("#<%=btnActualizaGVPunto.ClientID %>").click();
                 $("#<%=cbo_magnitud.ClientID %>").val("0");
                 $("#cbo_funcion").val("0");
-                $("#txt-in-punto-cal").val("");             
+                $("#txt-in-punto-cal").val("");
+                $.removeCookie('iditemeq');
             });
 
             $("#btn-edit-punto-upd-gv").on('click', function () {
-                $.cookie('iditemeq', '');
+                $.cookie('iditemeq', $("#txt-edit-punto-dccid-gv").val());
                 modPuntoDetFila($("#txt-edit-punto-item-gv").val(),
                                 $.cookie('pcusr'),
-                                $("#txt-edit-punto-lista-gv").val()
-                                );
+                                $("#txt-edit-punto-lista-gv").val(),
+                                $("#txt-edit-punto-dccid-gv").val());
                 $("#<%=btnActualizaGVPunto.ClientID %>").click();
                 limpiaPuntoDetFila();
                 $("#dialog-edit-punto-grid").dialog('close');
@@ -2343,13 +2356,14 @@
             });
 
             $("#btn-edit-punto-del-gv").on('click', function () {
-                $.cookie('iditemeq', '');
+                $.cookie('iditemeq', $("#txt-edit-punto-dccid-gv").val());
 
                 var eq_id = (($("#txt-eq-read-id").val() == "" || $("#txt-eq-read-id").val() == null) ? dgpEditIdEq : $("#txt-eq-read-id").val());
 
                 delPuntoDetFila($("#txt-edit-punto-item-gv").val(),
                                 $.cookie('pcusr'),
-                                eq_id);
+                                eq_id,
+                                $("#txt-edit-punto-dccid-gv").val());
                 $("#<%=btnActualizaGVPunto.ClientID %>").click();
                 limpiaPuntoDetFila();
                 $("#dialog-edit-punto-grid").dialog('close');
@@ -2371,7 +2385,7 @@
                         number: true
                     }
                 }
-            });
+            });            
         </script>
 
 </asp:Content>

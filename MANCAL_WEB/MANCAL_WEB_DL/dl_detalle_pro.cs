@@ -589,7 +589,7 @@ namespace MANCAL_WEB_DL
             }
         }
 
-        public void updatePuntoDetFila(int nitem, String idcot, String puntos) 
+        public void updatePuntoDetFila(int nitem, String idcot, String puntos, int indcc) 
         {
             using (OracleConnection con = new OracleConnection(conStr)) 
             {
@@ -608,13 +608,16 @@ namespace MANCAL_WEB_DL
                     cmd.Parameters.Add(new OracleParameter("P_PUNTO", OracleDbType.Varchar2)).Value = puntos;
                     cmd.Parameters["P_PUNTO"].Direction = ParameterDirection.Input;
 
+                    cmd.Parameters.Add(new OracleParameter("P_DCC_ID", OracleDbType.Varchar2)).Value = indcc;
+                    cmd.Parameters["P_DCC_ID"].Direction = ParameterDirection.Input;
+
                     cmd.ExecuteNonQuery();
                 }
                 con.Close();
             }
         }
 
-        public void deletePuntoDetFila(int nitem, String idcot, int nequipo) 
+        public void deletePuntoDetFila(int nitem, String idcot, int nequipo, int indcc) 
         {
             using (OracleConnection con = new OracleConnection(conStr)) 
             {
@@ -632,6 +635,9 @@ namespace MANCAL_WEB_DL
 
                     cmd.Parameters.Add(new OracleParameter("P_EQUI_ID", OracleDbType.Int32)).Value = nequipo;
                     cmd.Parameters["P_EQUI_ID"].Direction = ParameterDirection.Input;
+
+                    cmd.Parameters.Add(new OracleParameter("P_DCC_ID", OracleDbType.Int32)).Value = indcc;
+                    cmd.Parameters["P_DCC_ID"].Direction = ParameterDirection.Input;
 
                     cmd.ExecuteNonQuery();
                 }

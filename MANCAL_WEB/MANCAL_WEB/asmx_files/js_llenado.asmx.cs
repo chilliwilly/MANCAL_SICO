@@ -193,11 +193,11 @@ namespace MANCAL_WEB.asmx_files
             return ls;
         }
 
-        [WebMethod]
-        public void setDatoPuntoCot(String idcot, String idesp, String idfun, String txtpunto, String idequ) 
+        [WebMethod]//UTILIZADO POR bl_detalle_pro.setDatoPuntoEquipo
+        public void setDatoPuntoCot(String idcot, String idesp, String idfun, String txtpunto, String iddetcot, String iditem, String idequ) 
         {
             bl_detalle_pro objDetPro = new bl_detalle_pro();
-            objDetPro.setDatoPuntoEquipo(idcot, idesp, idfun, txtpunto, null, null, idequ);
+            objDetPro.setDatoPuntoEquipo(idcot, idesp, idfun, txtpunto, iddetcot, iditem, idequ);
         }
 
         [WebMethod]
@@ -231,17 +231,17 @@ namespace MANCAL_WEB.asmx_files
         }
 
         [WebMethod]
-        public void updPuntoDetFila(String item, String coti, String punto) 
+        public void updPuntoDetFila(String item, String coti, String punto, String indcc) 
         {
             bl_detalle_pro det = new bl_detalle_pro();
-            det.setPuntoDetFila(item, coti, punto);
+            det.setPuntoDetFila(item, coti, punto, indcc);
         }
 
-        [WebMethod]
-        public void delePuntoDetFila(String item, String coti, String equi)         
+        [WebMethod]//UTILIZADO POR AJAX delPuntoDetFila 
+        public void delePuntoDetFila(String item, String coti, String equi, String dccid)         
         {
             bl_detalle_pro det = new bl_detalle_pro();
-            det.delPuntoDetFila(item, coti, equi);
+            det.delPuntoDetFila(item, coti, equi, dccid);
         }
 
         [WebMethod]

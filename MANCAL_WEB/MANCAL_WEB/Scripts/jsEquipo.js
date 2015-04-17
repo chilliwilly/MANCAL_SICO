@@ -369,14 +369,15 @@ function getListaMagniFunct(idmag) {
     });
 }
 
-//FUNCION UTILIZADA CUANDO SE INSERTAN PUNTOS PRO PRIMERA VEZ
+//FUNCION UTILIZADA CUANDO SE INSERTAN PUNTOS PRO PRIMERA VEZ WEBMETHOD setDatoPuntoCot getNumeroFilaGVDetCot
 function setListaPuntoEquipo(cotid, espid, funid, punto, equid, eqdccid) {
+    var nroFila = getNumeroFilaGVDetCot();
     $.ajax({
         type: "POST",
         url: "/asmx_files/js_llenado.asmx/setDatoPuntoCot",
         datatype: "json",
         contentType: "application/json; charset=utf-8",
-        data: JSON.stringify({ "idcot": cotid, "idesp": espid, "idfun": funid, "txtpunto": punto, "idequ": equid }),
+        data: JSON.stringify({ "idcot": cotid, "idesp": espid, "idfun": funid, "txtpunto": punto, "iddetcot": nroFila, "iditem": nroFila, "idequ": equid }),
         success: function (data, status) {
             alert("Puntos agregados");
             limpiaEditaGridDetPunto();
@@ -387,7 +388,7 @@ function setListaPuntoEquipo(cotid, espid, funid, punto, equid, eqdccid) {
     });
 }
 
-//FUNCION QUE SE UTILIZA PARA AGREGAR PUNTOS LUEGO DE EDITAR EL DETALLE COTIZACION
+//FUNCION QUE SE UTILIZA PARA AGREGAR PUNTOS LUEGO DE EDITAR EL DETALLE COTIZACION WEBMETHOD insModDatoPuntoCot
 function modInsDatoPuntoCot(idcot, idesp, idfun, txtpunto, iddcc, iddcitem, idequ) {
     $.ajax({
         type: "POST",
@@ -511,18 +512,16 @@ function modValoresDetCalProd(item, cotiid, np, oc, saot, lp, estado) {
 
 //---------------------------------------------------//
 //---------------------------------------------------//
-
-//FUNCIONES DE EDICION DEL PUNTO DEL EQUIPO
-
+//    FUNCIONES DE EDICION DEL PUNTO DEL EQUIPO      //
 //---------------------------------------------------//
 //---------------------------------------------------//
-function modPuntoDetFila(item, coti, punto) {
+function modPuntoDetFila(item, coti, punto, dcc) {
     $.ajax({
         type: "POST",
         url: "/asmx_files/js_llenado.asmx/updPuntoDetFila",
         datatype: "json",
         contentType: "application/json; charset=utf-8",
-        data: JSON.stringify({ "item": item, "coti": coti, "punto": punto }),
+        data: JSON.stringify({ "item": item, "coti": coti, "punto": punto, "indcc": dcc }),
         success: function (data, status) {
             alert("Puntos actualizados correctamente");
         },
@@ -533,13 +532,13 @@ function modPuntoDetFila(item, coti, punto) {
 }
 
 //FUNCION QUE ELIMINA EQUIPO PUNTO DEL DETALLE
-function delPuntoDetFila(item, coti, equi) {
+function delPuntoDetFila(item, coti, equi, dcc) {
     $.ajax({
         type: "POST",
         url: "/asmx_files/js_llenado.asmx/delePuntoDetFila",
         datatype: "json",
         contentType: "application/json; charset=utf-8",
-        data: JSON.stringify({ "item": item, "coti": coti, "equi": equi }),
+        data: JSON.stringify({ "item": item, "coti": coti, "equi": equi, "dccid": dcc }),
         success: function (data, status) {
             alert("Puntos borrados correctamente");
         },
@@ -557,9 +556,7 @@ function limpiaPuntoDetFila() {
 }
 //---------------------------------------------------//
 //---------------------------------------------------//
-
-//FIN FUNCIONES DE EDICION DEL PUNTO DEL EQUIPO
-
+//FIN FUNCIONES DE EDICION DEL PUNTO DEL EQUIPO      //
 //---------------------------------------------------//
 //---------------------------------------------------//
 
@@ -592,6 +589,44 @@ function validaPrecioMOChange() {
         alert("El Precio MO no puede ser menor al precio base (" + $("#edit_eq_torig").val() + ")");
         $("#edit_eq_pmo").val($("#edit_eq_torig").val());
     }
+}
+
+function validaNparteNserie() {
+    var fl_valida;
+    if (($("#txt-eq-read-np").val() == "" || $("#txt-eq-read-np").val() == null) || ($("#txt-eq-read-ns").val() == "" || $("#txt-eq-read-ns").val() == null)) {
+        fl_valida = true;
+    } else {
+        fl_valida = false;
+    }
+    return fl_valida;
+}
+
+function validaIngresoDetEquipo() {
+    var cotid, equid, nropa, fl_inequ;
+    $('.cssDetEq').each(function () {
+        cotid = $('.equipocotid_', $(this).closest('tr')).html();
+        equid = $('.equipoid_', $(this).closest('tr')).html();
+        nropa = $('.equiponparte_', $(this).closest('tr')).html();
+
+        if (cotid == $.cookie('pcusr') && equid == $("#txt-eq-read-id").val() && nropa == $("#txt-eq-read-np").val()) {            
+            fl_inequ = true;
+        } else {
+            fl_inequ = false;
+        }
+    });
+    return fl_inequ;
+}
+
+function getNumeroFilaGVDetCot() {
+    var nrofila = 1;
+    if (!$('.cssDetEq').length) {
+        nrofila = 1;
+    } else {
+        $('.cssDetEq').each(function () {
+            nrofila = nrofila + 1;
+        });
+    }
+    return nrofila;
 }
 
 function bloqueaCampoComision() {
