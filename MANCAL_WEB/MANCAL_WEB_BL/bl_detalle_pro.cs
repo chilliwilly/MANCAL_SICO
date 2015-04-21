@@ -178,6 +178,7 @@ namespace MANCAL_WEB_BL
             return cal_calculo;
         }
 
+        //CONVIERTE DATOS DEL DETALLE Y DETALLE CAL EN XML PARA SER LEIDOS EN EL PROCEDIMIENTO DE INSERT
         public void setDetCotCal(CotizacionEquipo coteq) 
         {
             objProDet = new dl_detalle_pro();

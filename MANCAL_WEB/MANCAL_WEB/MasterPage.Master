@@ -10,9 +10,9 @@
     <script type="text/javascript" src="//code.jquery.com/jquery-1.10.2.js"></script>
     <script type="text/javascript" src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
     <%--<script type="text/javascript" src="//ajax.aspnetcdn.com/ajax/jquery.validate/1.11.0/jquery.validate.js"></script>--%>
-    <script type="text/javascript" src="../Scripts/jquery.validate.js"></script>
-    <script type="text/javascript" src="../Scripts/jsEquipo.js"></script>
+    <script type="text/javascript" src="../Scripts/jquery.validate.js"></script>    
     <script type="text/javascript" src="../Scripts/jquery.cookie.js"></script>
+    <script type="text/javascript" src="../Scripts/jsEquipo.js"></script>
     <asp:ContentPlaceHolder ID="HeadContent" runat="server">
     </asp:ContentPlaceHolder>
 </head>
@@ -47,5 +47,5 @@
         
     </div>
     </form>
-</body>
+</body>    
 </html>

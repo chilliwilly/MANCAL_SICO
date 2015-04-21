@@ -49,6 +49,7 @@
     <Compile Include="dl_calculo.cs" />
     <Compile Include="dl_carga_cbo.cs" />
     <Compile Include="dl_cliente.cs" />
+    <Compile Include="dl_cotizacion.cs" />
     <Compile Include="dl_detalle_pro.cs" />
     <Compile Include="dl_equipo.cs" />
     <Compile Include="dl_login.cs" />

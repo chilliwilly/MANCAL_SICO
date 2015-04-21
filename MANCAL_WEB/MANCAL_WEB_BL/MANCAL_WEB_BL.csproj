@@ -47,6 +47,7 @@
     <Compile Include="bl_carga_cbo.cs" />
     <Compile Include="bl_cliente.cs" />
     <Compile Include="bl_codificar_pwd.cs" />
+    <Compile Include="bl_cotizacion.cs" />
     <Compile Include="bl_detalle_pro.cs" />
     <Compile Include="bl_equipo.cs" />
     <Compile Include="bl_login.cs" />

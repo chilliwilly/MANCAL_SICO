@@ -113,7 +113,7 @@
                         Tipo Cotización
                     </td>
                     <td class="style6">
-                        <asp:DropDownList ID="cboTipoCotizacion" runat="server" Width="263px" 
+                        <asp:DropDownList ID="cboTipoCotizacion" runat="server" Width="263px" CssClass="_cboTipoCotizacion_"
                             oninit="cboTipoCotizacion_Init"> 
                         </asp:DropDownList>
                     </td>
@@ -135,11 +135,11 @@
                         Fecha Cotizacion
                     </td>
                     <td class="style6">
-                                        <%-- ACA VA EL CONTROLTOOLKIT --%>                      
-                        <asp:TextBox ID="txtFecha" runat="server" AutoPostBack="True" style="text-align:center;"></asp:TextBox>
-                        <asp:CalendarExtender ID="CalendarExtender1" TargetControlID="txtFecha" runat="server"
+                                        <%-- ACA VA EL CONTROLTOOLKIT AutoPostBack="True" --%>                      
+                        <asp:TextBox ID="txtFecha" runat="server" style="text-align:center;" ReadOnly="true" CssClass="_txtFecha_"></asp:TextBox>
+                        <asp:CalendarExtender ID="CalendarExtender1" TargetControlID="txtFecha" runat="server" OnClientDateSelectionChanged="cambioFechaCotizacion"
                             FirstDayOfWeek="Monday" Format="dd/MM/yyyy">
-                        </asp:CalendarExtender>
+                        </asp:CalendarExtender>                        
                     </td>
                     <td class="style9">
                     </td>
@@ -147,7 +147,7 @@
                         Cuenta
                     </td>                
                     <td class="style9"><%--CBO CLIENTE --%>
-                        <asp:TextBox ID="txtCuenta" runat="server" Width="350px" ReadOnly="true"></asp:TextBox>
+                        <asp:TextBox ID="txtCuenta" runat="server" Width="350px" ReadOnly="true" CssClass="_txtCuenta_"></asp:TextBox>
                     </td>
                 </tr>
                 <tr>
@@ -155,7 +155,7 @@
                         Vendedor
                     </td>
                     <td class="style6">
-                        <asp:DropDownList ID="cboVendedor" runat="server" Height="22px" Width="263px" oninit="cboVendedor_Init">
+                        <asp:DropDownList ID="cboVendedor" runat="server" Height="22px" Width="263px" oninit="cboVendedor_Init" CssClass="_cboVendedor_">
                         </asp:DropDownList>
                     </td>
                     <td class="style9">
@@ -165,7 +165,7 @@
                         Cliente Informe
                     </td>
                     <td class="style9">
-                        <asp:TextBox ID="txtClienteInforme" runat="server" Width="350px"></asp:TextBox>
+                        <asp:TextBox ID="txtClienteInforme" runat="server" Width="350px" CssClass="_txtClienteInforme_"></asp:TextBox>
                     </td>
                 </tr>
                 <tr>
@@ -180,10 +180,10 @@
                         <%--<asp:TextBox ID="txtInicialVendedor" runat="server" Width="30px" Height="22px"></asp:TextBox>--%>
                     </td>
                     <td class="style4">
-                        Cliente Contacto
+                        Cliente Cert.
                     </td>
                     <td>
-                        <asp:TextBox ID="txtContactoCliente" runat="server" Width="263px"></asp:TextBox>
+                        <asp:TextBox ID="txtClienteCertificado" runat="server" Width="350px" CssClass="_txtClienteCertificado_"></asp:TextBox>
                     </td>
                 </tr>
                 <tr>
@@ -191,16 +191,16 @@
                         Referencias
                     </td>
                     <td class="style2" rowspan="3">
-                        <asp:TextBox ID="txtReferencia" runat="server" Height="68px" Width="260px" 
+                        <asp:TextBox ID="txtReferencia" runat="server" Height="68px" Width="260px" CssClass="_txtReferencia_"
                             TextMode="MultiLine">Sin Referencia.</asp:TextBox>
                     </td>
                         <td class="style9">
                         </td>
                     <td class="style4">
-                        Cliente Dirección
+                        Cliente Contacto
                     </td>
                     <td>
-                        <asp:TextBox ID="txtDireccionCliente" runat="server" Width="263px"></asp:TextBox>
+                        <asp:TextBox ID="txtContactoCliente" runat="server" Width="350px" CssClass="_txtContactoCliente_"></asp:TextBox>
                     </td>
                 </tr>
                 <tr>
@@ -209,26 +209,37 @@
                         &nbsp;
                     </td>
                     <td class="style4">
-                        Cliente Mail
+                        Cliente Dirección
                     </td>
                     <td>
-                        <asp:TextBox ID="txtMailCliente" runat="server" Width="263px"></asp:TextBox>
+                        <asp:TextBox ID="txtDireccionCliente" runat="server" Width="350px" CssClass="_txtDireccionCliente_"></asp:TextBox>
                     </td>
                 </tr>
                 <tr>
                     <td>
                     </td>
                     <td class="style4">
-                        Cliente Fono
+                        Cliente Mail
                     </td>
                     <td>
-                        <asp:TextBox ID="txtFonoCliente" runat="server" Width="263px"></asp:TextBox>
+                        <asp:TextBox ID="txtMailCliente" runat="server" Width="350px" CssClass="_txtMailCliente_"></asp:TextBox>
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td class="style8">Cliente Fono</td>
+                    <td class="style9">
+                        <asp:TextBox ID="txtFonoCliente" runat="server" Width="350px" CssClass="_txtFonoCliente_"></asp:TextBox>
                     </td>
                 </tr>
                 <tr>
                 <td></td>
                     <td>
-                        <asp:TextBox ID="txtIdContactoCli" runat="server" Width="20px" Visible="false"></asp:TextBox>
+                        <asp:TextBox ID="txtIdContactoCli" runat="server" Width="20px" Visible="false" CssClass="_txtIdContactoCli_"></asp:TextBox>
+                        <asp:TextBox ID="txtIdCliente" runat="server" style="display:none;" CssClass="_txtIdCliente_"></asp:TextBox>
+                        <asp:TextBox ID="txtIdUniNeg" runat="server" style="display:none;" CssClass="_txtIdUniNeg_" Text="CAL"></asp:TextBox>
                         <asp:HiddenField ID="txtHiddenTipoTarifa" runat="server" />
                         <asp:HiddenField ID="txtHiddIdCliente" runat="server" />
                     </td>
@@ -237,7 +248,7 @@
                         Tipo Tarifa
                     </td>
                     <td class="style9">
-                        <asp:DropDownList ID="cboTipoTarifa" runat="server" Width="263px" oninit="cboTipoTarifa_Init">
+                        <asp:DropDownList ID="cboTipoTarifa" runat="server" Width="263px" oninit="cboTipoTarifa_Init" CssClass="_cboTipoTarifa_">
                         </asp:DropDownList>
                     </td>               
                 </tr>
@@ -596,7 +607,7 @@
                                     <td>Region</td>
                                     <td></td>
                                     <td>
-                                        <asp:DropDownList ID="cboRegion" runat="server" Width="200px" 
+                                        <asp:DropDownList ID="cboRegion" runat="server" Width="200px" CssClass="_cboRegion_"
                                             oninit="cboRegion_Init">
                                         </asp:DropDownList>
                                     </td>
@@ -612,7 +623,7 @@
                                     <td>Traslado</td>
                                     <td></td>
                                     <td>
-                                        <asp:DropDownList ID="cboTraslado" runat="server" Width="150px" 
+                                        <asp:DropDownList ID="cboTraslado" runat="server" Width="150px" CssClass="_cboTraslado_"
                                             oninit="cboTraslado_Init">
                                         </asp:DropDownList>
                                     </td>
@@ -645,7 +656,7 @@
                                     </td>
                                     <td>Lugar</td>
                                     <td colspan="3">
-                                        <asp:DropDownList ID="cboLugarComision" runat="server" Width="200px" 
+                                        <asp:DropDownList ID="cboLugarComision" runat="server" Width="200px" CssClass="_cboLugarComision_"
                                             oninit="cboLugarComision_Init">
                                         </asp:DropDownList>
                                     </td>                
@@ -823,7 +834,7 @@
                                         Impuesto
                                     </td>
                                     <td>
-                                        <asp:DropDownList ID="cboTipoImpuesto" runat="server">
+                                        <asp:DropDownList ID="cboTipoImpuesto" runat="server" CssClass="_cboTipoImpuesto_">
                                             <asp:ListItem Value="0">Seleccione</asp:ListItem>
                                             <asp:ListItem Value="1">c/ IVA</asp:ListItem>
                                             <asp:ListItem Value="2">s/ IVA</asp:ListItem>
@@ -835,7 +846,7 @@
                                         Descuento
                                     </td>
                                     <td>
-                                        <asp:CheckBox ID="chkDcto" runat="server"/>
+                                        <asp:CheckBox ID="chkDcto" CssClass="_chkDcto_" runat="server"/>
                                     </td>
                                 </tr>
                                 <tr>
@@ -914,7 +925,7 @@
                             <tr>
                                 <td>Nota 1:</td>
                                 <td>
-                                    <asp:TextBox ID="txtNotaUno" runat="server" TextMode="MultiLine" Width="625px" Height="50px" onKeyPress="return taLimit(this)" onKeyUp="return taCount(this,'myCounter')">Sin Nota</asp:TextBox>                
+                                    <asp:TextBox ID="txtNotaUno" CssClass="_txtNotaUno_" runat="server" TextMode="MultiLine" Width="625px" Height="50px" onKeyPress="return taLimit(this)" onKeyUp="return taCount(this,'myCounter')">Sin Nota</asp:TextBox>                
                                 </td>
                                 <td>
                                     Caracteres restantes: <span id="myCounter">400</span>
@@ -923,7 +934,7 @@
                             <tr>
                                 <td>Nota 2:</td>
                                 <td>
-                                    <asp:TextBox ID="txtNotaDos" runat="server" TextMode="MultiLine" Width="625px" Height="50px" onKeyPress="return taLimit(this)" onKeyUp="return taCount(this,'myCounterDos')">Sin Nota</asp:TextBox>
+                                    <asp:TextBox ID="txtNotaDos" CssClass="_txtNotaDos_" runat="server" TextMode="MultiLine" Width="625px" Height="50px" onKeyPress="return taLimit(this)" onKeyUp="return taCount(this,'myCounterDos')">Sin Nota</asp:TextBox>
                                 </td>
                                 <td>
                                     Caracteres restantes: <span id="myCounterDos">400</span>
@@ -942,14 +953,14 @@
                                 <td style="width:90px;">
                                     Facturación
                                       <br />
-                                    <asp:DropDownList ID="cboFacturacion" runat="server" 
+                                    <asp:DropDownList ID="cboFacturacion" runat="server" CssClass="_cboFacturacion_"
                                         Width="140px" oninit="cboFacturacion_Init"> 
                                     </asp:DropDownList>
                                 </td>
                                 <td>
                                 </td>
                                 <td class="style12">Comentario Facturacion<br />
-                                    <asp:TextBox ID="txtFacturacion" runat="server" Height="50px" 
+                                    <asp:TextBox ID="txtFacturacion" runat="server" Height="50px" CssClass="_txtFacturacion_"
                                         TextMode="MultiLine" Width="421px" ReadOnly="true"></asp:TextBox>
                                 </td>
                             </tr>
@@ -957,14 +968,14 @@
                                 <td style="width:90px;">
                                     Forma Pago Facturación
                                     <br />
-                                    <asp:DropDownList ID="cboFormaPago" runat="server" Width="140px" 
+                                    <asp:DropDownList ID="cboFormaPago" runat="server" Width="140px" CssClass="_cboFormaPago_"
                                         oninit="cboFormaPago_Init">
                                     </asp:DropDownList>
                                 </td>
                                 <td>
                                 </td>
                                 <td class="style12">Comentario Forma Pago Facturacion<br />
-                                    <asp:TextBox ID="txtFormaPago" runat="server" Height="50px" 
+                                    <asp:TextBox ID="txtFormaPago" runat="server" Height="50px" CssClass="_txtFormaPago_"
                                         TextMode="MultiLine" Width="422px">a contar de la fecha de facturación</asp:TextBox>
                                 </td>
                             </tr>
@@ -979,7 +990,7 @@
                                 <td>
                                 </td>
                                 <td class="style12">Comentario Plazo Entrega<br />
-                                    <asp:TextBox ID="txtPlazoEntrega" runat="server" Height="50px" 
+                                    <asp:TextBox ID="txtPlazoEntrega" runat="server" Height="50px" CssClass="_txtPlazoEntrega_"
                                         TextMode="MultiLine" Width="422px" ReadOnly="true"></asp:TextBox>
                                 </td>
                             </tr>
@@ -1019,7 +1030,7 @@
                         <tr>
                             <td>Texto solo cotizaciones<br /> clientes extranjeros</td>
                             <td>
-                                <asp:DropDownList ID="cboTextCotEx" runat="server">
+                                <asp:DropDownList ID="cboTextCotEx" runat="server" CssClass="_cboTextCotEx_">
                                     <asp:ListItem>Seleccione...</asp:ListItem>
                                     <asp:ListItem>Todos los costos de traslado e impuestos serán de cargo del cliente.</asp:ListItem>
                                     <asp:ListItem>Los costos de traslado e impuestos en origen serán de cargo del cliente.</asp:ListItem>
@@ -1032,49 +1043,62 @@
                         <tr>
                             <td>Lugar Ejecucion Trabajos</td>
                             <td>
-                                <asp:DropDownList ID="cboEjecTrab" runat="server" oninit="cboEjecTrab_Init">
+                                <asp:DropDownList ID="cboEjecTrab" runat="server" oninit="cboEjecTrab_Init" CssClass="_cboEjecTrab_">
                                 </asp:DropDownList>                                           
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Lugar de Retiro</td>
+                            <td>
+                                <asp:DropDownList ID="cboLugarRetiro" runat="server" OnInit="cboLugarRetiro_Init" CssClass="_cboLugarRetiro_">
+                                </asp:DropDownList>
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                                Sector Retiro
+                                <asp:TextBox ID="txtSectorRetiro" runat="server" Width="200px" CssClass="_txtSectorRetiro_"></asp:TextBox>
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                                Nombre Responsable
+                                <asp:TextBox ID="txtSectorRetiroNom" runat="server" Width="200px" CssClass="_txtSectorRetiroNom_"></asp:TextBox>
                             </td>
                         </tr>
                         <tr>
                             <td>Lugar de Entrega</td>
                             <td>
-                                <asp:DropDownList ID="cboLugarEntrega" runat="server" 
+                                <asp:DropDownList ID="cboLugarEntrega" runat="server" CssClass="_cboLugarEntrega_"
                                     oninit="cboLugarEntrega_Init">
                                 </asp:DropDownList>
                         &nbsp;&nbsp;&nbsp;&nbsp; Sector Entrega
-                                <asp:TextBox ID="txtSectorEntrega" runat="server" Width="400px"></asp:TextBox>
+                                <asp:TextBox ID="txtSectorEntrega" runat="server" Width="400px" CssClass="_txtSectorEntrega_"></asp:TextBox>
                             </td>
                         </tr>
                         <tr>
                             <td>Validez Oferta</td>
                             <td>
-                                <asp:TextBox ID="txtValidezOferta" runat="server" style="text-align:center;"></asp:TextBox>
-                                <asp:CalendarExtender ID="CalendarExtender2" runat="server" TargetControlID="txtValidezOferta" FirstDayOfWeek="Monday" Format="dd/MM/yyyy">
+                                <asp:TextBox ID="txtValidezOferta" runat="server" style="text-align:center;" ReadOnly="true" CssClass="_txtValidezOferta_"></asp:TextBox>
+                                <asp:CalendarExtender ID="CalendarExtender2" runat="server" TargetControlID="txtValidezOferta" FirstDayOfWeek="Monday" Format="dd/MM/yyyy" BehaviorID="nuevaFechaVence">
                                 </asp:CalendarExtender>
                             </td>
                         </tr>
                         <tr>
                             <td>Garantia</td>
                             <td>
-                                <asp:DropDownList ID="cboGarantia" runat="server" oninit="cboGarantia_Init">
+                                <asp:DropDownList ID="cboGarantia" runat="server" oninit="cboGarantia_Init" CssClass="_cboGarantia_">
                                 </asp:DropDownList>
 
                             &nbsp;&nbsp;&nbsp;&nbsp; Validez Garantia
 
-                                <asp:DropDownList ID="cboValidezGar" runat="server" oninit="cboValidezGar_Init">
+                                <asp:DropDownList ID="cboValidezGar" runat="server" oninit="cboValidezGar_Init" CssClass="_cboValidezGar_">
                                 </asp:DropDownList>            
                             </td>
                         </tr>
                         <tr>
                             <td>Aceptador por</td>
                             <td>
-                                <asp:DropDownList ID="cboJefe" runat="server" AutoPostBack="True" 
+                                <asp:DropDownList ID="cboJefe" runat="server" AutoPostBack="True" CssClass="_cboJefe_"
                                     oninit="cboJefe_Init" 
                                     onselectedindexchanged="cboJefe_SelectedIndexChanged">
                                 </asp:DropDownList>&nbsp;&nbsp;&nbsp;&nbsp;
-                                Mail&nbsp;<asp:TextBox ID="txtMailJefe" runat="server" ReadOnly="True"></asp:TextBox>&nbsp;&nbsp;&nbsp;&nbsp;
-                                Cargo&nbsp;<asp:TextBox ID="txtCargoJefe" runat="server" Width="180px" 
+                                Mail&nbsp;<asp:TextBox ID="txtMailJefe" runat="server" ReadOnly="True" CssClass="_txtMailJefe_"></asp:TextBox>&nbsp;&nbsp;&nbsp;&nbsp;
+                                Cargo&nbsp;<asp:TextBox ID="txtCargoJefe" runat="server" Width="180px" CssClass="_txtCargoJefe_"
                                     ReadOnly="True"></asp:TextBox>
                             </td>
                         </tr>
@@ -1162,6 +1186,7 @@
             <td>
                 <asp:Button ID="btnSave" runat="server" 
                 Text="Guardar" Width="130px"/>
+                <input type="button" id="btnGuardaCoti" value="Guardar Cotizacion" onclick="insCotizacion();" />
             </td>
             <td>
                 <asp:Button ID="btnSaveDraft" runat="server" Text="Guardar Borrador" style="display:none;"/>
@@ -1793,12 +1818,13 @@
 
             function dataCliente() {
                 $('.gridListaCliente').on('click', function () {
-                    $("#<%=txtHiddIdCliente.ClientID %>").val($('.idcliente_', $(this).closest('tr')).html()); //$('.idcliente_', find('td:first').text()                   
+                    $("#<%=txtIdCliente.ClientID %>").val($('.idcliente_', $(this).closest('tr')).html()); //$('.idcliente_', find('td:first').text()                   
                     $("#<%=txtCliente.ClientID %>").val($('.nomcliente_', $(this).closest('tr')).html());
                     $("#<%=txtCuenta.ClientID %>").val($('.nomcuenta_', $(this).closest('tr')).html());
                     $("#<%=txtClienteInforme.ClientID %>").val($('.nomcuenta_', $(this).closest('tr')).html());
                     $("#<%=txtContactoCliente.ClientID %>").val($('.nomcontacto_', $(this).closest('tr')).html());
                     $("#<%=txtDireccionCliente.ClientID %>").val($('.direccioncli_', $(this).closest('tr')).html());
+                    $("#<%=txtClienteCertificado.ClientID %>").val($('.direccioncli_', $(this).closest('tr')).html());
                     $("#<%=txtMailCliente.ClientID %>").val($('.mailcontacto_', $(this).closest('tr')).html());
                     $("#<%=txtFonoCliente.ClientID %>").val($('.fonocontacto_', $(this).closest('tr')).html());
                     $("#txt-cliente-bloq").val($("#<%=txtCliente.ClientID %>").val());
@@ -1933,6 +1959,7 @@
             /*****************/
             function seleccionDetalleCal() {
                 dataGridCal();
+                dataGridPunto();
                 $("#dialog-equipo-dato-cal").dialog({
                     modal: true,
                     width: "500px",
@@ -1954,12 +1981,10 @@
                 });
             }
 
-            function muestraEditPuntos() {//<<<<<<<<<================================<<<<<<<=============
+            function muestraEditPuntos() {
                 $.cookie('flag_inpunto', '2');
-                $("#btn-in-punto-cal").toggle(false);
-                //$("#btn-det-cal-edita-punto").toggle(false);
-                $("#btn-ed-punto-cal").toggle(true);
-                //$("#btn-det-cal-edita-punto-gv").toggle(true);
+                $("#btn-in-punto-cal").toggle(false);                
+                $("#btn-ed-punto-cal").toggle(true);                
                 $.cookie('idequipocot', dgcEquId);
                 $.cookie('iditemeq', dgcItem);
                 $("#<%=btnActualizaGVPunto.ClientID %>").click();
@@ -2322,12 +2347,12 @@
                 $("#<%=cbo_magnitud.ClientID %>").val("0");
                 $("#cbo_funcion").val("0");
                 $("#txt-in-punto-cal").val("");
-                $.removeCookie('iditemeq');
+                //$.removeCookie('iditemeq');
             });
 
             //BOTON QUE ESTABA OCULTO QUE SOLO SE MUESTRA CUANDO SE EDITA PUNTOS DESDE EL DETALLE COTIZACION
             $("#btn-ed-punto-cal").on('click', function () {
-                $.cookie('iditemeq', $("#txt-edit-punto-dccid-gv").val()); //txt-edit-punto-item-gv
+                $.cookie('iditemeq', dgcItemCal); //txt-edit-punto-item-gv $("#txt-edit-punto-dccid-gv").val() dgcItemCal
                 $.cookie('flag_inpunto', '2');
                 modInsDatoPuntoCot($.cookie('pcusr'),
                                    $("#<%=cbo_magnitud.ClientID %>").val(),
@@ -2340,7 +2365,7 @@
                 $("#<%=cbo_magnitud.ClientID %>").val("0");
                 $("#cbo_funcion").val("0");
                 $("#txt-in-punto-cal").val("");
-                $.removeCookie('iditemeq');
+                //$.removeCookie('iditemeq');
             });
 
             $("#btn-edit-punto-upd-gv").on('click', function () {
@@ -2352,7 +2377,7 @@
                 $("#<%=btnActualizaGVPunto.ClientID %>").click();
                 limpiaPuntoDetFila();
                 $("#dialog-edit-punto-grid").dialog('close');
-                $.removeCookie('iditemeq');
+                //$.removeCookie('iditemeq');
             });
 
             $("#btn-edit-punto-del-gv").on('click', function () {
@@ -2367,7 +2392,7 @@
                 $("#<%=btnActualizaGVPunto.ClientID %>").click();
                 limpiaPuntoDetFila();
                 $("#dialog-edit-punto-grid").dialog('close');
-                $.removeCookie('iditemeq');
+                //$.removeCookie('iditemeq');
             });
 
             $('#frm-edit-eq-valor').validate({

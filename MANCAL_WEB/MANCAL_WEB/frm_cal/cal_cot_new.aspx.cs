@@ -295,6 +295,14 @@ namespace MANCAL_WEB.frm_cal
             }
         }
 
+        protected void cboLugarRetiro_Init(object sender, EventArgs e) 
+        {
+            cboLugarRetiro.Items.Add(new ListItem("Seleccione", "0"));
+            cboLugarRetiro.Items.Add(new ListItem("Retira DTS", "1"));
+            cboLugarRetiro.Items.Add(new ListItem("Envia Cliente", "2"));
+            cboLugarRetiro.Items.Add(new ListItem("No Aplica", "3"));
+        }
+
         #endregion
 
         #region Metodos Protected

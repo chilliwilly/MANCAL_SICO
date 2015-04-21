@@ -546,7 +546,7 @@ function delPuntoDetFila(item, coti, equi, dcc) {
             alert("Error al borrar puntos");
         }
     });
-} 
+}
 
 function limpiaPuntoDetFila() {
     $("#txt-edit-punto-item-gv").val("");
@@ -576,6 +576,32 @@ function getEmailVendedor(idven) {
         }
     });
 }
+
+//---------------------------------------------------//
+//---------------------------------------------------//
+//  FUNCIONES DE SELECT, UPDATE, INSERT COTIZACION   //
+//---------------------------------------------------//
+//---------------------------------------------------//
+function insCotizacion() {
+    $.ajax({
+        type: "POST",
+        url: "/asmx_files/js_llenado.asmx/insObjCotizacion",
+        datatype: "json",
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify({ "cot": CotizacionObject(), "trans": CotizacionTransObject(), "comi": CotizacionComisObject() }),
+        success: function (data, status) {
+            $("#txtMailVendedor").val(data.d);
+        },
+        error: function (data) {
+            alert("Error al buscar mail del vendedor");
+        }
+    });
+}
+//---------------------------------------------------//
+//---------------------------------------------------//
+// FIN FUNCIONES DE SELECT, UPDATE, INSERT COTI      //
+//---------------------------------------------------//
+//---------------------------------------------------//
 
 function validaPrecioGastoChange(oldPGasto, newPGasto) {
     if (newPGasto < oldPGasto) {
@@ -629,6 +655,14 @@ function getNumeroFilaGVDetCot() {
     return nrofila;
 }
 
+function cambioFechaCotizacion(sender, args) {
+    var fCot = sender.get_selectedDate();
+    var fCotVence = $find("nuevaFechaVence");
+    fCot = new Date(fCot.getTime() + fCot.getTimezoneOffset() * 60000);
+    var fCotVenc = new Date(fCot.setDate(fCot.getDate() + 30));
+    fCotVence.set_selectedDate(fCotVenc);
+}
+
 function bloqueaCampoComision() {
     $("#txt-com-qty-persona").prop("disabled", true);
     $("#txt-com-qty-dia").prop("disabled", true);
@@ -677,6 +711,107 @@ function desbloqueaCampoComision() {
     $("#txt-com-fondo-rendir").prop("disabled", false);
     $("#txt-com-rep-gasto").prop("disabled", false);
     $("#txt-com-qty-com-mes").prop("disabled", false);
+}
+
+function CotizacionObject() {
+    var objCoti = {};
+    objCoti.cot_numero = "";
+    objCoti.cot_id = "";
+    objCoti.cot_un_id = $('._txtIdUniNeg_').val();
+    objCoti.cot_fecha = $('._txtFecha_').val();
+    objCoti.cot_referencia = $('._txtReferencia_').val();
+    objCoti.cot_id_cliente = $('._txtIdCliente_').val();
+    objCoti.cot_cuentacli = $('._txtCuenta_').val();
+    objCoti.cot_informecli = $('._txtClienteInforme_').val();
+    objCoti.cot_contacto_nom = $('._txtContactoCliente_').val();
+    objCoti.cot_contacto_dir = $('._txtDireccionCliente_').val();
+    objCoti.cot_contacto_cargo = "";
+    objCoti.cot_contacto_ff = $('._txtFonoCliente_').val();
+    objCoti.cot_contacto_fc = "";
+    objCoti.cot_contacto_mail = $('._txtMailCliente_').val();
+    objCoti.cot_notauno = $('._txtNotaUno_').val();
+    objCoti.cot_notados = $('._txtNotaDos_').val();
+    objCoti.cot_txtfacturacion = $('._txtFacturacion_').val();
+    objCoti.cot_txtformapago = $('._txtFormaPago_').val();
+    objCoti.cot_txttpe = $('._txtPlazoEntrega_').val();
+    objCoti.cot_plazo_entrega = $("#txtPlazoEntregaD").val();
+    objCoti.cot_secentrega = $('._txtSectorEntrega_').val();
+    objCoti.cot_tipo_retiro = $('._cboLugarRetiro_').val();
+    objCoti.cot_secretiro_dir = $('._txtSectorRetiro_').val();
+    objCoti.cot_secretiro_nom = $('._txtSectorRetiroNom_').val();
+    objCoti.cot_certificado_dir = $('._txtClienteCertificado_').val();
+    objCoti.cot_valioferta = $('._txtValidezOferta_').val();
+    objCoti.cot_totcostmo = $("#txtTotalCostoMo").val();
+    objCoti.cot_totvalrpto = $("#txtTotalCostoRpto").val();
+    objCoti.cot_mgopporc = $("#txtMgOpPorc").val();
+    objCoti.cot_mgbrutoporc = $("#txtMgBrutoPorc").val();
+    objCoti.cot_mgcontrib = $("#txtMgContribucion").val();
+    objCoti.cot_mgcontribporc = $("#txtMgContribucionPorc").val();
+    objCoti.cot_utilesperaporc = $("#txtUtilidadEspPorc").val();
+    objCoti.cot_afecto = $('._cboTipoImpuesto_').val();
+    objCoti.cot_tipomoneda = $("#txtTipoMoneda").val();
+    objCoti.cot_neto = $("#txtNeto").val();
+    objCoti.cot_descuento = $("#txtDcto").val();
+    objCoti.cot_netodcto = $("#txtNetoDcto").val();
+    objCoti.cot_iva = $("#txtIva").val();
+    objCoti.cot_total = $("#txtTotal").val();
+    objCoti.cot_chkdcto = $('._chkDcto_').val();
+    objCoti.cot_chkex = "";
+    objCoti.cot_usrpc = $.cookie('pcusr');
+    objCoti.tf_id = $('._cboFacturacion_').val(); //int
+    objCoti.tvg_id = $('._cboValidezGar_').val();
+    objCoti.tg_id = $('._cboGarantia_').val();
+    objCoti.tfpf_id = $('._cboFormaPago_').val();
+    objCoti.tlej_id = $('._cboEjecTrab_').val();
+    objCoti.tt_id = $('._cboTipoTarifa_').val();
+    objCoti.ec_id = "";
+    objCoti.tc_id = $('._cboTipoCotizacion_').val();
+    objCoti.jef_id = $('._cboJefe_').val();
+    objCoti.ven_id = $('._cboVendedor_').val();
+    objCoti.tle_id = $('._cboLugarEntrega_').val(); //fin int
+
+    return objCoti;
+}
+
+function CotizacionTransObject() {
+    var objCotiTrans = {};
+    objCotiTrans.ctrans_id = "";
+    objCotiTrans.cot_numero = "";
+    objCotiTrans.ctrans_total = $("#txtTotalTransporte").val();
+    objCotiTrans.reg_id = $('._cboRegion_').val();
+    objCotiTrans.ten_id = $('._cboTraslado_').val();
+    objCotiTrans.ctrans_direccion = $("#txtDirTransporte").val();
+
+    return objCotiTrans;
+}
+
+function CotizacionComisObject() {
+    var objCotiComis = {};
+    objCotiComis.ccom_id = "";
+    objCotiComis.ccom_qtypersona = $("#txt-com-qty-persona").val();
+    objCotiComis.ccom_qtydia = $("#txt-com-qty-dia").val();
+    objCotiComis.ccom_qtyveh = $("#txt-com-qty-veh").val();
+    objCotiComis.ccom_qtranseqt = $("#txt-com-eq-c").val();
+    objCotiComis.ccom_qtranseqa = $("#txt-com-eq-a").val();
+    objCotiComis.ccom_fondor = $("#txt-com-fondo-rendir").val();
+    objCotiComis.ccom_qgasrepr = $("#txt-com-rep-gasto").val();
+    objCotiComis.ccom_qtycommes = $("#txt-com-qty-com-mes").val();
+    objCotiComis.ccom_transdts = $("#txt-com-trans-dts").val();
+    objCotiComis.ccom_transhotel = $("#txt-com-trans-hotel").val();
+    objCotiComis.ccom_psjavionper = $("#txt-com-trans-av-per").val();
+    objCotiComis.ccom_alqveh = $("#txt-com-arr-veh").val();
+    objCotiComis.ccom_transeqt = $("#txt-com-tras-eq-c").val();
+    objCotiComis.ccom_transeqa = $("#txt-com-tras-eq-a").val();
+    objCotiComis.ccom_viatico = $("#txt-com-viatico").val();
+    objCotiComis.ccom_hotel = $("#txt-com-hotel").val();
+    objCotiComis.ccom_frendir = $("#txt-com-fondo-rend").val();
+    objCotiComis.ccom_gasrepr = $("#txt-com-gasto-rep").val();
+    objCotiComis.ccom_totalcom = $("#txt-com-tot-cos-com").val();
+    objCotiComis.ccom_totalcommg = $("#txt-com-tot-p-com").val();
+    objCotiComis.lug_id = $('._cboLugarComision_').val();
+    objCotiComis.cot_numero = "";
+
+    return objCotiComis;
 }
 
 function EquipoCotizacion() {

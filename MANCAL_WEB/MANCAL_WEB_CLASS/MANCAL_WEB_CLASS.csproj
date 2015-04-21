@@ -68,6 +68,7 @@
     <Compile Include="CotizacionTPEntrega.cs" />
     <Compile Include="CotizacionTPFactura.cs" />
     <Compile Include="CotizacionTrabajo.cs" />
+    <Compile Include="CotizacionTransporte.cs" />
     <Compile Include="CotizacionVendedor.cs" />
     <Compile Include="DetalleCotizacionPro.cs" />
     <Compile Include="MenuUsuario.cs" />

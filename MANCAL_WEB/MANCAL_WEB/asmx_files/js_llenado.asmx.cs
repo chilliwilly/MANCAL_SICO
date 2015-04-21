@@ -6,6 +6,7 @@ using System.Web.Services;
 using MANCAL_WEB_BL;
 using System.Collections;
 using System.Web.UI.WebControls;
+using Newtonsoft.Json;
 
 namespace MANCAL_WEB.asmx_files
 {
@@ -248,7 +249,27 @@ namespace MANCAL_WEB.asmx_files
         public void insModDatoPuntoCot(String idcot, String idesp, String idfun, String txtpunto, String iddcc, String iddcitem, String idequ)
         {
             bl_detalle_pro objDetPro = new bl_detalle_pro();
-            objDetPro.setDatoPuntoEquipo(idcot, idesp, idfun, txtpunto, iddcc, iddcitem, idequ);
+            objDetPro.setDatoPuntoEquipo(idcot, idesp, idfun, txtpunto, iddcc, iddcitem, idequ);            
+        }
+
+        [WebMethod]
+        public void insObjCotizacion(Object cot, Object trans, Object comi) 
+        {
+            MANCAL_WEB_CLASS.Cotizacion objCot = MANCAL_WEB_CLASS.Cotizacion.objCotizacion(cot);
+            MANCAL_WEB_CLASS.CotizacionTransporte objCotTrans = MANCAL_WEB_CLASS.CotizacionTransporte.objCotiTrans(trans);
+            MANCAL_WEB_CLASS.CotizacionComision objCotComis = MANCAL_WEB_CLASS.CotizacionComision.objCotiCom(comi);
+
+            objCot.CotizacionComision = objCotComis;
+            objCot.CotizacionTransporte = objCotTrans;
+
+            bl_cotizacion blCot = new bl_cotizacion();
+            blCot.insDatoCotizacion(objCot);
+        }
+
+        [WebMethod]
+        public void updObjCotizacion(Object cot) 
+        {
+        
         }
     }
 }
