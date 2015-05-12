@@ -11,43 +11,46 @@ namespace MANCAL_WEB
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (Session["page_id"].ToString().Equals("1"))
+            //int cookie_page_id = Convert.ToInt32(Session["page_id"]);
+            //Request.Cookies["page_id"]);
+
+            if (Session["pag_num"].ToString().Equals("1"))//redirect nueva cot caal Session["page_id"].ToString().Equals("1")
+            {
+                Response.AddHeader("REFRESH", "3;URL=/frm_cal/cal_cot_new.aspx");
+            }
+            if (Session["pag_num"].ToString().Equals("2"))
             {
                 Response.AddHeader("REFRESH", "3;URL=/index.aspx");
             }
-            if (Session["page_id"].ToString().Equals("2"))
+            if (Session["pag_num"].ToString().Equals("3"))
             {
                 Response.AddHeader("REFRESH", "3;URL=/index.aspx");
             }
-            if (Session["page_id"].ToString().Equals("3"))
+            if (Session["pag_num"].ToString().Equals("4"))
             {
                 Response.AddHeader("REFRESH", "3;URL=/index.aspx");
             }
-            if (Session["page_id"].ToString().Equals("4"))
+            if (Session["pag_num"].ToString().Equals("5"))
             {
                 Response.AddHeader("REFRESH", "3;URL=/index.aspx");
             }
-            if (Session["page_id"].ToString().Equals("5"))
+            if (Session["pag_num"].ToString().Equals("6"))
             {
                 Response.AddHeader("REFRESH", "3;URL=/index.aspx");
             }
-            if (Session["page_id"].ToString().Equals("6"))
+            if (Session["pag_num"].ToString().Equals("7"))
             {
                 Response.AddHeader("REFRESH", "3;URL=/index.aspx");
             }
-            if (Session["page_id"].ToString().Equals("7"))
+            if (Session["pag_num"].ToString().Equals("8"))
             {
                 Response.AddHeader("REFRESH", "3;URL=/index.aspx");
             }
-            if (Session["page_id"].ToString().Equals("8"))
+            if (Session["pag_num"].ToString().Equals("9"))
             {
                 Response.AddHeader("REFRESH", "3;URL=/index.aspx");
             }
-            if (Session["page_id"].ToString().Equals("9"))
-            {
-                Response.AddHeader("REFRESH", "3;URL=/index.aspx");
-            }
-            if (Session["page_id"].ToString().Equals("10")) //cambio y reset de pwd
+            if (Session["pag_num"].ToString().Equals("10")) //cambio y reset de pwd
             {
                 Response.AddHeader("REFRESH", "3;URL=/index.aspx");
             }

@@ -54,6 +54,7 @@
     <Compile Include="dl_equipo.cs" />
     <Compile Include="dl_login.cs" />
     <Compile Include="dl_menu.cs" />
+    <Compile Include="dl_reporte.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

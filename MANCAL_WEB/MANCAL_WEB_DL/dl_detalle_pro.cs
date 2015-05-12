@@ -360,7 +360,7 @@ namespace MANCAL_WEB_DL
             using (OracleConnection con = new OracleConnection(conStr)) 
             {
                 con.Open();
-                String qry = "PKG_MANCAL_DMLCOT_DETEQUIPO.SP_DETEQUIPO_INSERT";
+                String qry = "PKG_MANCAL_DMLCOT_DETEQUIPO_V2.SP_DETEQUIPO_INSERT";
                 using (OracleCommand cmd = new OracleCommand(qry, con)) 
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
@@ -382,7 +382,7 @@ namespace MANCAL_WEB_DL
             {
                 con.Open();
                 con.BeginTransaction();
-                String qry = "PKG_MANCAL_DMLCOT_DETEQUIPO.FN_DETEQUIPO_SELECT";
+                String qry = "PKG_MANCAL_DMLCOT_DETEQUIPO_V2.FN_DETEQUIPO_SELECT";
                 using (OracleCommand cmd = new OracleCommand(qry, con)) 
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
@@ -486,7 +486,7 @@ namespace MANCAL_WEB_DL
             using (OracleConnection con = new OracleConnection(conStr))
             {
                 con.Open();
-                String qry = "PKG_MANCAL_DMLCOT_DETEQUIPO.SP_DETCALEQUIPO_UPDATE";
+                String qry = "PKG_MANCAL_DMLCOT_DETEQUIPO_V2.SP_DETCALEQUIPO_UPDATE";
                 using (OracleCommand cmd = new OracleCommand(qry, con))
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
@@ -532,7 +532,7 @@ namespace MANCAL_WEB_DL
             using (OracleConnection con = new OracleConnection(conStr)) 
             {
                 con.Open();
-                String qry = "PKG_MANCAL_DMLCOT_DETEQUIPO.SP_DETEQUIPO_DELETE";
+                String qry = "PKG_MANCAL_DMLCOT_DETEQUIPO_V2.SP_DETEQUIPO_DELETE";
                 using (OracleCommand cmd = new OracleCommand(qry, con)) 
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
@@ -557,7 +557,7 @@ namespace MANCAL_WEB_DL
             using (OracleConnection con = new OracleConnection(conStr)) 
             {
                 con.Open();
-                String qry = "PKG_MANCAL_DMLCOT_DETEQUIPO.SP_DETCALEQUIPO_UPDATE_PROD";
+                String qry = "PKG_MANCAL_DMLCOT_DETEQUIPO_V2.SP_DETCALEQUIPO_UPDATE_PROD";
                 using (OracleCommand cmd = new OracleCommand(qry, con)) 
                 {
                     cmd.CommandType = CommandType.StoredProcedure;

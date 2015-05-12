@@ -61,10 +61,15 @@ namespace MANCAL_WEB_CLASS
         public String tc_id { get; set; }
         public String jef_id { get; set; }
         public String ven_id { get; set; }
-        public String tle_id { get; set; }//fin int
+        public String tle_id { get; set; }//fin int 
+        public String cot_cantidad { get; set; }
+        public String cot_moneda_texto { get; set; }
         public DetalleCotizacionPro DetalleCotizacionPro { get; set; }
         public CotizacionTransporte CotizacionTransporte { get; set; }
         public CotizacionComision CotizacionComision { get; set; }
+        public CotizacionEjecutivo CotizacionEjecutivo { get; set; }
+        public CotizacionVendedor CotizacionVendedor { get; set; }
+        public CotizacionPunto CotizacionPunto { get; set; }
 
         public String cot_msgautoriza { get; set; }
 

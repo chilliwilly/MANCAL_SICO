@@ -43,7 +43,23 @@
                     }
                 });
             });
-        }        
+        }
+
+        function agregarArchivo() {
+            $("#btn-doc").on('click', function () {
+                $("#dialog-doc").dialog({
+                    modal: true,
+                    width: "600px",
+                    title: "Adjuntar Documento",
+                    buttons: {
+                        "Cerrar": function () {
+                            $("#<%=btnUpdateDoc.ClientID %>").click();
+                            $(this).dialog('close');
+                        }
+                    }
+                });
+            });
+        }      
     </script>
 
 
@@ -125,7 +141,7 @@
                     </td>
                     <td class="style9">
                         <asp:TextBox ID="txtIdCotizacion" runat="server" Width="130px" ReadOnly="True" style="display:none;"></asp:TextBox>
-                        <asp:TextBox ID="txtCliente" runat="server" Width="350px" ReadOnly="true"></asp:TextBox><!--263px-->
+                        <asp:TextBox ID="txtCliente" runat="server" Width="350px" ReadOnly="true" CssClass="_txtCliente_"></asp:TextBox><!--263px-->
                         &nbsp;&nbsp;&nbsp;
                         <a href="javascript:void(null);" id="btn-busca-cli" style="display:inline-block;" class="ui-icon ui-icon-search"></a>
                     </td>                
@@ -240,6 +256,7 @@
                         <asp:TextBox ID="txtIdContactoCli" runat="server" Width="20px" Visible="false" CssClass="_txtIdContactoCli_"></asp:TextBox>
                         <asp:TextBox ID="txtIdCliente" runat="server" style="display:none;" CssClass="_txtIdCliente_"></asp:TextBox>
                         <asp:TextBox ID="txtIdUniNeg" runat="server" style="display:none;" CssClass="_txtIdUniNeg_" Text="CAL"></asp:TextBox>
+                        <asp:TextBox ID="txtEstadoCot" runat="server" style="display:none;" CssClass="_txtEstadoCot_" Text="2"></asp:TextBox>
                         <asp:HiddenField ID="txtHiddenTipoTarifa" runat="server" />
                         <asp:HiddenField ID="txtHiddIdCliente" runat="server" />
                     </td>
@@ -402,7 +419,6 @@
             </ul>
 
             <div id="tab-det-cot">
-                Datos Equipo
                 <asp:UpdatePanel ID="upBtnBuscarEquipo" runat="server" UpdateMode="Conditional" style="display:none;">
                     <ContentTemplate>
                         <asp:Button ID="btnBuscarListaEquipo" runat="server" 
@@ -847,6 +863,7 @@
                                     </td>
                                     <td>
                                         <asp:CheckBox ID="chkDcto" CssClass="_chkDcto_" runat="server"/>
+                                        <asp:CheckBox ID="chkExcede" CssClass="_chkExcede_" style="display:none;" runat="server"/>
                                     </td>
                                 </tr>
                                 <tr>
@@ -985,7 +1002,7 @@
                                     <%--<asp:DropDownList ID="cboPlazoEntrega" runat="server" Width="140px" 
                                         oninit="cboPlazoEntrega_Init">
                                     </asp:DropDownList>--%>
-                                    <input type="text" id="txtPlazoEntregaD" name="txtPlazoEntregaD" placeholder="Plazo entrega dias" style="width:140px;"/>
+                                    <input type="text" id="txtPlazoEntregaD" name="txtPlazoEntregaD" placeholder="Plazo entrega dias" pattern="^\d+$" style="width:140px;"/>
                                 </td>
                                 <td>
                                 </td>
@@ -1093,12 +1110,11 @@
                         <tr>
                             <td>Aceptador por</td>
                             <td>
-                                <asp:DropDownList ID="cboJefe" runat="server" AutoPostBack="True" CssClass="_cboJefe_"
-                                    oninit="cboJefe_Init" 
-                                    onselectedindexchanged="cboJefe_SelectedIndexChanged">
+                                <asp:DropDownList ID="cboJefe" runat="server" CssClass="_cboJefe_"
+                                    oninit="cboJefe_Init"> <%--onselectedindexchanged="cboJefe_SelectedIndexChanged"--%>
                                 </asp:DropDownList>&nbsp;&nbsp;&nbsp;&nbsp;
                                 Mail&nbsp;<asp:TextBox ID="txtMailJefe" runat="server" ReadOnly="True" CssClass="_txtMailJefe_"></asp:TextBox>&nbsp;&nbsp;&nbsp;&nbsp;
-                                Cargo&nbsp;<asp:TextBox ID="txtCargoJefe" runat="server" Width="180px" CssClass="_txtCargoJefe_"
+                                Cargo&nbsp;<asp:TextBox ID="txtCargoJefe" runat="server" Width="250px" CssClass="_txtCargoJefe_"
                                     ReadOnly="True"></asp:TextBox>
                             </td>
                         </tr>
@@ -1108,7 +1124,15 @@
             </div>
 
             <div id="tab-adjunto">
-                Archivos Adjuntos
+                <asp:UpdatePanel ID="upBtnAdjDoc" runat="server" UpdateMode="Conditional">
+                    <ContentTemplate>
+                        <script type="text/javascript">
+                            Sys.Application.add_load(agregarArchivo);
+                        </script>
+
+                        <input type="button" id="btn-doc" name="btn-doc" value="Adjuntar Documento" />
+                    </ContentTemplate>
+                </asp:UpdatePanel>                
                 <asp:UpdatePanel ID="udpArchivo" runat="server" UpdateMode="Conditional">
                     <ContentTemplate>
                         <asp:GridView ID="gvArchivo" runat="server" AutoGenerateColumns="False" 
@@ -1184,18 +1208,19 @@
     <table cellpadding="5px">
         <tr>
             <td>
-                <asp:Button ID="btnSave" runat="server" 
-                Text="Guardar" Width="130px"/>
+                <%--<asp:Button ID="btnSave" runat="server" 
+                Text="Guardar" Width="130px"/>--%>                
                 <input type="button" id="btnGuardaCoti" value="Guardar Cotizacion" onclick="insCotizacion();" />
+                <%--<input type="button" id="btnTestPrint" value="Imprimir" onclick="imprimeCotizacion();"/>--%>
             </td>
-            <td>
+            <%--<td>
                 <asp:Button ID="btnSaveDraft" runat="server" Text="Guardar Borrador" style="display:none;"/>
             </td>
             <td>
                 <asp:Button ID="btnSavePrint" runat="server" Text="Guardar e Imprimir"/>
-            </td>            
+            </td>    --%>        
             <td>
-                <input type="button" id="btn-doc" name="btn-doc" value="Adjuntar Documento" />
+                
             </td>
         </tr>
       </table>
@@ -1758,7 +1783,7 @@
             $.cookie('nomcuenta', '');
             $.cookie('nomcontact', '');
             $.cookie('nomtipo', '');
-            $.cookie('nomestado', '');
+            $.cookie('nomestado', '');            
             var objEqJs = new EquipoCotizacion();
             var objComCot = new ComisionCotizacion();
             var objInfoCot = new InfoCotizacion();
@@ -2142,21 +2167,7 @@
                 arch_nroitem = "";
                 arch_idcoti = "";
                 $("#<%=btnUpdateDoc.ClientID %>").click();
-            });
-
-            $("#btn-doc").on('click', function () {
-                $("#dialog-doc").dialog({
-                    modal: true,
-                    width: "600px",
-                    title: "Adjuntar Documento",
-                    buttons: {
-                        "Cerrar": function () {
-                            $("#<%=btnUpdateDoc.ClientID %>").click();
-                            $(this).dialog('close');
-                        }
-                    }
-                });
-            });
+            });            
 
             $("#btn-busca-cliente").on('click', function () {
                 $.cookie('nomclient', $("#txt-busca-nom-cli").val());
@@ -2316,6 +2327,10 @@
 
             $("#<%=cbo_magnitud.ClientID %>").change(function () {
                 getListaMagniFunct($(this).val());
+            });
+
+            $('._cboJefe_').change(function () {
+                getDatoAceptadoPor($(this).val());
             });
 
             $("#btnAddComision").on('click', function () {

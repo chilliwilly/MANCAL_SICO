@@ -495,5 +495,90 @@ namespace MANCAL_WEB_BL
             int idv = Convert.ToInt32(idvendedor);
             return objCbo.selectMailVendedor(idv);
         }
+
+        public String[] getDatoAceptadoPor(String jefeid) 
+        {
+            objCbo = new dl_carga_cbo();
+            String[] dAceptado = new String[2];
+            int jid=Convert.ToInt32(jefeid);
+
+            DataTable dt = objCbo.selectDatoAceptadoPor(jid).Tables["CUR_DATO_JEFE"];
+
+            foreach (DataRow dr in dt.Rows) 
+            {
+                dAceptado[0] = dr["MAIL_JEFE"].ToString();
+                dAceptado[1] = dr["AREA_JEFE"].ToString();
+            }
+
+            return dAceptado;
+        }
+
+        public List<String> getIdCotizacion() 
+        {
+            List<String> ls = new List<String>();
+            objCbo = new dl_carga_cbo();
+
+            DataTable dt = objCbo.selectIdCotizacion();
+
+            foreach (DataRow dr in dt.Rows) 
+            {
+                ls.Add(dr["COT_ID"].ToString());
+            }
+
+            return ls;
+        }
+
+        public List<String> getNroCotizacion() 
+        {
+            List<String> ls = new List<String>();
+            objCbo = new dl_carga_cbo();
+
+            DataTable dt = objCbo.selectNroCotizacion();
+
+            foreach (DataRow dr in dt.Rows)
+            {
+                ls.Add(dr["COT_NUMERO"].ToString());
+            }
+
+            return ls;
+        }
+
+        public List<CotizacionEstado> getEstadoCotizacion() 
+        {
+            List<CotizacionEstado> ls = new List<CotizacionEstado>();
+            objCbo = new dl_carga_cbo();
+
+            DataTable dt = objCbo.selectEstadoCotizacion();
+
+            foreach (DataRow dr in dt.Rows)
+            {
+                CotizacionEstado ce = new CotizacionEstado();
+                ce.idestado = dr["EC_ID"].ToString();
+                ce.noestado = dr["EC_NOMBRE"].ToString();
+
+                ls.Add(ce);
+            }
+
+            return ls;
+        }
+
+        public List<CotizacionCliente> getClienteCotizacion() 
+        {
+            List<CotizacionCliente> ls = new List<CotizacionCliente>();
+            objCbo = new dl_carga_cbo();
+
+            DataTable dt = objCbo.selectClienteCotizacion();
+
+            foreach (DataRow dr in dt.Rows) 
+            {
+                CotizacionCliente cli = new CotizacionCliente();
+                cli.idcliente = dr["ID_CLIENTE"].ToString();
+                cli.nomcliente = dr["NOMBRE"].ToString();
+
+                ls.Add(cli);
+            }
+
+            return ls;
+        }
     }
 }

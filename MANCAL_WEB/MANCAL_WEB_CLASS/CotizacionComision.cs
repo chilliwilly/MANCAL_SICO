@@ -32,6 +32,32 @@ namespace MANCAL_WEB_CLASS
 
         public CotizacionComision() { }
 
+        public CotizacionComision(String ccom_id, String ccom_qtypersona, String ccom_qtydia, String ccom_qtyveh, String ccom_qtranseqt, String ccom_qtranseqa, String ccom_fondor, String ccom_qgasrepr, String ccom_qtycommes, String ccom_transdts, String ccom_transhotel, String ccom_psjavionper, String ccom_alqveh, String ccom_transeqt, String ccom_transeqa, String ccom_viatico, String ccom_hotel, String ccom_frendir, String ccom_gasrepr, String ccom_totalcom, String ccom_totalcommg, String lug_id)
+        {
+            this.ccom_id = ccom_id;
+            this.ccom_qtypersona = ccom_qtypersona;
+            this.ccom_qtydia = ccom_qtydia;
+            this.ccom_qtyveh = ccom_qtyveh;
+            this.ccom_qtranseqt = ccom_qtranseqt;
+            this.ccom_qtranseqa = ccom_qtranseqa;
+            this.ccom_fondor = ccom_fondor;
+            this.ccom_qgasrepr = ccom_qgasrepr;
+            this.ccom_qtycommes = ccom_qtycommes;
+            this.ccom_transdts = ccom_transdts;
+            this.ccom_transhotel = ccom_transhotel;
+            this.ccom_psjavionper = ccom_psjavionper;
+            this.ccom_alqveh = ccom_alqveh;
+            this.ccom_transeqt = ccom_transeqt;
+            this.ccom_transeqa = ccom_transeqa;
+            this.ccom_viatico = ccom_viatico;
+            this.ccom_hotel = ccom_hotel;
+            this.ccom_frendir = ccom_frendir;
+            this.ccom_gasrepr = ccom_gasrepr;
+            this.ccom_totalcom = ccom_totalcom;
+            this.ccom_totalcommg = ccom_totalcommg;
+            this.lug_id = lug_id;
+        }
+
         public static CotizacionComision objCotCom(Object obj) 
         {
             CotizacionComision cc = new CotizacionComision();

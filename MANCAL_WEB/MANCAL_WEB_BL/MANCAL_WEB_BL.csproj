@@ -54,6 +54,7 @@
     <Compile Include="bl_mail.cs" />
     <Compile Include="bl_menu.cs" />
     <Compile Include="bl_pwd.cs" />
+    <Compile Include="bl_reporte.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

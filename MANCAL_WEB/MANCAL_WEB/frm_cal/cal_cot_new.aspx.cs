@@ -28,6 +28,9 @@ namespace MANCAL_WEB.frm_cal
             {
                 this.txtFecha.Text = DateTime.Now.Date.ToString("dd/MM/yyyy");
                 this.txtValidezOferta.Text = DateTime.Now.Date.AddDays(30).ToString("dd/MM/yyyy");
+                Response.Cookies["pcusr"].Value = System.Environment.UserName;
+                Response.Cookies["pcusr"].Expires = DateTime.Now.AddMinutes(60);
+                Session["pag_num"] = "1";
             }
         }
 

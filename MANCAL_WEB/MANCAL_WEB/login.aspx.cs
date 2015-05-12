@@ -16,14 +16,16 @@ namespace MANCAL_WEB
         {
             if (!IsPostBack) 
             {
-                txtUser.Text = System.Environment.UserName;                
+                //txtUser.Text = System.Environment.UserName;  
+                String txtUsr = "$('#inputEmail').val('" + System.Environment.UserName + "');";
+                ClientScript.RegisterStartupScript(typeof(string), "ServerControlScript", txtUsr, true);
             }
         }
 
         protected void btnEntrar_Click(object sender, EventArgs e)
         {
-            String u = txtUser.Text;
-            String p = txtPwd.Text;
+            String u = String.Format("{0}", Request.Form["username"]);// txtUser.Text;
+            String p = String.Format("{0}", Request.Form["password"]);// txtPwd.Text;
             objLogin = new bl_login();
 
             if (objLogin.validaEstadoUsr(u))
@@ -34,7 +36,7 @@ namespace MANCAL_WEB
                     ScriptManager.RegisterStartupScript(this, GetType(), "ServerControlScript", notificacionUno, true);
                     Response.AddHeader("REFRESH", "0.5;URL=login.aspx");
                 }
-                else 
+                else
                 {
                     String v_pr = objLogin.getPerfilUsr(u);
                     String pcusr = System.Environment.UserName;
@@ -56,7 +58,7 @@ namespace MANCAL_WEB
                     Response.Redirect("~/index.aspx");
                 }
             }
-            else 
+            else
             {
                 String notificacionUno = "alert(\"Usuario ingresado no esta habilitado.\");";
                 ScriptManager.RegisterStartupScript(this, GetType(), "ServerControlScript", notificacionUno, true);

@@ -193,6 +193,15 @@ namespace MANCAL_WEB.frm_cal {
         protected global::System.Web.UI.WebControls.TextBox txtIdUniNeg;
         
         /// <summary>
+        /// Control txtEstadoCot.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtEstadoCot;
+        
+        /// <summary>
         /// Control txtHiddenTipoTarifa.
         /// </summary>
         /// <remarks>
@@ -389,6 +398,15 @@ namespace MANCAL_WEB.frm_cal {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.CheckBox chkDcto;
+        
+        /// <summary>
+        /// Control chkExcede.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox chkExcede;
         
         /// <summary>
         /// Control panelNota.
@@ -625,6 +643,15 @@ namespace MANCAL_WEB.frm_cal {
         protected global::System.Web.UI.WebControls.TextBox txtCargoJefe;
         
         /// <summary>
+        /// Control upBtnAdjDoc.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel upBtnAdjDoc;
+        
+        /// <summary>
         /// Control udpArchivo.
         /// </summary>
         /// <remarks>
@@ -659,33 +686,6 @@ namespace MANCAL_WEB.frm_cal {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::AjaxControlToolkit.AjaxFileUpload fuCalibracion;
-        
-        /// <summary>
-        /// Control btnSave.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnSave;
-        
-        /// <summary>
-        /// Control btnSaveDraft.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnSaveDraft;
-        
-        /// <summary>
-        /// Control btnSavePrint.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnSavePrint;
         
         /// <summary>
         /// Control upEquipoBusca.

@@ -16,6 +16,16 @@ namespace MANCAL_WEB_CLASS
 
         public CotizacionTransporte() { }
 
+        public CotizacionTransporte(String ctrans_id, String cot_numero, String ctrans_total, String reg_id, String ten_id, String ctrans_direccion)
+        {
+            this.ctrans_id = ctrans_id;
+            this.cot_numero = cot_numero;
+            this.ctrans_total = ctrans_total;
+            this.reg_id = reg_id;
+            this.ten_id = ten_id;
+            this.ctrans_direccion = ctrans_direccion;
+        }
+
         //PARA INSERTAR
         public static CotizacionTransporte objCotiTrans(Object obj)
         {

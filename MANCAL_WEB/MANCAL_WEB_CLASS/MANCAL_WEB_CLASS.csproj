@@ -44,9 +44,11 @@
     <Compile Include="CotizacionAdjunto.cs" />
     <Compile Include="CotizacionCliente.cs" />
     <Compile Include="CotizacionComision.cs" />
+    <Compile Include="CotizacionEjecutivo.cs" />
     <Compile Include="CotizacionEnvio.cs" />
     <Compile Include="CotizacionEquipo.cs" />
     <Compile Include="CotizacionEquipoCal.cs" />
+    <Compile Include="CotizacionEstado.cs" />
     <Compile Include="CotizacionEstadoCliente.cs" />
     <Compile Include="CotizacionEstadoDet.cs" />
     <Compile Include="CotizacionGarantia.cs" />

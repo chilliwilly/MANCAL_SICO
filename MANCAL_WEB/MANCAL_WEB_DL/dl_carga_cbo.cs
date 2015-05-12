@@ -476,6 +476,128 @@ namespace MANCAL_WEB_DL
             return dt;
         }
 
+        #region Select Para Criterios de Busqueda Cotizacion
+
+        public DataTable selectIdCotizacion() 
+        {
+            DataTable dt = new DataTable();
+
+            using (OracleConnection con = new OracleConnection(conStr)) 
+            {
+                con.Open();
+                String qry = "SELECT COT_ID FROM TBL_COTIZACION ORDER BY COT_NUMERO";
+                using (OracleCommand cmd = new OracleCommand(qry, con)) 
+                {
+                    cmd.CommandType = CommandType.Text;
+
+                    cmd.ExecuteNonQuery();
+
+                    using (OracleDataAdapter oda = new OracleDataAdapter(cmd)) 
+                    {
+                        oda.Fill(dt);
+                    }
+                }
+                con.Close();
+            }
+            return dt;
+        }
+
+        public DataTable selectNroCotizacion() 
+        {
+            DataTable dt = new DataTable();
+
+            using (OracleConnection con = new OracleConnection(conStr))
+            {
+                con.Open();
+                String qry = "SELECT COT_NUMERO FROM TBL_COTIZACION ORDER BY COT_NUMERO";
+                using (OracleCommand cmd = new OracleCommand(qry, con))
+                {
+                    cmd.CommandType = CommandType.Text;
+
+                    cmd.ExecuteNonQuery();
+
+                    using (OracleDataAdapter oda = new OracleDataAdapter(cmd))
+                    {
+                        oda.Fill(dt);
+                    }
+                }
+                con.Close();
+            }
+            return dt;
+        }
+
+        public DataTable selectEstadoCotizacion() 
+        {
+            DataTable dt = new DataTable();
+
+            using (OracleConnection con = new OracleConnection(conStr))
+            {
+                con.Open();
+                String qry = "SELECT EC_ID, EC_NOMBRE FROM TBL_ESTADO_COTIZACION WHERE EC_UN_ID IN ('DUO','CAL') ORDER BY EC_ID";
+                using (OracleCommand cmd = new OracleCommand(qry, con))
+                {
+                    cmd.CommandType = CommandType.Text;
+
+                    cmd.ExecuteNonQuery();
+
+                    using (OracleDataAdapter oda = new OracleDataAdapter(cmd))
+                    {
+                        oda.Fill(dt);
+                    }
+                }
+                con.Close();
+            }
+            return dt;
+        }
+
+        public DataTable selectClienteCotizacion()
+        {
+            DataTable dt = new DataTable();
+
+            using (OracleConnection con = new OracleConnection(conStr))
+            {
+                con.Open();
+                con.BeginTransaction();
+                String qryproc = "SP_SPAC_SEARCH_CLIENTE";
+                using (OracleCommand cmdproc = new OracleCommand(qryproc, con))
+                {
+                    cmdproc.CommandType = CommandType.StoredProcedure;
+
+                    cmdproc.Parameters.Add(new OracleParameter("P_NOMCLI", OracleDbType.Varchar2)).Value = null;
+                    cmdproc.Parameters["P_NOMCLI"].Direction = ParameterDirection.Input;
+
+                    cmdproc.Parameters.Add(new OracleParameter("P_DIRECCION", OracleDbType.Varchar2)).Value = null;
+                    cmdproc.Parameters["P_DIRECCION"].Direction = ParameterDirection.Input;
+
+                    cmdproc.Parameters.Add(new OracleParameter("P_TIPO_CLIENTE", OracleDbType.Int32)).Value = null;
+                    cmdproc.Parameters["P_TIPO_CLIENTE"].Direction = ParameterDirection.Input;
+
+                    cmdproc.Parameters.Add(new OracleParameter("P_ESTADO", OracleDbType.Int32)).Value = null;
+                    cmdproc.Parameters["P_ESTADO"].Direction = ParameterDirection.Input;
+
+                    cmdproc.ExecuteNonQuery();
+                }
+
+
+                String qry = "SELECT DISTINCT ID_CLIENTE, NOMBRE FROM TBL_SPAC_SEARCH_CLIENTE_TMP ORDER BY NOMBRE";
+                using (OracleCommand cmd = new OracleCommand(qry, con)) 
+                {
+                    cmd.CommandType = CommandType.Text;
+
+                    cmd.ExecuteNonQuery();
+
+                    using (OracleDataAdapter oda = new OracleDataAdapter(cmd)) 
+                    {
+                        oda.Fill(dt);
+                    }
+                }
+
+            }
+            return dt;
+        }
+
+        #endregion
+
         public DataTable selectLineaProd() 
         {
             DataTable dt = new DataTable();
@@ -598,6 +720,35 @@ namespace MANCAL_WEB_DL
                 con.Close();
             }
             return mv;
+        }
+
+        public DataSet selectDatoAceptadoPor(int jefe_id) 
+        {
+            DataSet ds = new DataSet();
+
+            using (OracleConnection con = new OracleConnection(conStr)) 
+            {
+                con.Open();
+                String qry = "FN_MANCAL_GET_DATO_JEFE";
+                using (OracleCommand cmd = new OracleCommand(qry, con)) 
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    cmd.Parameters.Add(new OracleParameter("CUR_DATO_JEFE", OracleDbType.RefCursor)).Direction = ParameterDirection.ReturnValue;
+
+                    cmd.Parameters.Add(new OracleParameter("P_JEFE_ID", OracleDbType.Int32)).Value = jefe_id;
+                    cmd.Parameters["P_JEFE_ID"].Direction = ParameterDirection.Input;
+
+                    cmd.ExecuteNonQuery();
+
+                    using (OracleDataAdapter oda = new OracleDataAdapter(cmd)) 
+                    {
+                        oda.Fill(ds, "CUR_DATO_JEFE");
+                    }
+                }
+                con.Close();
+            }
+            return ds;
         }
     }
 }

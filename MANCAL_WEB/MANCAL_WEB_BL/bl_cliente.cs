@@ -91,5 +91,13 @@ namespace MANCAL_WEB_BL
 
             return ls;
         }
+
+        public String getNombreCli(String cli_id) 
+        {
+            objCliente = new dl_cliente();
+            int idcli = Convert.ToInt32(cli_id);
+
+            return objCliente.selectNombreCli(idcli);
+        }
     }
 }

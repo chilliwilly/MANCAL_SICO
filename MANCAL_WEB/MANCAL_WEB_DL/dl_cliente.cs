@@ -47,32 +47,26 @@ namespace MANCAL_WEB_DL
             {
                 con.Open();
                 con.BeginTransaction();
-                String qryproc = "SP_SPAC_SEARCH_CLIENTE";
-                using (OracleCommand cmdproc = new OracleCommand(qryproc, con))
-                {
-                    cmdproc.CommandType = CommandType.StoredProcedure;
+                //String qryproc = "SP_SPAC_SEARCH_CLIENTE";
+                //using (OracleCommand cmdproc = new OracleCommand(qryproc, con))
+                //{
+                //    cmdproc.CommandType = CommandType.StoredProcedure;
 
-                    cmdproc.Parameters.Add(new OracleParameter("P_NOMCLI", OracleDbType.Varchar2)).Value = null;
-                    cmdproc.Parameters["P_NOMCLI"].Direction = ParameterDirection.Input;
+                //    cmdproc.Parameters.Add(new OracleParameter("P_NOMCLI", OracleDbType.Varchar2)).Value = null;
+                //    cmdproc.Parameters["P_NOMCLI"].Direction = ParameterDirection.Input;
 
-                    cmdproc.Parameters.Add(new OracleParameter("P_DIRECCION", OracleDbType.Varchar2)).Value = null;
-                    cmdproc.Parameters["P_DIRECCION"].Direction = ParameterDirection.Input;
+                //    cmdproc.Parameters.Add(new OracleParameter("P_DIRECCION", OracleDbType.Varchar2)).Value = null;
+                //    cmdproc.Parameters["P_DIRECCION"].Direction = ParameterDirection.Input;
 
-                    cmdproc.Parameters.Add(new OracleParameter("P_TIPO_CLIENTE", OracleDbType.Int32)).Value = null;
-                    cmdproc.Parameters["P_TIPO_CLIENTE"].Direction = ParameterDirection.Input;
+                //    cmdproc.Parameters.Add(new OracleParameter("P_TIPO_CLIENTE", OracleDbType.Int32)).Value = null;
+                //    cmdproc.Parameters["P_TIPO_CLIENTE"].Direction = ParameterDirection.Input;
 
-                    cmdproc.Parameters.Add(new OracleParameter("P_ESTADO", OracleDbType.Int32)).Value = null;
-                    cmdproc.Parameters["P_ESTADO"].Direction = ParameterDirection.Input;
+                //    cmdproc.Parameters.Add(new OracleParameter("P_ESTADO", OracleDbType.Int32)).Value = null;
+                //    cmdproc.Parameters["P_ESTADO"].Direction = ParameterDirection.Input;
 
-                    cmdproc.ExecuteNonQuery();
-                }
-
-                //String qry = "SELECT NOMBRE, DIRECCION, NOMBRE_CTA, ID_CLIENTE FROM TBL_SPAC_SEARCH_CLIENTE_TMP " +
-                //             "WHERE UPPER(NOMBRE) LIKE '%' || UPPER(:V_NOMCLI) || '%' " +
-                //             "AND UPPER(NOMBRE_CTA) LIKE '%' || UPPER(:V_NOMCTA) || '%' " +
-                //             "AND TIPO_CLIENTE LIKE '%' || :V_TIPOCLI || '%' " +
-                //             "AND ESTADO LIKE '%' || :V_ESTADOCLI || '%' " +
-                //             "ORDER BY NOMBRE";
+                //    cmdproc.ExecuteNonQuery();
+                //}
+                
                 String qry = "FN_MANCAL_BUSCAR_CLIENTE";
                 using (OracleCommand cmd = new OracleCommand(qry, con)) 
                 {
@@ -104,6 +98,34 @@ namespace MANCAL_WEB_DL
             }
 
             return ds;
+        }
+
+        public String selectNombreCli(int id_cliente)
+        {
+            String nom_cli = "";
+
+            using (OracleConnection con = new OracleConnection(conStr)) 
+            {
+                con.Open();
+                con.BeginTransaction();
+                String qry = "FN_MANCAL_GET_NOM_CLI";
+                using (OracleCommand cmd = new OracleCommand(qry, con)) 
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    cmd.Parameters.Add(new OracleParameter("NOM_CLI", OracleDbType.Varchar2, 200)).Direction = ParameterDirection.ReturnValue;
+
+                    cmd.Parameters.Add(new OracleParameter("P_ID_CLIENTE", OracleDbType.Int32)).Value = id_cliente;
+                    cmd.Parameters["P_ID_CLIENTE"].Direction = ParameterDirection.Input;
+
+                    cmd.ExecuteNonQuery();
+
+                    nom_cli = cmd.Parameters["NOM_CLI"].Value.ToString();
+                }
+            }
+
+
+            return nom_cli;
         }
     }
 }

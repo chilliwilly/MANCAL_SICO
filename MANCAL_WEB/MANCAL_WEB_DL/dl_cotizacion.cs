@@ -11,8 +11,10 @@ namespace MANCAL_WEB_DL
     {
         private static String conStr = System.Configuration.ConfigurationManager.ConnectionStrings["ora_sico_mancal"].ConnectionString;
 
-        public void insertCotizacion(String dataCot, String dataTrans, String dataComi) 
+        public String insertCotizacion(String dataCot, String dataTrans, String dataComi) 
         {
+            String varOut = "";
+
             using (OracleConnection con = new OracleConnection(conStr)) 
             {
                 con.Open();
@@ -30,10 +32,15 @@ namespace MANCAL_WEB_DL
                     cmd.Parameters.Add(new OracleParameter("P_DATO_COT_COMI", OracleDbType.Clob)).Value = dataComi;
                     cmd.Parameters["P_DATO_COT_COMI"].Direction = ParameterDirection.Input;
 
+                    cmd.Parameters.Add(new OracleParameter("P_VAR_PRINT", OracleDbType.Varchar2, 100)).Direction = ParameterDirection.Output;
+
                     cmd.ExecuteNonQuery();
+
+                    varOut = cmd.Parameters["P_VAR_PRINT"].Value.ToString();
                 }
                 con.Close();
             }
+            return varOut;
         }
 
         public void updateCotizacion(String dataCot, String dataTrans, String dataComi) 
@@ -61,7 +68,7 @@ namespace MANCAL_WEB_DL
             }
         }
 
-        public DataSet selectCotizacion(int dataVendedor, int dataEstadoCot, int dataCliente, int dataCotiNum, String dataCotiText) 
+        public DataSet selectCotizacion(int? dataVendedor, int? dataEstadoCot, int? dataCliente, int? dataCotiNum, String dataCotiText) 
         {
             DataSet ds = new DataSet();
 
@@ -103,5 +110,7 @@ namespace MANCAL_WEB_DL
 
             return ds;
         }
+
+        
     }
 }

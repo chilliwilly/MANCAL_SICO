@@ -95,18 +95,18 @@ function delArchivo(item, coti) {
     });
 }
 
-function getFiltroCliente(nom, cta, tip, est) {
+function getNomCliente(idcli) {//OBTENER SOLO NOMBRE CLIENTE
     $.ajax({
         type: "POST",
-        url: "proy_new.aspx/setFiltroCliente",
+        url: "/asmx_files/js_llenado.asmx/getNombreCliente",
         datatype: "json",
         contentType: "application/json; charset=utf-8",
-        data: JSON.stringify({ "clinom": nom, "clicta": cta, "clitipo": tip, "cliestado": est}),
+        data: JSON.stringify({ "cliid": idcli }),
         success: function (data, status) {
-            
+            $('._txtCliente_').val(data.d);
         },
         error: function (data) {
-            alert("Error al buscar cliente");
+            alert("Error al buscar nombre del cliente");
         }
     });
 }
@@ -577,23 +577,191 @@ function getEmailVendedor(idven) {
     });
 }
 
+//FUNCION OBTENER DATOS ACPETADO POR
+function getDatoAceptadoPor(jefe_id) {
+    $.ajax({
+        type: "POST",
+        url: "/asmx_files/js_llenado.asmx/getDatoAceptadoPor",
+        datatype: "json",
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify({ "idjefe": jefe_id }),
+        success: function (data, status) {
+            var arrAcepta = data.d;
+            $('._txtMailJefe_').val(arrAcepta[0]);
+            $('._txtCargoJefe_').val(arrAcepta[1]);            
+        },
+        error: function (data) {
+            alert("Error al buscar datos del jefe");
+        }
+    });
+}
+
 //---------------------------------------------------//
 //---------------------------------------------------//
 //  FUNCIONES DE SELECT, UPDATE, INSERT COTIZACION   //
 //---------------------------------------------------//
 //---------------------------------------------------//
-function insCotizacion() {
+function insCotizacion() {//INSERT COTIZACION
+    if (validaIngresoCotizacion()) {
+        alert(msgValCot);
+    } else {
+        $.ajax({
+            type: "POST",
+            url: "/asmx_files/js_llenado.asmx/insObjCotizacion",
+            datatype: "json",
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify({ "cot": CotizacionObject(), "trans": CotizacionTransObject(), "comi": CotizacionComisObject() }),
+            success: function (data, status) {
+                window.location = "../load.aspx";
+                imprimeCotizacion();                            
+            },
+            error: function (data) {
+                alert("Error al guardar/imprimir cotizacion");
+            }
+        });
+    }
+}
+
+function seleccionaCotizacion(num) {//SELECT COTIZACION
     $.ajax({
         type: "POST",
-        url: "/asmx_files/js_llenado.asmx/insObjCotizacion",
+        url: "/asmx_files/js_llenado.asmx/selObjCotizacion",
         datatype: "json",
         contentType: "application/json; charset=utf-8",
-        data: JSON.stringify({ "cot": CotizacionObject(), "trans": CotizacionTransObject(), "comi": CotizacionComisObject() }),
+        data: JSON.stringify({ "numcot": num }),
         success: function (data, status) {
-            $("#txtMailVendedor").val(data.d);
+            var cotData = data.d;
+
+            /*LIMPIA SECTOR OTROS COSTOS*/
+            limpiaCostosBusqueda();
+            bloqueaCampoComision();
+            $("#btnAddComision").attr('disabled', 'disabled');
+            $('._cboLugarComision_').val("0");
+
+            /*ENCABEZADO COTIZACION*/
+            $('._txtIdCotNum_').val(cotData.cot_numero);
+            $('._txtIdCotTxt_').val(cotData.cot_id);
+            $('._cboTipoCotizacion_').val(cotData.tc_id);
+            $('._txtFecha_').val(cotData.cot_fecha);
+            $('._txtCuenta_').val(cotData.cot_cuentacli);
+            $('._cboVendedor_').val(cotData.ven_id);
+            getEmailVendedor(cotData.ven_id);
+            $('._txtClienteInforme_').val(cotData.cot_informecli);
+            $('._txtClienteCertificado_').val(cotData.cot_certificado_dir);
+            $('._txtContactoCliente_').val(cotData.cot_contacto_nom);
+            $('._txtDireccionCliente_').val(cotData.cot_contacto_dir);
+            $('._txtMailCliente_').val(cotData.cot_contacto_mail);
+            $('._txtFonoCliente_').val(cotData.cot_contacto_ff);
+            getNomCliente(cotData.cot_id_cliente);
+            $('._cboTipoTarifa_').val(cotData.tt_id);
+            $('._cboEstadoCotizacion_').val(cotData.ec_id);
+            $("#txtId_Cotizacion").val(cotData.cot_id);
+            $('._txtIdCotizacion_').val(cotData.cot_id);
+
+            /*ENCABEZADO COMISION*/
+            if (cotData.CotizacionComision != null) {
+                $("#txt-com-qty-persona").val(cotData.CotizacionComision.ccom_qtypersona);
+                $("#txt-com-qty-dia").val(cotData.CotizacionComision.ccom_qtydia);
+                $("#txt-com-qty-veh").val(cotData.CotizacionComision.ccom_qtyveh);
+                $("#txt-com-eq-c").val(cotData.CotizacionComision.ccom_qtranseqt);
+                $("#txt-com-eq-a").val(cotData.CotizacionComision.ccom_qtranseqa);
+                $("#txt-com-fondo-rendir").val(cotData.CotizacionComision.ccom_fondor);
+                $("#txt-com-rep-gasto").val(cotData.CotizacionComision.ccom_qgasrepr);
+                $("#txt-com-qty-com-mes").val(cotData.CotizacionComision.ccom_qtycommes);
+
+                $('._cboLugarComision_').val(cotData.CotizacionComision.lug_id);
+                $("#txt-com-trans-dts").val(cotData.CotizacionComision.ccom_transdts);
+                $("#txt-com-trans-hotel").val(cotData.CotizacionComision.ccom_transhotel);
+                $("#txt-com-trans-av-per").val(cotData.CotizacionComision.ccom_psjavionper);
+                $("#txt-com-arr-veh").val(cotData.CotizacionComision.ccom_alqveh);
+                $("#txt-com-tras-eq-c").val(cotData.CotizacionComision.ccom_transeqt);
+                $("#txt-com-tras-eq-a").val(cotData.CotizacionComision.ccom_transeqa);
+                $("#txt-com-viatico").val(cotData.CotizacionComision.ccom_viatico);
+                $("#txt-com-hotel").val(cotData.CotizacionComision.ccom_hotel);
+                $("#txt-com-fondo-rend").val(cotData.CotizacionComision.ccom_frendir);
+                $("#txt-com-gasto-rep").val(cotData.CotizacionComision.ccom_gasrepr);
+                $("#txt-com-tot-cos-com").val(cotData.CotizacionComision.ccom_totalcom);
+                $("#txt-com-tot-p-com").val(cotData.CotizacionComision.ccom_totalcommg);
+
+                desbloqueaCampoComision();
+                $("#btnAddComision").removeAttr('disabled');
+            }
+
+            /*ENCABEZADO TRANSPORTE*/
+            if (cotData.CotizacionTransporte != null) {
+                $("#chkTransporte").prop('checked', true);
+                $('._cboRegion_').val(cotData.CotizacionTransporte.reg_id);
+                $("#txtDirTransporte").val(cotData.CotizacionTransporte.ctrans_direccion);
+                $('._cboTraslado_').val(cotData.CotizacionTransporte.ten_id);
+                $("#txtTotalTransporte").val(cotData.CotizacionTransporte.ctrans_total);
+
+                $("#txtDirTransporte").prop("disabled", false);
+                $('._cboRegion_').prop("disabled", false);
+                $('._cboTraslado_').prop("disabled", false);
+                $("#btnAddTransporte").removeAttr('disabled');
+            }
+
+            /*ENCABEZADO NOTAS*/
+            $('._txtNotaUno_').val(cotData.cot_notauno);
+            $('._txtNotaDos_').val(cotData.cot_notados);
+
+            /*ENCABEZADO TOTALES*/
+            $('._cboTipoImpuesto_').val(cotData.cot_afecto);
+            $("#txtTipoMoneda").val(cotData.cot_tipomoneda);
+            $("#txtTotalCostoMo").val(cotData.cot_totcostmo);
+            $("#txtTotalCostoRpto").val(cotData.cot_totvalrpto);
+            $("#txtMgOpPorc").val(cotData.cot_mgopporc);
+            $("#txtMgBrutoPorc").val(cotData.cot_mgbrutoporc);
+            $("#txtMgContribucion").val(cotData.cot_mgcontrib);
+            $("#txtMgContribucionPorc").val(cotData.cot_mgcontribporc);
+            $("#txtUtilidadEspPorc").val(cotData.cot_utilesperaporc);
+            $("#txtNeto").val(cotData.cot_neto);
+            $("#txtDcto").val(cotData.cot_descuento);
+            $("#txtNetoDcto").val(cotData.cot_netodcto);
+            $("#txtIva").val(cotData.cot_iva);
+            $("#txtTotal").val(cotData.cot_total);
+
+            /*ENCABEZADO FACTURACION*/
+            $('._cboFacturacion_').val(cotData.tf_id);
+            $('._txtFacturacion_').val(cotData.cot_txtfacturacion);
+            $('._cboFormaPago_').val(cotData.tfpf_id);
+            $('._txtFormaPago_').val(cotData.cot_txtformapago);
+            $("#txtPlazoEntregaD").val(cotData.cot_plazo_entrega);
+            $('._txtPlazoEntrega_').val(cotData.cot_txttpe);
+
+            /*RNCABEZADO GARANTIA*/
+            $('._cboEjecTrab_').val(cotData.tlej_id);
+            $('._cboLugarRetiro_').val(cotData.cot_tipo_retiro);
+            $('._txtSectorRetiro_').val(cotData.cot_secretiro_dir);
+            $('._txtSectorRetiroNom_').val(cotData.cot_secretiro_nom);
+            $('._cboLugarEntrega_').val(cotData.tle_id);
+            $('._txtSectorEntrega_').val(cotData.cot_secentrega);
+            $('._txtValidezOferta_').val(cotData.cot_valioferta);
+            $('._cboGarantia_').val(cotData.tg_id);
+            $('._cboValidezGar_').val(cotData.tvg_id);
+            $('._cboJefe_').val(cotData.jef_id);
+            getDatoAceptadoPor(cotData.jef_id);
+
+            $("#dialog-busca-cot").dialog('close');
         },
         error: function (data) {
-            alert("Error al buscar mail del vendedor");
+            alert("Error al cargar cotizacion");
+        }
+    });      
+}
+
+function verDocCotizacion(numc, txtc) {//MOSTRAR COTIZACION DESDE BUSCADOR COTIZACION
+    $.ajax({
+        type: "POST",
+        url: "/asmx_files/js_llenado.asmx/selDocuCotizacion",
+        datatype: "json",
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify({ "numcot": numc, "txtcot": txtc }),
+        success: function (data, status) {
+            imprimeCotizacion();
+        },
+        error: function (data) {
+            alert("Error al mostrar documento de cotizacion");
         }
     });
 }
@@ -602,6 +770,34 @@ function insCotizacion() {
 // FIN FUNCIONES DE SELECT, UPDATE, INSERT COTI      //
 //---------------------------------------------------//
 //---------------------------------------------------//
+
+function imprimeCotizacion() {//IMPRIME REPORTE DE COTIZACION
+    window.open('/frm_reporte/rpt_cotizacion_cal.aspx');
+}
+
+function limpiaCostosBusqueda() {
+    $("#chkTransporte").prop('checked', false);
+    $("#txtDirTransporte").prop("disabled", true);
+    $('._cboRegion_').prop("disabled", true);
+    $('._cboTraslado_').prop("disabled", true);
+    $("#btnAddTransporte").attr('disabled', 'disabled');
+
+    $('._cboRegion_').val("0");
+    $("#txtDirTransporte").val("");
+    $('._cboTraslado_').val("0");
+    $("#txtTotalTransporte").val("");
+    /*******************************/
+
+
+}
+/*** INI FUNCIONES BUSQUEDA COTIZACION ***/
+
+/*** FIN FUNCIONES BUSQUEDA COTIZACION ***/
+
+/*** INI FUNCIONES CARGA COMBO BUSQUEDA COTIZACION ***/
+
+
+/*** INI FUNCIONES CARGA COMBO BUSQUEDA COTIZACION ***/
 
 function validaPrecioGastoChange(oldPGasto, newPGasto) {
     if (newPGasto < oldPGasto) {
@@ -661,6 +857,138 @@ function cambioFechaCotizacion(sender, args) {
     fCot = new Date(fCot.getTime() + fCot.getTimezoneOffset() * 60000);
     var fCotVenc = new Date(fCot.setDate(fCot.getDate() + 30));
     fCotVence.set_selectedDate(fCotVenc);
+}
+
+function verificaChkDcto() {
+    var txtChkDcto = "";
+    if ($('._chkDcto_').is(":checked")) {
+        txtChkDcto = "Y";
+    } else {
+        txtChkDcto = "N";
+    }
+    return txtChkDcto;
+}
+
+function verificaChkExc() {
+    var txtChkExc = "";
+    if ($('._chkExcede_').is(":checked")) {
+        txtChkExc = "Y";
+    } else {
+        txtChkExc = "N";
+    }
+    return txtChkExc;
+}
+
+var msgValCot = "";
+function validaIngresoCotizacion() {
+    var flagValCot = false;
+//    var validaNumero = new RegExp(' /^\d*$/'); //'^\d+$');
+//    var plazoEntrega = $("#txtPlazoEntregaD").val();
+    msgValCot = "";
+
+    if ($('._cboTipoCotizacion_').val() == "0") {
+        msgValCot = msgValCot + "Debe seleccionar un tipo de cotizacion.\n";
+        flagValCot = true;
+    }
+    if ($('._cboVendedor_').val() == "0") {
+        msgValCot = msgValCot + "Debe seleccionar un vendedor.\n";
+        flagValCot = true;
+    }
+    if ($('._txtCliente_').val() == "") {
+        msgValCot = msgValCot + "Debe seleccionar un cliente.\n";
+        flagValCot = true;
+    }
+    if ($('._txtClienteInforme_').val() == "") {
+        msgValCot = msgValCot + "Debe ingresar un cliente informe.\n";
+        flagValCot = true;
+    }
+    if ($('._txtClienteCertificado_').val() == "") {
+        msgValCot = msgValCot + "Debe ingresar direccion de certificado.\n";
+        flagValCot = true;
+    }
+    if ($('._txtContactoCliente_').val() == "") {
+        msgValCot = msgValCot + "Debe ingresar un nombre de contacto.\n";
+        flagValCot = true;
+    }
+    if ($('._txtDireccionCliente_').val() == "") {
+        msgValCot = msgValCot + "Debe ingresar una direccion de contacto.\n";
+        flagValCot = true;
+    }
+    if ($('._txtMailCliente_').val() == "") {
+        msgValCot = msgValCot + "Debe ingresar un mail de contacto.\n";
+        flagValCot = true;
+    }
+    if ($('._txtFonoCliente_').val() == "") {
+        msgValCot = msgValCot + "Debe ingresar un fono de contacto.\n";
+        flagValCot = true;
+    }
+    if ($('._cboTipoTarifa_').val() == "0") {
+        msgValCot = msgValCot + "Debe seleccionar un tipo de tarifa.\n";
+        flagValCot = true;
+    }
+    if ($('._cboTipoImpuesto_').val() == "0") {
+        msgValCot = msgValCot + "Debe seleccionar si es afecto.\n";
+        flagValCot = true;
+    }
+    if ($('._cboFacturacion_').val() == "0") {
+        msgValCot = msgValCot + "Debe seleccionar un tipo de facturacion.\n";
+        flagValCot = true;
+    }
+    if ($('._txtFacturacion_').val() == "") {
+        msgValCot = msgValCot + "Debe ingresar un tipo de facturacion.\n";
+        flagValCot = true;
+    }
+    if ($('._cboFormaPago_').val() == "0") {
+        msgValCot = msgValCot + "Debe ingresar un tipo de forma de pago.\n";
+        flagValCot = true;
+    }
+    if ($('._txtFormaPago_').val() == "") {
+        msgValCot = msgValCot + "Debe ingresar un texto de forma de pago.\n";
+        flagValCot = true;
+    }
+    if ($("#txtPlazoEntregaD").val() == "0" || $("#txtPlazoEntregaD").val()=="") {
+        msgValCot = msgValCot + "Debe ingresar un plazo de entrega o el plazo de entrega es 0.\n";
+        flagValCot = true;
+    }
+//    if (!validaNumero.test(plazoEntrega)) {
+//        msgValCot = msgValCot + "El plazo de entrega debe ser un numero valido.\n";
+//        flagValCot = true;
+//    }
+    if ($('._txtPlazoEntrega_').val() == "") {
+        msgValCot = msgValCot + "Debe ingresar un texto de plazo de entrega.\n";
+        flagValCot = true;
+    }
+    if ($('._cboEjecTrab_').val() == "0") {
+        msgValCot = msgValCot + "Debe ingresar ejecucion de trabajos.\n";
+        flagValCot = true;
+    }
+    if ($('._cboLugarRetiro_').val() == "0") {
+        msgValCot = msgValCot + "Debe seleccionar un lugar de retiro.\n";
+        flagValCot = true;
+    } else {
+        if ($('._cboLugarRetiro_').val() == "" || $('._txtSectorRetiroNom_').val() == "") {
+            msgValCot = msgValCot + "Debe ingresar lugar y nombre en sector de retiro.\n";
+            flagValCot = true;
+        }
+    }
+    if ($('._cboLugarEntrega_').val() == "0") {
+        msgValCot = msgValCot + "Debe seleccionar un lugar de entrega.\n";
+        flagValCot = true;
+    }
+    if ($('._cboGarantia_').val() == "0") {
+        msgValCot = msgValCot + "Debe seleccionar garantia.\n";
+        flagValCot = true;
+    }
+    if ($('._cboValidezGar_').val() == "0") {
+        msgValCot = msgValCot + "Debe seleccionar validez de garantia.\n";
+        flagValCot = true;
+    }
+    if ($('._cboJefe_').val() == "0") {
+        msgValCot = msgValCot + "Debe seleccionar una persona para aprobacion.\n";
+        flagValCot = true;
+    }
+
+    return flagValCot;
 }
 
 function bloqueaCampoComision() {
@@ -755,8 +1083,8 @@ function CotizacionObject() {
     objCoti.cot_netodcto = $("#txtNetoDcto").val();
     objCoti.cot_iva = $("#txtIva").val();
     objCoti.cot_total = $("#txtTotal").val();
-    objCoti.cot_chkdcto = $('._chkDcto_').val();
-    objCoti.cot_chkex = "";
+    objCoti.cot_chkdcto = verificaChkDcto();// $('._chkDcto_').val();
+    objCoti.cot_chkex = verificaChkExc();
     objCoti.cot_usrpc = $.cookie('pcusr');
     objCoti.tf_id = $('._cboFacturacion_').val(); //int
     objCoti.tvg_id = $('._cboValidezGar_').val();
@@ -764,7 +1092,7 @@ function CotizacionObject() {
     objCoti.tfpf_id = $('._cboFormaPago_').val();
     objCoti.tlej_id = $('._cboEjecTrab_').val();
     objCoti.tt_id = $('._cboTipoTarifa_').val();
-    objCoti.ec_id = "";
+    objCoti.ec_id = $('._txtEstadoCot_').val();
     objCoti.tc_id = $('._cboTipoCotizacion_').val();
     objCoti.jef_id = $('._cboJefe_').val();
     objCoti.ven_id = $('._cboVendedor_').val();

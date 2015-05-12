@@ -6,7 +6,7 @@ using System.Web.Services;
 using MANCAL_WEB_BL;
 using System.Collections;
 using System.Web.UI.WebControls;
-using Newtonsoft.Json;
+using System.Web.Script.Serialization;
 
 namespace MANCAL_WEB.asmx_files
 {
@@ -252,24 +252,89 @@ namespace MANCAL_WEB.asmx_files
             objDetPro.setDatoPuntoEquipo(idcot, idesp, idfun, txtpunto, iddcc, iddcitem, idequ);            
         }
 
-        [WebMethod]
+        [WebMethod(EnableSession = true)]//INSERTAR COTIZACION
         public void insObjCotizacion(Object cot, Object trans, Object comi) 
         {
             MANCAL_WEB_CLASS.Cotizacion objCot = MANCAL_WEB_CLASS.Cotizacion.objCotizacion(cot);
             MANCAL_WEB_CLASS.CotizacionTransporte objCotTrans = MANCAL_WEB_CLASS.CotizacionTransporte.objCotiTrans(trans);
             MANCAL_WEB_CLASS.CotizacionComision objCotComis = MANCAL_WEB_CLASS.CotizacionComision.objCotiCom(comi);
-
+            
             objCot.CotizacionComision = objCotComis;
             objCot.CotizacionTransporte = objCotTrans;
-
+            
             bl_cotizacion blCot = new bl_cotizacion();
-            blCot.insDatoCotizacion(objCot);
+            String[] dataInforme = blCot.insDatoCotizacion(objCot).Split(',');
+            Session.Add("RPT_NUM_COT", dataInforme[0]);
+            Session.Add("RPT_NUM_TXT", dataInforme[1]);
+            //return dataInforme;
+        }
+
+        [WebMethod]//MOSTRAR COTIZACION EN PAGINA
+        public MANCAL_WEB_CLASS.Cotizacion selObjCotizacion(String numcot) 
+        {            
+            bl_cotizacion blcot = new bl_cotizacion();
+
+            MANCAL_WEB_CLASS.Cotizacion cot = blcot.selDatoCotizacion(numcot);
+            
+            HttpContext.Current.Response.Cookies["pcusr"].Value = cot.cot_numero;
+            HttpContext.Current.Response.Cookies["pcusr"].Expires = DateTime.Now.AddMinutes(60);
+
+            //JavaScriptSerializer jsrlz = new JavaScriptSerializer();
+            //var obj = blcot.selDatoCotizacion(numcot).ToString().ToList();
+            //var objJson = jsrlz.Serialize(obj);
+            return cot;
+        }
+
+        [WebMethod]
+        public String[] getDatoAceptadoPor(String idjefe)
+        {
+            bl_carga_cbo objCbo = new bl_carga_cbo();
+            String[] objDAP = new String[2];
+            objDAP = objCbo.getDatoAceptadoPor(idjefe);
+
+            return objDAP;
+        }
+
+        [WebMethod(EnableSession = true)]
+        public void selDocuCotizacion(String numcot, String txtcot) 
+        {
+            Session.Add("RPT_NUM_COT", numcot);
+            Session.Add("RPT_NUM_TXT", txtcot);
+        }
+
+        [WebMethod]//OBTIENE SOLO NOMBRE CLIENTE
+        public String getNombreCliente(String cliid) 
+        {
+            MANCAL_WEB_BL.bl_cliente objCli = new MANCAL_WEB_BL.bl_cliente();
+            return objCli.getNombreCli(cliid);
         }
 
         [WebMethod]
         public void updObjCotizacion(Object cot) 
         {
         
+        }
+
+        [WebMethod]
+        public String getCotId()
+        {
+            List<MANCAL_WEB_CLASS.CotizacionEstado> lsc = new List<MANCAL_WEB_CLASS.CotizacionEstado>();
+            
+            bl_carga_cbo cc = new bl_carga_cbo();
+            //String jsonList = "";
+
+            /*foreach (var item in cc.getIdCotizacion())
+            {
+                MANCAL_WEB_CLASS.CotizacionEstado idcot = new MANCAL_WEB_CLASS.CotizacionEstado();
+                idcot.noestado = item;
+                lsc.Add(idcot);
+            }*/
+
+            JavaScriptSerializer jscr = new JavaScriptSerializer();
+            var objser = cc.getIdCotizacion().ToList();
+            var jsonList = jscr.Serialize(objser);
+
+            return jsonList;
         }
     }
 }
