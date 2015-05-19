@@ -245,6 +245,7 @@ namespace MANCAL_WEB_BL
             dtXmlc.Columns.Add("jef_id", typeof(Int32));
             dtXmlc.Columns.Add("ven_id", typeof(Int32));
             dtXmlc.Columns.Add("tle_id", typeof(Int32));
+            dtXmlc.Columns.Add("cot_nompc", typeof(string));
 
             DataRow drXmlc = dtXmlc.NewRow();
             drXmlc["cot_un_id"] = objCot.cot_un_id;
@@ -298,6 +299,7 @@ namespace MANCAL_WEB_BL
             drXmlc["jef_id"] = objCot.jef_id;
             drXmlc["ven_id"] = objCot.ven_id;
             drXmlc["tle_id"] = objCot.tle_id;
+            drXmlc["cot_nompc"] = System.Environment.UserName;
 
             dtXmlc.Rows.Add(drXmlc);
 
