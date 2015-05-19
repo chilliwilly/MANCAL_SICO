@@ -38,10 +38,10 @@ namespace MANCAL_WEB.rpt_cal
             this.textBox9 = new Telerik.Reporting.TextBox();
             this.textBox11 = new Telerik.Reporting.TextBox();
             this.textBox13 = new Telerik.Reporting.TextBox();
-            this.pageFooterSection1 = new Telerik.Reporting.PageFooterSection();
             this.objectDataSource1 = new Telerik.Reporting.ObjectDataSource();
             this.table2 = new Telerik.Reporting.Table();
             this.textBox15 = new Telerik.Reporting.TextBox();
+            this.pageFooterSection1 = new Telerik.Reporting.PageFooterSection();
             ((System.ComponentModel.ISupportInitialize)(this)).BeginInit();
             // 
             // textBox4
@@ -171,7 +171,7 @@ namespace MANCAL_WEB.rpt_cal
             this.table1.Body.Columns.Add(new Telerik.Reporting.TableBodyColumn(Telerik.Reporting.Drawing.Unit.Cm(1.1439478397369385D)));
             this.table1.Body.Columns.Add(new Telerik.Reporting.TableBodyColumn(Telerik.Reporting.Drawing.Unit.Cm(8.1754169464111328D)));
             this.table1.Body.Columns.Add(new Telerik.Reporting.TableBodyColumn(Telerik.Reporting.Drawing.Unit.Cm(2.2000010013580322D)));
-            this.table1.Body.Columns.Add(new Telerik.Reporting.TableBodyColumn(Telerik.Reporting.Drawing.Unit.Cm(3.2869975566864014D)));
+            this.table1.Body.Columns.Add(new Telerik.Reporting.TableBodyColumn(Telerik.Reporting.Drawing.Unit.Cm(3.2869973182678223D)));
             this.table1.Body.Columns.Add(new Telerik.Reporting.TableBodyColumn(Telerik.Reporting.Drawing.Unit.Cm(4.001370906829834D)));
             this.table1.Body.Rows.Add(new Telerik.Reporting.TableBodyRow(Telerik.Reporting.Drawing.Unit.Cm(0.47999998927116394D)));
             this.table1.Body.SetCellContent(0, 0, this.textBox5);
@@ -252,11 +252,6 @@ namespace MANCAL_WEB.rpt_cal
             this.textBox13.StyleName = "";
             this.textBox13.Value = "{Fields.cp_punto}";
             // 
-            // pageFooterSection1
-            // 
-            this.pageFooterSection1.Height = Telerik.Reporting.Drawing.Unit.Cm(2.5D);
-            this.pageFooterSection1.Name = "pageFooterSection1";
-            // 
             // objectDataSource1
             // 
             this.objectDataSource1.DataMember = "getPuntoCotCal";
@@ -277,7 +272,7 @@ namespace MANCAL_WEB.rpt_cal
             this.textBox15});
             this.table2.Location = new Telerik.Reporting.Drawing.PointU(Telerik.Reporting.Drawing.Unit.Cm(4.4000000953674316D), Telerik.Reporting.Drawing.Unit.Cm(0.20000000298023224D));
             this.table2.Name = "table2";
-            tableGroup8.Groupings.Add(new Telerik.Reporting.Grouping(null));
+            tableGroup8.Groupings.Add(new Telerik.Reporting.Grouping("= Fields.cp_dcot_id"));
             tableGroup8.Name = "detailTableGroup1";
             this.table2.RowGroups.Add(tableGroup8);
             this.table2.Size = new Telerik.Reporting.Drawing.SizeU(Telerik.Reporting.Drawing.Unit.Cm(10.5D), Telerik.Reporting.Drawing.Unit.Cm(0.699999988079071D));
@@ -289,7 +284,12 @@ namespace MANCAL_WEB.rpt_cal
             this.textBox15.Style.Font.Bold = true;
             this.textBox15.Style.Font.Size = Telerik.Reporting.Drawing.Unit.Point(14D);
             this.textBox15.Style.TextAlign = Telerik.Reporting.Drawing.HorizontalAlign.Center;
-            this.textBox15.Value = "ANEXO A COTIZACIÓN Nº {Last({Fields.cp_dcot_id})}";
+            this.textBox15.Value = "ANEXO A COTIZACIÓN Nº {Fields.cp_dcot_id}";
+            // 
+            // pageFooterSection1
+            // 
+            this.pageFooterSection1.Height = Telerik.Reporting.Drawing.Unit.Cm(2.5D);
+            this.pageFooterSection1.Name = "pageFooterSection1";
             // 
             // rptCotizacionCal_DetPunto
             // 

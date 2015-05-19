@@ -32,16 +32,22 @@ namespace MANCAL_WEB_CLASS
             CotizacionTransporte ct = new CotizacionTransporte();
             Dictionary<String, Object> d = (Dictionary<String, Object>)obj;
 
+            Object ctrans_id = null;
+            Object cot_numero = null;
             Object ctrans_total = null;
             Object reg_id = null;
             Object ten_id = null;
             Object ctrans_direccion = null;
 
+            d.TryGetValue("ctrans_id", out ctrans_id);
+            d.TryGetValue("cot_numero", out cot_numero);
             d.TryGetValue("ctrans_total", out ctrans_total);
             d.TryGetValue("reg_id", out reg_id);
             d.TryGetValue("ten_id", out ten_id);
             d.TryGetValue("ctrans_direccion", out ctrans_direccion);
 
+            ct.ctrans_id = ctrans_id.ToString();
+            ct.cot_numero = cot_numero.ToString();
             ct.ctrans_total = ctrans_total.ToString();
             ct.reg_id = reg_id.ToString();
             ct.ten_id = ten_id.ToString();

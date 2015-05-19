@@ -43,11 +43,14 @@ namespace MANCAL_WEB_DL
             return varOut;
         }
 
-        public void updateCotizacion(String dataCot, String dataTrans, String dataComi) 
+        public String updateCotizacion(String dataCot, String dataTrans, String dataComi) 
         {
+            String varOut = "";
+
             using (OracleConnection con = new OracleConnection(conStr))
             {
                 con.Open();
+                con.BeginTransaction();
                 String qry = "PKG_MANCAL_DMLCOT.SP_MANCAL_UPDATE_COT";
                 using (OracleCommand cmd = new OracleCommand(qry, con))
                 {
@@ -62,10 +65,15 @@ namespace MANCAL_WEB_DL
                     cmd.Parameters.Add(new OracleParameter("P_DATO_COT_COMI", OracleDbType.Clob)).Value = dataComi;
                     cmd.Parameters["P_DATO_COT_COMI"].Direction = ParameterDirection.Input;
 
+                    cmd.Parameters.Add(new OracleParameter("P_VAR_PRINT", OracleDbType.Varchar2, 100)).Direction = ParameterDirection.Output;
+
                     cmd.ExecuteNonQuery();
+
+                    varOut = cmd.Parameters["P_VAR_PRINT"].Value.ToString();
                 }
                 con.Close();
             }
+            return varOut;
         }
 
         public DataSet selectCotizacion(int? dataVendedor, int? dataEstadoCot, int? dataCliente, int? dataCotiNum, String dataCotiText) 
@@ -111,6 +119,65 @@ namespace MANCAL_WEB_DL
             return ds;
         }
 
-        
+        #region Solo Traspasa Detalle Original al Provisorio
+
+        public void selectDetOrigDetProv(int num_cot) 
+        {
+            using (OracleConnection con = new OracleConnection(conStr)) 
+            {
+                con.Open();
+                String qry = "PKG_MANCAL_DMLCOT_DETEQUIPO_V2.SP_DETPROD_DETPROV";
+                using (OracleCommand cmd = new OracleCommand(qry, con)) 
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    cmd.Parameters.Add(new OracleParameter("P_NUM_COTIZACION", OracleDbType.Int32)).Value = num_cot;
+                    cmd.Parameters["P_NUM_COTIZACION"].Direction = ParameterDirection.Input;
+
+                    cmd.ExecuteNonQuery();
+                }
+                con.Close();
+            }
+        }
+
+        public void selectDetOrigPDetProvP(int num_cot) 
+        {
+            using (OracleConnection con = new OracleConnection(conStr))
+            {
+                con.Open();
+                String qry = "PKG_MANCAL_DMLCOT_DETPUNTO.SP_DETPUNTOPROD_DETPUNTOPROV";
+                using (OracleCommand cmd = new OracleCommand(qry, con))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    cmd.Parameters.Add(new OracleParameter("P_NUM_COTIZACION", OracleDbType.Int32)).Value = num_cot;
+                    cmd.Parameters["P_NUM_COTIZACION"].Direction = ParameterDirection.Input;
+
+                    cmd.ExecuteNonQuery();
+                }
+                con.Close();
+            }
+        }
+
+        public void selectArchOrigArchProv(String txt_cot) 
+        {
+            using (OracleConnection con = new OracleConnection(conStr))
+            {
+                con.Open();
+                String qry = "PKG_MANCAL_ARCHIVO.SP_ARCHORIG_ARCHPROV";
+                using (OracleCommand cmd = new OracleCommand(qry, con))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    cmd.Parameters.Add(new OracleParameter("IDNARCH", OracleDbType.Varchar2)).Value = txt_cot;
+                    cmd.Parameters["IDNARCH"].Direction = ParameterDirection.Input;
+
+                    cmd.ExecuteNonQuery();
+                }
+                con.Close();
+            }
+        }
+
+        #endregion
     }
 }

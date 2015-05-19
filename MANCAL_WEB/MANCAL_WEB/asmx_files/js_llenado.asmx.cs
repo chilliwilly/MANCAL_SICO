@@ -258,15 +258,58 @@ namespace MANCAL_WEB.asmx_files
             MANCAL_WEB_CLASS.Cotizacion objCot = MANCAL_WEB_CLASS.Cotizacion.objCotizacion(cot);
             MANCAL_WEB_CLASS.CotizacionTransporte objCotTrans = MANCAL_WEB_CLASS.CotizacionTransporte.objCotiTrans(trans);
             MANCAL_WEB_CLASS.CotizacionComision objCotComis = MANCAL_WEB_CLASS.CotizacionComision.objCotiCom(comi);
+            MANCAL_WEB_BL.bl_reporte rpt = new MANCAL_WEB_BL.bl_reporte();
+            String validaPto = "";
             
             objCot.CotizacionComision = objCotComis;
             objCot.CotizacionTransporte = objCotTrans;
             
             bl_cotizacion blCot = new bl_cotizacion();
             String[] dataInforme = blCot.insDatoCotizacion(objCot).Split(',');
+
+            if (rpt.getPuntoCotCal(dataInforme[0]).Count < 1)
+            {
+                validaPto = "N";
+            }
+            else
+            {
+                validaPto = "Y";
+            }
+
+            Session.Add("RPT_NUM_PTO", validaPto);
             Session.Add("RPT_NUM_COT", dataInforme[0]);
             Session.Add("RPT_NUM_TXT", dataInforme[1]);
             //return dataInforme;
+        }
+
+        [WebMethod(EnableSession = true)]//ACTUALIZAR COTIZACION
+        public void updObjCotizacion(Object cot, Object trans, Object comi)
+        {
+            MANCAL_WEB_CLASS.Cotizacion objCot = MANCAL_WEB_CLASS.Cotizacion.objCotizacion(cot);
+            MANCAL_WEB_CLASS.CotizacionTransporte objCotTrans = MANCAL_WEB_CLASS.CotizacionTransporte.objCotiTrans(trans);
+            MANCAL_WEB_CLASS.CotizacionComision objCotComis = MANCAL_WEB_CLASS.CotizacionComision.objCotiCom(comi);            
+            String validaPto = "";
+
+            objCot.CotizacionComision = objCotComis;
+            objCot.CotizacionTransporte = objCotTrans;
+
+            bl_cotizacion blCot = new bl_cotizacion();
+            String[] dataInforme = blCot.updDatoCotizacion(objCot).Split(',');
+
+            MANCAL_WEB_BL.bl_reporte rpt = new MANCAL_WEB_BL.bl_reporte();
+
+            if (rpt.getPuntoCotCal(dataInforme[0]).Count < 1)
+            {
+                validaPto = "N";
+            }
+            else
+            {
+                validaPto = "Y";
+            }
+
+            Session.Add("RPT_NUM_PTO", validaPto);
+            Session.Add("RPT_NUM_COT", dataInforme[0]);
+            Session.Add("RPT_NUM_TXT", dataInforme[1]);
         }
 
         [WebMethod]//MOSTRAR COTIZACION EN PAGINA
@@ -277,7 +320,7 @@ namespace MANCAL_WEB.asmx_files
             MANCAL_WEB_CLASS.Cotizacion cot = blcot.selDatoCotizacion(numcot);
             
             HttpContext.Current.Response.Cookies["pcusr"].Value = cot.cot_numero;
-            HttpContext.Current.Response.Cookies["pcusr"].Expires = DateTime.Now.AddMinutes(60);
+            HttpContext.Current.Response.Cookies["pcusr"].Expires = DateTime.Now.AddMinutes(60);            
 
             //JavaScriptSerializer jsrlz = new JavaScriptSerializer();
             //var obj = blcot.selDatoCotizacion(numcot).ToString().ToList();
@@ -298,6 +341,19 @@ namespace MANCAL_WEB.asmx_files
         [WebMethod(EnableSession = true)]
         public void selDocuCotizacion(String numcot, String txtcot) 
         {
+            MANCAL_WEB_BL.bl_reporte rpt = new MANCAL_WEB_BL.bl_reporte();
+            String validaPto = "";
+
+            if (rpt.getPuntoCotCal(numcot).Count < 1)
+            {
+                validaPto = "N";
+            }
+            else 
+            {
+                validaPto = "Y";
+            }
+
+            Session.Add("RPT_NUM_PTO", validaPto);
             Session.Add("RPT_NUM_COT", numcot);
             Session.Add("RPT_NUM_TXT", txtcot);
         }
@@ -310,9 +366,10 @@ namespace MANCAL_WEB.asmx_files
         }
 
         [WebMethod]
-        public void updObjCotizacion(Object cot) 
+        public void extendCookie(String vcookie) 
         {
-        
+            HttpContext.Current.Response.Cookies["v_pr"].Value = vcookie;
+            HttpContext.Current.Response.Cookies["v_pr"].Expires = DateTime.Now.AddMinutes(60);
         }
 
         [WebMethod]

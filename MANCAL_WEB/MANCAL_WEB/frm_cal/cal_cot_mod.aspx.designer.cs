@@ -346,6 +346,24 @@ namespace MANCAL_WEB.frm_cal {
         protected global::System.Web.UI.WebControls.TextBox txtIdCotTxt;
         
         /// <summary>
+        /// Control txtIdTrans.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtIdTrans;
+        
+        /// <summary>
+        /// Control txtIdComis.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtIdComis;
+        
+        /// <summary>
         /// Control txtHiddenTipoTarifa.
         /// </summary>
         /// <remarks>

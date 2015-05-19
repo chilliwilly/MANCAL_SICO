@@ -61,8 +61,60 @@
             });
         }
 
-        function buscarCotizacionLista() {
-            
+        //get a hold of the timers
+        var iddleTimeoutWarning = null;
+        var iddleTimeoutFinal = null;
+        var iddleTimeout = null;
+
+        //this function will automatically be called by ASP.NET AJAX when page is loaded and partial postbacks complete
+        function pageLoad() { 
+
+	        //clear out any old timers from previous postbacks
+	        if (iddleTimeoutWarning != null)
+		        clearTimeout(iddleTimeoutWarning);
+	        if (iddleTimeout != null)
+		        clearTimeout(iddleTimeout);
+            if(iddleTimeoutFinal != null)
+                clearTimeout(iddleTimeoutFinal);
+	        //read time from web.config
+	        var millisecTimeOutWarning = <%= int.Parse(System.Configuration.ConfigurationManager.AppSettings["SessionTimeoutWarning"]) * 60 * 1000 %>;
+	        //var millisecTimeOut = <%= int.Parse(System.Configuration.ConfigurationManager.AppSettings["SessionTimeout"]) * 60 * 1000 %>; 
+
+	        //set a timeout to display warning if user has been inactive
+	        iddleTimeoutWarning = setTimeout("DisplayIddleWarning()", millisecTimeOutWarning);
+	        //iddleTimeout = setTimeout("TimeoutPage()", millisecTimeOut);
+        } 
+
+        function DisplayIddleWarning() {
+            var confirmacion = confirm("La sesion esta próxima a expirar, para extenderla presione aceptar");
+            if(confirmacion){
+                extenderCookie($.cookie('v_pr'));
+                pageLoad();
+            }
+            else{
+                var millisecTimeOut = <%= int.Parse(System.Configuration.ConfigurationManager.AppSettings["SessionTimeout"]) * 60 * 1000 %>;
+                iddleTimeout = setTimeout("TimeoutPage()", millisecTimeOut);
+            }
+	        //alert("La sesion esta próxima a expirar para continuar presione el boton.");
+            //extenderCookie($.cookie('v_pr'));
+        }
+
+        function TimeoutPage() {
+	        //refresh page for this sample, we could redirect to another page that has code to clear out session variables
+	        //location.reload();            
+            var confirmacion_t=confirm("Su sesion se cerrara automaticamente desea extenderla?");
+            if(confirmacion_t){
+                extenderCookie($.cookie('v_pr'));
+                pageLoad();
+            }
+            else{
+                var millisecTimeOutFinal = <%= int.Parse(System.Configuration.ConfigurationManager.AppSettings["SessionTimeoutFinal"]) * 60 * 1000 %>;
+                iddleTimeoutFinal = setTimeout("TimeoutFinal()", millisecTimeOutFinal);
+            }
+        }
+
+        function TimeoutFinal(){
+            window.location="../logout.aspx";
         }
     </script>
 
@@ -123,7 +175,7 @@
 
 <asp:ToolkitScriptManager ID="ToolkitScriptManager1" runat="server" EnableScriptGlobalization="True" ScriptMode="Release" EnablePartialRendering="true" LoadScriptsBeforeUI="false">
 </asp:ToolkitScriptManager>
-
+    
     <input type="button" id="btn-busca-cot" value="Buscar Cotizacion" />    
     <input type="button" id="btn-busca-rst" style="display:none;"/>
 
@@ -141,7 +193,7 @@
 
     <asp:UpdatePanel ID="udpBotonCargaDetalle" runat="server" UpdateMode="Conditional" style="display:none;">
         <ContentTemplate>
-            <asp:Button ID="btnBuscaDetalleCot" runat="server" OnClick="btnBuscaDetalleCot_Click" />
+            <asp:Button ID="btnBuscaDetalleCot" CssClass="_btnBuscaDetalleCot_" runat="server" OnClick="btnBuscaDetalleCot_Click" />
         </ContentTemplate>
     </asp:UpdatePanel>
 
@@ -462,9 +514,11 @@
                         <asp:TextBox ID="txtIdContactoCli" runat="server" Width="20px" Visible="false" CssClass="_txtIdContactoCli_"></asp:TextBox>
                         <asp:TextBox ID="txtIdCliente" runat="server" style="display:none;" CssClass="_txtIdCliente_"></asp:TextBox>
                         <asp:TextBox ID="txtIdUniNeg" runat="server" style="display:none;" CssClass="_txtIdUniNeg_" Text="CAL"></asp:TextBox>
-                        <asp:TextBox ID="txtEstadoCot" runat="server" style="display:none;" CssClass="_txtEstadoCot_" Text="2"></asp:TextBox>
+                        <asp:TextBox ID="txtEstadoCot" runat="server" style="display:none;" CssClass="_txtEstadoCot_"></asp:TextBox>
                         <asp:TextBox ID="txtIdCotNum" runat="server" style="display:none;" CssClass="_txtIdCotNum_"></asp:TextBox>
                         <asp:TextBox ID="txtIdCotTxt" runat="server" style="display:none;" CssClass="_txtIdCotTxt_"></asp:TextBox>
+                        <asp:TextBox ID="txtIdTrans" runat="server" style="display:none;" CssClass="_txtIdTrans_"></asp:TextBox>
+                        <asp:TextBox ID="txtIdComis" runat="server" style="display:none;" CssClass="_txtIdComis_"></asp:TextBox>
                         <asp:HiddenField ID="txtHiddenTipoTarifa" runat="server" />
                         <asp:HiddenField ID="txtHiddIdCliente" runat="server" />
                     </td>
@@ -487,7 +541,7 @@
     <%--CUADRO QUE SE UTILIZARA PARA BUSCAR CLIENTE --%>
     <asp:UpdatePanel ID="upUpdDatoEquipo" runat="server" UpdateMode="Conditional" style="display:none;">
         <ContentTemplate>
-            <asp:Button ID="btnUpdDatoEquipo" runat="server" 
+            <asp:Button ID="btnUpdDatoEquipo" runat="server" CssClass="_btnUpdDatoEquipo_"
                 onclick="btnUpdDatoEquipo_Click"/><!-- onclick="btnUpdDatoEquipo_Click"-->
         </ContentTemplate>
     </asp:UpdatePanel>
@@ -613,7 +667,7 @@
         </asp:UpdatePanel>
     </div>
 
-    <div id="dialog-tab">
+    <div id="dialog-tab">    
         <div id="tab" style="height:380px;"> 
             <ul>
                 <li><a href="#tab-det-cot">Detalle Cotizacion</a></li>
@@ -649,7 +703,7 @@
 
                 <br />
                 
-                <%-- ACA VA EL GRIDVIEW ScrollBars="Vertical" --%>
+                <%-- ACA VA EL GRIDVIEW ScrollBars="Vertical" 
                 <%--<asp:Panel ID="Panel1" runat="server" Width="100%" Height="165px">--%>
                     <asp:UpdatePanel ID="UpdatePanel5" runat="server" UpdateMode="Conditional">
                         <ContentTemplate>
@@ -1210,7 +1264,7 @@
                                     <%--<asp:DropDownList ID="cboPlazoEntrega" runat="server" Width="140px" 
                                         oninit="cboPlazoEntrega_Init">
                                     </asp:DropDownList>--%>
-                                    <input type="text" id="txtPlazoEntregaD" name="txtPlazoEntregaD" placeholder="Plazo entrega dias" style="width:140px;"/>
+                                    <input type="text" id="txtPlazoEntregaD" name="txtPlazoEntregaD" required placeholder="Plazo entrega dias" style="width:140px;"/>
                                 </td>
                                 <td>
                                 </td>
@@ -1340,7 +1394,8 @@
 
                         <input type="button" id="btn-doc" name="btn-doc" value="Adjuntar Documento" />
                     </ContentTemplate>
-                </asp:UpdatePanel>                
+                </asp:UpdatePanel>
+                <br />            
                 <asp:UpdatePanel ID="udpArchivo" runat="server" UpdateMode="Conditional">
                     <ContentTemplate>
                         <asp:GridView ID="gvArchivo" runat="server" AutoGenerateColumns="False" 
@@ -1384,12 +1439,12 @@
                             </Columns>            
                         </asp:GridView>
 
-                        <asp:Button ID="btnUpdateDoc" runat="server" style="display:none;" OnClick="btnUpdateDoc_Click"/>
+                        <asp:Button ID="btnUpdateDoc" CssClass="_btnUpdateDoc_" runat="server" style="display:none;" OnClick="btnUpdateDoc_Click"/>
 
                     </ContentTemplate>        
                 </asp:UpdatePanel>
             </div>
-        </div>
+        </div>        
     </div>   
 
     <%--DIV PARA ELIMINAR EL ARCHIVO SELECCIONADO --%>
@@ -1418,7 +1473,7 @@
             <td>
                 <%--<asp:Button ID="btnSave" runat="server" 
                 Text="Guardar" Width="130px"/>--%>                
-                <input type="button" id="btnGuardaCoti" value="Guardar Cotizacion" onclick="insCotizacion(); imprimeCotizacion();" />
+                <input type="button" id="btnGuardaCoti" value="Actualizar Cotizacion" onclick="updCotizacion();" />
                 <%--<input type="button" id="btnTestPrint" value="Imprimir" onclick="imprimeCotizacion();"/>--%>
             </td>
             <%--<td>
@@ -1987,7 +2042,7 @@
     <!--FIN CODIGO COTIZACION-->
 
     <!--SCRIPTS PAGINA-->
-    <script type="text/javascript">
+    <script type="text/javascript">        
 
         $("#btn-busca-cot").on('click', function () {
             $.cookie('_dataV', '');
@@ -2078,10 +2133,12 @@
             $(".td").css("font-weight", "bold");
             cambiaAjaxUploader();
             $("#<%=cbo_eq_dato_cal_tt.ClientID %>").prop("disabled", true);
+            $("#<%=cboVendedor.ClientID %>").prop("disabled", true);
             $("#btnAddComision").attr('disabled', 'disabled');
             transporteVal();
             bloqueaCampoComision();
             $("#btn-ed-punto-cal").toggle(false);
+            currentTimePage = Date();
             //$("#btn-det-cal-edita-punto-gv").toggle(false);
         });
 

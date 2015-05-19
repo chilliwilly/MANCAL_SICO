@@ -663,10 +663,10 @@ namespace MANCAL_WEB.rpt_cal
             this.table11.Body.Columns.Add(new Telerik.Reporting.TableBodyColumn(Telerik.Reporting.Drawing.Unit.Cm(2.7340302467346191D)));
             this.table11.Body.Columns.Add(new Telerik.Reporting.TableBodyColumn(Telerik.Reporting.Drawing.Unit.Cm(4.69490385055542D)));
             this.table11.Body.Rows.Add(new Telerik.Reporting.TableBodyRow(Telerik.Reporting.Drawing.Unit.Cm(0.4800000786781311D)));
-            this.table11.Body.Rows.Add(new Telerik.Reporting.TableBodyRow(Telerik.Reporting.Drawing.Unit.Cm(0.47999998927116394D)));
-            this.table11.Body.Rows.Add(new Telerik.Reporting.TableBodyRow(Telerik.Reporting.Drawing.Unit.Cm(0.4800000786781311D)));
-            this.table11.Body.Rows.Add(new Telerik.Reporting.TableBodyRow(Telerik.Reporting.Drawing.Unit.Cm(0.4800000786781311D)));
             this.table11.Body.Rows.Add(new Telerik.Reporting.TableBodyRow(Telerik.Reporting.Drawing.Unit.Cm(0.48000004887580872D)));
+            this.table11.Body.Rows.Add(new Telerik.Reporting.TableBodyRow(Telerik.Reporting.Drawing.Unit.Cm(0.4800000786781311D)));
+            this.table11.Body.Rows.Add(new Telerik.Reporting.TableBodyRow(Telerik.Reporting.Drawing.Unit.Cm(0.4800000786781311D)));
+            this.table11.Body.Rows.Add(new Telerik.Reporting.TableBodyRow(Telerik.Reporting.Drawing.Unit.Cm(0.4800000786781311D)));
             this.table11.Body.Rows.Add(new Telerik.Reporting.TableBodyRow(Telerik.Reporting.Drawing.Unit.Cm(0.4800000786781311D)));
             this.table11.Body.SetCellContent(0, 0, this.textBox27);
             this.table11.Body.SetCellContent(0, 3, this.textBox53);
@@ -779,7 +779,7 @@ namespace MANCAL_WEB.rpt_cal
             this.textBox64.Name = "textBox64";
             this.textBox64.Size = new Telerik.Reporting.Drawing.SizeU(Telerik.Reporting.Drawing.Unit.Cm(4.6949028968811035D), Telerik.Reporting.Drawing.Unit.Cm(0.48000010848045349D));
             this.textBox64.StyleName = "";
-            this.textBox64.Value = ":{Fields.COT_CONTACTO_FF}";
+            this.textBox64.Value = ": {Fields.COT_CONTACTO_FF}";
             // 
             // textBox65
             // 
@@ -822,7 +822,7 @@ namespace MANCAL_WEB.rpt_cal
             this.textBox71.Name = "textBox71";
             this.textBox71.Size = new Telerik.Reporting.Drawing.SizeU(Telerik.Reporting.Drawing.Unit.Cm(14.639726638793945D), Telerik.Reporting.Drawing.Unit.Cm(0.48000010848045349D));
             this.textBox71.StyleName = "";
-            this.textBox71.Value = ": {Fields.tlej_id}";
+            this.textBox71.Value = ": {Fields.tlej_id}.";
             // 
             // textBox4
             // 

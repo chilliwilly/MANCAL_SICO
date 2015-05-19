@@ -94,9 +94,9 @@ namespace MANCAL_WEB_DL
                     using (OracleDataAdapter oda = new OracleDataAdapter(cmd))
                     {
                         oda.Fill(ds, "CUR_PUNTO");
-                    }
+                    }                    
                 }
-                con.Close();
+                con.Close();                
             }
 
             return ds;

@@ -8,6 +8,7 @@ namespace MANCAL_WEB_CLASS
     public class CotizacionComision //: Cotizacion
     {
         public String ccom_id { get; set; }
+        public String cot_numero { get; set; }
         public String ccom_qtypersona { get; set; }
         public String ccom_qtydia { get; set; }
         public String ccom_qtyveh { get; set; }
@@ -102,6 +103,8 @@ namespace MANCAL_WEB_CLASS
             CotizacionComision cc = new CotizacionComision();
             Dictionary<String, Object> d = (Dictionary<String, Object>)obj;
 
+            Object ccom_id = null;
+            Object cot_numero = null;
             Object ccom_qtypersona = null;
             Object ccom_qtydia = null;
             Object ccom_qtyveh = null;
@@ -124,6 +127,8 @@ namespace MANCAL_WEB_CLASS
             Object ccom_totalcommg = null;
             Object lug_id = null;
 
+            d.TryGetValue("ccom_id", out ccom_id);
+            d.TryGetValue("cot_numero", out cot_numero);
             d.TryGetValue("ccom_qtypersona", out ccom_qtypersona);
             d.TryGetValue("ccom_qtydia", out ccom_qtydia);
             d.TryGetValue("ccom_qtyveh", out ccom_qtyveh);
@@ -146,6 +151,8 @@ namespace MANCAL_WEB_CLASS
             d.TryGetValue("ccom_totalcommg", out ccom_totalcommg);
             d.TryGetValue("lug_id", out lug_id);
 
+            cc.ccom_id = ccom_id.ToString();
+            cc.cot_numero = cot_numero.ToString();
             cc.ccom_qtypersona = ccom_qtypersona.ToString();
             cc.ccom_qtydia = ccom_qtydia.ToString();
             cc.ccom_qtyveh = ccom_qtyveh.ToString();

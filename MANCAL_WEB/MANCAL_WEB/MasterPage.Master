@@ -5,14 +5,15 @@
 <head id="Head1" runat="server">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title></title>
-    <link href="css/Site.css" rel="stylesheet" type="text/css" />
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css" />
     <script type="text/javascript" src="//code.jquery.com/jquery-1.10.2.js"></script>
     <script type="text/javascript" src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
     <%--<script type="text/javascript" src="//ajax.aspnetcdn.com/ajax/jquery.validate/1.11.0/jquery.validate.js"></script>--%>
     <script type="text/javascript" src="../Scripts/jquery.validate.js"></script>    
     <script type="text/javascript" src="../Scripts/jquery.cookie.js"></script>
     <script type="text/javascript" src="../Scripts/jsEquipo.js"></script>
+    <%--<script src="http://html5form.googlecode.com/svn/trunk/jquery.html5form-1.5-min.js"></script>--%>
+    <link href="css/Site.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css" />    
     <asp:ContentPlaceHolder ID="HeadContent" runat="server">
     </asp:ContentPlaceHolder>
 </head>

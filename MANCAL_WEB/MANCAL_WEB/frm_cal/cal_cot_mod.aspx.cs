@@ -445,7 +445,7 @@ namespace MANCAL_WEB.frm_cal
 
         protected void GV1_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
-            String usr = System.Environment.UserName;
+            String usr = Request.Cookies["pcusr"].Value;
 
             GV1.PageIndex = e.NewPageIndex;
             getListaDetalle(usr, cboTipoTarifa.SelectedValue);
@@ -453,7 +453,7 @@ namespace MANCAL_WEB.frm_cal
 
         protected void gvArchivo_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
-            String usr = System.Environment.UserName;
+            String usr = String.Format("{0}", Request.Form["txtId_Cotizacion"]);
 
             gvArchivo.PageIndex = e.NewPageIndex;
             getListArchivo(usr);
@@ -461,13 +461,14 @@ namespace MANCAL_WEB.frm_cal
 
         protected void gvArchivo_RowCommand(object sender, GridViewCommandEventArgs e)
         {
-            String usr = System.Environment.UserName;
+            String usr = String.Format("{0}", Request.Form["txtId_Cotizacion"]);
             getListArchivo(usr);
         }
 
         protected void btnUpdateDoc_Click(object sender, EventArgs e)
         {
-            getListArchivo(System.Environment.UserName);
+            String txtIdCot = String.Format("{0}", Request.Form["txtId_Cotizacion"]);
+            getListArchivo(txtIdCot);
             udpArchivo.Update();
         }
 
@@ -475,7 +476,7 @@ namespace MANCAL_WEB.frm_cal
         {
             objAdj = new bl_adjunto();
             String adjunto = "";
-            String usr = System.Environment.UserName;
+            String usr = String.Format("{0}", Request.Form["txtId_Cotizacion"]);
 
             adjunto = objAdj.adjuntarDocumento(e.FileName, usr);
             fuCalibracion.SaveAs(Server.MapPath("~/adjunto_doc/") + adjunto);
@@ -521,7 +522,7 @@ namespace MANCAL_WEB.frm_cal
 
         protected void btnUpdDatoEquipo_Click(object sender, EventArgs e) //
         {
-            String usr = System.Environment.UserName;
+            String usr = Request.Cookies["pcusr"].Value;
             getListaDetalle(usr, cboTipoTarifa.SelectedValue);
             gvListaPunto.DataSource = null;
             gvListaPunto.DataBind();
@@ -625,7 +626,14 @@ namespace MANCAL_WEB.frm_cal
 
         protected void btnBuscaDetalleCot_Click(object sender, EventArgs e) 
         {
-        
+            String txt_cot = String.Format("{0}", Request.Form["txtId_Cotizacion"]);
+            String num_cot = Request.Cookies["pcusr"].Value;
+
+            getListaDetalle(num_cot, cboTipoTarifa.SelectedValue);
+            UpdatePanel5.Update();
+
+            getListArchivo(txt_cot);
+            udpArchivo.Update();
         }
 
         public void buscarCotizacionLista(String dataV_, String dataEC_, String dataC_, String dataCN_, String dataCT_) 
