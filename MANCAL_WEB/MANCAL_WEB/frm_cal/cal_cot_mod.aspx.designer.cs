@@ -391,6 +391,15 @@ namespace MANCAL_WEB.frm_cal {
         protected global::System.Web.UI.WebControls.DropDownList cboTipoTarifa;
         
         /// <summary>
+        /// Control upBtnLsCliente.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel upBtnLsCliente;
+        
+        /// <summary>
         /// Control btnUpdLsCliente.
         /// </summary>
         /// <remarks>
@@ -922,6 +931,15 @@ namespace MANCAL_WEB.frm_cal {
         protected global::System.Web.UI.WebControls.DropDownList cbo_magnitud;
         
         /// <summary>
+        /// Control txt_in_punto_coment.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txt_in_punto_coment;
+        
+        /// <summary>
         /// Control upListaPunto.
         /// </summary>
         /// <remarks>
@@ -965,5 +983,14 @@ namespace MANCAL_WEB.frm_cal {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList cbo_eq_dato_cal_lp;
+        
+        /// <summary>
+        /// Control txt_edit_punto_coment.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txt_edit_punto_coment;
     }
 }

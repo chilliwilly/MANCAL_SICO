@@ -308,7 +308,7 @@ namespace MANCAL_WEB.frm_cal
 
         #endregion
 
-        #region Metodos Protected
+        #region Metodos Protected        
 
         protected void gvListaCliente_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
@@ -513,13 +513,13 @@ namespace MANCAL_WEB.frm_cal
 
             if (fl_inpunto.Equals("1")) 
             {
-                gvListaPunto.Columns[10].Visible = true;
-                gvListaPunto.Columns[11].Visible = false;
+                gvListaPunto.Columns[11].Visible = true;
+                gvListaPunto.Columns[12].Visible = false;
             }
             else if (fl_inpunto.Equals("2")) 
             {
-                gvListaPunto.Columns[10].Visible = false;
-                gvListaPunto.Columns[11].Visible = true;
+                gvListaPunto.Columns[11].Visible = false;
+                gvListaPunto.Columns[12].Visible = true;
             }
         }
 
@@ -527,6 +527,17 @@ namespace MANCAL_WEB.frm_cal
         {
             getListaPunto();
             upListaPunto.Update();
+        }
+
+        protected void CalendarExtender1_PreRender(object sender, EventArgs e)
+        {
+            objCbo = new bl_carga_cbo();
+
+            DateTime sd = objCbo.getFechaDivisa().Min();
+            DateTime ed = objCbo.getFechaDivisa().Max();
+
+            CalendarExtender1.StartDate = sd;            
+            CalendarExtender1.EndDate = ed;//.AddDays(1);
         }
     }
 }

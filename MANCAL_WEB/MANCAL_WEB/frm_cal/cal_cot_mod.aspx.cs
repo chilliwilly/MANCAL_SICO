@@ -20,7 +20,7 @@ namespace MANCAL_WEB.frm_cal
         String un = "CAL";
         String cli_nom, cli_cta, cli_cont, cli_tipo, cli_estado;
         String eq_nombre, eq_modelo, eq_nparte;
-
+         
         protected void Page_Load(object sender, EventArgs e)
         {
 
@@ -80,7 +80,7 @@ namespace MANCAL_WEB.frm_cal
 
             cboBuscaCliCot.Items.Add(new ListItem("Seleccione", "0"));
 
-            foreach (var cc in objCbo.getClienteCotizacion())
+            foreach (var cc in objCbo.getClienteBusca())
             {
                 cboBuscaCliCot.Items.Add(new ListItem(cc.nomcliente, cc.idcliente));
             }
@@ -453,7 +453,7 @@ namespace MANCAL_WEB.frm_cal
 
         protected void gvArchivo_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
-            String usr = String.Format("{0}", Request.Form["txtId_Cotizacion"]);
+            String usr = Request.Cookies["txtcot"].Value;//String.Format("{0}", Request.Form["txtId_Cotizacion_"]);
 
             gvArchivo.PageIndex = e.NewPageIndex;
             getListArchivo(usr);
@@ -461,13 +461,13 @@ namespace MANCAL_WEB.frm_cal
 
         protected void gvArchivo_RowCommand(object sender, GridViewCommandEventArgs e)
         {
-            String usr = String.Format("{0}", Request.Form["txtId_Cotizacion"]);
+            String usr = Request.Cookies["txtcot"].Value;//String.Format("{0}", Request.Form["txtId_Cotizacion_"]);
             getListArchivo(usr);
         }
 
         protected void btnUpdateDoc_Click(object sender, EventArgs e)
         {
-            String txtIdCot = String.Format("{0}", Request.Form["txtId_Cotizacion"]);
+            String txtIdCot = Request.Cookies["txtcot"].Value;//String.Format("{0}", Request.Form["txtId_Cotizacion_"]);
             getListArchivo(txtIdCot);
             udpArchivo.Update();
         }
@@ -476,7 +476,7 @@ namespace MANCAL_WEB.frm_cal
         {
             objAdj = new bl_adjunto();
             String adjunto = "";
-            String usr = String.Format("{0}", Request.Form["txtId_Cotizacion"]);
+            String usr = Request.Cookies["txtcot"].Value;//String.Format("{0}", Request.Form["_txtIdCotTxt_"]);
 
             adjunto = objAdj.adjuntarDocumento(e.FileName, usr);
             fuCalibracion.SaveAs(Server.MapPath("~/adjunto_doc/") + adjunto);
@@ -509,7 +509,7 @@ namespace MANCAL_WEB.frm_cal
         {
             objDet = new bl_detalle_pro();
             String systemid = "2";
-            gvEquipoBusca.DataSource = objDet.getEquipo(nom, np, modelo, systemid, cboTipoTarifa.SelectedValue, txtFecha.Text);
+            gvEquipoBusca.DataSource = objDet.getEquipo(nom, np, modelo, systemid, cboTipoTarifa.SelectedValue, String.Format("{0}", Request.Form["txt_Fecha"]));//txtFecha.Text);
             gvEquipoBusca.DataBind();
         }
 
@@ -571,7 +571,7 @@ namespace MANCAL_WEB.frm_cal
         public void getListaPunto()
         {
             objDet = new bl_detalle_pro();
-            String usr = System.Environment.UserName;
+            String usr = Request.Cookies["pcusr"].Value;
             String eqid = Request.Cookies["idequipocot"].Value ?? null;
             String dcc = Request.Cookies["iditemeq"].Value ?? null;
             String fl_inpunto = Request.Cookies["flag_inpunto"].Value;
@@ -581,13 +581,13 @@ namespace MANCAL_WEB.frm_cal
 
             if (fl_inpunto.Equals("1"))
             {
-                gvListaPunto.Columns[10].Visible = true;
-                gvListaPunto.Columns[11].Visible = false;
+                gvListaPunto.Columns[11].Visible = true;
+                gvListaPunto.Columns[12].Visible = false;
             }
             else if (fl_inpunto.Equals("2"))
             {
-                gvListaPunto.Columns[10].Visible = false;
-                gvListaPunto.Columns[11].Visible = true;
+                gvListaPunto.Columns[11].Visible = false;
+                gvListaPunto.Columns[12].Visible = true;
             }
         }
 
@@ -626,7 +626,7 @@ namespace MANCAL_WEB.frm_cal
 
         protected void btnBuscaDetalleCot_Click(object sender, EventArgs e) 
         {
-            String txt_cot = String.Format("{0}", Request.Form["txtId_Cotizacion"]);
+            String txt_cot = Request.Cookies["txtcot"].Value;//String.Format("{0}", Request.Form["txtId_Cotizacion_"]);
             String num_cot = Request.Cookies["pcusr"].Value;
 
             getListaDetalle(num_cot, cboTipoTarifa.SelectedValue);

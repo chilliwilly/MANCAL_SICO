@@ -10,6 +10,9 @@ namespace MANCAL_WEB.rpt_cal
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(rptCotizacion_Resp));
+            Telerik.Reporting.Drawing.FormattingRule formattingRule1 = new Telerik.Reporting.Drawing.FormattingRule();
+            Telerik.Reporting.Drawing.FormattingRule formattingRule2 = new Telerik.Reporting.Drawing.FormattingRule();
+            Telerik.Reporting.ReportParameter reportParameter1 = new Telerik.Reporting.ReportParameter();
             Telerik.Reporting.Drawing.StyleRule styleRule1 = new Telerik.Reporting.Drawing.StyleRule();
             this.pageHeaderSection1 = new Telerik.Reporting.PageHeaderSection();
             this.textBox3 = new Telerik.Reporting.TextBox();
@@ -62,6 +65,12 @@ namespace MANCAL_WEB.rpt_cal
             // 
             // pictureBox3
             // 
+            formattingRule1.Filters.Add(new Telerik.Reporting.Filter("= Parameters.ACREDI.Value", Telerik.Reporting.FilterOperator.Equal, "Y"));
+            formattingRule2.Filters.Add(new Telerik.Reporting.Filter("= Parameters.ACREDI.Value", Telerik.Reporting.FilterOperator.Equal, "N"));
+            formattingRule2.Style.Visible = false;
+            this.pictureBox3.ConditionalFormatting.AddRange(new Telerik.Reporting.Drawing.FormattingRule[] {
+            formattingRule1,
+            formattingRule2});
             this.pictureBox3.Location = new Telerik.Reporting.Drawing.PointU(Telerik.Reporting.Drawing.Unit.Cm(14.70354175567627D), Telerik.Reporting.Drawing.Unit.Cm(0.65562492609024048D));
             this.pictureBox3.MimeType = "image/png";
             this.pictureBox3.Name = "pictureBox3";
@@ -111,6 +120,9 @@ namespace MANCAL_WEB.rpt_cal
             this.PageSettings.Landscape = false;
             this.PageSettings.Margins = new Telerik.Reporting.Drawing.MarginsU(Telerik.Reporting.Drawing.Unit.Mm(12D), Telerik.Reporting.Drawing.Unit.Mm(12D), Telerik.Reporting.Drawing.Unit.Mm(12D), Telerik.Reporting.Drawing.Unit.Mm(12D));
             this.PageSettings.PaperKind = System.Drawing.Printing.PaperKind.Letter;
+            reportParameter1.Name = "ACREDI";
+            reportParameter1.Text = "ACREDI";
+            this.ReportParameters.Add(reportParameter1);
             styleRule1.Selectors.AddRange(new Telerik.Reporting.Drawing.ISelector[] {
             new Telerik.Reporting.Drawing.TypeSelector(typeof(Telerik.Reporting.TextItemBase)),
             new Telerik.Reporting.Drawing.TypeSelector(typeof(Telerik.Reporting.HtmlTextBox))});

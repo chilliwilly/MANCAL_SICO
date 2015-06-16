@@ -19,19 +19,21 @@ namespace MANCAL_WEB.frm_equipo
         {
             //String cod = TextBox1.Text;
 
-            //String valor, password;
-            //valor = "20";
-            //password = "SIGEBASESYSTEM_DTS";
+            String valor, password;
+            valor = "531";
+            password = "DTSSIGEBASE";
 
-            //String codif = Global_Procedures_of_cryptdll.Encripta(valor, password);
+            String codif = "a";// Global_Procedures_of_netdll.Encripta(valor, password);
             
             ////Blowfish crypt=new Blowfish(cod);
-            ////String cryptCod=crypt.encryptString(cod);
-
+            ////String cryptCod=crypt.encryptString(cod);              
+            //SR_EncriptaPasswd.Encripta_wsSOAPPortTypeClient a = new SR_EncriptaPasswd.Encripta_wsSOAPPortTypeClient();
+            //String s = a.Encripta(valor, password);//a.Encripta(valor, password);            
+            TextBox1.Text = codif;//DateTime.Now.ToShortDateString();
             //Label1.Text = codif;
-            MANCAL_WEB_BL.bl_detalle_pro obj = new MANCAL_WEB_BL.bl_detalle_pro();
-            MANCAL_WEB_CLASS.CotizacionEquipo c = new MANCAL_WEB_CLASS.CotizacionEquipo();
-            obj.setDetCotCal(c);
+            //MANCAL_WEB_BL.bl_detalle_pro obj = new MANCAL_WEB_BL.bl_detalle_pro();
+            //MANCAL_WEB_CLASS.CotizacionEquipo c = new MANCAL_WEB_CLASS.CotizacionEquipo();
+            //obj.setDetCotCal(c);
         }
     }
 }

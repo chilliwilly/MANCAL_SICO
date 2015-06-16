@@ -8,16 +8,16 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace MANCAL_WEB.ServiceEncripta {
+namespace MANCAL_WEB.SR_EncriptaPasswd {
     
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ServiceModel.ServiceContractAttribute(Namespace="urn:Encripta_ws", ConfigurationName="ServiceEncripta.Encripta_wsSOAPPortType")]
+    [System.ServiceModel.ServiceContractAttribute(Namespace="urn:Encripta_ws", ConfigurationName="SR_EncriptaPasswd.Encripta_wsSOAPPortType")]
     public interface Encripta_wsSOAPPortType {
         
         // CODEGEN: Se está generando un contrato de mensaje, ya que la operación Encripta no es RPC ni está encapsulada en un documento.
         [System.ServiceModel.OperationContractAttribute(Action="urn:Encripta_ws/Encripta", ReplyAction="*")]
-        MANCAL_WEB.ServiceEncripta.EncriptaResponse Encripta(MANCAL_WEB.ServiceEncripta.EncriptaRequest request);
+        MANCAL_WEB.SR_EncriptaPasswd.EncriptaResponse Encripta(MANCAL_WEB.SR_EncriptaPasswd.EncriptaRequest request);
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
@@ -59,12 +59,12 @@ namespace MANCAL_WEB.ServiceEncripta {
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public interface Encripta_wsSOAPPortTypeChannel : MANCAL_WEB.ServiceEncripta.Encripta_wsSOAPPortType, System.ServiceModel.IClientChannel {
+    public interface Encripta_wsSOAPPortTypeChannel : MANCAL_WEB.SR_EncriptaPasswd.Encripta_wsSOAPPortType, System.ServiceModel.IClientChannel {
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public partial class Encripta_wsSOAPPortTypeClient : System.ServiceModel.ClientBase<MANCAL_WEB.ServiceEncripta.Encripta_wsSOAPPortType>, MANCAL_WEB.ServiceEncripta.Encripta_wsSOAPPortType {
+    public partial class Encripta_wsSOAPPortTypeClient : System.ServiceModel.ClientBase<MANCAL_WEB.SR_EncriptaPasswd.Encripta_wsSOAPPortType>, MANCAL_WEB.SR_EncriptaPasswd.Encripta_wsSOAPPortType {
         
         public Encripta_wsSOAPPortTypeClient() {
         }
@@ -86,15 +86,15 @@ namespace MANCAL_WEB.ServiceEncripta {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        MANCAL_WEB.ServiceEncripta.EncriptaResponse MANCAL_WEB.ServiceEncripta.Encripta_wsSOAPPortType.Encripta(MANCAL_WEB.ServiceEncripta.EncriptaRequest request) {
+        MANCAL_WEB.SR_EncriptaPasswd.EncriptaResponse MANCAL_WEB.SR_EncriptaPasswd.Encripta_wsSOAPPortType.Encripta(MANCAL_WEB.SR_EncriptaPasswd.EncriptaRequest request) {
             return base.Channel.Encripta(request);
         }
         
         public string Encripta(string valor, string password) {
-            MANCAL_WEB.ServiceEncripta.EncriptaRequest inValue = new MANCAL_WEB.ServiceEncripta.EncriptaRequest();
+            MANCAL_WEB.SR_EncriptaPasswd.EncriptaRequest inValue = new MANCAL_WEB.SR_EncriptaPasswd.EncriptaRequest();
             inValue.valor = valor;
             inValue.password = password;
-            MANCAL_WEB.ServiceEncripta.EncriptaResponse retVal = ((MANCAL_WEB.ServiceEncripta.Encripta_wsSOAPPortType)(this)).Encripta(inValue);
+            MANCAL_WEB.SR_EncriptaPasswd.EncriptaResponse retVal = ((MANCAL_WEB.SR_EncriptaPasswd.Encripta_wsSOAPPortType)(this)).Encripta(inValue);
             return retVal.EncriptaResult;
         }
     }

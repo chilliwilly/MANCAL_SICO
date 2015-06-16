@@ -10,6 +10,8 @@ namespace MANCAL_WEB.rpt_cal
         private void InitializeComponent()
         {
             Telerik.Reporting.Drawing.FormattingRule formattingRule1 = new Telerik.Reporting.Drawing.FormattingRule();
+            Telerik.Reporting.Drawing.FormattingRule formattingRule2 = new Telerik.Reporting.Drawing.FormattingRule();
+            Telerik.Reporting.Drawing.FormattingRule formattingRule3 = new Telerik.Reporting.Drawing.FormattingRule();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(rptCotizacionCal_Det));
             Telerik.Reporting.TableGroup tableGroup1 = new Telerik.Reporting.TableGroup();
             Telerik.Reporting.TableGroup tableGroup2 = new Telerik.Reporting.TableGroup();
@@ -49,6 +51,7 @@ namespace MANCAL_WEB.rpt_cal
             Telerik.Reporting.TableGroup tableGroup36 = new Telerik.Reporting.TableGroup();
             Telerik.Reporting.TableGroup tableGroup37 = new Telerik.Reporting.TableGroup();
             Telerik.Reporting.ReportParameter reportParameter1 = new Telerik.Reporting.ReportParameter();
+            Telerik.Reporting.ReportParameter reportParameter2 = new Telerik.Reporting.ReportParameter();
             Telerik.Reporting.Drawing.StyleRule styleRule1 = new Telerik.Reporting.Drawing.StyleRule();
             this.textBox1 = new Telerik.Reporting.TextBox();
             this.textBox5 = new Telerik.Reporting.TextBox();
@@ -269,6 +272,12 @@ namespace MANCAL_WEB.rpt_cal
             // 
             // pictureBox3
             // 
+            formattingRule2.Filters.Add(new Telerik.Reporting.Filter("= Parameters.ACREDI.Value", Telerik.Reporting.FilterOperator.Equal, "Y"));
+            formattingRule3.Filters.Add(new Telerik.Reporting.Filter("= Parameters.ACREDI.Value", Telerik.Reporting.FilterOperator.Equal, "N"));
+            formattingRule3.Style.Visible = false;
+            this.pictureBox3.ConditionalFormatting.AddRange(new Telerik.Reporting.Drawing.FormattingRule[] {
+            formattingRule2,
+            formattingRule3});
             this.pictureBox3.Location = new Telerik.Reporting.Drawing.PointU(Telerik.Reporting.Drawing.Unit.Cm(14.699999809265137D), Telerik.Reporting.Drawing.Unit.Cm(0.64937448501586914D));
             this.pictureBox3.MimeType = "image/png";
             this.pictureBox3.Name = "pictureBox3";
@@ -319,11 +328,11 @@ namespace MANCAL_WEB.rpt_cal
             // table1
             // 
             this.table1.Body.Columns.Add(new Telerik.Reporting.TableBodyColumn(Telerik.Reporting.Drawing.Unit.Cm(1.1643455028533936D)));
-            this.table1.Body.Columns.Add(new Telerik.Reporting.TableBodyColumn(Telerik.Reporting.Drawing.Unit.Cm(0.96456915140151978D)));
+            this.table1.Body.Columns.Add(new Telerik.Reporting.TableBodyColumn(Telerik.Reporting.Drawing.Unit.Cm(0.96456921100616455D)));
             this.table1.Body.Columns.Add(new Telerik.Reporting.TableBodyColumn(Telerik.Reporting.Drawing.Unit.Cm(8.7460403442382812D)));
             this.table1.Body.Columns.Add(new Telerik.Reporting.TableBodyColumn(Telerik.Reporting.Drawing.Unit.Cm(2.1957285404205322D)));
-            this.table1.Body.Columns.Add(new Telerik.Reporting.TableBodyColumn(Telerik.Reporting.Drawing.Unit.Cm(2.8599114418029785D)));
-            this.table1.Body.Columns.Add(new Telerik.Reporting.TableBodyColumn(Telerik.Reporting.Drawing.Unit.Cm(2.8643929958343506D)));
+            this.table1.Body.Columns.Add(new Telerik.Reporting.TableBodyColumn(Telerik.Reporting.Drawing.Unit.Cm(2.8599116802215576D)));
+            this.table1.Body.Columns.Add(new Telerik.Reporting.TableBodyColumn(Telerik.Reporting.Drawing.Unit.Cm(2.8643932342529297D)));
             this.table1.Body.Rows.Add(new Telerik.Reporting.TableBodyRow(Telerik.Reporting.Drawing.Unit.Cm(0.48000001907348633D)));
             this.table1.Body.SetCellContent(0, 4, this.textBox16);
             this.table1.Body.SetCellContent(0, 0, this.textBox14);
@@ -645,9 +654,9 @@ namespace MANCAL_WEB.rpt_cal
             // 
             // table4
             // 
-            this.table4.Body.Columns.Add(new Telerik.Reporting.TableBodyColumn(Telerik.Reporting.Drawing.Unit.Cm(1.5610425472259522D)));
+            this.table4.Body.Columns.Add(new Telerik.Reporting.TableBodyColumn(Telerik.Reporting.Drawing.Unit.Cm(1.5610424280166626D)));
             this.table4.Body.Columns.Add(new Telerik.Reporting.TableBodyColumn(Telerik.Reporting.Drawing.Unit.Cm(17.239999771118164D)));
-            this.table4.Body.Rows.Add(new Telerik.Reporting.TableBodyRow(Telerik.Reporting.Drawing.Unit.Cm(0.47999987006187439D)));
+            this.table4.Body.Rows.Add(new Telerik.Reporting.TableBodyRow(Telerik.Reporting.Drawing.Unit.Cm(0.479999840259552D)));
             this.table4.Body.Rows.Add(new Telerik.Reporting.TableBodyRow(Telerik.Reporting.Drawing.Unit.Cm(0.48000016808509827D)));
             this.table4.Body.SetCellContent(0, 0, this.textBox39);
             this.table4.Body.SetCellContent(0, 1, this.textBox37);
@@ -920,7 +929,10 @@ namespace MANCAL_WEB.rpt_cal
             this.PageSettings.PaperKind = System.Drawing.Printing.PaperKind.Letter;
             reportParameter1.Name = "NUMCOT";
             reportParameter1.Text = "NUMCOT";
+            reportParameter2.Name = "ACREDI";
+            reportParameter2.Text = "ACREDI";
             this.ReportParameters.Add(reportParameter1);
+            this.ReportParameters.Add(reportParameter2);
             styleRule1.Selectors.AddRange(new Telerik.Reporting.Drawing.ISelector[] {
             new Telerik.Reporting.Drawing.TypeSelector(typeof(Telerik.Reporting.TextItemBase)),
             new Telerik.Reporting.Drawing.TypeSelector(typeof(Telerik.Reporting.HtmlTextBox))});

@@ -9,6 +9,8 @@ namespace MANCAL_WEB.rpt_cal
         /// </summary>
         private void InitializeComponent()
         {
+            Telerik.Reporting.Drawing.FormattingRule formattingRule1 = new Telerik.Reporting.Drawing.FormattingRule();
+            Telerik.Reporting.Drawing.FormattingRule formattingRule2 = new Telerik.Reporting.Drawing.FormattingRule();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(rptCotizacionCal_DetPunto));
             Telerik.Reporting.TableGroup tableGroup1 = new Telerik.Reporting.TableGroup();
             Telerik.Reporting.TableGroup tableGroup2 = new Telerik.Reporting.TableGroup();
@@ -18,7 +20,10 @@ namespace MANCAL_WEB.rpt_cal
             Telerik.Reporting.TableGroup tableGroup6 = new Telerik.Reporting.TableGroup();
             Telerik.Reporting.TableGroup tableGroup7 = new Telerik.Reporting.TableGroup();
             Telerik.Reporting.TableGroup tableGroup8 = new Telerik.Reporting.TableGroup();
+            Telerik.Reporting.TableGroup tableGroup9 = new Telerik.Reporting.TableGroup();
+            Telerik.Reporting.TableGroup tableGroup10 = new Telerik.Reporting.TableGroup();
             Telerik.Reporting.ReportParameter reportParameter1 = new Telerik.Reporting.ReportParameter();
+            Telerik.Reporting.ReportParameter reportParameter2 = new Telerik.Reporting.ReportParameter();
             Telerik.Reporting.Drawing.StyleRule styleRule1 = new Telerik.Reporting.Drawing.StyleRule();
             this.textBox4 = new Telerik.Reporting.TextBox();
             this.textBox6 = new Telerik.Reporting.TextBox();
@@ -41,6 +46,10 @@ namespace MANCAL_WEB.rpt_cal
             this.objectDataSource1 = new Telerik.Reporting.ObjectDataSource();
             this.table2 = new Telerik.Reporting.Table();
             this.textBox15 = new Telerik.Reporting.TextBox();
+            this.table3 = new Telerik.Reporting.Table();
+            this.textBox16 = new Telerik.Reporting.TextBox();
+            this.objectDataSource2 = new Telerik.Reporting.ObjectDataSource();
+            this.textBox21 = new Telerik.Reporting.TextBox();
             this.pageFooterSection1 = new Telerik.Reporting.PageFooterSection();
             ((System.ComponentModel.ISupportInitialize)(this)).BeginInit();
             // 
@@ -113,6 +122,12 @@ namespace MANCAL_WEB.rpt_cal
             // 
             // pictureBox3
             // 
+            formattingRule1.Filters.Add(new Telerik.Reporting.Filter("= Parameters.ACREDI.Value", Telerik.Reporting.FilterOperator.Equal, "Y"));
+            formattingRule2.Filters.Add(new Telerik.Reporting.Filter("= Parameters.ACREDI.Value", Telerik.Reporting.FilterOperator.Equal, "N"));
+            formattingRule2.Style.Visible = false;
+            this.pictureBox3.ConditionalFormatting.AddRange(new Telerik.Reporting.Drawing.FormattingRule[] {
+            formattingRule1,
+            formattingRule2});
             this.pictureBox3.Location = new Telerik.Reporting.Drawing.PointU(Telerik.Reporting.Drawing.Unit.Cm(14.699999809265137D), Telerik.Reporting.Drawing.Unit.Cm(0.6600000262260437D));
             this.pictureBox3.MimeType = "image/png";
             this.pictureBox3.Name = "pictureBox3";
@@ -150,11 +165,13 @@ namespace MANCAL_WEB.rpt_cal
             // 
             // detail
             // 
-            this.detail.Height = Telerik.Reporting.Drawing.Unit.Cm(4.0000009536743164D);
+            this.detail.Height = Telerik.Reporting.Drawing.Unit.Cm(8.09999942779541D);
             this.detail.Items.AddRange(new Telerik.Reporting.ReportItemBase[] {
             this.textBox1,
             this.table1,
-            this.table2});
+            this.table2,
+            this.table3,
+            this.textBox21});
             this.detail.Name = "detail";
             // 
             // textBox1
@@ -286,6 +303,49 @@ namespace MANCAL_WEB.rpt_cal
             this.textBox15.Style.TextAlign = Telerik.Reporting.Drawing.HorizontalAlign.Center;
             this.textBox15.Value = "ANEXO A COTIZACIÓN Nº {Fields.cp_dcot_id}";
             // 
+            // table3
+            // 
+            this.table3.Body.Columns.Add(new Telerik.Reporting.TableBodyColumn(Telerik.Reporting.Drawing.Unit.Cm(18.799999237060547D)));
+            this.table3.Body.Rows.Add(new Telerik.Reporting.TableBodyRow(Telerik.Reporting.Drawing.Unit.Cm(0.80000060796737671D)));
+            this.table3.Body.SetCellContent(0, 0, this.textBox16);
+            tableGroup9.Name = "tableGroup4";
+            this.table3.ColumnGroups.Add(tableGroup9);
+            this.table3.DataSource = this.objectDataSource2;
+            this.table3.Items.AddRange(new Telerik.Reporting.ReportItemBase[] {
+            this.textBox16});
+            this.table3.Location = new Telerik.Reporting.Drawing.PointU(Telerik.Reporting.Drawing.Unit.Cm(0.19999989867210388D), Telerik.Reporting.Drawing.Unit.Cm(4.0999999046325684D));
+            this.table3.Name = "table3";
+            tableGroup10.Groupings.Add(new Telerik.Reporting.Grouping(null));
+            tableGroup10.Name = "detailTableGroup2";
+            this.table3.RowGroups.Add(tableGroup10);
+            this.table3.Size = new Telerik.Reporting.Drawing.SizeU(Telerik.Reporting.Drawing.Unit.Cm(18.799999237060547D), Telerik.Reporting.Drawing.Unit.Cm(0.80000060796737671D));
+            this.table3.Style.BorderStyle.Default = Telerik.Reporting.Drawing.BorderType.None;
+            // 
+            // textBox16
+            // 
+            this.textBox16.Name = "textBox16";
+            this.textBox16.Size = new Telerik.Reporting.Drawing.SizeU(Telerik.Reporting.Drawing.Unit.Cm(18.799999237060547D), Telerik.Reporting.Drawing.Unit.Cm(0.80000060796737671D));
+            this.textBox16.Style.BorderStyle.Default = Telerik.Reporting.Drawing.BorderType.None;
+            this.textBox16.Value = "Comentario para Nro Parte {Fields.cp_numero} en item Nro {Fields.cp_id}: {Fields." +
+    "cp_comentario}.\r\n";
+            // 
+            // objectDataSource2
+            // 
+            this.objectDataSource2.DataMember = "getPuntoCotCalComent";
+            this.objectDataSource2.DataSource = typeof(MANCAL_WEB_BL.bl_reporte);
+            this.objectDataSource2.Name = "objectDataSource2";
+            this.objectDataSource2.Parameters.AddRange(new Telerik.Reporting.ObjectDataSourceParameter[] {
+            new Telerik.Reporting.ObjectDataSourceParameter("numcot", typeof(string), "= Parameters.NUMCOT.Value")});
+            // 
+            // textBox21
+            // 
+            this.textBox21.Location = new Telerik.Reporting.Drawing.PointU(Telerik.Reporting.Drawing.Unit.Cm(0.19999989867210388D), Telerik.Reporting.Drawing.Unit.Cm(3.3999998569488525D));
+            this.textBox21.Name = "textBox21";
+            this.textBox21.Size = new Telerik.Reporting.Drawing.SizeU(Telerik.Reporting.Drawing.Unit.Cm(5.6999998092651367D), Telerik.Reporting.Drawing.Unit.Cm(0.47999998927116394D));
+            this.textBox21.Style.Font.Bold = false;
+            this.textBox21.Style.TextAlign = Telerik.Reporting.Drawing.HorizontalAlign.Left;
+            this.textBox21.Value = "Comentarios por item:";
+            // 
             // pageFooterSection1
             // 
             this.pageFooterSection1.Height = Telerik.Reporting.Drawing.Unit.Cm(2.5D);
@@ -303,7 +363,10 @@ namespace MANCAL_WEB.rpt_cal
             this.PageSettings.PaperKind = System.Drawing.Printing.PaperKind.Letter;
             reportParameter1.Name = "NUMCOT";
             reportParameter1.Text = "NUMCOT";
+            reportParameter2.Name = "ACREDI";
+            reportParameter2.Text = "ACREDI";
             this.ReportParameters.Add(reportParameter1);
+            this.ReportParameters.Add(reportParameter2);
             styleRule1.Selectors.AddRange(new Telerik.Reporting.Drawing.ISelector[] {
             new Telerik.Reporting.Drawing.TypeSelector(typeof(Telerik.Reporting.TextItemBase)),
             new Telerik.Reporting.Drawing.TypeSelector(typeof(Telerik.Reporting.HtmlTextBox))});
@@ -339,5 +402,9 @@ namespace MANCAL_WEB.rpt_cal
         private Telerik.Reporting.TextBox textBox12;
         private Telerik.Reporting.Table table2;
         private Telerik.Reporting.TextBox textBox15;
+        private Telerik.Reporting.Table table3;
+        private Telerik.Reporting.TextBox textBox16;
+        private Telerik.Reporting.TextBox textBox21;
+        private Telerik.Reporting.ObjectDataSource objectDataSource2;
     }
 }

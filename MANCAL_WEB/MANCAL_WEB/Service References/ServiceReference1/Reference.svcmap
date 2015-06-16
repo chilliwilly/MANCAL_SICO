@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="d55ac70b-80d4-43d4-9fbb-f010ac3cefc1" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="9da96905-d57e-4c67-8f99-7536e8779003" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
   <ClientOptions>
     <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
     <EnableDataBinding>true</EnableDataBinding>
@@ -18,10 +18,10 @@
     <ServiceContractMappings />
   </ClientOptions>
   <MetadataSources>
-    <MetadataSource Address="http://201.238.200.108/ENCRIPTA_WS_WEB/awws/Encripta_ws.awws?wsdl" Protocol="http" SourceId="1" />
+    <MetadataSource Address="http://172.29.11.200/ENCRIPTA_WS_WEB/awws/Encripta_ws.awws?wsdl" Protocol="http" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="Encripta_ws.wsdl" MetadataType="Wsdl" ID="50f030ed-5ac9-4e95-ae39-58a3f49e01b4" SourceId="1" SourceUrl="http://201.238.200.108/ENCRIPTA_WS_WEB/awws/Encripta_ws.awws?wsdl" />
+    <MetadataFile FileName="Encripta_ws.wsdl" MetadataType="Wsdl" ID="ca41bda3-7f0f-4e4f-97d8-de73f3fa1572" SourceId="1" SourceUrl="http://172.29.11.200/ENCRIPTA_WS_WEB/awws/Encripta_ws.awws?wsdl" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

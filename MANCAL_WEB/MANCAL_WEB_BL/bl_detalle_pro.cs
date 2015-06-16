@@ -282,7 +282,7 @@ namespace MANCAL_WEB_BL
         }
 
         //UTILIZADO POR WEBMETHOD setDatoPuntoCot
-        public void setDatoPuntoEquipo(String cot_id, String esp_id, String fun_id, String punto_in, String id_detcot, String id_item, String equ_id) 
+        public void setDatoPuntoEquipo(String cot_id, String esp_id, String fun_id, String punto_in, String id_detcot, String id_item, String equ_id, String comentario) 
         {
             objProDet = new dl_detalle_pro();
             
@@ -292,7 +292,7 @@ namespace MANCAL_WEB_BL
             int iditm = Convert.ToInt32(id_item);
             int idequ = Convert.ToInt32(equ_id);
 
-            objProDet.insertDatoPuntoEquipo(cot_id, idesp, idfun, punto_in, iddc, iditm, idequ);
+            objProDet.insertDatoPuntoEquipo(cot_id, idesp, idfun, punto_in, iddc, iditm, idequ, comentario);
         }
 
         public List<CotizacionPunto> getListaPuntoEquipo(String idcot, String idequ, String iddcc) 
@@ -326,6 +326,7 @@ namespace MANCAL_WEB_BL
                 cp.cp_numero = dr["COT_NUMERO"].ToString();
                 cp.cp_item = dr["DC_ITEM"].ToString();
                 cp.cp_id_equipo = dr["DC_ID_EQUIPO"].ToString();
+                cp.cp_comentario = dr["PDCC_COMENTARIO"].ToString();
 
                 ls.Add(cp);
             }
@@ -362,12 +363,12 @@ namespace MANCAL_WEB_BL
             objProDet.updateEquipoDetCalProd(nitem, cotiid_, np_, oc_, saot_, nlp, nestado);
         }
 
-        public void setPuntoDetFila(String itemnro, String cotiid, String detpunto, String indcc) //ACTUALIZA UN ITEM DE LA LISTA DE PUNTOS DEL EQUIPO
+        public void setPuntoDetFila(String itemnro, String cotiid, String detpunto, String indcc, String comentario) //ACTUALIZA UN ITEM DE LA LISTA DE PUNTOS DEL EQUIPO
         {
             objProDet = new dl_detalle_pro();
             int nroitem = Convert.ToInt32(itemnro);
             int dccin = Convert.ToInt32(indcc);
-            objProDet.updatePuntoDetFila(nroitem, cotiid, detpunto, dccin);
+            objProDet.updatePuntoDetFila(nroitem, cotiid, detpunto, dccin, comentario);
         }
 
         public void delPuntoDetFila(String item, String coti, String equipo, String dccin) 

@@ -7,6 +7,7 @@ using MANCAL_WEB_BL;
 using System.Collections;
 using System.Web.UI.WebControls;
 using System.Web.Script.Serialization;
+//using MANCAL_WEB.SR_EncriptaPasswd;
 
 namespace MANCAL_WEB.asmx_files
 {
@@ -74,7 +75,7 @@ namespace MANCAL_WEB.asmx_files
         {
             MANCAL_WEB_BL.bl_adjunto objAdjunto = new MANCAL_WEB_BL.bl_adjunto();
             String nomArchivo = objAdjunto.delAdjunto(item_, coti_);
-            System.IO.File.Delete(Server.MapPath("~/adjunto_doc/") + nomArchivo);
+            //System.IO.File.Delete(Server.MapPath("~/adjunto_doc/") + nomArchivo);
         }
 
         [WebMethod]
@@ -195,10 +196,10 @@ namespace MANCAL_WEB.asmx_files
         }
 
         [WebMethod]//UTILIZADO POR bl_detalle_pro.setDatoPuntoEquipo
-        public void setDatoPuntoCot(String idcot, String idesp, String idfun, String txtpunto, String iddetcot, String iditem, String idequ) 
+        public void setDatoPuntoCot(String idcot, String idesp, String idfun, String txtpunto, String iddetcot, String iditem, String idequ, String pcoment) 
         {
             bl_detalle_pro objDetPro = new bl_detalle_pro();
-            objDetPro.setDatoPuntoEquipo(idcot, idesp, idfun, txtpunto, iddetcot, iditem, idequ);
+            objDetPro.setDatoPuntoEquipo(idcot, idesp, idfun, txtpunto, iddetcot, iditem, idequ, pcoment);
         }
 
         [WebMethod]
@@ -232,10 +233,10 @@ namespace MANCAL_WEB.asmx_files
         }
 
         [WebMethod]
-        public void updPuntoDetFila(String item, String coti, String punto, String indcc) 
+        public void updPuntoDetFila(String item, String coti, String punto, String indcc, String pcoment) 
         {
             bl_detalle_pro det = new bl_detalle_pro();
-            det.setPuntoDetFila(item, coti, punto, indcc);
+            det.setPuntoDetFila(item, coti, punto, indcc, pcoment);
         }
 
         [WebMethod]//UTILIZADO POR AJAX delPuntoDetFila 
@@ -246,10 +247,10 @@ namespace MANCAL_WEB.asmx_files
         }
 
         [WebMethod]
-        public void insModDatoPuntoCot(String idcot, String idesp, String idfun, String txtpunto, String iddcc, String iddcitem, String idequ)
+        public void insModDatoPuntoCot(String idcot, String idesp, String idfun, String txtpunto, String iddcc, String iddcitem, String idequ, String pcoment)
         {
             bl_detalle_pro objDetPro = new bl_detalle_pro();
-            objDetPro.setDatoPuntoEquipo(idcot, idesp, idfun, txtpunto, iddcc, iddcitem, idequ);            
+            objDetPro.setDatoPuntoEquipo(idcot, idesp, idfun, txtpunto, iddcc, iddcitem, idequ, pcoment);            
         }
 
         [WebMethod(EnableSession = true)]//INSERTAR COTIZACION
@@ -279,6 +280,7 @@ namespace MANCAL_WEB.asmx_files
             Session.Add("RPT_NUM_PTO", validaPto);
             Session.Add("RPT_NUM_COT", dataInforme[0]);
             Session.Add("RPT_NUM_TXT", dataInforme[1]);
+            Session.Add("RPT_VAL_ACR", dataInforme[2]);
             //return dataInforme;
         }
 
@@ -310,6 +312,7 @@ namespace MANCAL_WEB.asmx_files
             Session.Add("RPT_NUM_PTO", validaPto);
             Session.Add("RPT_NUM_COT", dataInforme[0]);
             Session.Add("RPT_NUM_TXT", dataInforme[1]);
+            Session.Add("RPT_VAL_ACR", dataInforme[2]);
         }
 
         [WebMethod]//MOSTRAR COTIZACION EN PAGINA
@@ -320,7 +323,10 @@ namespace MANCAL_WEB.asmx_files
             MANCAL_WEB_CLASS.Cotizacion cot = blcot.selDatoCotizacion(numcot);
             
             HttpContext.Current.Response.Cookies["pcusr"].Value = cot.cot_numero;
-            HttpContext.Current.Response.Cookies["pcusr"].Expires = DateTime.Now.AddMinutes(60);            
+            HttpContext.Current.Response.Cookies["pcusr"].Expires = DateTime.Now.AddMinutes(60);
+
+            HttpContext.Current.Response.Cookies["txtcot"].Value = cot.cot_id;
+            HttpContext.Current.Response.Cookies["txtcot"].Expires = DateTime.Now.AddMinutes(60);
 
             //JavaScriptSerializer jsrlz = new JavaScriptSerializer();
             //var obj = blcot.selDatoCotizacion(numcot).ToString().ToList();
@@ -339,7 +345,7 @@ namespace MANCAL_WEB.asmx_files
         }
 
         [WebMethod(EnableSession = true)]
-        public void selDocuCotizacion(String numcot, String txtcot) 
+        public void selDocuCotizacion(String numcot, String txtcot)//, String acredito) 
         {
             MANCAL_WEB_BL.bl_reporte rpt = new MANCAL_WEB_BL.bl_reporte();
             String validaPto = "";
@@ -356,6 +362,7 @@ namespace MANCAL_WEB.asmx_files
             Session.Add("RPT_NUM_PTO", validaPto);
             Session.Add("RPT_NUM_COT", numcot);
             Session.Add("RPT_NUM_TXT", txtcot);
+            Session.Add("RPT_VAL_ACR", HttpContext.Current.Request.Cookies["acredi"].Value);
         }
 
         [WebMethod]//OBTIENE SOLO NOMBRE CLIENTE
@@ -392,6 +399,33 @@ namespace MANCAL_WEB.asmx_files
             var jsonList = jscr.Serialize(objser);
 
             return jsonList;
+        }
+
+        [WebMethod]
+        public String getPwdSigepac(String pwd, String pwdkey) 
+        {
+            String pwdencripta = "";            
+            //EncriptaRequest datocrypt = new EncriptaRequest();
+            //EncriptaResponse respcrypt = new EncriptaResponse();
+
+            //datocrypt.valor = pwd;
+            //datocrypt.password = pwdkey;
+
+            //Encripta_wsSOAPPortTypeClient a = new Encripta_wsSOAPPortTypeClient();
+            //a.Open();
+            //pwdencripta = a.Encripta(datocrypt.valor, datocrypt.password);
+
+            using (var sr = new SR_EncriptaPasswd.Encripta_wsSOAPPortTypeClient("Encripta_wsSOAPPort"))
+            {
+                pwdencripta = sr.Encripta(pwd, pwdkey).ToString();
+            }
+
+            /*using (var ws = new SR_EncriptaPasswd.Encripta_wsSOAPPortTypeClient("Encripta_wsSOAPPort")) 
+            {
+                pwdencripta = ws.Encripta(pwd, pwdkey);
+            }*/
+
+            return pwdencripta;
         }
     }
 }

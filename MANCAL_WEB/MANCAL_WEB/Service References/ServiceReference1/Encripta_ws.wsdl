@@ -37,7 +37,7 @@
   </binding>
   <service name="Encripta_ws">
     <port name="Encripta_wsSOAPPort" binding="s0:Encripta_wsSOAPBinding">
-      <soap:address location="http://WEB/ENCRIPTA_WS_WEB/awws/Encripta_ws.awws" />
+      <soap:address location="http://apngc2/ENCRIPTA_WS_WEB/awws/Encripta_ws.awws" />
     </port>
   </service>
 </definitions>

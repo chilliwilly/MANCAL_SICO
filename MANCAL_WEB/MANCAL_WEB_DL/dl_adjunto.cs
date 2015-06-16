@@ -46,11 +46,11 @@ namespace MANCAL_WEB_DL
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
 
-                    cmd.Parameters.Add(new OracleParameter("itnarch", OracleDbType.Int32)).Value = numarch;
-                    cmd.Parameters["itnarch"].Direction = ParameterDirection.Input;
+                    cmd.Parameters.Add(new OracleParameter("ITNARCH", OracleDbType.Int32)).Value = numarch;
+                    cmd.Parameters["ITNARCH"].Direction = ParameterDirection.Input;
 
-                    cmd.Parameters.Add(new OracleParameter("idnarch", OracleDbType.Varchar2)).Value = idncotiz;
-                    cmd.Parameters["idnarch"].Direction = ParameterDirection.Input;
+                    cmd.Parameters.Add(new OracleParameter("IDNARCH", OracleDbType.Varchar2)).Value = idncotiz;
+                    cmd.Parameters["IDNARCH"].Direction = ParameterDirection.Input;
 
                     cmd.ExecuteNonQuery();
                 }

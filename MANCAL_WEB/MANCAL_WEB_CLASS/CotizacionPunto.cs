@@ -17,6 +17,7 @@ namespace MANCAL_WEB_CLASS
         public String cp_numero { get; set; }
         public String cp_item { get; set; }
         public String cp_id_equipo { get; set; }
+        public String cp_comentario { get; set; }
 
         public CotizacionPunto() { }
     }

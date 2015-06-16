@@ -52,7 +52,7 @@ namespace MANCAL_WEB_BL
                 cot.cot_id = dr["COT_ID"].ToString();
                 cot.cot_informecli = dr["COT_INFORMECLI"].ToString();
                 cot.cot_contacto_nom = dr["COT_CONTACTO_NOM"].ToString();
-                cot.cot_contacto_cargo = dr["COT_CONTACTO_CAR"].ToString();
+                //cot.cot_contacto_cargo = dr["COT_CONTACTO_CAR"].ToString();
                 cot.cot_fecha = dr["FECHA_COT"].ToString();
                 cot.cot_contacto_mail = dr["COT_CONTACTO_MAIL"].ToString();
                 cot.cot_contacto_ff = dr["COT_CONTACTO_FONO"].ToString();
@@ -107,6 +107,27 @@ namespace MANCAL_WEB_BL
                 cp.cp_no_mag = dr["PDCC_FUNCION"].ToString();
                 cp.cp_punto = dr["PDCC_PUNTO"].ToString();
                 cp.cp_dcot_id = dr["PDCC_COTID"].ToString();
+
+                ls.Add(cp);
+            }
+
+            return ls;
+        }
+
+        public List<CotizacionPunto> getPuntoCotCalComent(String numcot) 
+        {
+            List<CotizacionPunto> ls = new List<CotizacionPunto>();
+            int cot_num = Convert.ToInt32(numcot);
+            objReport = new dl_reporte();
+
+            DataTable dt = objReport.selectDetPuntoCal(cot_num).Tables["CUR_PUNTO"];
+
+            foreach (DataRow dr in dt.Rows) 
+            {
+                CotizacionPunto cp = new CotizacionPunto();
+                cp.cp_id = dr["PDCC_ID"].ToString();
+                cp.cp_numero = dr["PDCC_NPARTE"].ToString();
+                cp.cp_comentario = dr["PDCC_COMENTARIO"].ToString();
 
                 ls.Add(cp);
             }

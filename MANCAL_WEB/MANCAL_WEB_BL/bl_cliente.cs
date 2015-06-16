@@ -82,8 +82,7 @@ namespace MANCAL_WEB_BL
                 ccli.dircliente = dr["DIRECCION"].ToString();
                 ccli.nomcontacto = dr["NOMBRE_CONTACTO"].ToString();
                 ccli.cargocontacto = dr["CARGO"].ToString();
-                ccli.fonocontacto = dr["TELEFONO"].ToString();
-                ccli.celcontacto = dr["CELULAR"].ToString();
+                ccli.fonocontacto = dr["TELEFONO"].ToString() + " " + dr["CELULAR"].ToString();
                 ccli.mailcontacto = dr["EMAIL"].ToString();
 
                 ls.Add(ccli);

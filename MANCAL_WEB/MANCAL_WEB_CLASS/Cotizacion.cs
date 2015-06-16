@@ -55,7 +55,7 @@ namespace MANCAL_WEB_CLASS
         public String tg_id { get; set; }
         public String tfpf_id { get; set; }
         public String tlej_id { get; set; }
-        //public String tpe_id { get; set; }
+        public String tpe_id { get; set; }//descomentado
         public String tt_id { get; set; }
         public String ec_id { get; set; }
         public String tc_id { get; set; }

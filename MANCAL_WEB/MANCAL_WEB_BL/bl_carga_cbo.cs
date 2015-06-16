@@ -580,5 +580,42 @@ namespace MANCAL_WEB_BL
 
             return ls;
         }
+
+        public List<CotizacionCliente> getClienteBusca() 
+        {
+            List<CotizacionCliente> ls = new List<CotizacionCliente>();
+            objCbo = new dl_carga_cbo();
+
+            DataTable dt = objCbo.selectClienteBusca();
+
+            foreach (DataRow dr in dt.Rows)
+            {
+                CotizacionCliente cli = new CotizacionCliente();
+                cli.idcliente = dr["ID_CLIENTE"].ToString();
+                cli.nomcliente = dr["NOM_CLI"].ToString();
+
+                ls.Add(cli);
+            }
+
+            return ls;
+        }
+
+        public List<DateTime> getFechaDivisa() 
+        {
+            List<DateTime> ls = new List<DateTime>();
+            objCbo = new dl_carga_cbo();
+
+            DataTable dt = objCbo.selectFechaDivisa().Tables["CUR_FECHAS"];
+
+            foreach (DataRow dr in dt.Rows) 
+            {
+                DateTime f = new DateTime();
+                f = Convert.ToDateTime(dr["DIV_FECHA"].ToString());
+
+                ls.Add(f);
+            }
+
+            return ls;
+        }
     }
 }

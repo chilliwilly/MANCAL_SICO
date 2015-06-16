@@ -96,6 +96,7 @@ namespace MANCAL_WEB_BL
                 cot.tfpf_id = dr["TFPF_ID"].ToString();
                 cot.tlej_id = dr["TLEJ_ID"].ToString();
                 //public String tpe_id = dr[""].ToString();
+                cot.tpe_id = dr["ACREDITADO"].ToString();
                 cot.tt_id = dr["TT_ID"].ToString();
                 cot.tc_id = dr["TC_ID"].ToString();
                 cot.jef_id = dr["JEF_ID"].ToString();
@@ -325,7 +326,7 @@ namespace MANCAL_WEB_BL
 
             DataRow drXmlt = dtXmlt.NewRow();
             drXmlt["ctrans_id"] = objCot.CotizacionTransporte.ctrans_id;
-            drXmlt["cot_numero"] = objCot.cot_numero;
+            drXmlt["cot_numero"] = objCot.cot_usrpc;
             drXmlt["ctrans_total"] = objCot.CotizacionTransporte.ctrans_total;
             drXmlt["reg_id"] = objCot.CotizacionTransporte.reg_id;
             drXmlt["ten_id"] = objCot.CotizacionTransporte.ten_id;
@@ -372,7 +373,7 @@ namespace MANCAL_WEB_BL
 
             DataRow drXmlco = dtXmlco.NewRow();
             drXmlco["ccom_id"] = objCot.CotizacionComision.ccom_id;
-            drXmlco["cot_numero"] = objCot.cot_numero;
+            drXmlco["cot_numero"] = objCot.cot_usrpc;
             drXmlco["ccom_qtypersona"] = objCot.CotizacionComision.ccom_qtypersona;
             drXmlco["ccom_qtydia"] = objCot.CotizacionComision.ccom_qtydia;
             drXmlco["ccom_qtyveh"] = objCot.CotizacionComision.ccom_qtyveh;

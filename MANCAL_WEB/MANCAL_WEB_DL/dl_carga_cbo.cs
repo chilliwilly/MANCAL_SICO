@@ -579,7 +579,8 @@ namespace MANCAL_WEB_DL
                 }
 
 
-                String qry = "SELECT DISTINCT ID_CLIENTE, NOMBRE FROM TBL_SPAC_SEARCH_CLIENTE_TMP ORDER BY NOMBRE";
+                String qry = "SELECT DISTINCT ID_CLIENTE, NOMBRE FROM TBL_SPAC_SEARCH_CLIENTE_TMP GROUP BY ID_CLIENTE ORDER BY NOMBRE";
+                             //"SELECT ID_CLIENTE, NOMBRE FROM TBL_SPAC_SEARCH_CLIENTE_TMP GROUP BY ID_CLIENTE ORDER BY NOMBRE";
                 using (OracleCommand cmd = new OracleCommand(qry, con)) 
                 {
                     cmd.CommandType = CommandType.Text;
@@ -605,7 +606,7 @@ namespace MANCAL_WEB_DL
             using (OracleConnection con = new OracleConnection(conStr)) 
             {
                 con.Open();
-                String qry = "SELECT * FROM TBL_LINEA_PRODUCTO ORDER BY LP_ID";
+                String qry = "SELECT * FROM TBL_LINEA_PRODUCTO ORDER BY LP_NOMBRE";
                 using (OracleCommand cmd = new OracleCommand(qry, con)) 
                 {
                     cmd.CommandType = CommandType.Text;
@@ -748,6 +749,81 @@ namespace MANCAL_WEB_DL
                 }
                 con.Close();
             }
+            return ds;
+        }
+
+        public DataTable selectClienteBusca() 
+        {
+            DataTable dt = new DataTable();
+
+            using (OracleConnection con = new OracleConnection(conStr))
+            {
+                con.Open();
+                con.BeginTransaction();
+                String qryproc = "SP_SPAC_SEARCH_CLIENTE";
+                using (OracleCommand cmdproc = new OracleCommand(qryproc, con))
+                {
+                    cmdproc.CommandType = CommandType.StoredProcedure;
+
+                    cmdproc.Parameters.Add(new OracleParameter("P_NOMCLI", OracleDbType.Varchar2)).Value = null;
+                    cmdproc.Parameters["P_NOMCLI"].Direction = ParameterDirection.Input;
+
+                    cmdproc.Parameters.Add(new OracleParameter("P_DIRECCION", OracleDbType.Varchar2)).Value = null;
+                    cmdproc.Parameters["P_DIRECCION"].Direction = ParameterDirection.Input;
+
+                    cmdproc.Parameters.Add(new OracleParameter("P_TIPO_CLIENTE", OracleDbType.Int32)).Value = null;
+                    cmdproc.Parameters["P_TIPO_CLIENTE"].Direction = ParameterDirection.Input;
+
+                    cmdproc.Parameters.Add(new OracleParameter("P_ESTADO", OracleDbType.Int32)).Value = null;
+                    cmdproc.Parameters["P_ESTADO"].Direction = ParameterDirection.Input;
+
+                    cmdproc.ExecuteNonQuery();
+                }
+
+
+                String qry = "SELECT ID_CLIENTE, NVL(NOMBRE_CONTACTO, 'NN') || ' | ' || NOMBRE NOM_CLI FROM TBL_SPAC_SEARCH_CLIENTE_TMP ORDER BY NOM_CLI";
+                //"SELECT ID_CLIENTE, NOMBRE FROM TBL_SPAC_SEARCH_CLIENTE_TMP GROUP BY ID_CLIENTE ORDER BY NOMBRE";
+                using (OracleCommand cmd = new OracleCommand(qry, con))
+                {
+                    cmd.CommandType = CommandType.Text;
+
+                    cmd.ExecuteNonQuery();
+
+                    using (OracleDataAdapter oda = new OracleDataAdapter(cmd))
+                    {
+                        oda.Fill(dt);
+                    }
+                }
+
+            }
+            return dt;
+        }
+
+        public DataSet selectFechaDivisa() 
+        {
+            DataSet ds = new DataSet();
+
+            using (OracleConnection con = new OracleConnection(conStr)) 
+            {
+                con.Open();
+                String qry = "FN_MANCAL_GET_FECHAS";
+                using (OracleCommand cmd = new OracleCommand(qry, con)) 
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    cmd.Parameters.Add(new OracleParameter("CUR_FECHAS", OracleDbType.RefCursor)).Direction = ParameterDirection.ReturnValue;
+
+                    cmd.ExecuteNonQuery();
+
+                    using (OracleDataAdapter oda = new OracleDataAdapter(cmd)) 
+                    {
+                        oda.Fill(ds, "CUR_FECHAS");
+                    }
+                }
+                con.Close();
+
+            }
+
             return ds;
         }
     }

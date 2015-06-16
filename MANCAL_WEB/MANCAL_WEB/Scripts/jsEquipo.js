@@ -233,7 +233,7 @@ function getValorEquipo_Cal(eq_id, eq_tarifa, eq_fech) {
             $("#txt-eq-read-pventa").val(objData.equipototal);
         },
         error: function (data) {
-            alert("Error al buscar datos comerciales del equipo");
+            alert("Error al buscar datos comerciales del equipo, favor verifique que el equipo tenga los datos minimos para cotizar.");
         }
     });
 }
@@ -370,14 +370,14 @@ function getListaMagniFunct(idmag) {
 }
 
 //FUNCION UTILIZADA CUANDO SE INSERTAN PUNTOS PRO PRIMERA VEZ WEBMETHOD setDatoPuntoCot getNumeroFilaGVDetCot
-function setListaPuntoEquipo(cotid, espid, funid, punto, equid, eqdccid) {
+function setListaPuntoEquipo(cotid, espid, funid, punto, equid, eqdccid, coment) {
     var nroFila = getNumeroFilaGVDetCot();
     $.ajax({
         type: "POST",
         url: "/asmx_files/js_llenado.asmx/setDatoPuntoCot",
         datatype: "json",
         contentType: "application/json; charset=utf-8",
-        data: JSON.stringify({ "idcot": cotid, "idesp": espid, "idfun": funid, "txtpunto": punto, "iddetcot": nroFila, "iditem": nroFila, "idequ": equid }),
+        data: JSON.stringify({ "idcot": cotid, "idesp": espid, "idfun": funid, "txtpunto": punto, "iddetcot": nroFila, "iditem": nroFila, "idequ": equid, "pcoment": coment }),
         success: function (data, status) {
             alert("Puntos agregados");
             limpiaEditaGridDetPunto();
@@ -389,13 +389,13 @@ function setListaPuntoEquipo(cotid, espid, funid, punto, equid, eqdccid) {
 }
 
 //FUNCION QUE SE UTILIZA PARA AGREGAR PUNTOS LUEGO DE EDITAR EL DETALLE COTIZACION WEBMETHOD insModDatoPuntoCot
-function modInsDatoPuntoCot(idcot, idesp, idfun, txtpunto, iddcc, iddcitem, idequ) {
+function modInsDatoPuntoCot(idcot, idesp, idfun, txtpunto, iddcc, iddcitem, idequ, coment) {
     $.ajax({
         type: "POST",
         url: "/asmx_files/js_llenado.asmx/insModDatoPuntoCot",
         datatype: "json",
         contentType: "application/json; charset=utf-8",
-        data: JSON.stringify({ "idcot": idcot, "idesp": idesp, "idfun": idfun, "txtpunto": txtpunto, "iddcc": iddcc, "iddcitem": iddcitem, "idequ": idequ }),
+        data: JSON.stringify({ "idcot": idcot, "idesp": idesp, "idfun": idfun, "txtpunto": txtpunto, "iddcc": iddcc, "iddcitem": iddcitem, "idequ": idequ, "pcoment": coment }),
         success: function (data, status) {
             alert("Puntos agregados");
             limpiaEditaGridDetPunto();
@@ -515,13 +515,13 @@ function modValoresDetCalProd(item, cotiid, np, oc, saot, lp, estado) {
 //    FUNCIONES DE EDICION DEL PUNTO DEL EQUIPO      //
 //---------------------------------------------------//
 //---------------------------------------------------//
-function modPuntoDetFila(item, coti, punto, dcc) {
+function modPuntoDetFila(item, coti, punto, dcc, coment) {
     $.ajax({
         type: "POST",
         url: "/asmx_files/js_llenado.asmx/updPuntoDetFila",
         datatype: "json",
         contentType: "application/json; charset=utf-8",
-        data: JSON.stringify({ "item": item, "coti": coti, "punto": punto, "indcc": dcc }),
+        data: JSON.stringify({ "item": item, "coti": coti, "punto": punto, "indcc": dcc, "pcoment": coment }),
         success: function (data, status) {
             alert("Puntos actualizados correctamente");
         },
@@ -553,6 +553,7 @@ function limpiaPuntoDetFila() {
     $("#txt-edit-punto-esp-gv").val("");
     $("#txt-edit-punto-mag-gv").val("");
     $("#txt-edit-punto-lista-gv").val("");
+    $('.txt_edit_punto_coment').val("");
 }
 //---------------------------------------------------//
 //---------------------------------------------------//
@@ -666,6 +667,7 @@ function seleccionaCotizacion(num) {//SELECT COTIZACION
             $('._txtIdCotTxt_').val(cotData.cot_id);
             $('._cboTipoCotizacion_').val(cotData.tc_id);
             $('._txtFecha_').val(cotData.cot_fecha);
+            $("#txt_Fecha").val(cotData.cot_fecha);
             $('._txtCuenta_').val(cotData.cot_cuentacli);
             $('._cboVendedor_').val(cotData.ven_id);
             getEmailVendedor(cotData.ven_id);
@@ -718,12 +720,12 @@ function seleccionaCotizacion(num) {//SELECT COTIZACION
             if (cotData.CotizacionTransporte != null) {
                 $("#chkTransporte").prop('checked', true);
                 $('._cboRegion_').val(cotData.CotizacionTransporte.reg_id);
-                $("#txtDirTransporte").val(cotData.CotizacionTransporte.ctrans_direccion);
+                //$("#txtDirTransporte").val(cotData.CotizacionTransporte.ctrans_direccion);
                 $('._cboTraslado_').val(cotData.CotizacionTransporte.ten_id);
                 $("#txtTotalTransporte").val(cotData.CotizacionTransporte.ctrans_total);
                 $('._txtIdTrans_').val(cotData.CotizacionTransporte.ctrans_id);
 
-                $("#txtDirTransporte").prop("disabled", false);
+                //$("#txtDirTransporte").prop("disabled", false);
                 $('._cboRegion_').prop("disabled", false);
                 $('._cboTraslado_').prop("disabled", false);
                 $("#btnAddTransporte").removeAttr('disabled');
@@ -772,6 +774,8 @@ function seleccionaCotizacion(num) {//SELECT COTIZACION
 
             $("#dialog-busca-cot").dialog('close');
             $('._btnBuscaDetalleCot_').click();
+
+            $.cookie('acredi', cotData.tpe_id);
             //$('._btnUpdDatoEquipo_').click();
             //$('._btnUpdateDoc_').click();
         },
@@ -781,13 +785,13 @@ function seleccionaCotizacion(num) {//SELECT COTIZACION
     });      
 }
 
-function verDocCotizacion(numc, txtc) {//MOSTRAR COTIZACION DESDE BUSCADOR COTIZACION
+function verDocCotizacion(numc, txtc, acred) {//MOSTRAR COTIZACION DESDE BUSCADOR COTIZACION
     $.ajax({
         type: "POST",
         url: "/asmx_files/js_llenado.asmx/selDocuCotizacion",
         datatype: "json",
         contentType: "application/json; charset=utf-8",
-        data: JSON.stringify({ "numcot": numc, "txtcot": txtc }),
+        data: JSON.stringify({ "numcot": numc, "txtcot": txtc }), //, "acredito": acred }),
         success: function (data, status) {
             imprimeCotizacion();
         },
@@ -862,7 +866,7 @@ function validaPrecioMOChange() {
 
 function validaNparteNserie() {
     var fl_valida;
-    if (($("#txt-eq-read-np").val() == "" || $("#txt-eq-read-np").val() == null) || ($("#txt-eq-read-ns").val() == "" || $("#txt-eq-read-ns").val() == null)) {
+    if (($("#txt-eq-read-np").val() == "" || $("#txt-eq-read-np").val() == null) || ($("#txt-eq-read-ns").val() == "" || $("#txt-eq-read-ns").val() == null) || ($('._cboeqreadlprod_').val() == "" || $('._cboeqreadlprod_').val() == "N")) {
         fl_valida = true;
     } else {
         fl_valida = false;
@@ -901,9 +905,35 @@ function getNumeroFilaGVDetCot() {
 function cambioFechaCotizacion(sender, args) {
     var fCot = sender.get_selectedDate();
     var fCotVence = $find("nuevaFechaVence");
-    fCot = new Date(fCot.getTime() + fCot.getTimezoneOffset() * 60000);
-    var fCotVenc = new Date(fCot.setDate(fCot.getDate() + 30));
-    fCotVence.set_selectedDate(fCotVenc);
+    var fCotCotiz = $find("nuevaFechaCotiza");
+
+    if (fCot > new Date()) {
+        alert("La fecha no puede ser mayor a hoy");
+        var fnew = new Date();
+        fnew = new Date(fnew.getTime() + fnew.getTimezoneOffset() * 60000);
+        var fCotCot = new Date(fnew.setDate(fnew.getDate()));
+        fCotCotiz.set_selectedDate(fCotCot);
+    } else {
+        fCot = new Date(fCot.getTime() + fCot.getTimezoneOffset() * 60000);
+        var fCotVenc = new Date(fCot.setDate(fCot.getDate() + 30));
+        fCotVence.set_selectedDate(fCotVenc);
+    }
+}
+
+function deshabilitaFinDeSemana(sender, args) {
+    for (var i = 0; i < 6; i++) {
+        var row = sender._days.children[0].childNodes[1].children[i];
+        for (var j = 0; j < 7; j++) {
+            var cell = row.children[j].firstChild;
+
+            if (cell.id == sender._id + "_day_" + i + "_" + "5") {
+                cell.style.display = "none";
+            }
+            if (cell.id == sender._id + "_day_" + i + "_" + "6") {
+                cell.style.display = "none";
+            }
+        }
+    }
 }
 
 function verificaChkDcto() {
@@ -1090,8 +1120,8 @@ function desbloqueaCampoComision() {
 
 function CotizacionObject() {
     var objCoti = {};
-    objCoti.cot_numero = $('._txtIdCotNum_').val();
-    objCoti.cot_id = $('._txtIdCotTxt_').val();
+    objCoti.cot_numero = $('._txtIdCotNum_').val() || "-";
+    objCoti.cot_id = $('._txtIdCotTxt_').val() || "-";
     objCoti.cot_un_id = $('._txtIdUniNeg_').val();
     objCoti.cot_fecha = $('._txtFecha_').val();
     objCoti.cot_referencia = $('._txtReferencia_').val();
@@ -1150,19 +1180,19 @@ function CotizacionObject() {
 
 function CotizacionTransObject() {
     var objCotiTrans = {};
-    objCotiTrans.ctrans_id = $('._txtIdTrans_').val();
-    objCotiTrans.cot_numero = $('._txtIdCotNum_').val();
+    objCotiTrans.ctrans_id = $('._txtIdTrans_').val() || "-";
+    objCotiTrans.cot_numero = $('._txtIdCotNum_').val() || "-";
     objCotiTrans.ctrans_total = $("#txtTotalTransporte").val();
     objCotiTrans.reg_id = $('._cboRegion_').val();
     objCotiTrans.ten_id = $('._cboTraslado_').val();
-    objCotiTrans.ctrans_direccion = $("#txtDirTransporte").val();
+    objCotiTrans.ctrans_direccion = "N/A";// $("#txtDirTransporte").val();
 
     return objCotiTrans;
 }
 
 function CotizacionComisObject() {
     var objCotiComis = {};
-    objCotiComis.ccom_id = $('._txtIdComis_').val();
+    objCotiComis.ccom_id = $('._txtIdComis_').val() || "-";
     objCotiComis.ccom_qtypersona = $("#txt-com-qty-persona").val();
     objCotiComis.ccom_qtydia = $("#txt-com-qty-dia").val();
     objCotiComis.ccom_qtyveh = $("#txt-com-qty-veh").val();
@@ -1184,7 +1214,7 @@ function CotizacionComisObject() {
     objCotiComis.ccom_totalcom = $("#txt-com-tot-cos-com").val();
     objCotiComis.ccom_totalcommg = $("#txt-com-tot-p-com").val();
     objCotiComis.lug_id = $('._cboLugarComision_').val();
-    objCotiComis.cot_numero = $('._txtIdCotNum_').val();
+    objCotiComis.cot_numero = $('._txtIdCotNum_').val() || "-";
 
     return objCotiComis;
 }
@@ -1305,4 +1335,20 @@ function cambiaAjaxUploader() {
     Sys.Extended.UI.Resources.AjaxFileUpload_UploadCanceled = "Archivo Cancelado";
     Sys.Extended.UI.Resources.AjaxFileUpload_UploadingInputFile = "Subiendo Archivo: {0}.";
     Sys.Extended.UI.Resources.AjaxFileUpload_Uploaded = "Subido";
+}
+
+function getSigebasePwd() {//FUNCION PARA EXTENDER LA COOKIE DE LA PAGINA
+    $.ajax({
+        type: "POST",
+        url: "/asmx_files/js_llenado.asmx/getPwdSigepac",
+        datatype: "json",
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify({ "pwd": "12345", "pwdkey": "DTSSIGEBASE" }),
+        success: function (data, status) {
+            alert(data.d);
+        },
+        error: function (data) {
+            alert(data.d);
+        }
+    });
 }

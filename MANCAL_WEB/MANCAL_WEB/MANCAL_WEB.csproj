@@ -123,9 +123,16 @@
     <Content Include="Scripts\jquery.cookie.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jsEquipo.js" />
-    <None Include="Service References\ServiceEncripta\configuration91.svcinfo" />
-    <None Include="Service References\ServiceEncripta\configuration.svcinfo" />
-    <None Include="Service References\ServiceEncripta\Reference.svcmap">
+    <None Include="Service References\ServiceReference1\Encripta_ws.wsdl" />
+    <None Include="Service References\SR_EncriptaPasswd\configuration91.svcinfo" />
+    <None Include="Service References\SR_EncriptaPasswd\configuration.svcinfo" />
+    <None Include="Service References\SR_EncriptaPasswd\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Service References\ServiceReference1\configuration91.svcinfo" />
+    <None Include="Service References\ServiceReference1\configuration.svcinfo" />
+    <None Include="Service References\ServiceReference1\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
@@ -302,7 +309,12 @@
     <Compile Include="rpt_cal\rptCotizacionCal_Det.Designer.cs">
       <DependentUpon>rptCotizacionCal_Det.cs</DependentUpon>
     </Compile>
-    <Compile Include="Service References\ServiceEncripta\Reference.cs">
+    <Compile Include="Service References\ServiceReference1\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\SR_EncriptaPasswd\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
@@ -328,12 +340,6 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
-    <WCFMetadataStorage Include="Service References\ServiceEncripta\" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\ServiceEncripta\Encripta_ws.wsdl" />
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="rpt_cal\rptCotizacionCal_DetPunto.resx">
       <DependentUpon>rptCotizacionCal_DetPunto.cs</DependentUpon>
     </EmbeddedResource>
@@ -346,6 +352,13 @@
     <EmbeddedResource Include="rpt_cal\rptCotizacionCal_Det.resx">
       <DependentUpon>rptCotizacionCal_Det.cs</DependentUpon>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Service References\ServiceReference1\" />
+    <WCFMetadataStorage Include="Service References\SR_EncriptaPasswd\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\SR_EncriptaPasswd\Encripta_ws.wsdl" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

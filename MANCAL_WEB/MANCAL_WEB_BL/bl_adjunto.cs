@@ -5,6 +5,7 @@ using System.Text;
 using MANCAL_WEB_CLASS;
 using MANCAL_WEB_DL;
 using System.Data;
+using System.IO;
 
 namespace MANCAL_WEB_BL
 {
@@ -22,17 +23,22 @@ namespace MANCAL_WEB_BL
         {
             objAdjunto = new dl_adjunto();
             int id_adj = int.Parse(iddoc);
-            objAdjunto.deleteArchivo(id_adj, cotizdoc);
 
             List<CotizacionAdjunto> cotAdj = getAdjunto(cotizdoc);
+
+            objAdjunto.deleteArchivo(id_adj, cotizdoc);
+                        
             String nomArch = "";
 
             foreach (CotizacionAdjunto ca in cotAdj)
             {
                 if (ca.adjunto_id.Equals(iddoc))
-                {
-                    String[] dirArch = ca.adjunto_dir.Split('/');
+                {                  
+                    String[] dirArch = ca.adjunto_dir.Split('/');                    
                     nomArch = dirArch[2];
+                    String direArch = @"C:\Users\wcontreras\Documents\GitHub\MANCAL_SICO\MANCAL_WEB\MANCAL_WEB\adjunto_doc\" + nomArch + "";
+                    //String direArch = @"C:\WebManCal_Cot\adjunto_doc\" + nomArch + "";
+                    File.Delete(direArch);
                     break;
                 }
             }

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<definitions xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:s0="urn:Encripta_ws" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:Encripta_ws" xmlns="http://schemas.xmlsoap.org/wsdl/">
+  <types>
+    <xsd:schema elementFormDefault="unqualified" targetNamespace="urn:Encripta_ws">
+      <xsd:simpleType name="WLChar">
+        <xsd:restriction base="xsd:string">
+          <xsd:length value="1" fixed="true" />
+        </xsd:restriction>
+      </xsd:simpleType>
+    </xsd:schema>
+  </types>
+  <message name="Encripta_ws_Encripta_MessageIn">
+    <part name="valor" type="xsd:string" />
+    <part name="password" type="xsd:string" />
+  </message>
+  <message name="Encripta_ws_Encripta_MessageOut">
+    <part name="EncriptaResult" type="xsd:string" />
+  </message>
+  <portType name="Encripta_wsSOAPPortType">
+    <operation name="Encripta">
+      <documentation> Summary: &amp;lt;specify the procedure action&amp;gt;&lt;br /&gt; Syntax:&lt;br /&gt;[ &amp;lt;Result&amp;gt; = ] Encripta (&amp;lt;valor&amp;gt; is string, &amp;lt;password&amp;gt; is string)&lt;br /&gt;&lt;br /&gt; Parameters:&lt;br /&gt;	valor (ANSI string): &amp;lt;specify the role of valor&amp;gt;&lt;br /&gt;	password (ANSI string): &amp;lt;specify the role of password&amp;gt;&lt;br /&gt; Return Value:&lt;br /&gt; 	ANSI string: // 	None&lt;br /&gt;&lt;br /&gt; For instance:&lt;br /&gt; Indicate an example.&lt;br /&gt;</documentation>
+      <input message="s0:Encripta_ws_Encripta_MessageIn" />
+      <output message="s0:Encripta_ws_Encripta_MessageOut" />
+    </operation>
+  </portType>
+  <binding name="Encripta_wsSOAPBinding" type="s0:Encripta_wsSOAPPortType">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <operation name="Encripta">
+      <soap:operation soapAction="urn:Encripta_ws/Encripta" style="document" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+  </binding>
+  <service name="Encripta_ws">
+    <port name="Encripta_wsSOAPPort" binding="s0:Encripta_wsSOAPBinding">
+      <soap:address location="http://apngc2/ENCRIPTA_USR_WS_WEB/awws/Encripta_ws.awws" />
+    </port>
+  </service>
+</definitions>

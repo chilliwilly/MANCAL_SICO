@@ -407,7 +407,7 @@ namespace MANCAL_WEB_DL
             return ds;
         }
 
-        public void insertDatoPuntoEquipo(String cot_id, int esp_id, int fun_id, String punto_in, int id_detcot, int id_item, int equ_id) 
+        public void insertDatoPuntoEquipo(String cot_id, int esp_id, int fun_id, String punto_in, int id_detcot, int id_item, int equ_id, String coment) 
         {
             using (OracleConnection con = new OracleConnection(conStr)) 
             {
@@ -437,6 +437,9 @@ namespace MANCAL_WEB_DL
 
                     cmd.Parameters.Add(new OracleParameter("P_ID_EQUIPO", OracleDbType.Int32)).Value = equ_id;
                     cmd.Parameters["P_ID_EQUIPO"].Direction = ParameterDirection.Input;
+
+                    cmd.Parameters.Add(new OracleParameter("P_COMENTARIO", OracleDbType.Varchar2)).Value = coment;
+                    cmd.Parameters["P_COMENTARIO"].Direction = ParameterDirection.Input;
 
                     cmd.ExecuteNonQuery();
                 }
@@ -588,8 +591,8 @@ namespace MANCAL_WEB_DL
                 con.Close();
             }
         }
-
-        public void updatePuntoDetFila(int nitem, String idcot, String puntos, int indcc) 
+        
+        public void updatePuntoDetFila(int nitem, String idcot, String puntos, int indcc, String coment) 
         {
             using (OracleConnection con = new OracleConnection(conStr)) 
             {
@@ -610,6 +613,9 @@ namespace MANCAL_WEB_DL
 
                     cmd.Parameters.Add(new OracleParameter("P_DCC_ID", OracleDbType.Varchar2)).Value = indcc;
                     cmd.Parameters["P_DCC_ID"].Direction = ParameterDirection.Input;
+
+                    cmd.Parameters.Add(new OracleParameter("P_COMENTARIO", OracleDbType.Varchar2)).Value = coment;
+                    cmd.Parameters["P_COMENTARIO"].Direction = ParameterDirection.Input;
 
                     cmd.ExecuteNonQuery();
                 }
