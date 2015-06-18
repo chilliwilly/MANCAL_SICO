@@ -261,7 +261,8 @@ namespace MANCAL_WEB.asmx_files
             MANCAL_WEB_CLASS.CotizacionComision objCotComis = MANCAL_WEB_CLASS.CotizacionComision.objCotiCom(comi);
             MANCAL_WEB_BL.bl_reporte rpt = new MANCAL_WEB_BL.bl_reporte();
             String validaPto = "";
-            
+            int mostrar = 1;
+
             objCot.CotizacionComision = objCotComis;
             objCot.CotizacionTransporte = objCotTrans;
             
@@ -281,6 +282,9 @@ namespace MANCAL_WEB.asmx_files
             Session.Add("RPT_NUM_COT", dataInforme[0]);
             Session.Add("RPT_NUM_TXT", dataInforme[1]);
             Session.Add("RPT_VAL_ACR", dataInforme[2]);
+            Session.Add("COT_VAL_SHW", mostrar);
+            Session.Add("COT_VAL_TAR", objCot.tt_id);
+            HttpContext.Current.Response.Cookies["COTVALSHW"].Value = mostrar.ToString();
             //return dataInforme;
         }
 
@@ -328,6 +332,7 @@ namespace MANCAL_WEB.asmx_files
             HttpContext.Current.Response.Cookies["txtcot"].Value = cot.cot_id;
             HttpContext.Current.Response.Cookies["txtcot"].Expires = DateTime.Now.AddMinutes(60);
 
+            HttpContext.Current.Response.Cookies["acredi"].Value = cot.tpe_id;
             //JavaScriptSerializer jsrlz = new JavaScriptSerializer();
             //var obj = blcot.selDatoCotizacion(numcot).ToString().ToList();
             //var objJson = jsrlz.Serialize(obj);
@@ -348,7 +353,7 @@ namespace MANCAL_WEB.asmx_files
         public void selDocuCotizacion(String numcot, String txtcot)//, String acredito) 
         {
             MANCAL_WEB_BL.bl_reporte rpt = new MANCAL_WEB_BL.bl_reporte();
-            String validaPto = "";
+            String validaPto = "";            
 
             if (rpt.getPuntoCotCal(numcot).Count < 1)
             {

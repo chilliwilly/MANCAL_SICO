@@ -23,7 +23,22 @@ namespace MANCAL_WEB.frm_cal
          
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (!IsPostBack)
+            {
+                if (Session["COT_VAL_SHW"].ToString().Equals("1"))
+                {
+                    ScriptManager.RegisterStartupScript(this.Page, this.Page.GetType(), "Cosa", "seleccionaCotizacion(" + Session["RPT_NUM_COT"].ToString() + ")", true);
 
+                    getListaDetalle(Session["RPT_NUM_COT"].ToString(), Session["COT_VAL_TAR"].ToString());
+                    UpdatePanel5.Update();
+
+                    getListArchivo(Session["RPT_NUM_TXT"].ToString());
+                    udpArchivo.Update();
+
+                    Session["COT_VAL_SHW"] = 2;                    
+                }
+                HttpContext.Current.Response.Cookies["COTVALSHW"].Value = "2";
+            }
         }
 
         #region Carga Combos de Busqueda

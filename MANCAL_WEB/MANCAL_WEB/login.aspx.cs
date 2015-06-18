@@ -42,9 +42,11 @@ namespace MANCAL_WEB
                     String pcusr = System.Environment.UserName;
 
                     Session["usr_pc"] = System.Environment.UserName;
+                    Session["COT_VAL_SHW"] = "2";
 
                     HttpCookie cookie_perfil = new HttpCookie("v_pr");
                     HttpCookie cookie_pcusr = new HttpCookie("pcusr");
+                    HttpCookie cookie_acredi = new HttpCookie("acredi");
 
                     cookie_perfil.Value = v_pr;
                     cookie_pcusr.Value = pcusr;
@@ -54,6 +56,7 @@ namespace MANCAL_WEB
 
                     Response.Cookies.Add(cookie_perfil);
                     Response.Cookies.Add(cookie_pcusr);
+                    Response.Cookies.Add(cookie_acredi);
 
                     Response.Redirect("~/index.aspx");
                 }

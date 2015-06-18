@@ -606,20 +606,20 @@ function insCotizacion() {//INSERT COTIZACION
     if (validaIngresoCotizacion()) {
         alert(msgValCot);
     } else {
-        $.ajax({
-            type: "POST",
-            url: "/asmx_files/js_llenado.asmx/insObjCotizacion",
-            datatype: "json",
-            contentType: "application/json; charset=utf-8",
-            data: JSON.stringify({ "cot": CotizacionObject(), "trans": CotizacionTransObject(), "comi": CotizacionComisObject() }),
-            success: function (data, status) {
-                window.location = "../load.aspx";
-                imprimeCotizacion();                            
-            },
-            error: function (data) {
-                alert("Error al guardar/imprimir cotizacion");
-            }
-        });
+    $.ajax({
+        type: "POST",
+        url: "/asmx_files/js_llenado.asmx/insObjCotizacion",
+        datatype: "json",
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify({ "cot": CotizacionObject(), "trans": CotizacionTransObject(), "comi": CotizacionComisObject() }),
+        success: function (data, status) {
+            window.location = "../load.aspx";
+            imprimeCotizacion();
+        },
+        error: function (data) {
+            alert("Error al guardar/imprimir cotizacion");
+        }
+    });
     }
 }
 
@@ -772,10 +772,13 @@ function seleccionaCotizacion(num) {//SELECT COTIZACION
             $('._cboJefe_').val(cotData.jef_id);
             getDatoAceptadoPor(cotData.jef_id);
 
-            $("#dialog-busca-cot").dialog('close');
+            if ($("#dialog-busca-cot").hasClass('ui-dialog-content')) {
+                $("#dialog-busca-cot").dialog('close');
+            }
+
             $('._btnBuscaDetalleCot_').click();
 
-            $.cookie('acredi', cotData.tpe_id);
+            //$.cookie('acredi', cotData.tpe_id);
             //$('._btnUpdDatoEquipo_').click();
             //$('._btnUpdateDoc_').click();
         },

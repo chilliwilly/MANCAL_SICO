@@ -245,7 +245,7 @@ namespace MANCAL_WEB_DL
                     cmd_proc.ExecuteNonQuery();
                 }
 
-                String qry = "SELECT * FROM TBL_SPAC_SEARCH_PLANTILLAS_TMP";
+                String qry = "SELECT NOMBRE, NVL(MODELO,'NO ESPECIFICA') MODELO, NVL(N_PARTE,'SIN NRO PARTE') N_PARTE, ID_PP_PLANTILLA FROM TBL_SPAC_SEARCH_PLANTILLAS_TMP";
                 using (OracleCommand cmd = new OracleCommand(qry, con))
                 {
                     cmd.CommandType = CommandType.Text;

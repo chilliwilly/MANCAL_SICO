@@ -1403,7 +1403,7 @@
                 <td>Cantidad</td>
                 <td><input type="number" id="txt-eq-read-qty" name="txt-eq-read-qty" class="text ui-widget-content ui-corner-all" value="1"/></td>
             </tr>
-            <tr>
+            <tr style="display:none;">
                 <td>
                     Tipo Trabajo
                 </td>

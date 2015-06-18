@@ -16,7 +16,7 @@ namespace MANCAL_WEB
 
             if (Session["pag_num"].ToString().Equals("1"))//redirect nueva cot caal Session["page_id"].ToString().Equals("1")
             {
-                Response.AddHeader("REFRESH", "3;URL=/frm_cal/cal_cot_new.aspx");
+                Response.AddHeader("REFRESH", "3;URL=/frm_cal/cal_cot_mod.aspx");
             }
             if (Session["pag_num"].ToString().Equals("2"))
             {
