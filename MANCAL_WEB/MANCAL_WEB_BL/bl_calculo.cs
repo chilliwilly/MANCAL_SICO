@@ -27,6 +27,7 @@ namespace MANCAL_WEB_BL
             foreach (DataRow dr in dt.Rows) 
             {
                 cot.cot_neto = dr["NETO"].ToString();
+                cot.cot_dcto_porc = dr["DESCUENTO"].ToString();
                 cot.cot_netodcto = dr["NETODESC"].ToString();
                 cot.cot_iva = dr["IVA"].ToString();
                 cot.cot_total = dr["TOTAL"].ToString();

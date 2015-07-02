@@ -334,6 +334,7 @@ function getMargenTotalCot(obj, un_nom) {
             $("#txtUtilidadEspPorc").val(cotObj.cot_utilesperaporc);
             $("#txtTipoMoneda").val(cotObj.cot_tipomoneda);
             $("#txtNeto").val(cotObj.cot_neto);
+            $("#txtDctoPorc").val(cotObj.cot_dcto_porc);
             $("#txtNetoDcto").val(cotObj.cot_netodcto);
             $("#txtIva").val(cotObj.cot_iva);
             $("#txtTotal").val(cotObj.cot_total);
@@ -746,10 +747,19 @@ function seleccionaCotizacion(num) {//SELECT COTIZACION
             $("#txtMgContribucionPorc").val(cotData.cot_mgcontribporc);
             $("#txtUtilidadEspPorc").val(cotData.cot_utilesperaporc);
             $("#txtNeto").val(cotData.cot_neto);
+            $("#txtDctoPorc").val(cotData.cot_dcto_porc);
             $("#txtDcto").val(cotData.cot_descuento);
             $("#txtNetoDcto").val(cotData.cot_netodcto);
             $("#txtIva").val(cotData.cot_iva);
             $("#txtTotal").val(cotData.cot_total);
+
+            if (cotData.cot_chkdcto == "Y") {
+                $('._chkDcto_').find('>:first-child').prop('checked', true); // find('>:first-child').is(':checked')
+                $("#txtDcto").removeAttr("disabled");
+            } else {
+                $('._chkDcto_').find('>:first-child').prop('checked', false); // find('>:first-child').is(':checked')
+                $("#txtDcto").attr("disabled", "disabled");
+            }
 
             /*ENCABEZADO FACTURACION*/
             $('._cboFacturacion_').val(cotData.tf_id);
@@ -941,7 +951,7 @@ function deshabilitaFinDeSemana(sender, args) {
 
 function verificaChkDcto() {
     var txtChkDcto = "";
-    if ($('._chkDcto_').is(":checked")) {
+    if ($('._chkDcto_').find('>:first-child').is(':checked')) {
         txtChkDcto = "Y";
     } else {
         txtChkDcto = "N";
@@ -951,7 +961,7 @@ function verificaChkDcto() {
 
 function verificaChkExc() {
     var txtChkExc = "";
-    if ($('._chkExcede_').is(":checked")) {
+    if ($('._chkExcede_').find('>:first-child').is(':checked')) {
         txtChkExc = "Y";
     } else {
         txtChkExc = "N";

@@ -83,6 +83,7 @@ namespace MANCAL_WEB_BL
                 cot.cot_afecto = dr["COT_AFECTO"].ToString();
                 cot.cot_tipomoneda = dr["COT_TIPOMONEDA"].ToString();
                 cot.cot_neto = dr["COT_NETO"].ToString();
+                cot.cot_dcto_porc = dr["COT_PORCENTAJE"].ToString();
                 cot.cot_descuento = dr["COT_DESCUENTO"].ToString();
                 cot.cot_netodcto = dr["COT_NETODCTO"].ToString();
                 cot.cot_iva = dr["COT_IVA"].ToString();

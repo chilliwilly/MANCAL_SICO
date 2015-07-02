@@ -1163,6 +1163,14 @@
                                 </tr>
                                 <tr>
                                     <td>
+                                        Dcto %
+                                    </td>
+                                    <td>
+                                        <input type="text" id="txtDctoPorc" name="txtDctoPorc" value="0" style="text-align:right; width:100px;" disabled="disabled"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
                                         Descuento
                                     </td>
                                     <td>
@@ -2489,10 +2497,11 @@
 
         $("#<%=chkDcto.ClientID %>").on('click', function () {
             if ($("#<%=chkDcto.ClientID %>").is(':checked')) {
-                $('#txtDcto').removeAttr("disabled");
+                $('#txtDcto').removeAttr("disabled"); //txtDctoPorc                    
             } else {
-                $('#txtDcto').attr("disabled", "disabled");
+                $('#txtDcto').attr("disabled", "disabled"); //txtDctoPorc
                 $('#txtDcto').val("0");
+                $('#txtDctoPorc').val("0"); //no estaba
             }
         });
 
