@@ -71,6 +71,7 @@ namespace MANCAL_WEB_CLASS
         public CotizacionEjecutivo CotizacionEjecutivo { get; set; }
         public CotizacionVendedor CotizacionVendedor { get; set; }
         public CotizacionPunto CotizacionPunto { get; set; }
+        public NpSanp NpSanp { get; set; }
 
         public String cot_msgautoriza { get; set; }
 

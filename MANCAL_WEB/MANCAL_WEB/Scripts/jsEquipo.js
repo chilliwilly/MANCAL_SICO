@@ -1,4 +1,6 @@
-﻿function setEquipo(obj) {
+﻿var tipoOperacion;
+
+function setEquipo(obj) {
     $.ajax({
         type: "POST",
         url: "/asmx_files/js_llenado.asmx/setDatoEquipo",
@@ -95,7 +97,7 @@ function delArchivo(item, coti) {
     });
 }
 
-function getNomCliente(idcli) {//OBTENER SOLO NOMBRE CLIENTE
+function getNomCliente(idcli) {//OBTENER SOLO NOMBRE CLIENTE    
     $.ajax({
         type: "POST",
         url: "/asmx_files/js_llenado.asmx/getNombreCliente",
@@ -200,6 +202,7 @@ function equipoCal_Total(obj, id_sys, id_tarifa, f_cot) {
 
 //FUNCION QUE ES LLAMADA AL MOMENTO DE PRESIONAR GUARDAR EQUIPO - WEBSERVICE setEquipoSeleccion
 function equipoCal_Guarda(obj) {
+    tipoOperacion = "DET";
     $.ajax({
         type: "POST",
         url: "/asmx_files/js_llenado.asmx/setEquipoSeleccion",
@@ -209,9 +212,9 @@ function equipoCal_Guarda(obj) {
         success: function (data, status) {
             alert("Equipo Guardado");
         },
-        error: function (data) {
-            alert("Error al guardar equipo");
-        }
+        error: errorOperacionCotizacion //function (data) {
+            //alert("Error al guardar equipo");
+        //}
     });
 }
 
@@ -604,6 +607,7 @@ function getDatoAceptadoPor(jefe_id) {
 //---------------------------------------------------//
 //---------------------------------------------------//
 function insCotizacion() {//INSERT COTIZACION
+    tipoOperacion = "INS";
     if (validaIngresoCotizacion()) {
         alert(msgValCot);
     } else {
@@ -617,14 +621,17 @@ function insCotizacion() {//INSERT COTIZACION
             window.location = "../load.aspx";
             imprimeCotizacion();
         },
-        error: function (data) {
-            alert("Error al guardar/imprimir cotizacion");
-        }
+        error: errorOperacionCotizacion //function (result, status, err) {
+            //alert("Error al guardar/imprimir cotizacion");
+            //var err_txt = $.parseJSON(result.responseText);
+            //alert(err_txt.Message);
+        //}
     });
     }
 }
 
 function updCotizacion() { //UPDATE COTIZACION
+    tipoOperacion = "UPD";
     if (validaIngresoCotizacion()) {
         alert(msgValCot);
     } else {
@@ -640,14 +647,15 @@ function updCotizacion() { //UPDATE COTIZACION
                 alert("Actualizado");
                 verDocCotizacion(CotizacionObject().cot_numero, CotizacionObject().cot_id);
             },
-            error: function (data) {
-                alert("Error al actualizar/imprimir cotizacion");
-            }
+            error: errorOperacionCotizacion //function (data) {
+                //alert("Error al actualizar/imprimir cotizacion");
+            //}
         });
     }
 }
 
 function seleccionaCotizacion(num) {//SELECT COTIZACION
+    tipoOperacion = "SEL";
     $.ajax({
         type: "POST",
         url: "/asmx_files/js_llenado.asmx/selObjCotizacion",
@@ -662,7 +670,7 @@ function seleccionaCotizacion(num) {//SELECT COTIZACION
             bloqueaCampoComision();
             $("#btnAddComision").attr('disabled', 'disabled');
             $('._cboLugarComision_').val("0");
-
+            
             /*ENCABEZADO COTIZACION*/
             $('._txtIdCotNum_').val(cotData.cot_numero);
             $('._txtIdCotTxt_').val(cotData.cot_id);
@@ -769,7 +777,7 @@ function seleccionaCotizacion(num) {//SELECT COTIZACION
             $("#txtPlazoEntregaD").val(cotData.cot_plazo_entrega);
             $('._txtPlazoEntrega_').val(cotData.cot_txttpe);
 
-            /*RNCABEZADO GARANTIA*/
+            /*ENCABEZADO GARANTIA*/
             $('._cboEjecTrab_').val(cotData.tlej_id);
             $('._cboLugarRetiro_').val(cotData.cot_tipo_retiro);
             $('._txtSectorRetiro_').val(cotData.cot_secretiro_dir);
@@ -782,6 +790,12 @@ function seleccionaCotizacion(num) {//SELECT COTIZACION
             $('._cboJefe_').val(cotData.jef_id);
             getDatoAceptadoPor(cotData.jef_id);
 
+            /*ENCABEZADO NP SANP*/
+            $("#txtNroCaso").val(cotData.NpSanp.sanp_nro_caso);
+            $("#txtVaCaso").val(cotData.NpSanp.sanp_va_caso);
+            $("#txtTotalCaso").val(cotData.NpSanp.sanp_total_caso);
+            $('._txtNPCaso_').val(cotData.NpSanp.sanp_np_caso);
+
             if ($("#dialog-busca-cot").hasClass('ui-dialog-content')) {
                 $("#dialog-busca-cot").dialog('close');
             }
@@ -792,10 +806,47 @@ function seleccionaCotizacion(num) {//SELECT COTIZACION
             //$('._btnUpdDatoEquipo_').click();
             //$('._btnUpdateDoc_').click();
         },
-        error: function (data) {
-            alert("Error al cargar cotizacion");
+        error: errorOperacionCotizacion //function (data) {
+            //alert("Error al cargar cotizacion");
+        //}
+    });
+}
+
+function errorOperacionCotizacion(result, status, err) {
+    var err_txt;
+    var title_txt;
+
+    if (tipoOperacion == "INS") {
+        title_txt = "Error al Guardar/Imprimir Cotización";
+    } else if (tipoOperacion == "UPD") {
+        title_txt = "Error al Actualizar/Imprimir Cotización";
+    } else if (tipoOperacion == "SEL") {
+        title_txt = "Error al Cargar Cotización";
+    } else if (tipoOperacion == "DET") {
+        title_txt = "Error Al Guardar Equipo";
+    }
+
+    $("#dialog-error").html("");
+    try {
+        err_txt = $.parseJSON(result.responseText);
+        $("#dialog-error").append("<div><b>" + status + " " + err + "</b></div><br/>");
+        $("#dialog-error").append("<div><u>Excepción</u>:<br />" + err_txt.ExceptionType + "</div><br/><br/>");
+        //$("#dialog-error").append("<div><u>StackTrace</u>:<br /><br />" + err_txt.StackTrace + "</div>");
+        $("#dialog-error").append("<div><u>Mensaje</u>:<br />" + err_txt.Message + "</div>");
+    } catch (e) {
+        err_txt = result.responseText;
+        $("#dialog-error").html(err_txt);
+    }
+    $("#dialog-error").dialog({
+        title: title_txt,
+        width: 700,
+        modal: true,
+        buttons: {
+            "Cerrar": function () {
+                $(this).dialog('close');
+            }
         }
-    });      
+    });
 }
 
 function verDocCotizacion(numc, txtc, acred) {//MOSTRAR COTIZACION DESDE BUSCADOR COTIZACION

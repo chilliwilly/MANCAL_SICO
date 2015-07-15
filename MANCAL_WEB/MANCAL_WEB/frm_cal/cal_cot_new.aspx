@@ -281,6 +281,9 @@
         </ContentTemplate>
     </asp:UpdatePanel>
 
+    <%-- DIALOG ERROR --%>
+    <div id="dialog-error" style="display:none;"></div>
+
     <%--CUADRO QUE SE UTILIZARA PARA BUSCAR CLIENTE --%>
     <asp:UpdatePanel ID="upUpdDatoEquipo" runat="server" UpdateMode="Conditional" style="display:none;">
         <ContentTemplate>
@@ -2268,7 +2271,7 @@
                 objEqJs.equipoitem = $("#edit_eq_item").val();
                 objEqJs.equipocotid = $.cookie('pcusr');
             }
-
+            
             function setInfoMgTotCot() {
                 objInfoCot.cot_tipomoneda = $("#<%=cboTipoTarifa.ClientID %>").val();
                 objInfoCot.cot_afecto = $("#<%=cboTipoImpuesto.ClientID %>").val();

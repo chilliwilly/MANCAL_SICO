@@ -74,6 +74,7 @@
     <Compile Include="CotizacionVendedor.cs" />
     <Compile Include="DetalleCotizacionPro.cs" />
     <Compile Include="MenuUsuario.cs" />
+    <Compile Include="NpSanp.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

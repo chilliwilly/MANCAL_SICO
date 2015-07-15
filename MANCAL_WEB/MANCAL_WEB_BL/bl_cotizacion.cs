@@ -104,6 +104,8 @@ namespace MANCAL_WEB_BL
                 cot.ven_id = dr["VEN_ID"].ToString();
                 cot.tle_id = dr["TLE_ID"].ToString();//fin int
 
+                cot.NpSanp = new NpSanp(dr["NP_CASO"].ToString().Trim(), dr["NP_INGRESO"].ToString().Trim(), dr["NP_VA_CASO"].ToString().Trim(), dr["NP_TOTAL_CASO"].ToString().Trim());
+
                 if (String.IsNullOrEmpty(dr["CTRANS_ID"].ToString()))
                 {
                     cot.CotizacionTransporte = null;
