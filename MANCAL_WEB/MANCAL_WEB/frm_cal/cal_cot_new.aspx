@@ -267,9 +267,17 @@
                     <td class="style9">
                         <asp:DropDownList ID="cboTipoTarifa" runat="server" Width="263px" oninit="cboTipoTarifa_Init" CssClass="_cboTipoTarifa_">
                         </asp:DropDownList>
+                        <input type="text" id="txtIdTipoTarifa" style="display:none" />
+                        <input type="text" id="txtIdTipoTarifaPrev" style="display:none" />
+                        <input type="text" id="txtTipoTarifa" style="width:180px" readonly="readonly" />
                     </td>               
                 </tr>
             </table>
+            <div id="dialog-divisa" style="display:none">
+                Seleccione el tipo de divisa con el cual va a cotizar
+                <br /><br />
+                <asp:RadioButtonList ID="rblSelectDivisa" runat="server" OnInit="rblSelectDivisa_Init" CssClass="_rblSelectDivisa_"></asp:RadioButtonList>
+            </div>
             <br />            
         </ContentTemplate>
     </asp:UpdatePanel>
@@ -1290,6 +1298,8 @@
                     </td>
                 </tr>
             </table>
+            <br />
+            <label style="color: #FF0000; font-weight:bold">FILAS IDENTIFICADAS CON COLOR ROJO NO POSEEN VALORES COMERCIALES</label>
         </fieldset>
         <asp:UpdatePanel ID="upEquipoBusca" runat="server" UpdateMode="Conditional">
             <ContentTemplate>
@@ -1326,6 +1336,13 @@
                             <ItemTemplate>
                                 <asp:Label ID="lblequiponparte" CssClass="eqnparte_" runat="server" Text='<%# Bind("EQUIPONPARTE") %>'></asp:Label>                                
                             </ItemTemplate>
+                        </asp:TemplateField>
+
+                        <asp:TemplateField HeaderText="TieneValor" HeaderStyle-CssClass="ocultaCol" ItemStyle-CssClass="ocultaCol">
+                            <%--NUEVA COLUMNA AGREGADA--%>
+                            <ItemTemplate>
+                                <asp:Label ID="lblPoseeValor" CssClass="poseevalor_" runat="server" Text='<%# Bind("EQUIPOCOTID") %>'></asp:Label>
+                            </ItemTemplate>                            
                         </asp:TemplateField>
 
                         <asp:TemplateField HeaderText="Peso" HeaderStyle-CssClass="ocultaCol" ItemStyle-CssClass="ocultaCol">
@@ -2151,6 +2168,45 @@
                 $("#tab-edit-eq").tabs();
                 $("#tab-edit-punto").tabs();
                 $("#tab-equipo-dato-cal").tabs();
+            });
+
+            $('._rblSelectDivisa_').on('change', function () {
+                if ($("#txtIdTipoTarifaPrev").val() == "") {
+                    //alert("id previo esta nulo");
+                }
+            });
+
+            //Metodo para seleccionar divisa y recalcular el detalle de la cotizacion
+            $("#txtTipoTarifa").on('click', function () {
+                if ($("#txtIdTipoTarifa").val() != "") {
+                    $('._rblSelectDivisa_').val($("#txtIdTipoTarifa").val())
+                }
+                $("#dialog-divisa").dialog({
+                    modal: true,
+                    title: "Divisa Cotizacion",
+                    width: "500px",
+                    buttons: {
+                        "Aceptar": function () {
+                            if (validaCantidadGVDetCot()) {
+                                calculoCambioDivisa($('._rblSelectDivisa_').find(":checked").val(),//tipo tarifa previo
+                                                    $("#txtIdTipoTarifaPrev").val(),//tipo tarifa actual seleccionado
+                                                    $("#<%=txtFecha.ClientID %>").val(),//fecha cotizacion actual
+                                                    $.cookie('pcusr'));//numero cotizacion a cambiar
+                                //setear valor actual del id tarifa despues de calcular con el anterior                                
+                                //alert("tiene filas");
+                            } else {
+                                $("#txtIdTipoTarifaPrev").val($('._rblSelectDivisa_').find(":checked").val());
+                                $("#txtIdTipoTarifa").val($('._rblSelectDivisa_').find(":checked").val());
+                                $("#txtTipoTarifa").val($('._rblSelectDivisa_').find(":checked").next().html());
+                                $('._rblSelectDivisa_').removeAttr('checked');
+                            }
+                            $(this).dialog('close');
+                        },
+                        "Cerrar": function () {
+                            $(this).dialog('close');
+                        }
+                    }
+                });
             });
 
             $("#<%=txtPlazoEntrega.ClientID %>").on('click', function () {

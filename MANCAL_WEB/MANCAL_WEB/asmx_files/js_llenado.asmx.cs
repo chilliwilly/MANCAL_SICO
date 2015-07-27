@@ -405,6 +405,13 @@ namespace MANCAL_WEB.asmx_files
             return jsonList;
         }
 
+        //Metodo que realiza el cambio de divisa segun lo seleccionado por el usuario
+        [WebMethod]
+        public void calCambioDivisa(String curTarifa, String prevTarifa, String fechaCot, String numCoti) 
+        {
+        
+        }
+
         [WebMethod]
         public String getPwdSigepac(String pwd, String pwdkey) 
         {

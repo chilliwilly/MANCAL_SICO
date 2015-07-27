@@ -1584,6 +1584,8 @@
                     </td>
                 </tr>
             </table>
+            <br />
+            <label style="color: #FF0000; font-weight:bold">FILAS IDENTIFICADAS CON COLOR ROJO NO POSEEN VALORES COMERCIALES</label>
         </fieldset>
         <asp:UpdatePanel ID="upEquipoBusca" runat="server" UpdateMode="Conditional">
             <ContentTemplate>
@@ -1620,6 +1622,13 @@
                             <ItemTemplate>
                                 <asp:Label ID="lblequiponparte" CssClass="eqnparte_" runat="server" Text='<%# Bind("EQUIPONPARTE") %>'></asp:Label>                                
                             </ItemTemplate>
+                        </asp:TemplateField>
+
+                        <asp:TemplateField HeaderText="TieneValor" HeaderStyle-CssClass="ocultaCol" ItemStyle-CssClass="ocultaCol">
+                            <%--NUEVA COLUMNA AGREGADA--%>
+                            <ItemTemplate>
+                                <asp:Label ID="lblPoseeValor" CssClass="poseevalor_" runat="server" Text='<%# Bind("EQUIPOCOTID") %>'></asp:Label>
+                            </ItemTemplate>                            
                         </asp:TemplateField>
 
                         <asp:TemplateField HeaderText="Peso" HeaderStyle-CssClass="ocultaCol" ItemStyle-CssClass="ocultaCol">

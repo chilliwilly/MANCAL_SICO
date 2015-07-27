@@ -245,7 +245,9 @@ namespace MANCAL_WEB_DL
                     cmd_proc.ExecuteNonQuery();
                 }
 
-                String qry = "SELECT NOMBRE, NVL(MODELO,'NO ESPECIFICA') MODELO, NVL(N_PARTE,'SIN NRO PARTE') N_PARTE, ID_PP_PLANTILLA FROM TBL_SPAC_SEARCH_PLANTILLAS_TMP";
+                //String qry = "SELECT NOMBRE, NVL(MODELO,'NO ESPECIFICA') MODELO, NVL(N_PARTE,'SIN NRO PARTE') N_PARTE, ID_PP_PLANTILLA FROM TBL_SPAC_SEARCH_PLANTILLAS_TMP";
+                String qry = "SELECT NOMBRE, NVL(MODELO,'NO ESPECIFICA') MODELO, NVL(N_PARTE,'SIN NRO PARTE') N_PARTE, ID_PP_PLANTILLA, NVL(PRECIO_PROMEDIO,-10) PRECIO_PROM FROM TBL_SPAC_SEARCH_PLANTILLAS_TMP"
+                           + " LEFT JOIN TBL_SBAS_DATOS_COMER_EQ ON TBL_SPAC_SEARCH_PLANTILLAS_TMP.ID_PP_PLANTILLA = TBL_SBAS_DATOS_COMER_EQ.ID_PLANTILLA_EQ";
                 using (OracleCommand cmd = new OracleCommand(qry, con))
                 {
                     cmd.CommandType = CommandType.Text;

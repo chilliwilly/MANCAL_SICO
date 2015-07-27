@@ -101,6 +101,7 @@ namespace MANCAL_WEB_BL
                 cot.equipomodelo = dr["MODELO"].ToString();
                 cot.equiponparte = dr["N_PARTE"].ToString();
                 cot.equipoid = dr["ID_PP_PLANTILLA"].ToString();
+                cot.equipocotid = dr["PRECIO_PROM"].ToString();//para saber si tiene precios o no
 
                 //int id_eq = Convert.ToInt32(dr["ID_PP_PLANTILLA"].ToString());
                 //dt_eq = objProDet.selectValorEquipo(id_sys, id_eq, id_ta, fechcot).Tables["CUR_PRECIO_EQ"];

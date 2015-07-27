@@ -6,6 +6,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using MANCAL_WEB_BL;
 using MANCAL_WEB_CLASS;
+using System.Drawing;
 
 namespace MANCAL_WEB.frm_cal
 {
@@ -526,6 +527,15 @@ namespace MANCAL_WEB.frm_cal
             String systemid = "2";
             gvEquipoBusca.DataSource = objDet.getEquipo(nom, np, modelo, systemid, cboTipoTarifa.SelectedValue, String.Format("{0}", Request.Form["txt_Fecha"]));//txtFecha.Text);
             gvEquipoBusca.DataBind();
+
+            for (int i = 0; i < gvEquipoBusca.Rows.Count; i++)
+            {
+                if (((Label)gvEquipoBusca.Rows[i].FindControl("lblPoseeValor")).Text.Equals("-10"))
+                {
+                    gvEquipoBusca.Rows[i].BackColor = ColorTranslator.FromHtml("#FF0000");
+                    gvEquipoBusca.Rows[i].Cells[11].Style.Add("pointer-events", "none");
+                }
+            }
         }
 
         protected void btnBuscarListaEquipo_Click(object sender, EventArgs e)

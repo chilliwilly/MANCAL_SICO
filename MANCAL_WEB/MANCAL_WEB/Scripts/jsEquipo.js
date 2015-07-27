@@ -824,6 +824,8 @@ function errorOperacionCotizacion(result, status, err) {
         title_txt = "Error al Cargar Cotización";
     } else if (tipoOperacion == "DET") {
         title_txt = "Error Al Guardar Equipo";
+    } else if (tipoOperacion == "DIV") {
+        title_txt = "Error Al Calcular Cambio Divisa";
     }
 
     $("#dialog-error").html("");
@@ -964,6 +966,36 @@ function getNumeroFilaGVDetCot() {
         });
     }
     return nrofila;
+}
+
+function validaCantidadGVDetCot() {
+    var hasRows = false;
+    if ($('.cssDetEq').length) {
+        hasRows = true;
+    }
+    return hasRows;
+}
+
+//Funcion que al cambiar divisa, cambiara valores del detalle
+function calculoCambioDivisa(curTarifa, prevTarifa, fechaCot, numCoti) {
+    tipoOperacion = "DIV";
+    $.ajax({
+        type: "POST",
+        url: "/asmx_files/js_llenado.asmx/calCambioDivisa",
+        datatype: "json",
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify({ "curTarifa": curTarifa, "prevTarifa": prevTarifa, "fechaCot": fechaCot, "numCoti": numCoti }),
+        success: function (data, status) {
+            $("#txtIdTipoTarifa").val($('._rblSelectDivisa_').find(":checked").val());
+            $("#txtIdTipoTarifaPrev").val($('._rblSelectDivisa_').find(":checked").val());
+            $("#txtTipoTarifa").val($('._rblSelectDivisa_').find(":checked").next().html());
+            $('._rblSelectDivisa_').removeAttr('checked');
+        },
+        error: errorOperacionCotizacion
+        //error: function (data) {
+        //    alert("Error al calcular el cambio de divisa");
+        //}
+    });
 }
 
 function cambioFechaCotizacion(sender, args) {

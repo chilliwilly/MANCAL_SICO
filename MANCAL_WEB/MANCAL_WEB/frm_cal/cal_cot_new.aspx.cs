@@ -9,6 +9,7 @@ using MANCAL_WEB_CLASS;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Runtime.Serialization;
+using System.Drawing;
 
 namespace MANCAL_WEB.frm_cal
 {
@@ -255,6 +256,20 @@ namespace MANCAL_WEB.frm_cal
             }
         }
 
+        //Este metodo reemplaza al que rellena el tipo de tarifa en el cbo
+        protected void rblSelectDivisa_Init(object sender, EventArgs e)
+        {
+            objCbo = new bl_carga_cbo();
+
+            foreach (var rad in objCbo.lsTarifaTipo())
+            {
+                if (Convert.ToInt32(rad.tt_idn) > 0)
+                {
+                    rblSelectDivisa.Items.Add(new ListItem(rad.tt_nom, rad.tt_idn));
+                }
+            }
+        }
+
         protected void cboRegion_Init(object sender, EventArgs e) 
         {
             objCbo = new bl_carga_cbo();
@@ -443,6 +458,15 @@ namespace MANCAL_WEB.frm_cal
             String systemid = "2";
             gvEquipoBusca.DataSource = objDet.getEquipo(nom, np, modelo, systemid, cboTipoTarifa.SelectedValue, txtFecha.Text);
             gvEquipoBusca.DataBind();
+
+            for (int i = 0; i < gvEquipoBusca.Rows.Count; i++) 
+            {
+                if (((Label)gvEquipoBusca.Rows[i].FindControl("lblPoseeValor")).Text.Equals("-10")) 
+                {
+                    gvEquipoBusca.Rows[i].BackColor = ColorTranslator.FromHtml("#FF0000");
+                    gvEquipoBusca.Rows[i].Cells[11].Style.Add("pointer-events", "none");
+                }
+            }
         }
 
         protected void btnBuscarListaEquipo_Click(object sender, EventArgs e)
