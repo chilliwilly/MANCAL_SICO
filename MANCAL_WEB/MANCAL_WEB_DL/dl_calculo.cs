@@ -273,5 +273,33 @@ namespace MANCAL_WEB_DL
 
             return ds;
         }
+
+        public void updateCalculoCambioDivisa(int curTarifa, int prevTarifa, DateTime fechaCot, String numCoti) 
+        {
+            using (OracleConnection con = new OracleConnection(conStr)) 
+            {
+                con.Open();
+                String qry = "PKG_MANCAL_CAMBIO_DIVISA_DET.SP_RECALCULO_DET";
+                using (OracleCommand cmd = new OracleCommand(qry, con)) 
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    cmd.Parameters.Add(new OracleParameter("P_IDTARIFA_NEW", OracleDbType.Int32)).Value = curTarifa;
+                    cmd.Parameters["P_IDTARIFA_NEW"].Direction = ParameterDirection.Input;
+
+                    cmd.Parameters.Add(new OracleParameter("P_IDTARIFA_PRE", OracleDbType.Int32)).Value = prevTarifa;
+                    cmd.Parameters["P_IDTARIFA_PRE"].Direction = ParameterDirection.Input;
+
+                    cmd.Parameters.Add(new OracleParameter("P_FECHACOT", OracleDbType.Date)).Value = fechaCot;
+                    cmd.Parameters["P_FECHACOT"].Direction = ParameterDirection.Input;
+
+                    cmd.Parameters.Add(new OracleParameter("P_NRO_COTI", OracleDbType.Varchar2)).Value = numCoti;
+                    cmd.Parameters["P_NRO_COTI"].Direction = ParameterDirection.Input;
+
+                    cmd.ExecuteNonQuery();
+                }
+                con.Close();
+            }
+        }
     }
 }

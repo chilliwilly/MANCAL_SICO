@@ -407,9 +407,32 @@ namespace MANCAL_WEB.asmx_files
 
         //Metodo que realiza el cambio de divisa segun lo seleccionado por el usuario
         [WebMethod]
-        public void calCambioDivisa(String curTarifa, String prevTarifa, String fechaCot, String numCoti) 
+        public String calCambioDivisa(String curTarifa, String prevTarifa, String fechaCot, String numCoti) 
         {
-        
+            String resp = "";
+            String prev_Tarifa = "";
+            bl_calculo cambioDivisa = new bl_calculo();
+
+            if (curTarifa.Equals(prevTarifa))
+            {
+                resp = "Y";//son iguales
+            }
+            else 
+            {
+                resp = "N";//no son iguales
+                if (String.IsNullOrEmpty(prevTarifa))
+                {
+                    prev_Tarifa = "0";
+                }
+                else 
+                {
+                    prev_Tarifa = prevTarifa;
+                }
+
+                cambioDivisa.setCalculoCambioDivisa(curTarifa, prev_Tarifa, fechaCot, numCoti);
+            }
+
+            return resp;
         }
 
         [WebMethod]

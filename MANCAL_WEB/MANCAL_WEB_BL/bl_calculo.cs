@@ -133,5 +133,17 @@ namespace MANCAL_WEB_BL
 
             return cc;
         }
+
+        public void setCalculoCambioDivisa(String curTarifa, String prevTarifa, String fechaCot, String numCoti)
+        {
+            objCalculo = new dl_calculo();
+
+            int tarifaCur = Convert.ToInt32(curTarifa);
+            int tarifaPrev = Convert.ToInt32(prevTarifa);
+            DateTime cotFecha = Convert.ToDateTime(fechaCot);
+
+            objCalculo.updateCalculoCambioDivisa(tarifaCur, tarifaPrev, cotFecha, numCoti);
+
+        }
     }
 }

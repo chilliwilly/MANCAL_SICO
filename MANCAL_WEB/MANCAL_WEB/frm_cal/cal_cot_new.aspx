@@ -265,11 +265,11 @@
                         Tipo Tarifa
                     </td>
                     <td class="style9">
-                        <asp:DropDownList ID="cboTipoTarifa" runat="server" Width="263px" oninit="cboTipoTarifa_Init" CssClass="_cboTipoTarifa_">
-                        </asp:DropDownList>
-                        <input type="text" id="txtIdTipoTarifa" style="display:none" />
-                        <input type="text" id="txtIdTipoTarifaPrev" style="display:none" />
-                        <input type="text" id="txtTipoTarifa" style="width:180px" readonly="readonly" />
+                        <%--<asp:DropDownList ID="cboTipoTarifa" runat="server" Width="263px" oninit="cboTipoTarifa_Init" CssClass="_cboTipoTarifa_">
+                        </asp:DropDownList>--%>
+                        <input type="text" id="txtIdTipoTarifa" name="txtIdTipoTarifa" style="display:none" />
+                        <input type="text" id="txtIdTipoTarifaPrev" name="txtIdTipoTarifaPrev" style="display:none" />
+                        <input type="text" id="txtTipoTarifa" name="txtTipoTarifa" style="width:180px" readonly="readonly" />
                     </td>               
                 </tr>
             </table>
@@ -296,7 +296,7 @@
     <asp:UpdatePanel ID="upUpdDatoEquipo" runat="server" UpdateMode="Conditional" style="display:none;">
         <ContentTemplate>
             <asp:Button ID="btnUpdDatoEquipo" runat="server" 
-                onclick="btnUpdDatoEquipo_Click"/><!-- onclick="btnUpdDatoEquipo_Click"-->
+                onclick="btnUpdDatoEquipo_Click" CssClass="_btnUpdDatoEquipo_"/><!-- onclick="btnUpdDatoEquipo_Click"-->
         </ContentTemplate>
     </asp:UpdatePanel>
     <div id="dialog-busca-cli" style="display:none;" title="Buscar Cliente">
@@ -427,7 +427,7 @@
                 <li><a href="#tab-det-cot">Detalle Cotizacion</a></li>
                 <li><a href="#tab-costo">Otros Costos</a></li>
                 <li><a href="#tab-total">Total/Margenes</a></li>
-                <li><a href="#tab-total-ex">Total Exceder</a></li>
+                <%--<li><a href="#tab-total-ex">Total Exceder</a></li>--%>
                 <li><a href="#tab-notas">Notas</a></li>
                 <li><a href="#tab-factura">Facturacion</a></li>
                 <li><a href="#tab-garantia">Garantia/Otros</a></li>
@@ -955,9 +955,9 @@
                 </asp:UpdatePanel>
             </div>
 
-            <div id="tab-total-ex">
+            <%--<div id="tab-total-ex">
                 Solo para cotizaciones de mantenimiento
-            </div>
+            </div>--%>
 
             <div id="tab-notas">
                 <asp:UpdatePanel runat="server" ID="panelNota" UpdateMode="Conditional">
@@ -1914,7 +1914,7 @@
                     $("#txt-eq-read-mod").val($('.eqmodelo_', $(this).closest('tr')).html());
                     $("#txt-eq-read-np").val($('.eqnparte_', $(this).closest('tr')).html());
                     $.cookie('idequipocot', $('.eqid_', $(this).closest('tr')).html());
-                    getValorEquipo_Cal($('.eqid_', $(this).closest('tr')).html(), $("#<%=cboTipoTarifa.ClientID %>").val(), $("#<%=txtFecha.ClientID %>").val());
+                    getValorEquipo_Cal($('.eqid_', $(this).closest('tr')).html(), $("#txtIdTipoTarifa").val(), $("#<%=txtFecha.ClientID %>").val());// $("#%=cboTipoTarifa.ClientID %>").val()
                 });
             }
 
@@ -1950,7 +1950,7 @@
                     $("#edit_eq_total").val($('.equipototal_', $(this).closest('tr')).html());
 
                     getValoresEquipoEdit($('.equipoid_', $(this).closest('tr')).html(),
-                                         $("#<%=cboTipoTarifa.ClientID %>").val(),
+                                         $("#txtIdTipoTarifa").val(),//$("#%=cboTipoTarifa.ClientID %>").val(),
                                          $("#<%=txtFecha.ClientID %>").val());
                 });
             }
@@ -2004,7 +2004,7 @@
                             objEqJs.equipopmo = $("#txt-eq-read-pmo").val();
                             objEqJs.equipocalgasto = $("#txt-eq-read-gasto").val();
                             objEqJs.equipocalpcarga = $("#txt-eq-read-pcarga").val();
-                            equipoCal_Total(objEqJs, "2", $("#<%=cboTipoTarifa.ClientID %>").val(), $("#<%=txtFecha.ClientID %>").val());
+                            equipoCal_Total(objEqJs, "2", $("#txtIdTipoTarifa").val(), $("#<%=txtFecha.ClientID %>").val());//$("#%=cboTipoTarifa.ClientID %>").val()
                         },
                         "Agregar": function () {
                             //$(this).dialog('close');
@@ -2086,11 +2086,11 @@
                             objEqJs.equipopmo = $("#edit_eq_pmo").val();
                             objEqJs.equipocalgasto = $("#edit_eq_gasto").val();
                             objEqJs.equipocalpcarga = $("#edit_eq_pcarga").val();
-                            getTotalEquipoEdit(objEqJs, "2", $("#<%=cboTipoTarifa.ClientID %>").val(), $("#<%=txtFecha.ClientID %>").val());
+                            getTotalEquipoEdit(objEqJs, "2", $("#txtIdTipoTarifa").val(), $("#<%=txtFecha.ClientID %>").val());//$("#%=cboTipoTarifa.ClientID %>").val()
                         },
                         "Actualizar": function () {
                             setEquipoCalEdit();
-                            setValoresEquipoEdit(objEqJs, $("#<%=cboTipoTarifa.ClientID %>").val());
+                            setValoresEquipoEdit(objEqJs, $("#txtIdTipoTarifa").val());//$("#%=cboTipoTarifa.ClientID %>").val()
                             $("#<%=btnUpdDatoEquipo.ClientID %>").click();                            
                         },
                         "Cerrar": function () {                            
@@ -2271,7 +2271,7 @@
             });
 
             $("#btn-eq-busca").on('click', function () {
-                var tarifa_id = $("#<%=cboTipoTarifa.ClientID %>").val(); //txtHiddIdCliente
+                var tarifa_id = $("#txtIdTipoTarifa").val(); //txtHiddIdCliente $("#%=cboTipoTarifa.ClientID %>").val()
                 if (tarifa_id == 0) {//(tarifa_id == "" || tarifa_id == null) {
                     $("<div id='dialog-aux-eq' title='Error Tarifa'>Debe seleccionar un tipo tarifa para proceder a buscar un equipo.</div>").dialog({
                         modal: true,
@@ -2329,7 +2329,7 @@
             }
             
             function setInfoMgTotCot() {
-                objInfoCot.cot_tipomoneda = $("#<%=cboTipoTarifa.ClientID %>").val();
+                objInfoCot.cot_tipomoneda = $("#txtIdTipoTarifa").val();//$("#%=cboTipoTarifa.ClientID %>").val();
                 objInfoCot.cot_afecto = $("#<%=cboTipoImpuesto.ClientID %>").val();
                 objInfoCot.tc_id = $("#<%=cboTipoCotizacion.ClientID %>").val();
                 objInfoCot.cot_descuento = $("#txtDcto").val(); //txtDctoPorc
@@ -2386,7 +2386,7 @@
                 getTotalTransCot($.cookie('pcusr'),
                                 $("#<%=cboTraslado.ClientID %>").val(),
                                 $("#<%=cboRegion.ClientID %>").val(),
-                                $("#<%=cboTipoTarifa.ClientID %>").val(),
+                                $("#txtIdTipoTarifa").val(),//$("#%=cboTipoTarifa.ClientID %>").val(),
                                 $("#<%=txtFecha.ClientID %>").val());
                 $("#<%=btnUpdDatoEquipo.ClientID %>").click();
             });
@@ -2403,7 +2403,7 @@
                     bloqueaCampoComision();                    
                     setTotalCostoComision(objComCot,
                                           $.cookie('pcusr'),
-                                          $("#<%=cboTipoTarifa.ClientID %>").val(),
+                                          $("#txtIdTipoTarifa").val(),//$("#%=cboTipoTarifa.ClientID %>").val(),
                                           $("#<%=txtFecha.ClientID %>").val());
                     $("#<%=btnUpdDatoEquipo.ClientID %>").click();
                 } else {
@@ -2442,7 +2442,7 @@
                 setDatoComision();
                 getTotalCostoComision(objComCot,
                                       $.cookie('pcusr'),
-                                      $("#<%=cboTipoTarifa.ClientID %>").val(),
+                                      $("#txtIdTipoTarifa").val(),//$("#%=cboTipoTarifa.ClientID %>").val(),
                                       $("#<%=txtFecha.ClientID %>").val());
                 $("#<%=btnUpdDatoEquipo.ClientID %>").click();
                 //alert("boton ejecutado");

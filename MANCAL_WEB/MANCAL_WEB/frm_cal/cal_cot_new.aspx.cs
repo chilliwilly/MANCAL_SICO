@@ -58,15 +58,15 @@ namespace MANCAL_WEB.frm_cal
             }
         }
 
-        protected void cboTipoTarifa_Init(object sender, EventArgs e)
-        {
-            objCbo = new bl_carga_cbo();
+        //protected void cboTipoTarifa_Init(object sender, EventArgs e)
+        //{
+        //    objCbo = new bl_carga_cbo();
 
-            foreach (var ct in objCbo.lsTarifaTipo())
-            {
-                cboTipoTarifa.Items.Add(new ListItem(ct.tt_nom, ct.tt_idn));
-            }
-        }
+        //    foreach (var ct in objCbo.lsTarifaTipo())
+        //    {
+        //        cboTipoTarifa.Items.Add(new ListItem(ct.tt_nom, ct.tt_idn));
+        //    }
+        //}
 
         protected void cbo_eq_read_trabajo_Init(object sender, EventArgs e) 
         {
@@ -394,9 +394,10 @@ namespace MANCAL_WEB.frm_cal
         protected void GV1_PageIndexChanging(object sender, GridViewPageEventArgs e) 
         {
             String usr = System.Environment.UserName;
+            String tarifa = String.Format("{0}", Request.Form["txtIdTipoTarifa"]);
 
             GV1.PageIndex = e.NewPageIndex;
-            getListaDetalle(usr, cboTipoTarifa.SelectedValue);
+            getListaDetalle(usr, tarifa);//cboTipoTarifa.SelectedValue
         }
 
         protected void gvArchivo_PageIndexChanging(object sender, GridViewPageEventArgs e)
@@ -456,7 +457,9 @@ namespace MANCAL_WEB.frm_cal
         {
             objDet = new bl_detalle_pro();
             String systemid = "2";
-            gvEquipoBusca.DataSource = objDet.getEquipo(nom, np, modelo, systemid, cboTipoTarifa.SelectedValue, txtFecha.Text);
+            String tarifa = String.Format("{0}", Request.Form["txtIdTipoTarifa"]);
+
+            gvEquipoBusca.DataSource = objDet.getEquipo(nom, np, modelo, systemid, tarifa, txtFecha.Text);//cboTipoTarifa.SelectedValue
             gvEquipoBusca.DataBind();
 
             for (int i = 0; i < gvEquipoBusca.Rows.Count; i++) 
@@ -479,7 +482,9 @@ namespace MANCAL_WEB.frm_cal
         protected void btnUpdDatoEquipo_Click(object sender, EventArgs e) //
         {
             String usr = System.Environment.UserName;
-            getListaDetalle(usr, cboTipoTarifa.SelectedValue);
+            String tarifa = String.Format("{0}", Request.Form["txtIdTipoTarifa"]);
+
+            getListaDetalle(usr, tarifa);//cboTipoTarifa.SelectedValue
             gvListaPunto.DataSource = null;
             gvListaPunto.DataBind();
             upListaPunto.Update();

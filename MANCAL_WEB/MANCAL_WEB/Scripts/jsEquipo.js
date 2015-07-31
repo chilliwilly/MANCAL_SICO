@@ -688,8 +688,12 @@ function seleccionaCotizacion(num) {//SELECT COTIZACION
             $('._txtMailCliente_').val(cotData.cot_contacto_mail);
             $('._txtFonoCliente_').val(cotData.cot_contacto_ff);
             $('._txtIdCliente_').val(cotData.cot_id_cliente)
-            getNomCliente(cotData.cot_id_cliente);
-            $('._cboTipoTarifa_').val(cotData.tt_id);
+            getNomCliente(cotData.cot_id_cliente);            
+            //----
+            $("#txtIdTipoTarifa").val(cotData.tt_id);//$('._cboTipoTarifa_').val(cotData.tt_id);
+            $('._rblSelectDivisa_').val($("#txtIdTipoTarifa").val())
+            $("#txtTipoTarifa").val($('._rblSelectDivisa_').find(":checked").next().html());
+            //----
             $('._cboEstadoCotizacion_').val(cotData.ec_id);
             $('._txtEstadoCot_').val(cotData.ec_id);
             $("#txtId_Cotizacion").val(cotData.cot_id);
@@ -834,7 +838,7 @@ function errorOperacionCotizacion(result, status, err) {
         $("#dialog-error").append("<div><b>" + status + " " + err + "</b></div><br/>");
         $("#dialog-error").append("<div><u>Excepción</u>:<br />" + err_txt.ExceptionType + "</div><br/><br/>");
         //$("#dialog-error").append("<div><u>StackTrace</u>:<br /><br />" + err_txt.StackTrace + "</div>");
-        $("#dialog-error").append("<div><u>Mensaje</u>:<br />" + err_txt.Message + "</div>");
+        $("#dialog-error").append("<div><u>Mensaje</u>:<br />" + reemplazaSaltoLinea(err_txt.Message) + "</div>");
     } catch (e) {
         err_txt = result.responseText;
         $("#dialog-error").html(err_txt);
@@ -849,6 +853,10 @@ function errorOperacionCotizacion(result, status, err) {
             }
         }
     });
+}
+
+function reemplazaSaltoLinea(reemplazo) {
+    return reemplazo.replace(/\n/g, "<br />");
 }
 
 function verDocCotizacion(numc, txtc, acred) {//MOSTRAR COTIZACION DESDE BUSCADOR COTIZACION
@@ -924,7 +932,10 @@ function validaPrecioGastoChange(oldPGasto, newPGasto) {
 }
 
 function validaPrecioMOChange() {
-    if ($("#edit_eq_pmo").val() < $("#edit_eq_torig").val()) {
+    var pmo = parseFloat($("#edit_eq_pmo").val());
+    var pmo_orig = parseFloat($("#edit_eq_torig").val());
+
+    if (pmo < pmo_orig) {
         alert("El Precio MO no puede ser menor al precio base (" + $("#edit_eq_torig").val() + ")");
         $("#edit_eq_pmo").val($("#edit_eq_torig").val());
     }
@@ -986,10 +997,15 @@ function calculoCambioDivisa(curTarifa, prevTarifa, fechaCot, numCoti) {
         contentType: "application/json; charset=utf-8",
         data: JSON.stringify({ "curTarifa": curTarifa, "prevTarifa": prevTarifa, "fechaCot": fechaCot, "numCoti": numCoti }),
         success: function (data, status) {
-            $("#txtIdTipoTarifa").val($('._rblSelectDivisa_').find(":checked").val());
-            $("#txtIdTipoTarifaPrev").val($('._rblSelectDivisa_').find(":checked").val());
-            $("#txtTipoTarifa").val($('._rblSelectDivisa_').find(":checked").next().html());
-            $('._rblSelectDivisa_').removeAttr('checked');
+            var respuesta = data.d;
+            if (respuesta != "Y") {
+                $("#txtIdTipoTarifa").val($('._rblSelectDivisa_').find(":checked").val());
+                $("#txtIdTipoTarifaPrev").val($('._rblSelectDivisa_').find(":checked").val());
+                $("#txtTipoTarifa").val($('._rblSelectDivisa_').find(":checked").next().html());
+                $('._rblSelectDivisa_').removeAttr('checked');
+                $('._btnUpdDatoEquipo_').click();
+            }
+            //alert(respuesta);
         },
         error: errorOperacionCotizacion
         //error: function (data) {
@@ -1095,7 +1111,7 @@ function validaIngresoCotizacion() {
         msgValCot = msgValCot + "Debe ingresar un fono de contacto.\n";
         flagValCot = true;
     }
-    if ($('._cboTipoTarifa_').val() == "0") {
+    if ($("#txtIdTipoTarifa").val() == "0") {//$('._cboTipoTarifa_').val() == "0") {
         msgValCot = msgValCot + "Debe seleccionar un tipo de tarifa.\n";
         flagValCot = true;
     }
@@ -1264,7 +1280,7 @@ function CotizacionObject() {
     objCoti.tg_id = $('._cboGarantia_').val();
     objCoti.tfpf_id = $('._cboFormaPago_').val();
     objCoti.tlej_id = $('._cboEjecTrab_').val();
-    objCoti.tt_id = $('._cboTipoTarifa_').val();
+    objCoti.tt_id = $("#txtIdTipoTarifa").val();//$('._cboTipoTarifa_').val();
     objCoti.ec_id = $('._txtEstadoCot_').val();
     objCoti.tc_id = $('._cboTipoCotizacion_').val();
     objCoti.jef_id = $('._cboJefe_').val();
