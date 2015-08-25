@@ -7,6 +7,7 @@ using MANCAL_WEB_BL;
 using System.Collections;
 using System.Web.UI.WebControls;
 using System.Web.Script.Serialization;
+using System.Web.Script.Services;
 
 namespace MANCAL_WEB.asmx_files
 {
@@ -416,6 +417,7 @@ namespace MANCAL_WEB.asmx_files
             if (curTarifa.Equals(prevTarifa))
             {
                 resp = "Y";//son iguales
+                throw new Exception("Tarifa Nueva y Tarifa Anterior Son Iguales"); 
             }
             else 
             {
@@ -423,6 +425,7 @@ namespace MANCAL_WEB.asmx_files
                 if (String.IsNullOrEmpty(prevTarifa))
                 {
                     prev_Tarifa = "0";
+                    throw new Exception("Tarifa Anterior No Puede Estar En Blanco"); 
                 }
                 else 
                 {
@@ -436,9 +439,46 @@ namespace MANCAL_WEB.asmx_files
         }
 
         [WebMethod]
+        //[ScriptMethod (UseHttpGet = true, ResponseFormat = ResponseFormat.Json)]
+        public ArrayList getFamiliaMagnitud(String idmag) 
+        {
+            bl_carga_cbo objCbo = new bl_carga_cbo();
+            List<MANCAL_WEB_CLASS.CotizacionMagnitudFuncion> ls = new List<MANCAL_WEB_CLASS.CotizacionMagnitudFuncion>();
+            ArrayList lsArray = new ArrayList();
+
+            ls = objCbo.getFamiliaByMagnitud(idmag);
+
+            foreach (var item in ls) 
+            {
+                lsArray.Add(new ListItem(item.nommagfunc, item.idnmagfunc));
+            }
+
+            return lsArray;
+        }
+
+        [WebMethod]
+        [ScriptMethod(UseHttpGet = true, ResponseFormat = ResponseFormat.Json)]
+        public ArrayList getMagnitudDisponible() 
+        {
+            bl_carga_cbo objCbo = new bl_carga_cbo();
+            List<MANCAL_WEB_CLASS.CotizacionMagnitud> ls = new List<MANCAL_WEB_CLASS.CotizacionMagnitud>();
+            ArrayList lsArray = new ArrayList();
+
+            ls = objCbo.getMagnitudDispo();
+
+            foreach (var item in ls) 
+            {
+                lsArray.Add(new ListItem(item.nommagnitud, item.idnmagnitud));
+            }
+
+            return lsArray;
+        }
+
+        [WebMethod]
         public String getPwdSigepac(String pwd, String pwdkey) 
         {
             String pwdencripta = "";
+            
             //EncriptaRequest datocrypt = new EncriptaRequest();
             //EncriptaResponse respcrypt = new EncriptaResponse();
             
@@ -465,8 +505,8 @@ namespace MANCAL_WEB.asmx_files
                 pwdencripta = ws.Encripta(pwd, pwdkey);
             }*/
 
-            Encripta enc = new Encripta();
-            pwdencripta = enc.EncryptRijndael("12345", "");
+            //Encripta enc = new Encripta();
+            //pwdencripta = enc.EncryptRijndael("12345", "");
             
 
             return pwdencripta;

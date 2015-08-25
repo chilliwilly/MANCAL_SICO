@@ -35,7 +35,7 @@
             $("#btnAddEquipo").on('click', function () {                
                 $("#dialog-equipo-busca").dialog({
                     modal: true,
-                    width: "1000px",
+                    width: "1150px",
                     buttons: {
                         "Cerrar": function () {
                             $(this).dialog('close');
@@ -64,6 +64,12 @@
 
 
     <style type="text/css">
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            /* display: none; <- Crashes Chrome on hover */
+            -webkit-appearance: none;
+            margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+        }
         .style1
         {
             width: 120px;
@@ -115,7 +121,7 @@
 
 <asp:ToolkitScriptManager ID="ToolkitScriptManager1" runat="server" EnableScriptGlobalization="True" ScriptMode="Release" EnablePartialRendering="true" LoadScriptsBeforeUI="false">
 </asp:ToolkitScriptManager>
-
+    <%--<input type="button" value="Call Web Service" id="btnService"/>--%>
     <%-- PANEL DE ENCABEZADO DE LA COTIZACION--%>
     <asp:UpdatePanel ID="panelCli" runat="server" UpdateMode="Conditional">
         <ContentTemplate>
@@ -601,6 +607,18 @@
                                         </ItemTemplate>
                                     </asp:TemplateField>
 
+                                    <asp:TemplateField HeaderText="Total No Exceder" ItemStyle-Width="100px" HeaderStyle-CssClass="ocultaCol" ItemStyle-CssClass="ocultaCol">
+                                        <ItemTemplate>
+                                            <asp:Label ID="equipofactordcto" CssClass="equipofactordcto" runat="server" Text='<%# Bind("EQUIPOFACTORDCTO") %>'></asp:Label>
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+
+                                    <asp:TemplateField HeaderText="Total No Exceder" ItemStyle-Width="100px" HeaderStyle-CssClass="ocultaCol" ItemStyle-CssClass="ocultaCol">
+                                        <ItemTemplate>
+                                            <asp:Label ID="equipofactordctototal" CssClass="equipofactordctototal" runat="server" Text='<%# Bind("EQUIPOFACTORDCTOTOTAL") %>'></asp:Label>
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+
                                     <asp:TemplateField HeaderText="Otros / Puntos">
                                         <ItemTemplate>
                                             <a href="javascript:void(null);" id="btn-det-cal-det" onclick="seleccionDetalleCal();" style="display:inline-block;" class="ui-icon ui-icon-circle-plus"></a>
@@ -914,7 +932,7 @@
                                         Dcto %
                                     </td>
                                     <td>
-                                        <input type="text" id="txtDctoPorc" name="txtDctoPorc" value="0" style="text-align:right; width:100px;" disabled="disabled"/>
+                                        <input type="number" id="txtDctoPorc" name="txtDctoPorc" value="0" style="text-align:right; width:100px;" disabled="disabled" placeholder="Formato 0.0"/>
                                     </td>
                                 </tr>
                                 <tr>
@@ -922,7 +940,7 @@
                                         Descuento
                                     </td>
                                     <td>
-                                        <input type="text" id="txtDcto" name="txtDcto" value="0" style="text-align:right; width:100px;" disabled="disabled"/>
+                                        <input type="number" id="txtDcto" name="txtDcto" value="0" style="text-align:right; width:100px;" disabled="disabled" placeholder="Formato 0.0"/>
                                     </td>
                                 </tr>
                                 <tr>
@@ -1025,8 +1043,8 @@
                                     Plazo Entrega<br />
                                     <%--<asp:DropDownList ID="cboPlazoEntrega" runat="server" Width="140px" 
                                         oninit="cboPlazoEntrega_Init">
-                                    </asp:DropDownList>--%>
-                                    <input type="text" id="txtPlazoEntregaD" name="txtPlazoEntregaD" placeholder="Plazo entrega dias" pattern="^\d+$" style="width:140px;"/>
+                                    </asp:DropDownList> pattern="^\d+$" --%>
+                                    <input type="number" id="txtPlazoEntregaD" name="txtPlazoEntregaD" placeholder="Plazo entrega dias" style="width:140px;"/>
                                 </td>
                                 <td>
                                 </td>
@@ -1251,7 +1269,7 @@
 
     <%--DIALOG PARA BUSCAR Y AGREGAR EQUIPO --%>
     <div id="dialog-equipo-busca" title="Buscar Equipo" style="display:none;">
-        <fieldset>
+        <fieldset style="width:950px;">
             <legend>
                 Criterios de Busqueda
             </legend>
@@ -1272,10 +1290,23 @@
                         <input id="txt-eq-nombre" name="txt-eq-nombre" type="text" />
                     </td>
                     <td>
+                        &nbsp;
+                    </td>
+                    <td>
                         <label id="lbl-eq-modelo">Modelo</label>
                     </td>
                     <td>
                         <input id="txt-eq-modelo" name="txt-eq-modelo" type="text" />
+                    </td>
+                    <td>
+                        &nbsp;
+                    </td>
+                    <td>
+                        <label id="lbl-eq-magnitud">Magnitud</label>
+                    </td>
+                    <td>                        
+                        <select id="cboListaMagnitudBusca" name="cboListaMagnitudBusca"></select>
+                        <%--<asp:DropDownList ID="cboListaMagnitudBusca" CssClass="_cboListaMagnitudBusca_" runat="server" OnInit="cboListaMagnitudBusca_Init"></asp:DropDownList>--%>
                     </td>
                 </tr>
                 <tr>
@@ -1286,21 +1317,34 @@
                         <input id="txt-eq-nparte" name="txt-eq-nparte" type="text" />
                     </td>
                     <td>
+                        &nbsp;
+                    </td>
+                    <td>
                         <label id="lbl-eq-nserie">Nro Serie</label>
                     </td>
                     <td>
                         <input id="txt-eq-nserie" name="txt-eq-nserie" type="text" />
                     </td>
+                    <td>
+                        &nbsp;
+                    </td>
+                    <td>
+                        <label id="lbl-eq-familia">Familia</label>
+                    </td>
+                    <td>                        
+                        <select id="_cboListaFamiliaBusca_" name="_cboListaFamiliaBusca_"></select>
+                        <%--<asp:DropDownList ID="cboListaFamiliaBusca" CssClass="_cboListaFamiliaBusca_" runat="server"></asp:DropDownList>--%>
+                    </td>
                 </tr>
                 <tr>
-                    <td colspan="4">
+                    <td colspan="8">                        
                         <input id="btn-eq-busca" type="button" value="Buscar" />
                     </td>
                 </tr>
             </table>
             <br />
             <label style="color: #FF0000; font-weight:bold">FILAS IDENTIFICADAS CON COLOR ROJO NO POSEEN VALORES COMERCIALES</label>
-        </fieldset>
+        </fieldset><br />
         <asp:UpdatePanel ID="upEquipoBusca" runat="server" UpdateMode="Conditional">
             <ContentTemplate>
                 <asp:GridView ID="gvEquipoBusca" runat="server" AutoGenerateColumns="false"
@@ -1755,6 +1799,14 @@
                             <td><input type="text" id="edit_eq_pcarga" name="edit-eq-pcarga" class="text ui-widget-content ui-corner-all" readonly="readonly"/></td>
                         </tr>
                         <tr>
+                            <td>Factor Dcto</td>
+                            <td><input type="text" id="edit_eq_fdcto" name="edit-eq-fdcto" class="text ui-widget-content ui-corner-all" readonly="readonly"/></td>
+                        </tr>
+                        <tr>
+                            <td>Total con Dcto</td>
+                            <td><input type="text" id="edit_eq_fdcto_total" name="edit-eq-fdcto-total" class="text ui-widget-content ui-corner-all" readonly="readonly"/></td>
+                        </tr>
+                        <tr>
                             <td>Total</td>
                             <td><input type="text" id="edit_eq_total" name="edit-eq-total" class="text ui-widget-content ui-corner-all" readonly="readonly"/></td>
                         </tr>
@@ -1825,6 +1877,16 @@
             </div>
         </div>
     </div>
+
+    <%--DIALOG UTILIZADO PARA INGRESAR UN TIPO DE DESCUENTO YA SEA EN PORCENTAJE O MONEDA PERO NO AMBOS --%>
+    <%--<div id="dialog-edit-dcto" title="Agregar Descuento Cotizacion" style="display:none;">
+        Agregue el tipo descuento a aplicar a la cotizacion ya sea en moneda o porcentaje pero no ambos.
+        <br />
+        <asp:RadioButtonList ID="rblTipoDescuento" runat="server" CssClass="_rblTipoDescuento_">
+            <asp:ListItem Value="1">Porcentaje                &nbsp; : &nbsp; <input type="text" id="txtDctoPorcentaje" /></asp:ListItem>
+            <asp:ListItem Value="2">Moneda &nbsp;&nbsp;&nbsp; &nbsp; : &nbsp; <input type="text" id="txtDctoMoneda" /></asp:ListItem>
+        </asp:RadioButtonList>
+    </div>--%>
     
       <%--SECTOR DE JAVASCRIPT--%>
         <script type="text/javascript">
@@ -1877,6 +1939,10 @@
                 //$("#btn-det-cal-edita-punto-gv").toggle(false);
                 $('._cboJefe_').val("2");
                 getDatoAceptadoPor("2");
+                getNomMagnitud();
+                //$.support.cors = true;
+                $("#_cboListaFamiliaBusca_").empty().append($("<option></option>").val("0").html("Seleccione"));
+                $("#_cboListaFamiliaBusca_").attr('disabled', 'disabled');
             });
 
             var itemnro;
@@ -1948,6 +2014,8 @@
                     $("#edit_eq_gasto_h").val($('.equipocalgasto_', $(this).closest('tr')).html());
                     $("#edit_eq_pcarga").val($('.equipocalpcarga_', $(this).closest('tr')).html());
                     $("#edit_eq_total").val($('.equipototal_', $(this).closest('tr')).html());
+                    $("#edit_eq_fdcto").val($('.equipofactordcto', $(this).closest('tr')).html());
+                    $("#edit_eq_fdcto_total").val($('.equipofactordctototal', $(this).closest('tr')).html());
 
                     getValoresEquipoEdit($('.equipoid_', $(this).closest('tr')).html(),
                                          $("#txtIdTipoTarifa").val(),//$("#%=cboTipoTarifa.ClientID %>").val(),
@@ -2241,13 +2309,55 @@
                 $("#txta-pen").val(txtp);
             });
 
+            //$('._rblTipoDescuento_').change(function () {
+            //    $('._rblTipoDescuento_').removeAttr('checked');
+            //    var tipoDctoText = $('._rblTipoDescuento_').find(':checked').val();
+            //    if (tipoDctoText == "1") {
+            //        $("#txtDctoPorcentaje").removeAttr("disabled");
+            //        $("#txtDctoMoneda").attr("disabled", "disabled");
+            //        $("#txtDctoMoneda").val("0");
+            //    } else {
+            //        $("#txtDctoMoneda").removeAttr("disabled");
+            //        $("#txtDctoPorcentaje").attr("disabled", "disabled");
+            //        $("#txtDctoPorcentaje").val("0");
+            //    }
+            //});
+
+            $("#txtDcto").bind('keyup', function () {
+                //var timeOut;
+                //clearTimeout(timeOut);
+                //timeOut = setTimeout(function () {
+                //    $("#txtDctoPorc").val("100");
+                //}, 1500);
+                $("#txtDctoPorc").val("0");
+            });
+
+            $("#txtDctoPorc").bind('keyup', function () {
+                $("#txtDcto").val("0");
+            });
+
             $("#<%=chkDcto.ClientID %>").on('click', function () {
                 if ($("#<%=chkDcto.ClientID %>").is(':checked')) {
-                    $('#txtDcto').removeAttr("disabled"); //txtDctoPorc                 
+                    //txtDctoPorc 
+                    $('#txtDcto').removeAttr("disabled");
+                    $('#txtDctoPorc').removeAttr("disabled");
+                    //$('._rblTipoDescuento_').removeAttr('checked');
+                    //$("#dialog-edit-dcto").dialog({
+                    //    modal: true,
+                    //    width: "500px",
+                    //    buttons: {
+                    //        "Calcular": function () { },
+                    //        "Cerrar": function () {
+                    //            $(this).dialog('close');
+                    //        }
+                    //    }
+                    //});
                 } else {
                     $('#txtDcto').attr("disabled", "disabled"); //txtDcto
+                    $('#txtDctoPorc').attr("disabled", "disabled");
                     $('#txtDcto').val("0");
                     $('#txtDctoPorc').val("0"); //no estaba
+                    //alert("remover descuentos");
                 }
             });
 
@@ -2270,7 +2380,7 @@
                 $("#<%=btnUpdLsCliente.ClientID %>").click();
             });
 
-            $("#btn-eq-busca").on('click', function () {
+            $("#btn-eq-busca").on('click', function () {                
                 var tarifa_id = $("#txtIdTipoTarifa").val(); //txtHiddIdCliente $("#%=cboTipoTarifa.ClientID %>").val()
                 if (tarifa_id == 0) {//(tarifa_id == "" || tarifa_id == null) {
                     $("<div id='dialog-aux-eq' title='Error Tarifa'>Debe seleccionar un tipo tarifa para proceder a buscar un equipo.</div>").dialog({
@@ -2286,8 +2396,10 @@
                     $.cookie('eqnombre', $("#txt-eq-nombre").val());
                     $.cookie('eqmodelo', $("#txt-eq-modelo").val());
                     $.cookie('eqnparte', $("#txt-eq-nparte").val());
+                    $.cookie('numListaFamiliaBusca', $("#_cboListaFamiliaBusca_ option:selected").val());
+                    $.cookie('numListaMagnitudBusca', $("#cboListaMagnitudBusca option:selected").val());
                     //$.cookie('eqnserie', $("#txt-eq-nserie").val());
-                    //$.cookie('eqcodcli', $("#<%=txtHiddIdCliente.ClientID %>").val());
+                    //$.cookie('eqcodcli', $("#<=txtHiddIdCliente.ClientID %>").val());
                     $("#<%=btnBuscarListaEquipo.ClientID %>").click();
                 }
             });
@@ -2402,9 +2514,9 @@
                     setDatoComision();
                     bloqueaCampoComision();                    
                     setTotalCostoComision(objComCot,
-                                          $.cookie('pcusr'),
-                                          $("#txtIdTipoTarifa").val(),//$("#%=cboTipoTarifa.ClientID %>").val(),
-                                          $("#<%=txtFecha.ClientID %>").val());
+                                            $.cookie('pcusr'),
+                                            $("#txtIdTipoTarifa").val(),//$("#%=cboTipoTarifa.ClientID %>").val(),
+                                            $("#<%=txtFecha.ClientID %>").val());
                     $("#<%=btnUpdDatoEquipo.ClientID %>").click();
                 } else {
                     $("#btnAddComision").removeAttr('disabled');
@@ -2441,16 +2553,19 @@
             $("#btnAddComision").on('click', function () {
                 setDatoComision();
                 getTotalCostoComision(objComCot,
-                                      $.cookie('pcusr'),
-                                      $("#txtIdTipoTarifa").val(),//$("#%=cboTipoTarifa.ClientID %>").val(),
-                                      $("#<%=txtFecha.ClientID %>").val());
+                                        $.cookie('pcusr'),
+                                        $("#txtIdTipoTarifa").val(),//$("#%=cboTipoTarifa.ClientID %>").val(),
+                                        $("#<%=txtFecha.ClientID %>").val());
                 $("#<%=btnUpdDatoEquipo.ClientID %>").click();
                 //alert("boton ejecutado");
             });
 
+            //FUNCION QUE AL PRESIONAR CALCULAR TOTAL ACTUALICE AUTOMATICAMENTE
+            //EL DETALLE DE ACUERDO AL POSIBLE DESCUENTO QUE SE INGRESO
             $("#btnCalcularTotal").on('click', function () {
                 setInfoMgTotCot();
-                getMargenTotalCot(objInfoCot, "CAL");
+                getMargenTotalCot(objInfoCot, "CAL");                
+                $("#<%=btnUpdDatoEquipo.ClientID %>").click();
             });
 
             //FUNCION DE AGREGAR PUNTOS CUANDO SE INGRESA EQUIPO AL DETALLE COTIZACION
@@ -2477,13 +2592,13 @@
                 $.cookie('iditemeq', dgcItemCal); //txt-edit-punto-item-gv $("#txt-edit-punto-dccid-gv").val() dgcItemCal
                 $.cookie('flag_inpunto', '2');
                 modInsDatoPuntoCot($.cookie('pcusr'),
-                                   $("#<%=cbo_magnitud.ClientID %>").val(),
-                                   $("#cbo_funcion").val(),
-                                   $("#txt-in-punto-cal").val(),
-                                   dgcItemCal,
-                                   dgcItem,
-                                   dgcEquId,
-                                   $('._txt_in_punto_coment_').val());
+                                    $("#<%=cbo_magnitud.ClientID %>").val(),
+                                    $("#cbo_funcion").val(),
+                                    $("#txt-in-punto-cal").val(),
+                                    dgcItemCal,
+                                    dgcItem,
+                                    dgcEquId,
+                                    $('._txt_in_punto_coment_').val());
                 $("#<%=btnActualizaGVPunto.ClientID %>").click();
                 $("#<%=cbo_magnitud.ClientID %>").val("0");
                 $("#cbo_funcion").val("0");
@@ -2520,6 +2635,15 @@
                 //$.removeCookie('iditemeq');
             });
 
+            //$("#<=cboListaMagnitudBusca.ClientID%>").on('change', function () {
+            //    getNomFamiliaByMagnitud($("#<=cboListaMagnitudBusca.ClientID%>").val());
+            //});
+
+            $("#cboListaMagnitudBusca").change(function () {
+                getNomFamiliaByMagnitud($("#cboListaMagnitudBusca").val());
+                $("#_cboListaFamiliaBusca_").removeAttr('disabled');
+            });
+
             $('#frm-edit-eq-valor').validate({
                 rules: {
                     edit_eq_qty: {
@@ -2535,7 +2659,38 @@
                         number: true
                     }
                 }
-            });            
+            });
+
+            //$("#btnService").click(function (event) {                
+            //    var webServiceURL = 'http://www.webservicex.net/geoipservice.asmx';
+            //    var soapMessage = '<?xml version="1.0" encoding="utf-8"?><soap12:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://www.w3.org/2003/05/soap-envelope"><soap12:Body><GetGeoIP xmlns="http://www.webservicex.net/"><IPAddress>200.27.201.187</IPAddress></GetGeoIP></soap12:Body></soap12:Envelope>';
+
+            //    //function CallService()
+            //    //{
+            //    $.ajax({
+            //        type: "POST",
+            //        url: webServiceURL,             
+            //        dataType: "xml", 
+            //        data: soapMessage, 
+            //        contentType: "text/xml; charset=utf-8",
+            //        headers: { "Access-Control-Allow-Origin": "http://www.webservicex.net/geoipservice.asmx" },
+            //        success: OnSuccess, 
+            //        error: OnError
+            //    });
+
+            //    //return false;
+            //    //}
+
+            //    function OnSuccess(data, status, req)
+            //    {
+            //        if (status == "success")
+            //            alert(req.responseText);
+            //    }
+
+            //    function OnError(data, status, req) {
+            //        alert(req.responseText + " " + status);
+            //    }
+            //});   
         </script>
 
 </asp:Content>

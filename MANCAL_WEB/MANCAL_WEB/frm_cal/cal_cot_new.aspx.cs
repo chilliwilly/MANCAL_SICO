@@ -21,7 +21,7 @@ namespace MANCAL_WEB.frm_cal
         bl_detalle_pro objDet;
         String un = "CAL";
         String cli_nom, cli_cta, cli_cont, cli_tipo, cli_estado;
-        String eq_nombre, eq_modelo, eq_nparte;
+        String eq_nombre, eq_modelo, eq_nparte, eq_magnitud, eq_familia;
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -313,6 +313,19 @@ namespace MANCAL_WEB.frm_cal
             }
         }
 
+        //protected void cboListaMagnitudBusca_Init(object sender, EventArgs e) 
+        //{
+        //    objCbo = new bl_carga_cbo();
+        //    String cod = "2";
+
+        //    cboListaMagnitudBusca.Items.Add(new ListItem("Seleccione", "0"));
+
+        //    foreach (var cbo in objCbo.getMagnitudDispo())
+        //    {
+        //        cboListaMagnitudBusca.Items.Add(new ListItem(cbo.nommagnitud, cbo.idnmagnitud));
+        //    }
+        //}
+
         protected void cboLugarRetiro_Init(object sender, EventArgs e) 
         {
             cboLugarRetiro.Items.Add(new ListItem("Seleccione", "0"));
@@ -458,8 +471,10 @@ namespace MANCAL_WEB.frm_cal
             objDet = new bl_detalle_pro();
             String systemid = "2";
             String tarifa = String.Format("{0}", Request.Form["txtIdTipoTarifa"]);
-
-            gvEquipoBusca.DataSource = objDet.getEquipo(nom, np, modelo, systemid, tarifa, txtFecha.Text);//cboTipoTarifa.SelectedValue
+            //String fam = String.Format("{0}", Request.Form["numListaFamiliaBusca"]);
+            //String mag = String.Format("{0}", Request.Form["numListaMagnitudBusca"]);
+            
+            gvEquipoBusca.DataSource = objDet.getEquipo(nom, np, modelo, eq_magnitud, eq_familia, systemid, tarifa, txtFecha.Text);//cboTipoTarifa.SelectedValue
             gvEquipoBusca.DataBind();
 
             for (int i = 0; i < gvEquipoBusca.Rows.Count; i++) 
@@ -505,6 +520,8 @@ namespace MANCAL_WEB.frm_cal
             eq_nombre = Request.Cookies["eqnombre"].Value ?? null;
             eq_modelo = Request.Cookies["eqmodelo"].Value ?? null;
             eq_nparte = Request.Cookies["eqnparte"].Value ?? null;
+            eq_magnitud = Request.Cookies["numListaMagnitudBusca"].Value ?? null;
+            eq_familia = Request.Cookies["numListaFamiliaBusca"].Value ?? null;
             //eq_nserie = Request.Cookies["eqnserie"].Value ?? null;
             //eq_codcli = Request.Cookies["eqcodcli"].Value ?? null;
         }
@@ -525,7 +542,9 @@ namespace MANCAL_WEB.frm_cal
         public void getListaDetalle(String idcot, String idtarifa) 
         {
             objDet = new bl_detalle_pro();
-            GV1.DataSource = objDet.getDetalleCot(idcot, idtarifa);
+            String dco_cot = String.Format("{0}", Request.Form["txtDcto"]);
+
+            GV1.DataSource = objDet.getDetalleCot(idcot, idtarifa, dco_cot);
             GV1.DataBind();
         }
 

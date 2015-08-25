@@ -208,59 +208,96 @@ namespace MANCAL_WEB_DL
         #region Metodos Cotizacion
 
         //METODO PARA OBTENER LISTA DE EQUIPO PARA SER SELECCIONADOS
-        public DataTable selectEquipoBuscar(String nom, String nparte, String nommodelo, int idsys)
+        public DataSet selectEquipoBuscar(String nom, String nparte, String nommodelo, int idmagnitud, int idfamilia, int idsys)
         {
-            DataTable dt = new DataTable();
+            DataSet ds = new DataSet();
 
             using (OracleConnection con = new OracleConnection(conStr))
             {
                 con.Open();
                 con.BeginTransaction();
-                String qry_proc = "SP_SPAC_SEARCH_PLANTILLAS";
-                using (OracleCommand cmd_proc = new OracleCommand(qry_proc, con))
+                String qry = "FN_MANCAL_GET_LISTA_EQUIPO";
+                using (OracleCommand cmd = new OracleCommand(qry, con)) 
                 {
-                    cmd_proc.CommandType = CommandType.StoredProcedure;
+                    cmd.CommandType = CommandType.StoredProcedure;
 
-                    cmd_proc.Parameters.Add(new OracleParameter("P_NOMBRE_PLANTILLA", OracleDbType.Varchar2)).Value = nom;//NOMBRE EQUIPO
-                    cmd_proc.Parameters["P_NOMBRE_PLANTILLA"].Direction = ParameterDirection.Input;
+                    cmd.Parameters.Add(new OracleParameter("CUR_BUSCA_EQUIPO", OracleDbType.RefCursor)).Direction = ParameterDirection.ReturnValue;
 
-                    cmd_proc.Parameters.Add(new OracleParameter("P_FAMILIA", OracleDbType.Varchar2)).Value = null;
-                    cmd_proc.Parameters["P_FAMILIA"].Direction = ParameterDirection.Input;
+                    cmd.Parameters.Add(new OracleParameter("P_NOMBRE", OracleDbType.Varchar2)).Value = nom;//NOMBRE EQUIPO
+                    cmd.Parameters["P_NOMBRE"].Direction = ParameterDirection.Input;
 
-                    cmd_proc.Parameters.Add(new OracleParameter("P_NUMERO_PARTE", OracleDbType.Varchar2)).Value = nparte;//NUMERO DE PARTE
-                    cmd_proc.Parameters["P_NUMERO_PARTE"].Direction = ParameterDirection.Input;
+                    cmd.Parameters.Add(new OracleParameter("P_NROPARTE", OracleDbType.Varchar2)).Value = nparte;
+                    cmd.Parameters["P_NROPARTE"].Direction = ParameterDirection.Input;
 
-                    cmd_proc.Parameters.Add(new OracleParameter("P_MODELO", OracleDbType.Varchar2)).Value = nommodelo;//NOMBRE DEL MODELO
-                    cmd_proc.Parameters["P_MODELO"].Direction = ParameterDirection.Input;
+                    cmd.Parameters.Add(new OracleParameter("P_MODELO", OracleDbType.Varchar2)).Value = null;//NUMERO DE PARTE
+                    cmd.Parameters["P_MODELO"].Direction = ParameterDirection.Input;
 
-                    cmd_proc.Parameters.Add(new OracleParameter("P_TIPO", OracleDbType.Varchar2)).Value = null;
-                    cmd_proc.Parameters["P_TIPO"].Direction = ParameterDirection.Input;
+                    cmd.Parameters.Add(new OracleParameter("P_NROSERIE", OracleDbType.Varchar2)).Value = nommodelo;//NOMBRE DEL MODELO
+                    cmd.Parameters["P_NROSERIE"].Direction = ParameterDirection.Input;
 
-                    cmd_proc.Parameters.Add(new OracleParameter("P_ESTADO", OracleDbType.Varchar2)).Value = null;//ESTADO DEL EQUIPO
-                    cmd_proc.Parameters["P_ESTADO"].Direction = ParameterDirection.Input;
+                    cmd.Parameters.Add(new OracleParameter("P_MAGNITUD", OracleDbType.Int32)).Value = idmagnitud;
+                    cmd.Parameters["P_MAGNITUD"].Direction = ParameterDirection.Input;
 
-                    cmd_proc.Parameters.Add(new OracleParameter("P_ID_SISTEMA", OracleDbType.Int32)).Value = idsys;//ID DE SISTEMA 2 PARA SIGEPAC
-                    cmd_proc.Parameters["P_ID_SISTEMA"].Direction = ParameterDirection.Input;
+                    cmd.Parameters.Add(new OracleParameter("P_FAMILIA", OracleDbType.Int32)).Value = idfamilia;//ESTADO DEL EQUIPO
+                    cmd.Parameters["P_FAMILIA"].Direction = ParameterDirection.Input;
 
-                    cmd_proc.ExecuteNonQuery();
-                }
-
-                //String qry = "SELECT NOMBRE, NVL(MODELO,'NO ESPECIFICA') MODELO, NVL(N_PARTE,'SIN NRO PARTE') N_PARTE, ID_PP_PLANTILLA FROM TBL_SPAC_SEARCH_PLANTILLAS_TMP";
-                String qry = "SELECT NOMBRE, NVL(MODELO,'NO ESPECIFICA') MODELO, NVL(N_PARTE,'SIN NRO PARTE') N_PARTE, ID_PP_PLANTILLA, NVL(PRECIO_PROMEDIO,-10) PRECIO_PROM FROM TBL_SPAC_SEARCH_PLANTILLAS_TMP"
-                           + " LEFT JOIN TBL_SBAS_DATOS_COMER_EQ ON TBL_SPAC_SEARCH_PLANTILLAS_TMP.ID_PP_PLANTILLA = TBL_SBAS_DATOS_COMER_EQ.ID_PLANTILLA_EQ";
-                using (OracleCommand cmd = new OracleCommand(qry, con))
-                {
-                    cmd.CommandType = CommandType.Text;
+                    cmd.Parameters.Add(new OracleParameter("P_ID_SISTEMA", OracleDbType.Int32)).Value = idsys;//ID DE SISTEMA 2 PARA SIGEPAC
+                    cmd.Parameters["P_ID_SISTEMA"].Direction = ParameterDirection.Input;
 
                     using (OracleDataAdapter oda = new OracleDataAdapter(cmd)) 
                     {
-                        oda.Fill(dt);
+                        oda.Fill(ds, "CUR_BUSCA_EQUIPO");
                     }
+                    con.Close();
                 }
-                con.Close();
+
+
+
+                //String qry_proc = "SP_SPAC_SEARCH_PLANTILLAS";
+                //using (OracleCommand cmd_proc = new OracleCommand(qry_proc, con))
+                //{
+                //    cmd_proc.CommandType = CommandType.StoredProcedure;
+
+                //    cmd_proc.Parameters.Add(new OracleParameter("P_NOMBRE_PLANTILLA", OracleDbType.Varchar2)).Value = nom;//NOMBRE EQUIPO
+                //    cmd_proc.Parameters["P_NOMBRE_PLANTILLA"].Direction = ParameterDirection.Input;
+
+                //    cmd_proc.Parameters.Add(new OracleParameter("P_FAMILIA", OracleDbType.Varchar2)).Value = null;
+                //    cmd_proc.Parameters["P_FAMILIA"].Direction = ParameterDirection.Input;
+
+                //    cmd_proc.Parameters.Add(new OracleParameter("P_NUMERO_PARTE", OracleDbType.Varchar2)).Value = nparte;//NUMERO DE PARTE
+                //    cmd_proc.Parameters["P_NUMERO_PARTE"].Direction = ParameterDirection.Input;
+
+                //    cmd_proc.Parameters.Add(new OracleParameter("P_MODELO", OracleDbType.Varchar2)).Value = nommodelo;//NOMBRE DEL MODELO
+                //    cmd_proc.Parameters["P_MODELO"].Direction = ParameterDirection.Input;
+
+                //    cmd_proc.Parameters.Add(new OracleParameter("P_TIPO", OracleDbType.Varchar2)).Value = null;
+                //    cmd_proc.Parameters["P_TIPO"].Direction = ParameterDirection.Input;
+
+                //    cmd_proc.Parameters.Add(new OracleParameter("P_ESTADO", OracleDbType.Varchar2)).Value = null;//ESTADO DEL EQUIPO
+                //    cmd_proc.Parameters["P_ESTADO"].Direction = ParameterDirection.Input;
+
+                //    cmd_proc.Parameters.Add(new OracleParameter("P_ID_SISTEMA", OracleDbType.Int32)).Value = idsys;//ID DE SISTEMA 2 PARA SIGEPAC
+                //    cmd_proc.Parameters["P_ID_SISTEMA"].Direction = ParameterDirection.Input;
+
+                //    cmd_proc.ExecuteNonQuery();
+                //}
+
+                ////String qry = "SELECT NOMBRE, NVL(MODELO,'NO ESPECIFICA') MODELO, NVL(N_PARTE,'SIN NRO PARTE') N_PARTE, ID_PP_PLANTILLA FROM TBL_SPAC_SEARCH_PLANTILLAS_TMP";
+                //String qry = "SELECT NOMBRE, NVL(MODELO,'NO ESPECIFICA') MODELO, NVL(N_PARTE,'SIN NRO PARTE') N_PARTE, ID_PP_PLANTILLA, NVL(PRECIO_PROMEDIO,-10) PRECIO_PROM FROM TBL_SPAC_SEARCH_PLANTILLAS_TMP"
+                //           + " LEFT JOIN TBL_SBAS_DATOS_COMER_EQ ON TBL_SPAC_SEARCH_PLANTILLAS_TMP.ID_PP_PLANTILLA = TBL_SBAS_DATOS_COMER_EQ.ID_PLANTILLA_EQ";
+                //using (OracleCommand cmd = new OracleCommand(qry, con))
+                //{
+                //    cmd.CommandType = CommandType.Text;
+
+                //    using (OracleDataAdapter oda = new OracleDataAdapter(cmd)) 
+                //    {
+                //        oda.Fill(dt);
+                //    }
+                //}
+                //con.Close();
             }
 
-            return dt;
+            return ds;
         }
 
         //METODO PARA OBTENER PRECIO DEL EQUIPO AL SELECCIONARLO
@@ -376,7 +413,7 @@ namespace MANCAL_WEB_DL
             }
         }
 
-        public DataSet selectEquipoCot(String id_cot, int id_tarifa) 
+        public DataSet selectEquipoCot(String id_cot, int id_tarifa, String dcto) 
         {
             DataSet ds = new DataSet();
 
@@ -396,6 +433,9 @@ namespace MANCAL_WEB_DL
 
                     cmd.Parameters.Add(new OracleParameter("P_TIPO_TARIFA", OracleDbType.Int32)).Value = id_tarifa;
                     cmd.Parameters["P_TIPO_TARIFA"].Direction = ParameterDirection.Input;
+
+                    cmd.Parameters.Add(new OracleParameter("P_DCTO_COTIZACION", OracleDbType.Varchar2)).Value = dcto;
+                    cmd.Parameters["P_DCTO_COTIZACION"].Direction = ParameterDirection.Input;
 
                     cmd.ExecuteNonQuery();
 

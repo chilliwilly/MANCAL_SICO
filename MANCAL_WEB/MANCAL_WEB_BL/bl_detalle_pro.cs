@@ -83,15 +83,17 @@ namespace MANCAL_WEB_BL
         #region Metodos Cotizacion
 
         //CALIBRACION METODO PARA OBTENER LISTA DE EQUIPO PARA SER SELECCIONADOS
-        public List<CotizacionEquipo> getEquipo(String nombre, String nroparte, String modelo, String sysid, String idtarifa, String fcoti) 
+        public List<CotizacionEquipo> getEquipo(String nombre, String nroparte, String modelo, String magnitud, String familia, String sysid, String idtarifa, String fcoti) 
         {   
             objProDet=new dl_detalle_pro();
             List<CotizacionEquipo> ls = new List<CotizacionEquipo>();
             int id_sys = Convert.ToInt32(sysid);
             int id_ta = Convert.ToInt32(idtarifa);
+            int id_mag = Convert.ToInt32(magnitud);
+            int id_fam = Convert.ToInt32(familia);
             DateTime fechcot = Convert.ToDateTime(fcoti);
-
-            DataTable dt = objProDet.selectEquipoBuscar(nombre.ToUpper(), nroparte.ToUpper(), modelo.ToUpper(), id_sys);
+            
+            DataTable dt = objProDet.selectEquipoBuscar(nombre.ToUpper(), nroparte.ToUpper(), modelo.ToUpper(), id_mag, id_fam, id_sys).Tables["CUR_BUSCA_EQUIPO"];
             DataTable dt_eq = new DataTable();
 
             foreach (DataRow dr in dt.Rows) 
@@ -242,13 +244,13 @@ namespace MANCAL_WEB_BL
             objProDet.insertDetCotCal(tblxml);
         }
 
-        public List<CotizacionEquipo> getDetalleCot(String cot_id, String tarifa_id) 
+        public List<CotizacionEquipo> getDetalleCot(String cot_id, String tarifa_id, String cot_dcto) 
         {
             List<CotizacionEquipo> ls = new List<CotizacionEquipo>();
             objProDet = new dl_detalle_pro();
             int idtarifa = Convert.ToInt32(tarifa_id);
 
-            DataTable dt = objProDet.selectEquipoCot(cot_id, idtarifa).Tables["CUR_DET"];
+            DataTable dt = objProDet.selectEquipoCot(cot_id, idtarifa, cot_dcto).Tables["CUR_DET"];
 
             foreach (DataRow dr in dt.Rows) 
             {
@@ -275,6 +277,8 @@ namespace MANCAL_WEB_BL
                 ce.equipodet_nom = dr["DCE_NOMBRE"].ToString();
                 ce.equipotrabajo = dr["TTR_NOMBRE"].ToString();
                 ce.equipotrabajoid = dr["TTR_ID"].ToString();
+                ce.equipofactordcto = dr["DCTO_FACTOR"].ToString();
+                ce.equipofactordctototal = dr["DCTO_ITEM_TOTAL"].ToString();
 
                 ls.Add(ce);
             }            

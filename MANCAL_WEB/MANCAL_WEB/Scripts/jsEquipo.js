@@ -691,7 +691,9 @@ function seleccionaCotizacion(num) {//SELECT COTIZACION
             getNomCliente(cotData.cot_id_cliente);            
             //----
             $("#txtIdTipoTarifa").val(cotData.tt_id);//$('._cboTipoTarifa_').val(cotData.tt_id);
-            $('._rblSelectDivisa_').val($("#txtIdTipoTarifa").val())
+            $("#txtIdTipoTarifaPrev").val(cotData.tt_id);
+            $('._rblSelectDivisa_').find("input[value='" + cotData.tt_id + "']").attr("checked", "checked");
+            //$('._rblSelectDivisa_').val($("#txtIdTipoTarifa").val());
             $("#txtTipoTarifa").val($('._rblSelectDivisa_').find(":checked").next().html());
             //----
             $('._cboEstadoCotizacion_').val(cotData.ec_id);
@@ -884,6 +886,64 @@ function imprimeCotizacion() {//IMPRIME REPORTE DE COTIZACION
     window.open('/frm_reporte/rpt_cotizacion_cal.aspx');
 }
 
+//FUNCION QUE OBTIENE LAS MAGNITUDES PARA LUEGO FILTRAR LAS FAMILIAS
+//QUE POSEAN LA MAGNITUD SELECCIONADA
+function getNomMagnitud() {
+    var errMsg;
+    $.ajax({
+        type: "GET",
+        url: "/asmx_files/js_llenado.asmx/getMagnitudDisponible",
+        datatype: "json",
+        contentType: "application/json; charset=utf-8",
+        data: "",
+        success: function (data, status) {
+            var resultData = data.d;
+            $("#cboListaMagnitudBusca").empty().append($("<option></option>").val("0").html("Seleccione"));
+            $.each(resultData, function () {
+                $("#cboListaMagnitudBusca").append($("<option></option>").val(this['Value']).html(this['Text']));
+            });
+        },
+        error: function (result, status, error) {
+            errMsg = $.parseJSON(result.responseText);
+            alert(
+                "Error al llenar Selector Magnitud\n\n" +
+                status + " " + error + "\n" +
+                errMsg.ExceptionType + "\n\n" +
+                errMsg.Message
+                );
+        }
+    });
+}
+
+//FUNCION QUE AL CAMBIAR UNA MAGNITUD DE LA BUSQUEDA DE EQUIPOS
+//ACTUALIZA LA LISTA DE FAMILIAS QUE POSEEN ESA MAGNITUD
+function getNomFamiliaByMagnitud(magnitudId) {
+    var errMsg;
+    $.ajax({
+        type: "POST",
+        url: "/asmx_files/js_llenado.asmx/getFamiliaMagnitud",
+        datatype: "json",
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify({ "idmag": magnitudId }),
+        success: function (data, status) {
+            var resultData = data.d;
+            $("#_cboListaFamiliaBusca_").empty().append($("<option></option>").val("0").html("Seleccione"));
+            $.each(resultData, function () {
+                $("#_cboListaFamiliaBusca_").append($("<option></option>").val(this['Value']).html(this['Text']));
+            });
+        },
+        error: function (result, status, error) {
+            errMsg = $.parseJSON(result.responseText);
+            alert(
+                "Error Busqueda Familia por Magnitud\n\n" +
+                status + " " + error + "\n" +
+                errMsg.ExceptionType + "\n\n" +
+                errMsg.Message
+                );
+        }
+    });
+}
+
 function limpiaCostosBusqueda() {
     $("#chkTransporte").prop('checked', false);
     $("#txtDirTransporte").prop("disabled", true);
@@ -952,13 +1012,14 @@ function validaNparteNserie() {
 }
 
 function validaIngresoDetEquipo() {
-    var cotid, equid, nropa, fl_inequ;
+    var cotid, equid, nropa, nroserie, fl_inequ;
     $('.cssDetEq').each(function () {
         cotid = $('.equipocotid_', $(this).closest('tr')).html();
         equid = $('.equipoid_', $(this).closest('tr')).html();
         nropa = $('.equiponparte_', $(this).closest('tr')).html();
+        nroserie = $('.equiponserie_', $(this).closest('tr')).html();
 
-        if (cotid == $.cookie('pcusr') && equid == $("#txt-eq-read-id").val() && nropa == $("#txt-eq-read-np").val()) {            
+        if (cotid == $.cookie('pcusr') && equid == $("#txt-eq-read-id").val() && nropa == $("#txt-eq-read-np").val() && nroserie == $("#txt-eq-read-ns").val()) {
             fl_inequ = true;
         } else {
             fl_inequ = false;

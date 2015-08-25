@@ -382,13 +382,13 @@ namespace MANCAL_WEB.frm_cal {
         protected global::System.Web.UI.WebControls.HiddenField txtHiddIdCliente;
         
         /// <summary>
-        /// cboTipoTarifa control.
+        /// rblSelectDivisa control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList cboTipoTarifa;
+        protected global::System.Web.UI.WebControls.RadioButtonList rblSelectDivisa;
         
         /// <summary>
         /// upDatoNp control.

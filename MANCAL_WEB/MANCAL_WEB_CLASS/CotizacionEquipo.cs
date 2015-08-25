@@ -27,6 +27,8 @@ namespace MANCAL_WEB_CLASS
         public String equipoitem { get; set; }
         public String equipotrabajo { get; set; }
         public String equipotrabajoid { get; set; }
+        public String equipofactordcto { get; set; }
+        public String equipofactordctototal { get; set; }
 
         public CotizacionEquipo() { }
         

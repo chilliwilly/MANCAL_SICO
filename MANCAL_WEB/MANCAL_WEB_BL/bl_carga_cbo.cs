@@ -617,5 +617,43 @@ namespace MANCAL_WEB_BL
 
             return ls;
         }
+
+        public List<CotizacionMagnitud> getMagnitudDispo() 
+        {
+            objCbo = new dl_carga_cbo();
+            List<CotizacionMagnitud> ls = new List<CotizacionMagnitud>();
+
+            DataTable dt = objCbo.selectMagnitudDispo();
+
+            foreach (DataRow dr in dt.Rows) 
+            {
+                CotizacionMagnitud cm = new CotizacionMagnitud();
+                cm.idnmagnitud = dr["MAGNITUD"].ToString();
+                cm.nommagnitud = dr["MAGNITUD_NOM"].ToString();
+
+                ls.Add(cm);
+            }
+            return ls;
+        }
+
+        public List<CotizacionMagnitudFuncion> getFamiliaByMagnitud(String idmag)
+        {
+            objCbo = new dl_carga_cbo();
+            int mag_id = Convert.ToInt32(idmag);
+            List<CotizacionMagnitudFuncion> ls = new List<CotizacionMagnitudFuncion>();
+
+            DataTable dt = objCbo.selectFamiliaByMagnitud(mag_id);
+
+            foreach (DataRow dr in dt.Rows)
+            {
+                CotizacionMagnitudFuncion cmf = new CotizacionMagnitudFuncion();
+                cmf.idnmagfunc = dr["FAMILIA"].ToString();
+                cmf.nommagfunc = dr["FAMILIA_NOM"].ToString();
+
+                ls.Add(cmf);
+            }
+
+            return ls;
+        }
     }
 }

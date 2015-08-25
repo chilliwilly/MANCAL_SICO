@@ -23,13 +23,13 @@ namespace MANCAL_WEB_BL
             foreach (DataRow dr in dt.Rows) 
             {
                 CotizacionEquipo ce = new CotizacionEquipo();
-                ce.equipoitem = dr["DC_ITEM"].ToString();
-                ce.equiponombre = dr["DC_NOMBRE_EQ"].ToString();
-                ce.equiponparte = dr["DC_NPARTE"].ToString();
-                ce.equiponserie = dr["DC_NSERIE"].ToString();
-                ce.equipocantidad = dr["DC_CANTIDAD"].ToString();
-                ce.equipocalsaot = dr["DC_TOTAL_UNITARIO"].ToString();
-                ce.equipototal = dr["DC_TOTAL_EQ"].ToString();
+                ce.equipoitem = dr["DC_ITEM"].ToString();//ESTE
+                ce.equiponombre = dr["DC_NOMBRE_EQ"].ToString();//ESTE
+                ce.equiponparte = dr["DC_NPARTE"].ToString();//ESTE
+                //ce.equiponserie = dr["DC_NSERIE"].ToString();
+                ce.equipocantidad = dr["DC_CANTIDAD"].ToString();//ESTE
+                ce.equipocalsaot = dr["DC_TOTAL_UNITARIO"].ToString();//ESTE
+                ce.equipototal = dr["DC_TOTAL_EQ"].ToString();//ESTE
 
                 ls.Add(ce);
             }
