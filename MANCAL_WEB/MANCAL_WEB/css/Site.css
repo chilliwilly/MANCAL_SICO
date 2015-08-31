@@ -132,10 +132,15 @@ first child of the left and right table columns */
 .footer
 {
     color: #4e5766;
-    padding: 8px 0px 0px 0px;
-    margin: 0px auto;
-    text-align: center;
+    padding: 0px 0px 0px 0px;
+    margin: 0px auto;    
+    text-align: right;
     line-height: normal;
+    /*Agregado por mi lo de abajo*/
+    width: 1280px;
+    background-color: #4b6c9e;
+    border: 1px solid #496077;
+    margin-bottom: 20px;
 }
 
 

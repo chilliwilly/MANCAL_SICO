@@ -1044,7 +1044,7 @@
                                     <%--<asp:DropDownList ID="cboPlazoEntrega" runat="server" Width="140px" 
                                         oninit="cboPlazoEntrega_Init">
                                     </asp:DropDownList> pattern="^\d+$" --%>
-                                    <input type="number" id="txtPlazoEntregaD" name="txtPlazoEntregaD" placeholder="Plazo entrega dias" style="width:140px;"/>
+                                    <input type="number" id="txtPlazoEntregaD" name="txtPlazoEntregaD" placeholder="Plazo entrega dias" style="width:140px;" readonly="readonly"/>
                                 </td>
                                 <td>
                                 </td>
@@ -1225,6 +1225,15 @@
             </div>
         </div>
     </div>   
+
+    <%-- DIV PARA SELECCIONAR PLAZO DE ENTREGA Y REALIZAR EL CALCULO CORRESPONDIENTE --%>
+    <div id="dialog-plazo-entrega" style="display:none;">
+        Ingrese el plazo en días. 
+        <br />
+        Si los días son menores a 10 se aplicara un recargo del 40% a la cotización.
+        <br /><br />
+        <input type="number" id="txt-input-pl-entrega" name="txt-input-pl-entrega" placeholder="Plazo entrega dias" style="width:140px;"/>
+    </div>
 
     <%--DIV PARA ELIMINAR EL ARCHIVO SELECCIONADO --%>
     <div id="dialog-archivo" title="Quitar Archivo" style="display:none;">
@@ -2444,9 +2453,10 @@
                 objInfoCot.cot_tipomoneda = $("#txtIdTipoTarifa").val();//$("#%=cboTipoTarifa.ClientID %>").val();
                 objInfoCot.cot_afecto = $("#<%=cboTipoImpuesto.ClientID %>").val();
                 objInfoCot.tc_id = $("#<%=cboTipoCotizacion.ClientID %>").val();
-                objInfoCot.cot_descuento = $("#txtDcto").val(); //txtDctoPorc
+                objInfoCot.cot_descuento = $("#txtDcto").val().toString(); //txtDctoPorc
+                objInfoCot.cot_dcto_porc = $("#txtDctoPorc").val().toString();
                 objInfoCot.cot_id = $.cookie('pcusr');
-                objInfoCot.cot_fecha = $("#<%=txtFecha.ClientID %>").val();
+                objInfoCot.cot_fecha = $("#<%=txtFecha.ClientID %>").val();                
             }
 
             function setDatoComision() {
@@ -2659,6 +2669,20 @@
                         number: true
                     }
                 }
+            });
+
+            $("#txtPlazoEntregaD").click(function () {
+                $("#dialog-plazo-entrega").dialog({
+                    modal: true,
+                    width: "600px",
+                    title: "Plazo de Entrega",
+                    buttons: {
+                        "Aplicar": function () { },
+                        "Cerrar": function () {
+                            $(this).dialog('close');
+                        }
+                    }
+                });
             });
 
             //$("#btnService").click(function (event) {                

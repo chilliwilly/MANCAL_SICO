@@ -319,6 +319,7 @@ function setTotalCostoComision(obj, idcot, ttarifa, fcot) {
     });
 }
 
+//FUNCION QUE OBTIENE LOS MARGENES Y EL TOTAL DE LA COTIZACION
 function getMargenTotalCot(obj, un_nom) {
     $.ajax({
         type: "POST",
@@ -337,7 +338,17 @@ function getMargenTotalCot(obj, un_nom) {
             $("#txtUtilidadEspPorc").val(cotObj.cot_utilesperaporc);
             $("#txtTipoMoneda").val(cotObj.cot_tipomoneda);
             $("#txtNeto").val(cotObj.cot_neto);
-            $("#txtDctoPorc").val(cotObj.cot_dcto_porc);
+
+            if ((cotObj.cot_dcto_porc == null || cotObj.cot_dcto_porc == "") & !(cotObj.cot_descuento == null || cotObj.cot_descuento == "")) {
+
+                $("#txtDcto").val(cotObj.cot_descuento);
+
+            } else if (!(cotObj.cot_dcto_porc == null || cotObj.cot_dcto_porc == "") & (cotObj.cot_descuento == null || cotObj.cot_descuento == "")) {
+
+                $("#txtDctoPorc").val(cotObj.cot_dcto_porc);
+
+            }
+            
             $("#txtNetoDcto").val(cotObj.cot_netodcto);
             $("#txtIva").val(cotObj.cot_iva);
             $("#txtTotal").val(cotObj.cot_total);
@@ -1467,6 +1478,7 @@ function InfoCotizacion() {
     this.cot_afecto = "";
     this.tc_id = "";
     this.cot_descuento = "";
+    this.cot_dcto_porc = "";
     this.cot_id = "";
     this.cot_fecha = "";
 }

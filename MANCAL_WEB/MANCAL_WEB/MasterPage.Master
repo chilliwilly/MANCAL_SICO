@@ -24,8 +24,12 @@
             <div class="title">
                 <table>
                     <tr>
-                        <td><asp:Image ID="Image1" runat="server" ImageUrl="~/img_files/LOGO DTS UN Man Cal.bmp" Width="240px"/></td>
-                        <td><h1 style="color:Black;"></h1></td>
+                        <td>                            
+                            SICO
+                        </td>
+                        <td>
+                            <h1 style="color:Black;"></h1>
+                        </td>
                     </tr>
                 </table> 
             </div>
@@ -42,10 +46,23 @@
             <asp:ContentPlaceHolder ID="MainContent" runat="server"/>
         </div>
         <div class="clear">
+            
         </div>
     </div>
     <div class="footer">
-        
+        <table style="width:100%;">
+            <tr>
+                <td style="width:33%;">
+                    
+                </td>
+                <td style="text-align:center; width:33%;">
+                    <label style="vertical-align:central; color:black; font-weight:bold; font-size:medium;">DTS® 2015</label>
+                </td>
+                <td style="width:33%;">
+                    <asp:Image ID="Image3" runat="server" ImageUrl="~/img_files/LOGO DTS UN Man Cal.bmp" Width="240px" />
+                </td>
+            </tr>
+        </table>
     </div>
     </form>
 </body>    

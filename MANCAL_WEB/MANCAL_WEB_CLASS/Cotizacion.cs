@@ -86,6 +86,7 @@ namespace MANCAL_WEB_CLASS
             Object cot_afecto = null;
             Object tc_id = null;
             Object cot_descuento = null;
+            Object cot_dcto_porc = null;
             Object cot_id = null;
             Object cot_fecha = null;
 
@@ -93,6 +94,7 @@ namespace MANCAL_WEB_CLASS
             d.TryGetValue("cot_afecto", out cot_afecto);
             d.TryGetValue("tc_id", out tc_id);
             d.TryGetValue("cot_descuento", out cot_descuento);
+            d.TryGetValue("cot_dcto_porc", out cot_dcto_porc);
             d.TryGetValue("cot_id", out cot_id);
             d.TryGetValue("cot_fecha", out cot_fecha);
 
@@ -100,6 +102,7 @@ namespace MANCAL_WEB_CLASS
             cot.cot_afecto = cot_afecto.ToString();
             cot.tc_id = tc_id.ToString();
             cot.cot_descuento = cot_descuento.ToString();
+            cot.cot_dcto_porc = cot_dcto_porc.ToString();
             cot.cot_id = cot_id.ToString();
             cot.cot_fecha = cot_fecha.ToString();
 

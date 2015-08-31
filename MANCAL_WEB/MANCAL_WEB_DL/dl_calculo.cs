@@ -13,7 +13,7 @@ namespace MANCAL_WEB_DL
 
         #region Metodos Proyecto
 
-        public DataSet selectTotalDetalle(int tmoneda, String descto, int idiva, String idcotiz, String idun) 
+        public DataSet selectTotalDetalle(int tmoneda, String descto, String dcto_porc, int idiva, String idcotiz, String idun) 
         {
             DataSet ds = new DataSet();
 
@@ -31,6 +31,9 @@ namespace MANCAL_WEB_DL
                     cmd.Parameters["tipomoneda"].Direction = ParameterDirection.Input;
 
                     cmd.Parameters.Add(new OracleParameter("descto", OracleDbType.Varchar2)).Value = descto;
+                    cmd.Parameters["descto"].Direction = ParameterDirection.Input;
+
+                    cmd.Parameters.Add(new OracleParameter("descto_porc", OracleDbType.Varchar2)).Value = dcto_porc;
                     cmd.Parameters["descto"].Direction = ParameterDirection.Input;
 
                     cmd.Parameters.Add(new OracleParameter("tniva", OracleDbType.Int32)).Value = idiva;
