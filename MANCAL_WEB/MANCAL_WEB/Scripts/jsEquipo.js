@@ -178,13 +178,13 @@ function getEquipoDato(id_eq, id_ta, fe_co) {
 }
 
 //FUNCION QUE ES LLAMADA AL PRESIONAR CALCULAR PARA UN UNICO EQUIPO - WEBSERVICE getCalculaEquipo
-function equipoCal_Total(obj, id_sys, id_tarifa, f_cot) {
+function equipoCal_Total(obj, id_sys, id_tarifa, f_cot, idcot) {
     $.ajax({
         type: "POST",
         url: "/asmx_files/js_llenado.asmx/getCalculaEquipo",
         datatype: "json",
         contentType: "application/json; charset=utf-8",
-        data: JSON.stringify({ "obj": obj, "id_sys": id_sys, "id_tarifa": id_tarifa, "f_cot": f_cot }),
+        data: JSON.stringify({ "obj": obj, "id_sys": id_sys, "id_tarifa": id_tarifa, "f_cot": f_cot, "idcot": idcot }),
         success: function (data, status) {
             var arr = data.d;
             if (arr[1] == null || arr[1] == "") {
@@ -447,17 +447,19 @@ function getValoresEquipoEdit(e_id, e_tarifa, e_fecha) {
     });
 }
 
-function getTotalEquipoEdit(obj, id_sys, id_tarifa, f_cot) {
+function getTotalEquipoEdit(obj, id_sys, id_tarifa, f_cot, idcot) {
     $.ajax({
         type: "POST",
         url: "/asmx_files/js_llenado.asmx/getCalculaEquipo",
         datatype: "json",
         contentType: "application/json; charset=utf-8",
-        data: JSON.stringify({ "obj": obj, "id_sys": id_sys, "id_tarifa": id_tarifa, "f_cot": f_cot }),
+        data: JSON.stringify({ "obj": obj, "id_sys": id_sys, "id_tarifa": id_tarifa, "f_cot": f_cot, "idcot": idcot }),
         success: function (data, status) {
             var arr = data.d;
             if (arr[1] == null || arr[1] == "") {
                 $("#edit_eq_total").val(arr[0]);
+                $("#edit_eq_plazoen_total").val(arr[2]);
+                $("#edit_eq_fplazoen_total").val(arr[3]);
             } else {
                 alert(arr[1]);
                 $("#edit_eq_pmo").val(arr[0]);
@@ -693,7 +695,8 @@ function seleccionaCotizacion(num) {//SELECT COTIZACION
             getEmailVendedor(cotData.ven_id);
             $('._txtReferencia_').val(cotData.cot_referencia);
             $('._txtClienteInforme_').val(cotData.cot_informecli);
-            $('._txtClienteCertificado_').val(cotData.cot_certificado_dir);
+            $('._txtClienteCertificado_').val(cotData.cot_certificado_nom);
+            $('._txtClienteCertificadoDir_').val(cotData.cot_certificado_dir);
             $('._txtContactoCliente_').val(cotData.cot_contacto_nom);
             $('._txtDireccionCliente_').val(cotData.cot_contacto_dir);
             $('._txtMailCliente_').val(cotData.cot_contacto_mail);
@@ -829,6 +832,8 @@ function seleccionaCotizacion(num) {//SELECT COTIZACION
     });
 }
 
+//FUNCION QUE RETORNA EN UN DIALOG POPUP EL ERROR ARROJADO POR ALGUN PROCEDIMIENTO
+//TODO ESTO A NIVEL DE BASE DE DATOS
 function errorOperacionCotizacion(result, status, err) {
     var err_txt;
     var title_txt;
@@ -843,6 +848,8 @@ function errorOperacionCotizacion(result, status, err) {
         title_txt = "Error Al Guardar Equipo";
     } else if (tipoOperacion == "DIV") {
         title_txt = "Error Al Calcular Cambio Divisa";
+    } else if (tipoOperacion == "PROV") {
+        title_txt = "Error al guardar datos en tabla otros datos cot";
     }
 
     $("#dialog-error").html("");
@@ -947,6 +954,34 @@ function getNomFamiliaByMagnitud(magnitudId) {
             errMsg = $.parseJSON(result.responseText);
             alert(
                 "Error Busqueda Familia por Magnitud\n\n" +
+                status + " " + error + "\n" +
+                errMsg.ExceptionType + "\n\n" +
+                errMsg.Message
+                );
+        }
+    });
+}
+
+//FUNCION QUE LLENA COMBOBOX FABRICANTE PARA BUSCAR EQUIPO
+function getNomFabricante() {
+    var errMsg;
+    $.ajax({
+        type: "GET",
+        url: "/asmx_files/js_llenado.asmx/getFabricanteDisp",
+        datatype: "json",
+        contentType: "application/json; charset=utf-8",
+        data: "",
+        success: function (data, status) {
+            var resultData = data.d;
+            $("#_cboListaFabricante_").empty().append($("<option></option>").val("0").html("Seleccione"));
+            $.each(resultData, function () {
+                $("#_cboListaFabricante_").append($("<option></option>").val(this['Value']).html(this['Text']));
+            });
+        },
+        error: function (result, status, error) {
+            errMsg = $.parseJSON(result.responseText);
+            alert(
+                "Error al llenar Selector Fabricante\n\n" +
                 status + " " + error + "\n" +
                 errMsg.ExceptionType + "\n\n" +
                 errMsg.Message
@@ -1086,6 +1121,23 @@ function calculoCambioDivisa(curTarifa, prevTarifa, fechaCot, numCoti) {
     });
 }
 
+//funcion que inserta otros valores de cotizacion de manera provisoria por ejemplo el plazo de entrega
+function guardaOtroDatoCotizacion(idcotizacion, plazo_entrega) {
+    tipoOperacion = "PROV";
+    $.ajax({
+        type: "POST",
+        url: "/asmx_files/js_llenado.asmx/guardarOtroDatoCotizacion",
+        datatype: "json",
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify({ "idcot": idcotizacion, "plazoEntrega": plazo_entrega }),
+        success: function (data, status) {
+            alert("Recuerde Presionar CALCULAR para obtener el nuevo total de la cotizacion.");
+            $('._btnUpdDatoEquipo_').click();
+        },
+        error: errorOperacionCotizacion
+    });
+}
+
 function cambioFechaCotizacion(sender, args) {
     var fCot = sender.get_selectedDate();
     var fCotVence = $find("nuevaFechaVence");
@@ -1143,8 +1195,8 @@ function verificaChkExc() {
 var msgValCot = "";
 function validaIngresoCotizacion() {
     var flagValCot = false;
-//    var validaNumero = new RegExp(' /^\d*$/'); //'^\d+$');
-//    var plazoEntrega = $("#txtPlazoEntregaD").val();
+    //    var validaNumero = new RegExp(' /^\d*$/'); //'^\d+$');
+    //    var plazoEntrega = $("#txtPlazoEntregaD").val();
     msgValCot = "";
 
     if ($('._cboTipoCotizacion_').val() == "0") {
@@ -1211,10 +1263,10 @@ function validaIngresoCotizacion() {
         msgValCot = msgValCot + "Debe ingresar un plazo de entrega o el plazo de entrega es 0.\n";
         flagValCot = true;
     }
-//    if (!validaNumero.test(plazoEntrega)) {
-//        msgValCot = msgValCot + "El plazo de entrega debe ser un numero valido.\n";
-//        flagValCot = true;
-//    }
+    //    if (!validaNumero.test(plazoEntrega)) {
+    //        msgValCot = msgValCot + "El plazo de entrega debe ser un numero valido.\n";
+    //        flagValCot = true;
+    //    }
     if ($('._txtPlazoEntrega_').val() == "") {
         msgValCot = msgValCot + "Debe ingresar un texto de plazo de entrega.\n";
         flagValCot = true;
@@ -1328,7 +1380,8 @@ function CotizacionObject() {
     objCoti.cot_tipo_retiro = $('._cboLugarRetiro_').val();
     objCoti.cot_secretiro_dir = $('._txtSectorRetiro_').val();
     objCoti.cot_secretiro_nom = $('._txtSectorRetiroNom_').val();
-    objCoti.cot_certificado_dir = $('._txtClienteCertificado_').val();
+    objCoti.cot_certificado_nom = $('._txtClienteCertificado_').val();
+    objCoti.cot_certificado_dir = $('._txtClienteCertificadoDir_').val();
     objCoti.cot_valioferta = $('._txtValidezOferta_').val();
     objCoti.cot_totcostmo = $("#txtTotalCostoMo").val();
     objCoti.cot_totvalrpto = $("#txtTotalCostoRpto").val();

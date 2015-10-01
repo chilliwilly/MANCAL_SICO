@@ -655,5 +655,24 @@ namespace MANCAL_WEB_BL
 
             return ls;
         }
+
+        public List<CotizacionFabricante> getFabricante() 
+        {
+            objCbo = new dl_carga_cbo();
+            List<CotizacionFabricante> ls = new List<CotizacionFabricante>();
+
+            DataTable dt = objCbo.selectFabricante();
+
+            foreach (DataRow dr in dt.Rows) 
+            {
+                CotizacionFabricante cf = new CotizacionFabricante();
+                cf.fab_id = dr["NOM_FABRICANTE"].ToString();
+                cf.fab_nombre = dr["NOM_FABRICANTE"].ToString();
+
+                ls.Add(cf);
+            }
+
+            return ls;
+        }
     }
 }

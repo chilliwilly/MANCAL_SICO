@@ -99,14 +99,14 @@ namespace MANCAL_WEB.asmx_files
         }
 
         [WebMethod]
-        public String[] getCalculaEquipo(Object obj, String id_sys, String id_tarifa, String f_cot) 
+        public String[] getCalculaEquipo(Object obj, String id_sys, String id_tarifa, String f_cot, String idcot) 
         {
-            String[] a_calculo = new String[2];
+            String[] a_calculo = new String[4];
 
             MANCAL_WEB_CLASS.CotizacionEquipo det = MANCAL_WEB_CLASS.CotizacionEquipo.objCalEq(obj);
             bl_detalle_pro m_det = new bl_detalle_pro();
 
-            a_calculo = m_det.calculaEquipo(det.equipoid, id_sys, det.equipocantidad, det.equipopmo, det.equipocalgasto, det.equipocalpcarga, id_tarifa, f_cot);
+            a_calculo = m_det.calculaEquipo(det.equipoid, id_sys, det.equipocantidad, det.equipopmo, det.equipocalgasto, det.equipocalpcarga, id_tarifa, f_cot, idcot);
 
             return a_calculo;
         }
@@ -438,6 +438,8 @@ namespace MANCAL_WEB.asmx_files
             return resp;
         }
 
+        #region Metodo 1 obtiene familias de las magnitudes - Metodo 2 obtiene magnitudes a partir de la familia
+
         [WebMethod]
         //[ScriptMethod (UseHttpGet = true, ResponseFormat = ResponseFormat.Json)]
         public ArrayList getFamiliaMagnitud(String idmag) 
@@ -454,7 +456,7 @@ namespace MANCAL_WEB.asmx_files
             }
 
             return lsArray;
-        }
+        }        
 
         [WebMethod]
         [ScriptMethod(UseHttpGet = true, ResponseFormat = ResponseFormat.Json)]
@@ -472,6 +474,34 @@ namespace MANCAL_WEB.asmx_files
             }
 
             return lsArray;
+        }
+
+        #endregion
+
+        //CODIGO PARA LLENAR FABRICANTE DISPONIBLES
+        [WebMethod]
+        [ScriptMethod(UseHttpGet = true, ResponseFormat = ResponseFormat.Json)]
+        public ArrayList getFabricanteDisp()
+        {
+            bl_carga_cbo objCbo = new bl_carga_cbo();
+            List<MANCAL_WEB_CLASS.CotizacionFabricante> ls = new List<MANCAL_WEB_CLASS.CotizacionFabricante>();
+            ArrayList lsArray = new ArrayList();
+
+            ls = objCbo.getFabricante();
+
+            foreach (var item in ls) 
+            {
+                lsArray.Add(new ListItem(item.fab_nombre, item.fab_id));
+            }
+
+            return lsArray;
+        }
+
+        [WebMethod]
+        public void guardarOtroDatoCotizacion(String idcot, String plazoEntrega) 
+        {
+            bl_cotizacion objCot = new bl_cotizacion();
+            objCot.guardaOtroDatoCotizacion(idcot, plazoEntrega);
         }
 
         [WebMethod]
@@ -508,7 +538,6 @@ namespace MANCAL_WEB.asmx_files
             //Encripta enc = new Encripta();
             //pwdencripta = enc.EncryptRijndael("12345", "");
             
-
             return pwdencripta;
         }
     }

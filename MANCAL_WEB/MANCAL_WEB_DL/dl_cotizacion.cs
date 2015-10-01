@@ -179,5 +179,31 @@ namespace MANCAL_WEB_DL
         }
 
         #endregion
+
+        #region Solo guarda otros datos cotizacion ej: plazo entrega
+
+        public void insertOtroDatoCotizacion(String cotid, int cotplazoentrega) 
+        {
+            using (OracleConnection con = new OracleConnection(conStr)) 
+            {
+                con.Open();
+                String qry = "SP_MANCAL_GUARDA_OTRO_DATO_COT";
+                using (OracleCommand cmd = new OracleCommand(qry, con)) 
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    cmd.Parameters.Add(new OracleParameter("P_NUM_COTIZACION", OracleDbType.Varchar2)).Value = cotid;
+                    cmd.Parameters["P_NUM_COTIZACION"].Direction = ParameterDirection.Input;
+
+                    cmd.Parameters.Add(new OracleParameter("P_PLAZO_ENTREGA", OracleDbType.Int32)).Value = cotplazoentrega;
+                    cmd.Parameters["P_PLAZO_ENTREGA"].Direction = ParameterDirection.Input;
+
+                    cmd.ExecuteNonQuery();
+                }
+                con.Close();
+            }
+        }
+
+        #endregion
     }
 }

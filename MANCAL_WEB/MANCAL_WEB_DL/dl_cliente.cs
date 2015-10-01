@@ -39,7 +39,7 @@ namespace MANCAL_WEB_DL
             }
         }
 
-        public DataSet selectDTCliente(String cli, String cta, String cont, int tipo, int estado) 
+        public DataSet selectDTCliente(String cli, String cta, String cont, int tipo, int estado, String rut, String cli_alias) 
         {
             DataSet ds = new DataSet();
 
@@ -88,6 +88,12 @@ namespace MANCAL_WEB_DL
 
                     cmd.Parameters.Add(new OracleParameter("P_ESTADOCLI", OracleDbType.Int32)).Value = estado;
                     cmd.Parameters["P_ESTADOCLI"].Direction = ParameterDirection.Input;
+
+                    cmd.Parameters.Add(new OracleParameter("P_RUTCLI", OracleDbType.Varchar2)).Value = rut;
+                    cmd.Parameters["P_RUTCLI"].Direction = ParameterDirection.Input;
+
+                    cmd.Parameters.Add(new OracleParameter("P_ALIASCLI", OracleDbType.Varchar2)).Value = cli_alias;
+                    cmd.Parameters["P_ALIASCLI"].Direction = ParameterDirection.Input;
 
                     using (OracleDataAdapter oda = new OracleDataAdapter(cmd)) 
                     {

@@ -879,7 +879,7 @@
   <data name="pictureBox3.Value" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAB30AAAHFCAYAAAD2VeMKAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsEAAA7BAbiRa+0AAJgdSURBVHhe7flRdvTK0Sbp1jh65j3aOmdvNZeoTCOZ8Ah/
+        YQUAAAAJcEhZcwAADr4AAA6+AepCscAAAJgdSURBVHhe7flRdvTK0Sbp1jh65j3aOmdvNZeoTCOZ8Ah/
         I4CwZy3TRX2JcAdI6lcl/s//lSRJkiRJkiRJkiTdli99pQn+z//5Px8laT76W/spaYX/9//9fz9OkiRJ
         kiRJkir8Blz6Bb00SiRp3d/fP0mfoJe2qSRJkiRJkiTpO7/Zlv7/6KXPjklPRL/ru6Yz0UvXXZMkSZIk
         SZJ0Jr/B1rHohc6dku6Mfqfvlp6LXqbeMUmSJEmSJEnn8FtrHYVe3Dwh6Q7od/cp6d7ohenTkiRJkiRJ
@@ -1532,42 +1532,45 @@
 </value>
   </data>
   <data name="textBox1.Value" xml:space="preserve">
-    <value>1.   En  caso  que  durante la  inspección  de   recepción  del  instrumento  a calibrar,  se detecte  alguna  anomalía  en  su funcionamiento. DTS informará al cliente y emitirá un  informe  técnico con la factibilidad de  reparación,  acompañado de una cotización. Una vez aceptada la cotización se dará inicio a la reparación y posterior calibración.
+    <value>1. En caso que durante la inspección de recepción del instrumento a calibrar, se detecte alguna anomalía en su funcionamiento,  DTS informará al cliente para la factibilidad de reparación. Si el cliente acepta reparar, se enviará una cotización. Una vez aceptada ésta se dará inicio a la reparación y posterior calibración.
 
-2. En caso que el cliente no acepte reparar el instrumento y solicite que sea devuelto, éste deberá cancelar un 30% del valor de la calibración por concepto de horas invertidas. 
+2. En caso que el cliente no acepte reparar el instrumento y solicite que sea devuelto con informe técnico, éste deberá cancelar un 30% del valor de la calibración por concepto de horas invertidas; en su defecto, se devolverá sin costo para el cliente.
 
-3.  DT S garantiza que los trabajos de reparación serán  ejecutado  conforme a las ordene  técnicas del fabricante y se compromete a reparar,  sin  costo para el cliente y contra presentación de  la factura previamente  pagada, los defectos de  mano  de obra o de materiales  proporcionados  por DTS,  que se  presenten  dentro  de un plazo  de tres (3)  meses desde efectuada la reparación. Esta garantía se llevará a cabo en las dependencias de DTS.
+3. DTS garantiza que los trabajos de reparación serán ejecutados conforme a las ordenes técnicas del fabricante y se compromete a reparar, sin costo para el cliente y contra presentación de la factura previamente pagada, los defectos de mano de obra o de materiales proporcionados por DTS, que se presenten dentro de un plazo de tres (3) meses desde efectuada la reparación. Esta garantía se llevará a cabo en las dependencias de DTS.
 
-4. La calibración  de los  instrumentos se realizara según los procedimientos DTS. Cualquier solicitud especial de rangos o puntos de calibración,  el cliente la  debe especificar  formalmente  en la  solicitud de cotización. Cualquier variación de rangos y puntos de calibración avisada con posterioridad a la recepción de la orden de compra, se cobrará como una nueva calibración.
+4. La calibración de los instrumentos se realizará según la siguiente información. 
+Para las magnitudes: longitud, masa, presión, temperatura y torque se aplica el método de comparación directa, de acuerdo a los procedimientos y normas que a continuación se indican:</value>
+  </data>
+  <data name="textBox47.Value" xml:space="preserve">
+    <value>En el proceso de calibración para las variables de la magnitud eléctrica: voltaje AC/DC, corriente AC/DC, resistencia, capacitancia, inductancia, frecuencia, RPM, potencia AC/DC, potencia RF, generación y medición de temperatura por señal  eléctrica (termocuplas y RTD), se aplican métodos de medición directa o indirecta, de acuerdo a procedimientos de calibración de cada fabricante.
 
-5. DTS no se hace responsable por la información almacenada en discos duros u otro medio, la que se asume debidamente respaldada por el cliente.
+5. Cualquier solicitud especial de rangos o puntos de calibración, el cliente los debe especificar formalmente en la solicitud de cotización, orden de compra o correo electrónico, previo al inicio de los trabajos.  Cualquier variación de rangos y puntos de calibración avisada con posterioridad al  inicio del trabajo, se cobrará como una nueva calibración.
 
-6. DTS no hará validas multas, ni garantía por el servicio de calibración.
+6. DTS no se hace responsable por la información almacenada en discos duros u otro medio, la que se asume debidamente respaldada por el cliente.
 
-7. DTS no asume responsabilidad sobre instrumentos que una vez reparados y/o calibrados presenten problemas producto de una mala operación, manejo inapropiado o que hayan sido intervenidos por personas ajenas a nuestro servicio.
+7. DTS no hará válida multas, ni garantía por el servicio de calibración.
 
-8. Los trabajos a realizar se efectuaran de Lunes a Jueves entre las 8:15 hrs. y 18:00 hrs. y  el día Viernes entre las 8:15 y 17:00 hrs, en caso de que el cliente requiera el trabajo fuera de este horario, DTS cobrará las horas extraordinarias al cliente.
+8. DTS no asume responsabilidad sobre instrumentos que una vez reparados y/o calibrados presenten problemas producto de una mala operación, manejo inapropiado o que hayan sido intervenidos por personas ajenas a nuestro servicio.
 
-9. En el caso de trabajos en terreno, si los instrumentos incluidos en listado no puedan ser calibrados por encontrarse en mal estado o no estén disponibles durante la calibración o por cualquier otro motivo. El Cliente deberá pagar de igual forma el valor total neto cotizado y aceptado de esta calibración, esto por concepto de horas invertidas y traslados asignados a este trabajo. 
+9. Los trabajos a realizar se efectuarán de lunes a jueves entre las 8:15 hrs. y 18:00 hrs. y el día viernes entre las 8:15 hrs. y 17:00 hrs. En caso que el cliente requiera el trabajo fuera de este horario, DTS cobrará las horas extraordinarias al cliente.
 
-10. Si una vez realizada la calibración se incluyen más instrumentos al listado inicial, se cotizará su valor y se realizará un aumento a facturar previa aceptación del Cliente.
+10. En el caso de trabajos en terreno, si los instrumentos incluidos en la cotización no puedan ser calibrados por encontrarse en mal estado o no estén disponibles o por cualquier otro motivo, el cliente deberá pagar el valor total neto cotizado y aceptado. Esto por concepto de horas invertidas y traslados asignados a este trabajo.
 
-11. Para trabajos de calibración en terreno, el cliente es responsable de tener a disposición del técnico de DTS los instrumentos fuera de su instalación original y en el piso. Posteriormente deben ser instalados por el cliente. 
+11. Si una vez realizada la cotización se incluyen más instrumentos al listado inicial, se cotizará su valor y se realizará un aumento a facturar previa aceptación del cliente.
 
-12. La presente cotización incluye solamente precios por Calibración, por lo cual no incluye el valor de limpieza, ajuste, reparación o cambio de piezas.
+12. Para trabajos de calibración en terreno, el cliente es responsable de tener a disposición del técnico de DTS los instrumentos fuera de su instalación original. Posteriormente deben ser instalados por el cliente.
 
-13. Según la Norma NCh/ISO 17025, DTS no incluye en el certificado la fecha de expiración de la calibración. Si requiere fecha de expiración, el cliente debe indicarla en forma explícita en la orden de compra correspondiente. En caso de que el requerimiento se realice después de que están hechos los certificados, el rea-hacer dicho documento tendrá un costo adicional de 1 UF por cada uno de ellos. Dicha petición solo podrá efectuarla en un plazo no mayor a 15 días una vez efectuada la calibración. 
+13. La presente cotización incluye solamente precios por Calibración, por lo cual no incluye el valor de limpieza, ajuste, reparación o cambio de piezas.
 
-14. El Cliente debe ser responsable del envío y retiro de instrumentos hacia y desde nuestro laboratorio. Sin perjuicio de lo anterior, en algunos casos DTS ofrece el servicio de traslado, pero este debe quedar especificado en la orden de compra y/o cotización.
+14. Según la Norma NCh/ISO 17025, DTS no incluirá en el certificado de Calibración la fecha de vencimiento de la calibración. Si el cliente requiere fecha de vencimiento, éste debe solicitarla formalmente. En caso que el requerimiento se realice después de que están hechos los certificados de calibración, el rea-hacer dicho documento tendrá un costo adicional de 1 UF por cada uno de ellos. La fecha de vencimiento no es aplicable para trabajos de verificación.
 
-15. El cliente podrá solicitar una copia del certificado de calibración sin costo sólo en una segunda oportunidad. Si se requiere otra copia adicional, el costo de este documento será de 1 UF. 
+15. El cliente podrá solicitar una copia del certificado de calibración sin costo sólo en una segunda oportunidad. Si se requiere otra copia adicional, el costo de este documento será de 1 UF.
 
-16. Si los equipos enviados a DTS a calibrar, mantener o reparar no son retirados por el cliente antes de cumplir doce meses desde su llegada y habiendo recibido en este periodo, a lo menos un aviso de parte de DTS para su retiro, queda entendido que en tal caso los equipos se deberán entender como abandonados, quedando DTS facultada para proceder a su envío a botadero de basura, sin tener derecho el cliente a reclamar su restitución. Se excluye de esta condición, equipos que deban ser reparados y que se encuentren en espera de repuestos.
+16. El Cliente debe ser responsable del envío y retiro de instrumentos hacia y desde nuestro laboratorio. En algunos casos DTS ofrece el servicio de traslado, pero éste debe quedar especificado en la orden de compra y/o cotización.
 
-17.  En caso que los equipos sean enviados a DTS por una empresa subcontratista, el cliente deberá informar a dicha empresa que los equipos serán revisados al momento de la recepción, de lo contrario DTS tendrá hasta 3 días hábiles para informar al cliente cuando los instrumentos sean recibidos con alguna anomalía o elemento faltante.
+17. En caso que los equipos sean enviados a DTS por una empresa de transporte, el cliente deberá informar a dicha empresa que éstos serán revisados al momento de la recepción, de lo contrario DTS tendrá hasta 3 días hábiles para informar al cliente cuando los instrumentos sean recibidos con alguna anomalía o elemento faltante.
 
-18. El cliente tendrá un plazo máximo de 15 días corridos para emitir número HES u otro código interno previo a la emisión de la facturación por los servicios prestados, de lo contrario DTS emitirá la facturación correspondiente solo con la aceptación conforme de los trabajos.
-</value>
+18. Si los equipos enviados a DTS a calibrar, mantener o reparar no son retirados por el cliente antes de cumplir doce meses desde su llegada y habiendo recibido en este periodo, a lo menos un aviso de parte de DTS para su retiro, se entiende que los equipos están abandonados, quedando DTS facultada para su enajenación, sin tener derecho el cliente a reclamar su restitución. Se excluye de esta condición, equipos que deban ser reparados y que se encuentren en espera de repuestos.</value>
   </data>
   <metadata name="$this.ShowSnapGrid" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>

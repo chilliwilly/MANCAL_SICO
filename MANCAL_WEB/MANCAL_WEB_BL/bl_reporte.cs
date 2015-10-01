@@ -25,6 +25,7 @@ namespace MANCAL_WEB_BL
                 CotizacionEquipo ce = new CotizacionEquipo();
                 ce.equipoitem = dr["DC_ITEM"].ToString();//ESTE
                 ce.equiponombre = dr["DC_NOMBRE_EQ"].ToString();//ESTE
+                ce.equipofabricante = dr["DC_FABRICANTE"].ToString();
                 ce.equiponparte = dr["DC_NPARTE"].ToString();//ESTE
                 //ce.equiponserie = dr["DC_NSERIE"].ToString();
                 ce.equipocantidad = dr["DC_CANTIDAD"].ToString();//ESTE
@@ -57,6 +58,7 @@ namespace MANCAL_WEB_BL
                 cot.cot_contacto_mail = dr["COT_CONTACTO_MAIL"].ToString();
                 cot.cot_contacto_ff = dr["COT_CONTACTO_FONO"].ToString();
                 cot.cot_contacto_dir = dr["COT_CONTACTO_DIR"].ToString();
+                cot.cot_certificado_nom = dr["COT_CERTIFICADO_NOM"].ToString();
                 cot.cot_certificado_dir = dr["COT_CERTIFICADO_DIR"].ToString();
                 cot.tlej_id = dr["TLEJ_NOMBRE"].ToString();
                 cot.cot_cantidad = dr["COT_QTY"].ToString();//qty

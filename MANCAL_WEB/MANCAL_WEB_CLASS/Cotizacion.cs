@@ -31,6 +31,7 @@ namespace MANCAL_WEB_CLASS
         public String cot_tipo_retiro { get; set; }
         public String cot_secretiro_dir { get; set; }
         public String cot_secretiro_nom { get; set; }
+        public String cot_certificado_nom { get; set; }
         public String cot_certificado_dir { get; set; }
         public String cot_valioferta { get; set; }
         public String cot_totcostmo { get; set; }
@@ -139,6 +140,7 @@ namespace MANCAL_WEB_CLASS
             Object cot_tipo_retiro = null;
             Object cot_secretiro_dir = null;
             Object cot_secretiro_nom = null;
+            Object cot_certificado_nom = null;
             Object cot_certificado_dir = null;
             Object cot_valioferta = null;
             Object cot_totcostmo = null;
@@ -194,6 +196,7 @@ namespace MANCAL_WEB_CLASS
             d.TryGetValue("cot_tipo_retiro", out cot_tipo_retiro);
             d.TryGetValue("cot_secretiro_dir", out cot_secretiro_dir);
             d.TryGetValue("cot_secretiro_nom", out cot_secretiro_nom);
+            d.TryGetValue("cot_certificado_nom", out cot_certificado_nom);
             d.TryGetValue("cot_certificado_dir", out cot_certificado_dir);
             d.TryGetValue("cot_valioferta", out cot_valioferta);
             d.TryGetValue("cot_totcostmo", out cot_totcostmo);
@@ -249,6 +252,7 @@ namespace MANCAL_WEB_CLASS
             cot.cot_tipo_retiro = cot_tipo_retiro.ToString();
             cot.cot_secretiro_dir = cot_secretiro_dir.ToString();
             cot.cot_secretiro_nom = cot_secretiro_nom.ToString();
+            cot.cot_certificado_nom = cot_certificado_nom.ToString();
             cot.cot_certificado_dir = cot_certificado_dir.ToString();
             cot.cot_valioferta = cot_valioferta.ToString();
             cot.cot_totcostmo = cot_totcostmo.ToString();

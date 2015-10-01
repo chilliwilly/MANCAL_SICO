@@ -22,6 +22,8 @@ namespace MANCAL_WEB.rpt_cal
             Telerik.Reporting.TableGroup tableGroup8 = new Telerik.Reporting.TableGroup();
             Telerik.Reporting.TableGroup tableGroup9 = new Telerik.Reporting.TableGroup();
             Telerik.Reporting.TableGroup tableGroup10 = new Telerik.Reporting.TableGroup();
+            Telerik.Reporting.Drawing.FormattingRule formattingRule3 = new Telerik.Reporting.Drawing.FormattingRule();
+            Telerik.Reporting.Drawing.FormattingRule formattingRule4 = new Telerik.Reporting.Drawing.FormattingRule();
             Telerik.Reporting.ReportParameter reportParameter1 = new Telerik.Reporting.ReportParameter();
             Telerik.Reporting.ReportParameter reportParameter2 = new Telerik.Reporting.ReportParameter();
             Telerik.Reporting.Drawing.StyleRule styleRule1 = new Telerik.Reporting.Drawing.StyleRule();
@@ -51,6 +53,8 @@ namespace MANCAL_WEB.rpt_cal
             this.objectDataSource2 = new Telerik.Reporting.ObjectDataSource();
             this.textBox21 = new Telerik.Reporting.TextBox();
             this.pageFooterSection1 = new Telerik.Reporting.PageFooterSection();
+            this.textBox14 = new Telerik.Reporting.TextBox();
+            this.textBox49 = new Telerik.Reporting.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this)).BeginInit();
             // 
             // textBox4
@@ -112,12 +116,14 @@ namespace MANCAL_WEB.rpt_cal
             // 
             // pageHeaderSection1
             // 
-            this.pageHeaderSection1.Height = Telerik.Reporting.Drawing.Unit.Cm(2D);
+            this.pageHeaderSection1.Height = Telerik.Reporting.Drawing.Unit.Cm(2.8000001907348633D);
             this.pageHeaderSection1.Items.AddRange(new Telerik.Reporting.ReportItemBase[] {
             this.pictureBox3,
             this.pictureBox1,
             this.textBox2,
-            this.textBox3});
+            this.textBox3,
+            this.textBox14,
+            this.textBox49});
             this.pageHeaderSection1.Name = "pageHeaderSection1";
             // 
             // pictureBox3
@@ -351,6 +357,34 @@ namespace MANCAL_WEB.rpt_cal
             this.pageFooterSection1.Height = Telerik.Reporting.Drawing.Unit.Cm(2.5D);
             this.pageFooterSection1.Name = "pageFooterSection1";
             // 
+            // textBox14
+            // 
+            this.textBox14.Location = new Telerik.Reporting.Drawing.PointU(Telerik.Reporting.Drawing.Unit.Cm(0.52916663885116577D), Telerik.Reporting.Drawing.Unit.Cm(1.9000000953674316D));
+            this.textBox14.Name = "textBox14";
+            this.textBox14.Size = new Telerik.Reporting.Drawing.SizeU(Telerik.Reporting.Drawing.Unit.Cm(4.099799633026123D), Telerik.Reporting.Drawing.Unit.Cm(0.69980025291442871D));
+            this.textBox14.Style.Font.Bold = true;
+            this.textBox14.Style.Font.Size = Telerik.Reporting.Drawing.Unit.Point(8D);
+            this.textBox14.Style.TextAlign = Telerik.Reporting.Drawing.HorizontalAlign.Center;
+            this.textBox14.Style.VerticalAlign = Telerik.Reporting.Drawing.VerticalAlign.Middle;
+            this.textBox14.Value = "LABORATORIO DE CALIBRACIÓN";
+            // 
+            // textBox49
+            // 
+            formattingRule3.Filters.Add(new Telerik.Reporting.Filter("= Parameters.ACREDI.Value", Telerik.Reporting.FilterOperator.Equal, "Y"));
+            formattingRule4.Filters.Add(new Telerik.Reporting.Filter("= Parameters.ACREDI.Value", Telerik.Reporting.FilterOperator.Equal, "N"));
+            formattingRule4.Style.Visible = false;
+            this.textBox49.ConditionalFormatting.AddRange(new Telerik.Reporting.Drawing.FormattingRule[] {
+            formattingRule3,
+            formattingRule4});
+            this.textBox49.Location = new Telerik.Reporting.Drawing.PointU(Telerik.Reporting.Drawing.Unit.Cm(14.578540802001953D), Telerik.Reporting.Drawing.Unit.Cm(1.9000000953674316D));
+            this.textBox49.Name = "textBox49";
+            this.textBox49.Size = new Telerik.Reporting.Drawing.SizeU(Telerik.Reporting.Drawing.Unit.Cm(4.099799633026123D), Telerik.Reporting.Drawing.Unit.Cm(0.69980025291442871D));
+            this.textBox49.Style.Font.Bold = true;
+            this.textBox49.Style.Font.Size = Telerik.Reporting.Drawing.Unit.Point(8D);
+            this.textBox49.Style.TextAlign = Telerik.Reporting.Drawing.HorizontalAlign.Center;
+            this.textBox49.Style.VerticalAlign = Telerik.Reporting.Drawing.VerticalAlign.Middle;
+            this.textBox49.Value = "LC-013 A LC-017";
+            // 
             // rptCotizacionCal_DetPunto
             // 
             this.Items.AddRange(new Telerik.Reporting.ReportItemBase[] {
@@ -406,5 +440,7 @@ namespace MANCAL_WEB.rpt_cal
         private Telerik.Reporting.TextBox textBox16;
         private Telerik.Reporting.TextBox textBox21;
         private Telerik.Reporting.ObjectDataSource objectDataSource2;
+        private Telerik.Reporting.TextBox textBox14;
+        private Telerik.Reporting.TextBox textBox49;
     }
 }

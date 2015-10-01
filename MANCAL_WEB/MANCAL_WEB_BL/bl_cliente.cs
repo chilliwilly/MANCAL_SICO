@@ -12,7 +12,7 @@ namespace MANCAL_WEB_BL
     {
         dl_cliente objCliente;
 
-        public List<CotizacionCliente> getListaCliente(String cli, String cta, String cont, String tipo, String estado) 
+        public List<CotizacionCliente> getListaCliente(String cli, String cta, String cont, String tipo, String estado, String rut, String aliascli) 
         {
             objCliente=new dl_cliente();
 
@@ -21,6 +21,8 @@ namespace MANCAL_WEB_BL
             String nomcliente = "";
             String ctacliente = "";
             String contcliente = "";
+            String rutcliente = "";
+            String aliascliente = "";
             int v_tipo;
             int v_estado;
 
@@ -69,8 +71,25 @@ namespace MANCAL_WEB_BL
                 v_estado = Convert.ToInt32(estado);
             }
 
+            if (String.IsNullOrEmpty(rut))
+            {
+                rutcliente = null;
+            }
+            else
+            {
+                rutcliente = rut;
+            }
+
+            if (String.IsNullOrEmpty(aliascli))
+            {
+                aliascliente = null;
+            }
+            else
+            {
+                aliascliente = aliascli;
+            }
             //objCliente.selectCliente();//.Tables["cur_select_cli"];
-            DataTable dt = objCliente.selectDTCliente(nomcliente, ctacliente, contcliente, v_tipo, v_estado).Tables["CUR_SELECT_CLI"];
+            DataTable dt = objCliente.selectDTCliente(nomcliente, ctacliente, contcliente, v_tipo, v_estado, rutcliente, aliascliente).Tables["CUR_SELECT_CLI"];
 
 
             foreach (DataRow dr in dt.Rows) 
@@ -78,6 +97,7 @@ namespace MANCAL_WEB_BL
                 CotizacionCliente ccli = new CotizacionCliente();
                 ccli.idcliente = dr["ID_CLIENTE"].ToString();
                 ccli.nomcliente = dr["NOMBRE"].ToString();
+                ccli.aliascliente = dr["ALIASCLI"].ToString();
                 ccli.nomcuenta = dr["NOMBRE_CTA"].ToString();
                 ccli.dircliente = dr["DIRECCION"].ToString();
                 ccli.nomcontacto = dr["NOMBRE_CONTACTO"].ToString();

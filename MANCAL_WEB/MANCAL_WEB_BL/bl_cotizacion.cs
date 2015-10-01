@@ -71,6 +71,7 @@ namespace MANCAL_WEB_BL
                 cot.cot_tipo_retiro = dr["COT_TIPO_RETIRO"].ToString();
                 cot.cot_secretiro_dir = dr["COT_SECRETIRO_DIR"].ToString();
                 cot.cot_secretiro_nom = dr["COT_SECRETIRO_NOM"].ToString();
+                cot.cot_certificado_nom = dr["COT_CERTIFICADO_NOM"].ToString();
                 cot.cot_certificado_dir = dr["COT_CERTIFICADO_DIR"].ToString();
                 cot.cot_valioferta = dr["COT_VALIOFERTA"].ToString();
                 cot.cot_totcostmo = dr["COT_TOTCOSTMO"].ToString();
@@ -219,6 +220,7 @@ namespace MANCAL_WEB_BL
             dtXmlc.Columns.Add("cot_tipo_retiro", typeof(string));
             dtXmlc.Columns.Add("cot_secretiro_dir", typeof(string));
             dtXmlc.Columns.Add("cot_secretiro_nom", typeof(string));
+            dtXmlc.Columns.Add("cot_certificado_nom", typeof(string));
             dtXmlc.Columns.Add("cot_certificado_dir", typeof(string));
             dtXmlc.Columns.Add("cot_valioferta", typeof(string));
             dtXmlc.Columns.Add("cot_totcostmo", typeof(string));
@@ -272,6 +274,7 @@ namespace MANCAL_WEB_BL
             drXmlc["cot_tipo_retiro"] = objCot.cot_tipo_retiro;
             drXmlc["cot_secretiro_dir"] = objCot.cot_secretiro_dir;
             drXmlc["cot_secretiro_nom"] = objCot.cot_secretiro_nom;
+            drXmlc["cot_certificado_nom"] = objCot.cot_certificado_nom;
             drXmlc["cot_certificado_dir"] = objCot.cot_certificado_dir;
             drXmlc["cot_valioferta"] = objCot.cot_valioferta;
             drXmlc["cot_totcostmo"] = objCot.cot_totcostmo;
@@ -414,6 +417,14 @@ namespace MANCAL_WEB_BL
             cotXml[2] = dataXmlco;//comision
 
             return cotXml;
+        }
+
+        public void guardaOtroDatoCotizacion(String cot_id, String cot_plazo_entrega) 
+        {
+            objCotizacion = new dl_cotizacion();
+            int plazo_entrega = Convert.ToInt32(cot_plazo_entrega);
+
+            objCotizacion.insertOtroDatoCotizacion(cot_id, plazo_entrega);
         }
     }
 }

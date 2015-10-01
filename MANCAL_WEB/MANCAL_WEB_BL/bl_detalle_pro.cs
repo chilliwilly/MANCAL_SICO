@@ -83,7 +83,7 @@ namespace MANCAL_WEB_BL
         #region Metodos Cotizacion
 
         //CALIBRACION METODO PARA OBTENER LISTA DE EQUIPO PARA SER SELECCIONADOS
-        public List<CotizacionEquipo> getEquipo(String nombre, String nroparte, String modelo, String magnitud, String familia, String sysid, String idtarifa, String fcoti) 
+        public List<CotizacionEquipo> getEquipo(String nombre, String nroparte, /*String modelo,*/ String fabricante, String magnitud, String familia, String sysid, String idtarifa, String fcoti) 
         {   
             objProDet=new dl_detalle_pro();
             List<CotizacionEquipo> ls = new List<CotizacionEquipo>();
@@ -93,15 +93,17 @@ namespace MANCAL_WEB_BL
             int id_fam = Convert.ToInt32(familia);
             DateTime fechcot = Convert.ToDateTime(fcoti);
             
-            DataTable dt = objProDet.selectEquipoBuscar(nombre.ToUpper(), nroparte.ToUpper(), modelo.ToUpper(), id_mag, id_fam, id_sys).Tables["CUR_BUSCA_EQUIPO"];
+            DataTable dt = objProDet.selectEquipoBuscar(nombre.ToUpper(), nroparte.ToUpper(), /*modelo.ToUpper(),*/ fabricante, id_mag, id_fam, id_sys).Tables["CUR_BUSCA_EQUIPO"];
             DataTable dt_eq = new DataTable();
 
             foreach (DataRow dr in dt.Rows) 
             {
                 CotizacionEquipo cot = new CotizacionEquipo();
                 cot.equiponombre = dr["NOMBRE"].ToString();
-                cot.equipomodelo = dr["MODELO"].ToString();
-                cot.equiponparte = dr["N_PARTE"].ToString();
+                cot.equipomodelo = dr["NP_MODELO"].ToString();//RECIBE CONCATENADO EL NP CON MODELO
+                cot.equipofabricante = dr["EQ_FABRICANTE"].ToString();
+                cot.equipofamilia = dr["EQ_FAMILIA"].ToString();
+                cot.equipomagnitud = dr["EQ_MAGNITUD"].ToString();
                 cot.equipoid = dr["ID_PP_PLANTILLA"].ToString();
                 cot.equipocotid = dr["PRECIO_PROM"].ToString();//para saber si tiene precios o no
 
@@ -152,7 +154,7 @@ namespace MANCAL_WEB_BL
         #endregion
 
         //CALIBRACION METODO PARA CALCULAR EQUIPOS MODIFICADOS
-        public String[] calculaEquipo(String eq_id, String sys_id, String qty, String pmo, String gasto, String pcarga, String tarifa_id, String fecha_cot) 
+        public String[] calculaEquipo(String eq_id, String sys_id, String qty, String pmo, String gasto, String pcarga, String tarifa_id, String fecha_cot, String cotid) 
         {
             objProDet = new dl_detalle_pro();
             int id_eq = Convert.ToInt32(eq_id);
@@ -160,9 +162,9 @@ namespace MANCAL_WEB_BL
             int eq_qty = Convert.ToInt32(qty);
             int tarifa = Convert.ToInt32(tarifa_id);
             DateTime fcot = Convert.ToDateTime(fecha_cot);
-            String[] cal_calculo = new String[2];
+            String[] cal_calculo = new String[4];
 
-            DataTable dt = objProDet.selectCalculoEquipo(id_eq, id_sys, eq_qty, pmo, gasto, pcarga, tarifa, fcot).Tables["RET_PRECIO_VENTA"];
+            DataTable dt = objProDet.selectCalculoEquipo(id_eq, id_sys, eq_qty, pmo, gasto, pcarga, tarifa, fcot, cotid).Tables["RET_PRECIO_VENTA"];
 
             foreach (DataRow dr in dt.Rows) 
             {
@@ -170,6 +172,8 @@ namespace MANCAL_WEB_BL
                 {
                     cal_calculo[0] = dr["RES_TOTAL"].ToString();
                     cal_calculo[1] = "";
+                    cal_calculo[2] = dr["RES_TOTAL_PE"].ToString();
+                    cal_calculo[3] = dr["RES_TOTAL_F_PE"].ToString();
                 }
                 else 
                 {
@@ -244,13 +248,19 @@ namespace MANCAL_WEB_BL
             objProDet.insertDetCotCal(tblxml);
         }
 
-        public List<CotizacionEquipo> getDetalleCot(String cot_id, String tarifa_id, String cot_dcto) 
+        public List<CotizacionEquipo> getDetalleCot(String cot_id, String tarifa_id, String cot_dcto) //, String plazo_entrega
         {
             List<CotizacionEquipo> ls = new List<CotizacionEquipo>();
             objProDet = new dl_detalle_pro();
             int idtarifa = Convert.ToInt32(tarifa_id);
+            //int p_entrega = 10;
 
-            DataTable dt = objProDet.selectEquipoCot(cot_id, idtarifa, cot_dcto).Tables["CUR_DET"];
+            //if (!String.IsNullOrEmpty(plazo_entrega)) 
+            //{
+            //    p_entrega = Convert.ToInt32(plazo_entrega);
+            //}
+
+            DataTable dt = objProDet.selectEquipoCot(cot_id, idtarifa, cot_dcto).Tables["CUR_DET"];//, p_entrega
 
             foreach (DataRow dr in dt.Rows) 
             {
@@ -279,6 +289,8 @@ namespace MANCAL_WEB_BL
                 ce.equipotrabajoid = dr["TTR_ID"].ToString();
                 ce.equipofactordcto = dr["DCTO_FACTOR"].ToString();
                 ce.equipofactordctototal = dr["DCTO_ITEM_TOTAL"].ToString();
+                ce.equipocargope = dr["CARGO_PE"].ToString();
+                ce.equipototalcargope = dr["TOTAL_CARGO_PE"].ToString();
 
                 ls.Add(ce);
             }            

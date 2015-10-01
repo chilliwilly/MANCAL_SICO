@@ -128,6 +128,12 @@
     </script>
 
     <style type="text/css">
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            /* display: none; <- Crashes Chrome on hover */
+            -webkit-appearance: none;
+            margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+        }
         fieldset.inline
         {
             display:inline;
@@ -489,8 +495,19 @@
                         <asp:TextBox ID="txtReferencia" runat="server" Height="68px" Width="260px" CssClass="_txtReferencia_"
                             TextMode="MultiLine">Sin Referencia.</asp:TextBox>
                     </td>
-                        <td class="style9">
-                        </td>
+                    <td class="style9">
+                    </td>
+                    <td class="style4">
+                        Direccion Cert.
+                    </td>
+                    <td>
+                        <asp:TextBox ID="txtClienteCertificadoDir" runat="server" Width="350px" CssClass="_txtClienteCertificadoDir_"></asp:TextBox>
+                    </td>
+                </tr>
+                <tr>                
+                    <td>
+                        &nbsp;
+                    </td>
                     <td class="style4">
                         Cliente Contacto
                     </td>
@@ -499,9 +516,7 @@
                     </td>
                 </tr>
                 <tr>
-                
                     <td>
-                        &nbsp;
                     </td>
                     <td class="style4">
                         Cliente Dirección
@@ -511,22 +526,14 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>
-                    </td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
                     <td class="style4">
                         Cliente Mail
                     </td>
                     <td>
                         <asp:TextBox ID="txtMailCliente" runat="server" Width="350px" CssClass="_txtMailCliente_"></asp:TextBox>
-                    </td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td class="style8">Cliente Fono</td>
-                    <td class="style9">
-                        <asp:TextBox ID="txtFonoCliente" runat="server" Width="350px" CssClass="_txtFonoCliente_"></asp:TextBox>
                     </td>
                 </tr>
                 <tr>
@@ -544,6 +551,21 @@
                         <asp:HiddenField ID="txtHiddIdCliente" runat="server" />
                     </td>
                     <td></td> 
+                    <td class="style8">Cliente Fono</td>
+                    <td class="style9">
+                        <asp:TextBox ID="txtFonoCliente" runat="server" Width="350px" CssClass="_txtFonoCliente_"></asp:TextBox>
+                    </td>       
+                </tr>
+                <tr>
+                    <td>
+                        
+                    </td>
+                    <td>
+                        
+                    </td>
+                    <td>
+                        
+                    </td>
                     <td class="style8">
                         Tipo Tarifa
                     </td>
@@ -553,7 +575,7 @@
                         <input type="text" id="txtIdTipoTarifa" name="txtIdTipoTarifa" style="display:none" />
                         <input type="text" id="txtIdTipoTarifaPrev" name="txtIdTipoTarifaPrev" style="display:none" />
                         <input type="text" id="txtTipoTarifa" name="txtTipoTarifa" style="width:180px" readonly="readonly" />
-                    </td>               
+                    </td>  
                 </tr>
             </table>
             <div id="dialog-divisa" style="display:none">
@@ -640,8 +662,24 @@
                     <td>
                         <input type="text" id="txt-busca-nom-cont" name="txt-busca-nom-cont" value="" />
                     </td>
-                </tr>                             
+                    <td>
+                        <label id="lbl-busca-rut-cli">Rut Cliente:</label>
+                    </td>
+                    <td>
+                        <input type="text" id="txt-busca-rut-cli" name="txt-busca-rut-cli" value="" maxlength="8" />
+                    </td>
+                </tr>
                 <tr>
+                    <td>
+                        <label id="lbl-busca-alais-cli">Alias Cliente:</label>
+                    </td>
+                    <td>
+                        <input type="text" id="txt-busca-alias-cli" name="txt-busca-alias-cli" value="" />
+                    </td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <%--<tr>
                     <td colspan="2">
                         <label style="font-weight:bold;">Tipo Cliente</label><br />
                         <asp:RadioButtonList ID="rblTipoCliente" RepeatDirection="Horizontal" runat="server" 
@@ -654,7 +692,7 @@
                         <asp:RadioButtonList ID="rblEstadoCliente" RepeatDirection="Horizontal" runat="server" 
                             oninit="rblEstadoCliente_Init"></asp:RadioButtonList>
                     </td>
-                </tr>
+                </tr>--%>
                 <tr>
                     <td>
                         <input type="button" id="btn-busca-cliente" value="Buscar Cliente"/>
@@ -678,6 +716,12 @@
                         <asp:TemplateField HeaderText="ID" HeaderStyle-CssClass="ocultaCol" ItemStyle-CssClass="ocultaCol">
                             <ItemTemplate>
                                 <asp:Label ID="lblidcliente" CssClass="idcliente_" runat="server" Text='<%# Bind("IDCLIENTE") %>'></asp:Label>                                
+                            </ItemTemplate>
+                        </asp:TemplateField>
+
+                        <asp:TemplateField HeaderText="ALIAS">
+                            <ItemTemplate>
+                                <asp:Label ID="lblalias" CssClass="aliascliente_" runat="server" Text='<%# Bind("ALIASCLIENTE") %>'></asp:Label>
                             </ItemTemplate>
                         </asp:TemplateField>
 
@@ -926,6 +970,12 @@
                                     <asp:TemplateField HeaderText="Total No Exceder" ItemStyle-Width="100px" HeaderStyle-CssClass="ocultaCol" ItemStyle-CssClass="ocultaCol">
                                         <ItemTemplate>
                                             <asp:Label ID="equipofactordctototal" CssClass="equipofactordctototal" runat="server" Text='<%# Bind("EQUIPOFACTORDCTOTOTAL") %>'></asp:Label>
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+
+                                    <asp:TemplateField HeaderText="Total No Exceder" ItemStyle-Width="100px" HeaderStyle-CssClass="ocultaCol" ItemStyle-CssClass="ocultaCol">
+                                        <ItemTemplate>
+                                            <asp:Label ID="equipocargope" CssClass="equipocargope" runat="server" Text='<%# Bind("EQUIPOCARGOPE") %>'></asp:Label>
                                         </ItemTemplate>
                                     </asp:TemplateField>
 
@@ -1353,8 +1403,8 @@
                                     Plazo Entrega<br />
                                     <%--<asp:DropDownList ID="cboPlazoEntrega" runat="server" Width="140px" 
                                         oninit="cboPlazoEntrega_Init">
-                                    </asp:DropDownList>--%>
-                                    <input type="text" id="txtPlazoEntregaD" name="txtPlazoEntregaD" placeholder="Plazo entrega dias" style="width:140px;"/>
+                                    </asp:DropDownList>--%>                                    
+                                    <input type="number" id="txtPlazoEntregaD" name="txtPlazoEntregaD" placeholder="Plazo entrega dias" style="width:140px;" readonly="readonly"/>
                                 </td>
                                 <td>
                                 </td>
@@ -1536,6 +1586,15 @@
             </div>
         </div>        
     </div>   
+
+    <%-- DIV PARA SELECCIONAR PLAZO DE ENTREGA Y REALIZAR EL CALCULO CORRESPONDIENTE --%>
+    <div id="dialog-plazo-entrega" style="display:none;">
+        Ingrese el plazo en días. 
+        <br />
+        Si los días son menores a 10 se aplicara un recargo del 40% a la cotización.
+        <br /><br />
+        <input type="number" id="txt-input-pl-entrega" name="txt-input-pl-entrega" placeholder="Plazo entrega dias" style="width:140px;"/>
+    </div>
 
     <%--DIV PARA ELIMINAR EL ARCHIVO SELECCIONADO --%>
     <div id="dialog-archivo" title="Quitar Archivo" style="display:none;">
@@ -2118,6 +2177,14 @@
                             <td><input type="text" id="edit_eq_fdcto_total" name="edit-eq-fdcto-total" class="text ui-widget-content ui-corner-all" readonly="readonly"/></td>
                         </tr>
                         <tr>
+                            <td>Factor Plazo Entrega</td>
+                            <td><input type="text" id="edit_eq_fplazoen_total" name="edit-eq-fplazoen-total" class="text ui-widget-content ui-corner-all" readonly="readonly"/></td>
+                        </tr>
+                        <tr>
+                            <td>Total Plazo Entrega</td>
+                            <td><input type="text" id="edit_eq_plazoen_total" name="edit-eq-plazoen-total" class="text ui-widget-content ui-corner-all" readonly="readonly"/></td>
+                        </tr>
+                        <tr>
                             <td>Total</td>
                             <td><input type="text" id="edit_eq_total" name="edit-eq-total" class="text ui-widget-content ui-corner-all" readonly="readonly"/></td>
                         </tr>
@@ -2192,7 +2259,7 @@
 
     <!--SCRIPTS PAGINA-->
     <script type="text/javascript">
-
+        //CODIGO DIALOG PARA BUSCAR COTIZACION
         $("#btn-busca-cot").on('click', function () {
             $.cookie('_dataV', '');
             $.cookie('_dataEC', '');
@@ -2366,6 +2433,8 @@
                 $("#edit_eq_total").val($('.equipototal_', $(this).closest('tr')).html());
                 $("#edit_eq_fdcto").val($('.equipofactordcto', $(this).closest('tr')).html());
                 $("#edit_eq_fdcto_total").val($('.equipofactordctototal', $(this).closest('tr')).html());
+                $("#edit_eq_fplazoen_total").val($('.equipocargope', $(this).closest('tr')).html());
+                $("#edit_eq_plazoen_total").val($('.equipototal_', $(this).closest('tr')).html());
 
                 getValoresEquipoEdit($('.equipoid_', $(this).closest('tr')).html(),
                                          $("#txtIdTipoTarifa").val(),//$("#%=cboTipoTarifa.ClientID %>").val(),
@@ -2422,7 +2491,7 @@
                         objEqJs.equipopmo = $("#txt-eq-read-pmo").val();
                         objEqJs.equipocalgasto = $("#txt-eq-read-gasto").val();
                         objEqJs.equipocalpcarga = $("#txt-eq-read-pcarga").val();
-                        equipoCal_Total(objEqJs, "2", $("#txtIdTipoTarifa").val(), $("#<%=txtFecha.ClientID %>").val());//$("#%=cboTipoTarifa.ClientID %>").val()
+                        equipoCal_Total(objEqJs, "2", $("#txtIdTipoTarifa").val(), $("#<%=txtFecha.ClientID %>").val(), $.cookie('pcusr'));//$("#%=cboTipoTarifa.ClientID %>").val()
                     },
                     "Agregar": function () {
                         //$(this).dialog('close');
@@ -2488,6 +2557,7 @@
         /*****************/
         /*****************/
 
+        //FUNCION PARA EDITAR EL EQUIPO YA INGRESADO EN UN MODAL DIALOG
         var oldGasto = "";
         function seleccionDetalleCalPrecio() {
             dataGridCalPrecio();
@@ -2504,7 +2574,7 @@
                         objEqJs.equipopmo = $("#edit_eq_pmo").val();
                         objEqJs.equipocalgasto = $("#edit_eq_gasto").val();
                         objEqJs.equipocalpcarga = $("#edit_eq_pcarga").val();
-                        getTotalEquipoEdit(objEqJs, "2", $("#txtIdTipoTarifa").val(), $("#<%=txtFecha.ClientID %>").val());//$("#%=cboTipoTarifa.ClientID %>").val()
+                        getTotalEquipoEdit(objEqJs, "2", $("#txtIdTipoTarifa").val(), $("#<%=txtFecha.ClientID %>").val(), $.cookie('pcusr'));//$("#%=cboTipoTarifa.ClientID %>").val()
                     },
                     "Actualizar": function () {
                         setEquipoCalEdit();
@@ -2683,8 +2753,10 @@
             $.cookie('nomclient', $("#txt-busca-nom-cli").val());
             $.cookie('nomcuenta', $("#txt-busca-nom-cta").val());
             $.cookie('nomcontact', $("#txt-busca-nom-cont").val());
-            $.cookie('nomtipo', $("#<%=rblTipoCliente.ClientID%>").find(":checked").val());
-            $.cookie('nomestado', $("#<%=rblEstadoCliente.ClientID%>").find(":checked").val());
+            $.cookie('nomtipo', '');//$("#<=rblTipoCliente.ClientID%>").find(":checked").val());
+            $.cookie('nomestado', '');//$("#<=rblEstadoCliente.ClientID%>").find(":checked").val());
+            $.cookie('rutclient', $("#txt-busca-rut-cli").val());
+            $.cookie('aliasclient', $("#txt-busca-alias-cli").val());
             $("#<%=btnUpdLsCliente.ClientID %>").click();
         });
 
@@ -2958,6 +3030,26 @@
         $("#cboListaMagnitudBusca").change(function () {
             getNomFamiliaByMagnitud($("#cboListaMagnitudBusca").val());
             $("#_cboListaFamiliaBusca_").removeAttr('disabled');
+        });
+
+        //ejecuta metodo que calcula el cargo de plazo de entrega
+        $("#txtPlazoEntregaD").click(function () {
+            $("#dialog-plazo-entrega").dialog({
+                modal: true,
+                width: "600px",
+                title: "Plazo de Entrega",
+                buttons: {
+                    "Aplicar": function () {
+                        $("#txtPlazoEntregaD").val($("#txt-input-pl-entrega").val());
+                        guardaOtroDatoCotizacion($.cookie('pcusr'),
+                                                 $("#txtPlazoEntregaD").val());
+                        //$("#<=btnUpdDatoEquipo.ClientID %>").click();
+                    },
+                    "Cerrar": function () {
+                        $(this).dialog('close');
+                    }
+                }
+            });
         });
 
         $('#frm-edit-eq-valor').validate({

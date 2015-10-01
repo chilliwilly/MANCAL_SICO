@@ -118,6 +118,7 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
     <h1>Ingreso Cotización Calibraciones</h1>
+    <h3 style="color:green; font-weight:bold;">Campos en verde corresponden a los que se visualizaran en la cotizacion impresa</h3> 
 
 <asp:ToolkitScriptManager ID="ToolkitScriptManager1" runat="server" EnableScriptGlobalization="True" ScriptMode="Release" EnablePartialRendering="true" LoadScriptsBeforeUI="false">
 </asp:ToolkitScriptManager>
@@ -150,10 +151,10 @@
                         <asp:TextBox ID="txtCliente" runat="server" Width="350px" ReadOnly="true" CssClass="_txtCliente_"></asp:TextBox><!--263px-->
                         &nbsp;&nbsp;&nbsp;
                         <a href="javascript:void(null);" id="btn-busca-cli" style="display:inline-block;" class="ui-icon ui-icon-search"></a>
-                    </td>                
+                    </td>              
                 </tr>
                 <tr>
-                    <td class="style5">
+                    <td class="style5" style="color:green; font-weight:bold;">
                         Fecha Cotizacion
                     </td>
                     <td class="style6">
@@ -173,7 +174,7 @@
                     </td>
                 </tr>
                 <tr>
-                <td class="style5">
+                <td class="style5" style="color:green; font-weight:bold;">
                         Vendedor
                     </td>
                     <td class="style6">
@@ -183,7 +184,7 @@
                     <td class="style9">
                         <%--<asp:TextBox ID="txtCodEmpresa" runat="server" Width="30px"></asp:TextBox>--%>
                     </td>
-                    <td class="style8">
+                    <td class="style8" style="color:green; font-weight:bold;">
                         Cliente Informe
                     </td>
                     <td class="style9">
@@ -192,7 +193,7 @@
                 </tr>
                 <tr>
                     <%-- VENDEDOR--%>
-                    <td class="style5">
+                    <td class="style5" style="color:green; font-weight:bold;">
                         Correo Vendedor</td>
                         <td class="style6">
                             <%--<asp:TextBox ID="txtMailVendedor" runat="server" Width="260px" ReadOnly="True"></asp:TextBox>--%>
@@ -201,7 +202,7 @@
                     <td class="style9">
                         <%--<asp:TextBox ID="txtInicialVendedor" runat="server" Width="30px" Height="22px"></asp:TextBox>--%>
                     </td>
-                    <td class="style4">
+                    <td class="style4" style="color:green; font-weight:bold;">
                         Cliente Cert.
                     </td>
                     <td>
@@ -218,7 +219,18 @@
                     </td>
                         <td class="style9">
                         </td>
-                    <td class="style4">
+                    <td class="style4" style="color:green; font-weight:bold;">
+                        Direccion Cert.
+                    </td>
+                    <td>
+                        <asp:TextBox ID="txtClienteCertificadoDir" runat="server" Width="350px" CssClass="_txtClienteCertificadoDir_"></asp:TextBox>
+                    </td>
+                </tr>
+                <tr>                
+                    <td>
+                        &nbsp;
+                    </td>
+                    <td class="style4" style="color:green; font-weight:bold;">
                         Cliente Contacto
                     </td>
                     <td>
@@ -226,11 +238,9 @@
                     </td>
                 </tr>
                 <tr>
-                
                     <td>
-                        &nbsp;
                     </td>
-                    <td class="style4">
+                    <td class="style4" style="color:green; font-weight:bold;">
                         Cliente Dirección
                     </td>
                     <td>
@@ -238,22 +248,14 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>
-                    </td>
-                    <td class="style4">
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td class="style4" style="color:green; font-weight:bold;">
                         Cliente Mail
                     </td>
                     <td>
                         <asp:TextBox ID="txtMailCliente" runat="server" Width="350px" CssClass="_txtMailCliente_"></asp:TextBox>
-                    </td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td class="style8">Cliente Fono</td>
-                    <td class="style9">
-                        <asp:TextBox ID="txtFonoCliente" runat="server" Width="350px" CssClass="_txtFonoCliente_"></asp:TextBox>
                     </td>
                 </tr>
                 <tr>
@@ -267,7 +269,24 @@
                         <asp:HiddenField ID="txtHiddIdCliente" runat="server" />
                     </td>
                     <td></td> 
-                    <td class="style8">
+                    <td class="style8" style="color:green; font-weight:bold;">
+                        Cliente Fono
+                    </td>
+                    <td class="style9">
+                        <asp:TextBox ID="txtFonoCliente" runat="server" Width="350px" CssClass="_txtFonoCliente_"></asp:TextBox>
+                    </td>               
+                </tr>
+                <tr>
+                    <td>
+                        
+                    </td>
+                    <td>
+                        
+                    </td>
+                    <td>
+                        
+                    </td>
+                    <td class="style8" style="color:green; font-weight:bold;">
                         Tipo Tarifa
                     </td>
                     <td class="style9">
@@ -276,7 +295,7 @@
                         <input type="text" id="txtIdTipoTarifa" name="txtIdTipoTarifa" style="display:none" />
                         <input type="text" id="txtIdTipoTarifaPrev" name="txtIdTipoTarifaPrev" style="display:none" />
                         <input type="text" id="txtTipoTarifa" name="txtTipoTarifa" style="width:180px" readonly="readonly" />
-                    </td>               
+                    </td> 
                 </tr>
             </table>
             <div id="dialog-divisa" style="display:none">
@@ -332,8 +351,24 @@
                     <td>
                         <input type="text" id="txt-busca-nom-cont" name="txt-busca-nom-cont" value="" />
                     </td>
-                </tr>                             
+                    <td>
+                        <label id="lbl-busca-rut-cli">Rut Cliente:</label>
+                    </td>
+                    <td>
+                        <input type="text" id="txt-busca-rut-cli" name="txt-busca-rut-cli" value="" maxlength="8" />
+                    </td>
+                </tr>
                 <tr>
+                    <td>
+                        <label id="lbl-busca-alais-cli">Alias Cliente:</label>
+                    </td>
+                    <td>
+                        <input type="text" id="txt-busca-alias-cli" name="txt-busca-alias-cli" value="" />
+                    </td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <%--<tr>
                     <td colspan="2">
                         <label style="font-weight:bold;">Tipo Cliente</label><br />
                         <asp:RadioButtonList ID="rblTipoCliente" RepeatDirection="Horizontal" runat="server" 
@@ -346,7 +381,7 @@
                         <asp:RadioButtonList ID="rblEstadoCliente" RepeatDirection="Horizontal" runat="server" 
                             oninit="rblEstadoCliente_Init"></asp:RadioButtonList>
                     </td>
-                </tr>
+                </tr>--%>
                 <tr>
                     <td>
                         <input type="button" id="btn-busca-cliente" value="Buscar Cliente"/>
@@ -370,6 +405,12 @@
                         <asp:TemplateField HeaderText="ID" HeaderStyle-CssClass="ocultaCol" ItemStyle-CssClass="ocultaCol">
                             <ItemTemplate>
                                 <asp:Label ID="lblidcliente" CssClass="idcliente_" runat="server" Text='<%# Bind("IDCLIENTE") %>'></asp:Label>                                
+                            </ItemTemplate>
+                        </asp:TemplateField>
+
+                        <asp:TemplateField HeaderText="ALIAS">
+                            <ItemTemplate>
+                                <asp:Label ID="lblalias" CssClass="aliascliente_" runat="server" Text='<%# Bind("ALIASCLIENTE") %>'></asp:Label>
                             </ItemTemplate>
                         </asp:TemplateField>
 
@@ -543,7 +584,7 @@
 
                                     <asp:TemplateField HeaderText="Total" ItemStyle-Width="100px">
                                         <ItemTemplate>
-                                            <asp:Label ID="equipototal" CssClass="equipototal_" runat="server" Text='<%# Bind("EQUIPOTOTAL") %>'></asp:Label>
+                                            <asp:Label ID="equipototal" CssClass="equipototal_" runat="server" Text='<%# Bind("EQUIPOTOTALCARGOPE") %>'></asp:Label><%--EQUIPOTOTAL--%>
                                         </ItemTemplate>
                                     </asp:TemplateField>
 
@@ -616,6 +657,12 @@
                                     <asp:TemplateField HeaderText="Total No Exceder" ItemStyle-Width="100px" HeaderStyle-CssClass="ocultaCol" ItemStyle-CssClass="ocultaCol">
                                         <ItemTemplate>
                                             <asp:Label ID="equipofactordctototal" CssClass="equipofactordctototal" runat="server" Text='<%# Bind("EQUIPOFACTORDCTOTOTAL") %>'></asp:Label>
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+
+                                    <asp:TemplateField HeaderText="Total No Exceder" ItemStyle-Width="100px" HeaderStyle-CssClass="ocultaCol" ItemStyle-CssClass="ocultaCol">
+                                        <ItemTemplate>
+                                            <asp:Label ID="equipocargope" CssClass="equipocargope" runat="server" Text='<%# Bind("EQUIPOCARGOPE") %>'></asp:Label>
                                         </ItemTemplate>
                                     </asp:TemplateField>
 
@@ -982,7 +1029,7 @@
                     <ContentTemplate>
                         <table cellpadding="5px">
                             <tr>
-                                <td>Nota 1:</td>
+                                <td style="color:green; font-weight:bold;">Nota 1:</td>
                                 <td>
                                     <asp:TextBox ID="txtNotaUno" CssClass="_txtNotaUno_" runat="server" TextMode="MultiLine" Width="625px" Height="50px" onKeyPress="return taLimit(this)" onKeyUp="return taCount(this,'myCounter')">Sin Nota</asp:TextBox>                
                                 </td>
@@ -991,7 +1038,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td>Nota 2:</td>
+                                <td style="color:green; font-weight:bold;">Nota 2:</td>
                                 <td>
                                     <asp:TextBox ID="txtNotaDos" CssClass="_txtNotaDos_" runat="server" TextMode="MultiLine" Width="625px" Height="50px" onKeyPress="return taLimit(this)" onKeyUp="return taCount(this,'myCounterDos')">Sin Nota</asp:TextBox>
                                 </td>
@@ -1009,7 +1056,7 @@
                     <ContentTemplate>
                         <table cellpadding="5px">
                             <tr>
-                                <td style="width:90px;">
+                                <td style="width:90px; color:green; font-weight:bold;">
                                     Facturación
                                       <br />
                                     <asp:DropDownList ID="cboFacturacion" runat="server" CssClass="_cboFacturacion_"
@@ -1018,13 +1065,13 @@
                                 </td>
                                 <td>
                                 </td>
-                                <td class="style12">Comentario Facturacion<br />
+                                <td class="style12" style="color:green; font-weight:bold;">Comentario Facturacion<br />
                                     <asp:TextBox ID="txtFacturacion" runat="server" Height="50px" CssClass="_txtFacturacion_"
                                         TextMode="MultiLine" Width="421px" ReadOnly="true"></asp:TextBox>
                                 </td>
                             </tr>
                             <tr>
-                                <td style="width:90px;">
+                                <td style="width:90px; color:green; font-weight:bold;">
                                     Forma Pago Facturación
                                     <br />
                                     <asp:DropDownList ID="cboFormaPago" runat="server" Width="140px" CssClass="_cboFormaPago_"
@@ -1033,13 +1080,13 @@
                                 </td>
                                 <td>
                                 </td>
-                                <td class="style12">Comentario Forma Pago Facturacion<br />
+                                <td class="style12" style="color:green; font-weight:bold;">Comentario Forma Pago Facturacion<br />
                                     <asp:TextBox ID="txtFormaPago" runat="server" Height="50px" CssClass="_txtFormaPago_"
                                         TextMode="MultiLine" Width="422px">a contar de la fecha de facturación</asp:TextBox>
                                 </td>
                             </tr>
                             <tr>
-                                <td style="width:90px;">
+                                <td style="width:90px; color:green; font-weight:bold;">
                                     Plazo Entrega<br />
                                     <%--<asp:DropDownList ID="cboPlazoEntrega" runat="server" Width="140px" 
                                         oninit="cboPlazoEntrega_Init">
@@ -1048,7 +1095,7 @@
                                 </td>
                                 <td>
                                 </td>
-                                <td class="style12">Comentario Plazo Entrega<br />
+                                <td class="style12" style="color:green; font-weight:bold;">Comentario Plazo Entrega<br />
                                     <asp:TextBox ID="txtPlazoEntrega" runat="server" Height="50px" CssClass="_txtPlazoEntrega_"
                                         TextMode="MultiLine" Width="422px" ReadOnly="true"></asp:TextBox>
                                 </td>
@@ -1130,7 +1177,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td>Validez Oferta</td>
+                            <td style="color:green; font-weight:bold;">Validez Oferta</td>
                             <td>
                                 <asp:TextBox ID="txtValidezOferta" runat="server" style="text-align:center;" ReadOnly="true" CssClass="_txtValidezOferta_"></asp:TextBox>
                                 <asp:CalendarExtender ID="CalendarExtender2" runat="server" TargetControlID="txtValidezOferta" FirstDayOfWeek="Monday" Format="dd/MM/yyyy" BehaviorID="nuevaFechaVence">
@@ -1302,10 +1349,11 @@
                         &nbsp;
                     </td>
                     <td>
-                        <label id="lbl-eq-modelo">Modelo</label>
+                        <label id="lbl-eq-modelo">Fabricante</label>
                     </td>
                     <td>
-                        <input id="txt-eq-modelo" name="txt-eq-modelo" type="text" />
+                        <%--<input id="txt-eq-modelo" name="txt-eq-modelo" type="text" />--%>
+                        <select id="_cboListaFabricante_" name="_cboListaFabricante_"></select>
                     </td>
                     <td>
                         &nbsp;
@@ -1320,7 +1368,7 @@
                 </tr>
                 <tr>
                     <td>
-                        <label id="lbl-eq-nparte">Nro Parte</label>
+                        <label id="lbl-eq-nparte">Nro Parte/Modelo</label>
                     </td>
                     <td>
                         <input id="txt-eq-nparte" name="txt-eq-nparte" type="text" />
@@ -1329,10 +1377,10 @@
                         &nbsp;
                     </td>
                     <td>
-                        <label id="lbl-eq-nserie">Nro Serie</label>
+                        <label id="lbl-eq-nserie"></label><!-- Nro Serie -->
                     </td>
                     <td>
-                        <input id="txt-eq-nserie" name="txt-eq-nserie" type="text" />
+                        <!-- <input id="txt-eq-nserie" name="txt-eq-nserie" type="text" /> -->
                     </td>
                     <td>
                         &nbsp;
@@ -1379,13 +1427,19 @@
                             </ItemTemplate>
                         </asp:TemplateField>
 
-                        <asp:TemplateField HeaderText="Modelo">
+                        <asp:TemplateField HeaderText="Nro Parte / Modelo">
                             <ItemTemplate>
                                 <asp:Label ID="lblequipomodelo" CssClass="eqmodelo_" runat="server" Text='<%# Bind("EQUIPOMODELO") %>'></asp:Label>                                
                             </ItemTemplate>
                         </asp:TemplateField>
 
-                        <asp:TemplateField HeaderText="Nro Parte">
+                        <asp:TemplateField HeaderText="Fabricante">
+                            <ItemTemplate>
+                                <asp:Label ID="lblequipofabricante" CssClass="eqfabricante_" runat="server" Text='<%# Bind("EQUIPOFABRICANTE") %>'></asp:Label>                                
+                            </ItemTemplate>
+                        </asp:TemplateField>
+
+                        <asp:TemplateField HeaderText="Nro Parte" HeaderStyle-CssClass="ocultaCol" ItemStyle-CssClass="ocultaCol">
                             <ItemTemplate>
                                 <asp:Label ID="lblequiponparte" CssClass="eqnparte_" runat="server" Text='<%# Bind("EQUIPONPARTE") %>'></asp:Label>                                
                             </ItemTemplate>
@@ -1816,6 +1870,14 @@
                             <td><input type="text" id="edit_eq_fdcto_total" name="edit-eq-fdcto-total" class="text ui-widget-content ui-corner-all" readonly="readonly"/></td>
                         </tr>
                         <tr>
+                            <td>Factor Plazo Entrega</td>
+                            <td><input type="text" id="edit_eq_fplazoen_total" name="edit-eq-fplazoen-total" class="text ui-widget-content ui-corner-all" readonly="readonly"/></td>
+                        </tr>
+                        <tr>
+                            <td>Total Plazo Entrega</td>
+                            <td><input type="text" id="edit_eq_plazoen_total" name="edit-eq-plazoen-total" class="text ui-widget-content ui-corner-all" readonly="readonly"/></td>
+                        </tr>
+                        <tr>
                             <td>Total</td>
                             <td><input type="text" id="edit_eq_total" name="edit-eq-total" class="text ui-widget-content ui-corner-all" readonly="readonly"/></td>
                         </tr>
@@ -1949,6 +2011,7 @@
                 $('._cboJefe_').val("2");
                 getDatoAceptadoPor("2");
                 getNomMagnitud();
+                getNomFabricante();
                 //$.support.cors = true;
                 $("#_cboListaFamiliaBusca_").empty().append($("<option></option>").val("0").html("Seleccione"));
                 $("#_cboListaFamiliaBusca_").attr('disabled', 'disabled');
@@ -1975,7 +2038,8 @@
                     $("#<%=txtClienteInforme.ClientID %>").val($('.nomcuenta_', $(this).closest('tr')).html());
                     $("#<%=txtContactoCliente.ClientID %>").val($('.nomcontacto_', $(this).closest('tr')).html());
                     $("#<%=txtDireccionCliente.ClientID %>").val($('.direccioncli_', $(this).closest('tr')).html());
-                    $("#<%=txtClienteCertificado.ClientID %>").val($('.direccioncli_', $(this).closest('tr')).html());
+                    $("#<%=txtClienteCertificado.ClientID %>").val($('.nomcliente_', $(this).closest('tr')).html());
+                    $("#<%=txtClienteCertificadoDir.ClientID %>").val($('.direccioncli_', $(this).closest('tr')).html());
                     $("#<%=txtMailCliente.ClientID %>").val($('.mailcontacto_', $(this).closest('tr')).html());
                     $("#<%=txtFonoCliente.ClientID %>").val($('.fonocontacto_', $(this).closest('tr')).html());
                     $("#txt-cliente-bloq").val($("#<%=txtCliente.ClientID %>").val());
@@ -2025,6 +2089,8 @@
                     $("#edit_eq_total").val($('.equipototal_', $(this).closest('tr')).html());
                     $("#edit_eq_fdcto").val($('.equipofactordcto', $(this).closest('tr')).html());
                     $("#edit_eq_fdcto_total").val($('.equipofactordctototal', $(this).closest('tr')).html());
+                    $("#edit_eq_fplazoen_total").val($('.equipocargope', $(this).closest('tr')).html());
+                    $("#edit_eq_plazoen_total").val($('.equipototal_', $(this).closest('tr')).html());
 
                     getValoresEquipoEdit($('.equipoid_', $(this).closest('tr')).html(),
                                          $("#txtIdTipoTarifa").val(),//$("#%=cboTipoTarifa.ClientID %>").val(),
@@ -2081,7 +2147,7 @@
                             objEqJs.equipopmo = $("#txt-eq-read-pmo").val();
                             objEqJs.equipocalgasto = $("#txt-eq-read-gasto").val();
                             objEqJs.equipocalpcarga = $("#txt-eq-read-pcarga").val();
-                            equipoCal_Total(objEqJs, "2", $("#txtIdTipoTarifa").val(), $("#<%=txtFecha.ClientID %>").val());//$("#%=cboTipoTarifa.ClientID %>").val()
+                            equipoCal_Total(objEqJs, "2", $("#txtIdTipoTarifa").val(), $("#<%=txtFecha.ClientID %>").val(), $.cookie('pcusr'));//$("#%=cboTipoTarifa.ClientID %>").val()
                         },
                         "Agregar": function () {
                             //$(this).dialog('close');
@@ -2147,6 +2213,7 @@
             /*****************/
             /*****************/
 
+            //FUNCION PARA EDITAR EL EQUIPO YA INGRESADO EN UN MODAL DIALOG
             var oldGasto = "";
             function seleccionDetalleCalPrecio() {
                 dataGridCalPrecio();
@@ -2163,7 +2230,7 @@
                             objEqJs.equipopmo = $("#edit_eq_pmo").val();
                             objEqJs.equipocalgasto = $("#edit_eq_gasto").val();
                             objEqJs.equipocalpcarga = $("#edit_eq_pcarga").val();
-                            getTotalEquipoEdit(objEqJs, "2", $("#txtIdTipoTarifa").val(), $("#<%=txtFecha.ClientID %>").val());//$("#%=cboTipoTarifa.ClientID %>").val()
+                            getTotalEquipoEdit(objEqJs, "2", $("#txtIdTipoTarifa").val(), $("#<%=txtFecha.ClientID %>").val(), $.cookie('pcusr'));//$("#%=cboTipoTarifa.ClientID %>").val()
                         },
                         "Actualizar": function () {
                             setEquipoCalEdit();
@@ -2384,8 +2451,10 @@
                 $.cookie('nomclient', $("#txt-busca-nom-cli").val());
                 $.cookie('nomcuenta', $("#txt-busca-nom-cta").val());
                 $.cookie('nomcontact', $("#txt-busca-nom-cont").val());
-                $.cookie('nomtipo', $("#<%=rblTipoCliente.ClientID%>").find(":checked").val());
-                $.cookie('nomestado', $("#<%=rblEstadoCliente.ClientID%>").find(":checked").val());
+                $.cookie('nomtipo', '');//$("#<=rblTipoCliente.ClientID%>").find(":checked").val());
+                $.cookie('nomestado', '');//$("#<=rblEstadoCliente.ClientID%>").find(":checked").val());
+                $.cookie('rutclient', $("#txt-busca-rut-cli").val());
+                $.cookie('aliasclient', $("#txt-busca-alias-cli").val());
                 $("#<%=btnUpdLsCliente.ClientID %>").click();
             });
 
@@ -2403,10 +2472,11 @@
                     });
                 } else {
                     $.cookie('eqnombre', $("#txt-eq-nombre").val());
-                    $.cookie('eqmodelo', $("#txt-eq-modelo").val());
+                    //$.cookie('eqmodelo', $("#txt-eq-modelo").val());
                     $.cookie('eqnparte', $("#txt-eq-nparte").val());
+                    $.cookie('eqfabricante', $("#_cboListaFabricante_").val());
                     $.cookie('numListaFamiliaBusca', $("#_cboListaFamiliaBusca_ option:selected").val());
-                    $.cookie('numListaMagnitudBusca', $("#cboListaMagnitudBusca option:selected").val());
+                    $.cookie('numListaMagnitudBusca', $("#cboListaMagnitudBusca option:selected").val());                    
                     //$.cookie('eqnserie', $("#txt-eq-nserie").val());
                     //$.cookie('eqcodcli', $("#<=txtHiddIdCliente.ClientID %>").val());
                     $("#<%=btnBuscarListaEquipo.ClientID %>").click();
@@ -2574,7 +2644,7 @@
             //EL DETALLE DE ACUERDO AL POSIBLE DESCUENTO QUE SE INGRESO
             $("#btnCalcularTotal").on('click', function () {
                 setInfoMgTotCot();
-                getMargenTotalCot(objInfoCot, "CAL");                
+                getMargenTotalCot(objInfoCot, "CAL");
                 $("#<%=btnUpdDatoEquipo.ClientID %>").click();
             });
 
@@ -2671,13 +2741,19 @@
                 }
             });
 
+            //ejecuta metodo que calcula el cargo de plazo de entrega
             $("#txtPlazoEntregaD").click(function () {
                 $("#dialog-plazo-entrega").dialog({
                     modal: true,
                     width: "600px",
                     title: "Plazo de Entrega",
                     buttons: {
-                        "Aplicar": function () { },
+                        "Aplicar": function () {
+                            $("#txtPlazoEntregaD").val($("#txt-input-pl-entrega").val());
+                            guardaOtroDatoCotizacion($.cookie('pcusr'),
+                                                     $("#txtPlazoEntregaD").val());                            
+                            //$("#<=btnUpdDatoEquipo.ClientID %>").click();
+                        },
                         "Cerrar": function () {
                             $(this).dialog('close');
                         }

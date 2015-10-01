@@ -113,6 +113,7 @@
     <Content Include="img_files\Attach.png" />
     <Content Include="img_files\cross_icon_normal.png" />
     <Content Include="img_files\data_backup.png" />
+    <Content Include="img_files\iconcotizador.ico" />
     <Content Include="img_files\loading.gif" />
     <Content Include="img_files\LOGO DTS UN Man Cal.bmp" />
     <Content Include="img_files\logo inn - chile.gif" />
@@ -131,8 +132,10 @@
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-ui.js" />
     <Content Include="Scripts\jquery.cookie.js" />
+    <Content Include="Scripts\jquery.soap.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jsEquipo.js" />
+    <Content Include="Scripts\UseJQuery.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -351,6 +354,10 @@
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>
+    </ApplicationIcon>
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />

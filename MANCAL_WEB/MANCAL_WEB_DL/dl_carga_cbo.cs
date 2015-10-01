@@ -697,6 +697,60 @@ namespace MANCAL_WEB_DL
             return dt;
         }
 
+        public DataTable selectFabricante() 
+        {
+            DataTable dt = new DataTable();
+
+            using (OracleConnection con = new OracleConnection(conStr)) 
+            {
+                con.Open();
+                con.BeginTransaction();
+                String qry_sp = "SP_SPAC_SEARCH_PLANTILLAS";
+                using (OracleCommand cmd = new OracleCommand(qry_sp, con)) 
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    cmd.Parameters.Add(new OracleParameter("P_NOMBRE_PLANTILLA", OracleDbType.Varchar2)).Value = null;
+                    cmd.Parameters["P_NOMBRE_PLANTILLA"].Direction = ParameterDirection.Input;
+
+                    cmd.Parameters.Add(new OracleParameter("P_FAMILIA", OracleDbType.Varchar2)).Value = null;
+                    cmd.Parameters["P_FAMILIA"].Direction = ParameterDirection.Input;
+
+                    cmd.Parameters.Add(new OracleParameter("P_NUMERO_PARTE", OracleDbType.Varchar2)).Value = null;
+                    cmd.Parameters["P_NUMERO_PARTE"].Direction = ParameterDirection.Input;
+
+                    cmd.Parameters.Add(new OracleParameter("P_MODELO", OracleDbType.Varchar2)).Value = null;
+                    cmd.Parameters["P_MODELO"].Direction = ParameterDirection.Input;
+
+                    cmd.Parameters.Add(new OracleParameter("P_TIPO", OracleDbType.Int32)).Value = null;
+                    cmd.Parameters["P_TIPO"].Direction = ParameterDirection.Input;
+
+                    cmd.Parameters.Add(new OracleParameter("P_ESTADO", OracleDbType.Int32)).Value = null;
+                    cmd.Parameters["P_ESTADO"].Direction = ParameterDirection.Input;
+
+                    cmd.Parameters.Add(new OracleParameter("P_ID_SISTEMA", OracleDbType.Int32)).Value = 2;
+                    cmd.Parameters["P_ID_SISTEMA"].Direction = ParameterDirection.Input;
+
+                    cmd.ExecuteNonQuery();
+
+                }
+
+                String qry = "SELECT DISTINCT LTRIM(FABRICANTE) NOM_FABRICANTE FROM TBL_SPAC_SEARCH_PLANTILLAS_TMP WHERE FABRICANTE IS NOT NULL ORDER BY LTRIM(FABRICANTE)";
+                using (OracleCommand cmd_s = new OracleCommand(qry, con)) 
+                {
+                    cmd_s.CommandType = CommandType.Text;
+
+                    using (OracleDataAdapter oda = new OracleDataAdapter(cmd_s)) 
+                    {
+                        oda.Fill(dt);
+                    }
+                }
+                con.Close();
+            }
+
+            return dt;
+        }
+
         public String selectMailVendedor(int idven)
         {
             String mv = "";

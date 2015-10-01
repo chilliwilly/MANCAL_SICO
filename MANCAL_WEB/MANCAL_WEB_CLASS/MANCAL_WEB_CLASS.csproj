@@ -51,6 +51,7 @@
     <Compile Include="CotizacionEstado.cs" />
     <Compile Include="CotizacionEstadoCliente.cs" />
     <Compile Include="CotizacionEstadoDet.cs" />
+    <Compile Include="CotizacionFabricante.cs" />
     <Compile Include="CotizacionGarantia.cs" />
     <Compile Include="CotizacionGarantiaVal.cs" />
     <Compile Include="CotizacionJefe.cs" />

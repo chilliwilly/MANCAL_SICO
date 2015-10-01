@@ -302,9 +302,9 @@ namespace MANCAL_WEB.frm_proy
 
         public void mostrarCliente(String clinom, String clicta, String nomcont, String clitipo, String cliestado) 
         {
-            objCliente = new bl_cliente();
-            gvListaCliente.DataSource = objCliente.getListaCliente(clinom, clicta, nomcont, clitipo, cliestado);
-            gvListaCliente.DataBind();
+            //objCliente = new bl_cliente();
+            //gvListaCliente.DataSource = objCliente.getListaCliente(clinom, clicta, nomcont, clitipo, cliestado);
+            //gvListaCliente.DataBind();
         }
 
         #endregion

@@ -130,6 +130,15 @@ namespace MANCAL_WEB.frm_cal {
         protected global::System.Web.UI.WebControls.TextBox txtReferencia;
         
         /// <summary>
+        /// txtClienteCertificadoDir control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtClienteCertificadoDir;
+        
+        /// <summary>
         /// txtContactoCliente control.
         /// </summary>
         /// <remarks>
@@ -155,15 +164,6 @@ namespace MANCAL_WEB.frm_cal {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtMailCliente;
-        
-        /// <summary>
-        /// txtFonoCliente control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtFonoCliente;
         
         /// <summary>
         /// txtIdContactoCli control.
@@ -220,6 +220,15 @@ namespace MANCAL_WEB.frm_cal {
         protected global::System.Web.UI.WebControls.HiddenField txtHiddIdCliente;
         
         /// <summary>
+        /// txtFonoCliente control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtFonoCliente;
+        
+        /// <summary>
         /// rblSelectDivisa control.
         /// </summary>
         /// <remarks>
@@ -263,24 +272,6 @@ namespace MANCAL_WEB.frm_cal {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnUpdDatoEquipo;
-        
-        /// <summary>
-        /// rblTipoCliente control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButtonList rblTipoCliente;
-        
-        /// <summary>
-        /// rblEstadoCliente control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButtonList rblEstadoCliente;
         
         /// <summary>
         /// upListaCliente control.

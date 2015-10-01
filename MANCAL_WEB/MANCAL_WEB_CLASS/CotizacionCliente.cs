@@ -18,6 +18,8 @@ namespace MANCAL_WEB_CLASS
         public String mailcontacto { get; set; }
         public String tipcliente { get; set; }
         public String estcliente { get; set; }
+        public String rutcliente { get; set; }
+        public String aliascliente { get; set; }
 
         public CotizacionCliente() { }
     }

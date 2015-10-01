@@ -19,8 +19,8 @@ namespace MANCAL_WEB.frm_cal
         bl_detalle_pro objDet;
         String dataV, dataEC, dataC, dataCN, dataCT;        
         String un = "CAL";
-        String cli_nom, cli_cta, cli_cont, cli_tipo, cli_estado;
-        String eq_nombre, eq_modelo, eq_nparte, eq_magnitud, eq_familia;
+        String cli_nom, cli_cta, cli_cont, cli_tipo, cli_estado, cli_rut, cli_alias;
+        String eq_nombre, eq_modelo, eq_nparte, eq_magnitud, eq_familia, eq_fabricante;
          
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -317,25 +317,25 @@ namespace MANCAL_WEB.frm_cal
             }
         }
 
-        protected void rblTipoCliente_Init(object sender, EventArgs e)
-        {
-            objCbo = new bl_carga_cbo();
+        //protected void rblTipoCliente_Init(object sender, EventArgs e)
+        //{
+        //    objCbo = new bl_carga_cbo();
 
-            foreach (var rad in objCbo.getTipoCliente())
-            {
-                rblTipoCliente.Items.Add(new ListItem(rad.nomtipocli, rad.idtipocli));
-            }
-        }
+        //    foreach (var rad in objCbo.getTipoCliente())
+        //    {
+        //        rblTipoCliente.Items.Add(new ListItem(rad.nomtipocli, rad.idtipocli));
+        //    }
+        //}
 
-        protected void rblEstadoCliente_Init(object sender, EventArgs e)
-        {
-            objCbo = new bl_carga_cbo();
+        //protected void rblEstadoCliente_Init(object sender, EventArgs e)
+        //{
+        //    objCbo = new bl_carga_cbo();
 
-            foreach (var rad in objCbo.getEstadoCliente())
-            {
-                rblEstadoCliente.Items.Add(new ListItem(rad.nomestadocli, rad.idestadocli));
-            }
-        }
+        //    foreach (var rad in objCbo.getEstadoCliente())
+        //    {
+        //        rblEstadoCliente.Items.Add(new ListItem(rad.nomestadocli, rad.idestadocli));
+        //    }
+        //}
 
         //Este metodo reemplaza al que rellena el tipo de tarifa en el cbo
         protected void rblSelectDivisa_Init(object sender, EventArgs e)
@@ -413,17 +413,17 @@ namespace MANCAL_WEB.frm_cal
 
             gvListaCliente.PageIndex = e.NewPageIndex;
 
-            mostrarCliente(cli_nom, cli_cta, cli_cont, cli_tipo, cli_estado);
+            mostrarCliente(cli_nom, cli_cta, cli_cont, cli_tipo, cli_estado, cli_rut, cli_alias);
         }
 
         protected void gvListaCliente_Init(object sender, EventArgs e)
         {
-            mostrarCliente("", "", "", "", "");
+            mostrarCliente("", "", "", "", "", "", "");
         }
 
         protected void upListaCliente_Load(object sender, EventArgs e)
         {
-            mostrarCliente("", "", "", "", "");
+            mostrarCliente("", "", "", "", "", "", "");
             upListaCliente.Update();
         }
 
@@ -515,17 +515,17 @@ namespace MANCAL_WEB.frm_cal
 
         #endregion
 
-        public void mostrarCliente(String clinom, String clicta, String nomcont, String clitipo, String cliestado)
+        public void mostrarCliente(String clinom, String clicta, String nomcont, String clitipo, String cliestado, String clirut, String clialias)
         {
             objCliente = new bl_cliente();
-            gvListaCliente.DataSource = objCliente.getListaCliente(clinom, clicta, nomcont, clitipo, cliestado);
+            gvListaCliente.DataSource = objCliente.getListaCliente(clinom, clicta, nomcont, clitipo, cliestado, clirut, clialias);
             gvListaCliente.DataBind();
         }
 
         protected void btnUpdLsCliente_Click(object sender, EventArgs e)
         {
             setValueCliente();
-            mostrarCliente(cli_nom, cli_cta, cli_cont, cli_tipo, cli_estado);
+            mostrarCliente(cli_nom, cli_cta, cli_cont, cli_tipo, cli_estado, cli_rut, cli_alias);
             upListaCliente.Update();
         }
 
@@ -542,7 +542,7 @@ namespace MANCAL_WEB.frm_cal
             String systemid = "2";
             String tarifa = String.Format("{0}", Request.Form["txtIdTipoTarifa"]);
 
-            gvEquipoBusca.DataSource = objDet.getEquipo(nom, np, modelo, eq_magnitud, eq_familia, systemid, tarifa/*cboTipoTarifa.SelectedValue*/, String.Format("{0}", Request.Form["txt_Fecha"]));//txtFecha.Text);
+            gvEquipoBusca.DataSource = objDet.getEquipo(nom, np, /*modelo,*/ eq_fabricante, eq_magnitud, eq_familia, systemid, tarifa/*cboTipoTarifa.SelectedValue*/, String.Format("{0}", Request.Form["txt_Fecha"]));//txtFecha.Text);
             gvEquipoBusca.DataBind();
 
             for (int i = 0; i < gvEquipoBusca.Rows.Count; i++)
@@ -581,6 +581,8 @@ namespace MANCAL_WEB.frm_cal
             cli_cont = Request.Cookies["nomcontact"].Value ?? null;
             cli_tipo = Request.Cookies["nomtipo"].Value ?? null;
             cli_estado = Request.Cookies["nomestado"].Value ?? null;
+            cli_rut = Request.Cookies["rutclient"].Value ?? null;
+            cli_alias = Request.Cookies["aliasclient"].Value ?? null;
         }
 
         public void setValueEquipo()
@@ -611,8 +613,9 @@ namespace MANCAL_WEB.frm_cal
         {
             objDet = new bl_detalle_pro();
             String dco_cot = String.Format("{0}", Request.Form["txtDcto"]);
+            //String plazo_entrega = String.Format("{0}", Request.Form["txtPlazoEntregaD"]);
 
-            GV1.DataSource = objDet.getDetalleCot(idcot, idtarifa, dco_cot);
+            GV1.DataSource = objDet.getDetalleCot(idcot, idtarifa, dco_cot);//, plazo_entrega
             GV1.DataBind();
         }
 
